@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  CardManagementSDK
+
+  Created by Paula Radu on 24.10.2022.
+  
+*/
+
+"card_number" = "Card Number";
+"card_expiry" = "Expiry date";
+"card_cvv" = "CVV";
+"card_name" = "Name";
+
+"set_pin_title" = "Set PIN";
+"set_pin_description" = "Please enter the desired PIN for your card";
+"set_pin_error_message" = "Set pin failed, please try again";
+
+"change_pin_title" = "Change PIN";
+"change_pin_description_step1" = "Please enter your current PIN";
+"change_pin_description_step2" = "Please enter the new PIN";
+"change_pin_error_message" = "Change pin failed, please try again";
+
+"alert_button_ok" = "OK";
+"toast_message" = "Copied to clipboard";

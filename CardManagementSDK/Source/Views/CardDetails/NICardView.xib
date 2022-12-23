@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NICardView" customModule="NICardManagementSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="YRj-Zk-4KA" id="jr1-If-Om2"/>
+                <outlet property="backgroundCardImage" destination="MNR-pL-Ypb" id="zgd-BM-Yju"/>
+                <outlet property="cardExpiry" destination="yuA-MA-VnN" id="y2N-47-t1e"/>
+                <outlet property="cardExpiryLabel" destination="BR5-mQ-5at" id="6pi-lb-5xM"/>
+                <outlet property="cardNumber" destination="8qN-ge-L3F" id="kJY-6A-oNm"/>
+                <outlet property="cardNumberLabel" destination="yeZ-3R-Jwn" id="vYp-xl-oC3"/>
+                <outlet property="copyButton" destination="I1B-sk-vQA" id="9lv-Vg-Bac"/>
+                <outlet property="cvv2" destination="iNh-gx-88A" id="7af-EN-Cro"/>
+                <outlet property="cvv2Label" destination="AKD-hb-zpk" id="58m-rf-LJD"/>
+                <outlet property="eyeButton" destination="KtI-J8-WUC" id="zD5-2z-Hed"/>
+                <outlet property="nameCopyButton" destination="kao-j0-r6m" id="12f-9y-LbB"/>
+                <outlet property="nameLabel" destination="8JS-y8-xta" id="uSK-Ld-oem"/>
+                <outlet property="nameTagLabel" destination="kqS-vf-f9a" id="vqC-eU-dWg"/>
+                <outlet property="view" destination="jWG-xU-An2" id="Ui8-3N-Gr2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="jWG-xU-An2">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_card_details" translatesAutoresizingMaskIntoConstraints="NO" id="MNR-pL-Ypb">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="c number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeZ-3R-Jwn">
+                    <rect key="frame" x="16.000000000000004" y="64" width="43.333333333333343" height="14.333333333333329"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12343" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qN-ge-L3F">
+                    <rect key="frame" x="16" y="78.333333333333329" width="46" height="22.666666666666671"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BR5-mQ-5at">
+                    <rect key="frame" x="16" y="105" width="19.666666666666671" height="14.333333333333329"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 11/23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuA-MA-VnN">
+                    <rect key="frame" x="15.999999999999996" y="119.33333333333333" width="44.666666666666657" height="19.666666666666671"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvv" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKD-hb-zpk">
+                    <rect key="frame" x="99.666666666666671" y="105" width="15" height="14.333333333333329"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 234" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNh-gx-88A">
+                    <rect key="frame" x="99.666666666666671" y="119.33333333333333" width="30.333333333333329" height="19.666666666666671"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqS-vf-f9a">
+                    <rect key="frame" x="15.999999999999998" y="143" width="25.333333333333329" height="14.333333333333343"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JS-y8-xta">
+                    <rect key="frame" x="16.000000000000004" y="157.33333333333334" width="47.333333333333343" height="19.666666666666657"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya-Bold" family="Noto Sans Oriya" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" name="textColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1B-sk-vQA">
+                    <rect key="frame" x="86" y="79.666666666666671" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="KKg-3k-OOM"/>
+                        <constraint firstAttribute="height" constant="20" id="Usv-9C-NcE"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title=" ">
+                        <imageReference key="image" image="rectangle.portrait.on.rectangle.portrait" catalog="system" symbolScale="small"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="copyAction:" destination="-1" eventType="touchUpInside" id="BWM-bz-3LN"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KtI-J8-WUC" customClass="EyeButton" customModule="NICardManagementSDK" customModuleProvider="target">
+                    <rect key="frame" x="339" y="146" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="agV-hZ-IJT"/>
+                        <constraint firstAttribute="height" constant="20" id="sLZ-5L-agD"/>
+                    </constraints>
+                    <color key="tintColor" name="AlwaysWhite"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="icon_close_eye"/>
+                    <connections>
+                        <action selector="eyeButtonAction:" destination="-1" eventType="touchUpInside" id="ZMd-Rp-28Z"/>
+                    </connections>
+                </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="YRj-Zk-4KA">
+                    <rect key="frame" x="169" y="72.666666666666671" width="37" height="37"/>
+                    <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kao-j0-r6m">
+                    <rect key="frame" x="87.333333333333329" y="157.33333333333334" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="3Vw-EY-0OY"/>
+                        <constraint firstAttribute="height" constant="20" id="ynv-RV-m1S"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title=" ">
+                        <imageReference key="image" image="rectangle.portrait.on.rectangle.portrait" catalog="system" symbolScale="small"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="copyAction:" destination="-1" eventType="touchUpInside" id="NPs-MA-Sxe"/>
+                        <action selector="nameCopyAction:" destination="-1" eventType="touchUpInside" id="QZD-hM-IHm"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="XSr-Sr-MTh"/>
+            <constraints>
+                <constraint firstItem="I1B-sk-vQA" firstAttribute="centerY" secondItem="8qN-ge-L3F" secondAttribute="centerY" id="00S-TQ-1mY"/>
+                <constraint firstAttribute="height" constant="208" id="096-Co-3fq"/>
+                <constraint firstItem="yeZ-3R-Jwn" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" constant="64" id="25g-qb-wfF"/>
+                <constraint firstItem="8qN-ge-L3F" firstAttribute="top" secondItem="yeZ-3R-Jwn" secondAttribute="bottom" id="5FC-Ei-lr5"/>
+                <constraint firstAttribute="trailing" secondItem="KtI-J8-WUC" secondAttribute="trailing" constant="16" id="77P-4N-9jz"/>
+                <constraint firstItem="8qN-ge-L3F" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="82Z-8g-Alb"/>
+                <constraint firstItem="I1B-sk-vQA" firstAttribute="leading" secondItem="8qN-ge-L3F" secondAttribute="trailing" constant="24" id="9qv-bT-SZq"/>
+                <constraint firstItem="yeZ-3R-Jwn" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="BW6-Vr-pM0"/>
+                <constraint firstItem="kqS-vf-f9a" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="FIO-Xc-nTO"/>
+                <constraint firstAttribute="bottom" secondItem="MNR-pL-Ypb" secondAttribute="bottom" id="FcW-Xr-bED"/>
+                <constraint firstItem="AKD-hb-zpk" firstAttribute="leading" secondItem="BR5-mQ-5at" secondAttribute="trailing" constant="64" id="H5s-od-q5e"/>
+                <constraint firstItem="iNh-gx-88A" firstAttribute="leading" secondItem="AKD-hb-zpk" secondAttribute="leading" id="Jfh-6x-SSg"/>
+                <constraint firstItem="MNR-pL-Ypb" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" id="K0e-8S-Pv7"/>
+                <constraint firstItem="kao-j0-r6m" firstAttribute="leading" secondItem="8JS-y8-xta" secondAttribute="trailing" constant="24" id="St6-Fs-ZY4"/>
+                <constraint firstItem="BR5-mQ-5at" firstAttribute="centerY" secondItem="AKD-hb-zpk" secondAttribute="centerY" id="V4r-Bq-ngP"/>
+                <constraint firstItem="YRj-Zk-4KA" firstAttribute="centerY" secondItem="jWG-xU-An2" secondAttribute="centerY" id="YeD-RI-gyV"/>
+                <constraint firstItem="KtI-J8-WUC" firstAttribute="bottom" secondItem="MNR-pL-Ypb" secondAttribute="bottom" constant="-16" id="b7a-dS-b9P"/>
+                <constraint firstItem="kqS-vf-f9a" firstAttribute="top" secondItem="yuA-MA-VnN" secondAttribute="bottom" constant="4" id="bqO-Le-wXc"/>
+                <constraint firstAttribute="trailing" secondItem="MNR-pL-Ypb" secondAttribute="trailing" id="c1W-kj-2do"/>
+                <constraint firstItem="BR5-mQ-5at" firstAttribute="top" secondItem="8qN-ge-L3F" secondAttribute="bottom" constant="4" id="d8H-U0-UOh"/>
+                <constraint firstItem="MNR-pL-Ypb" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" id="fGa-mH-hVN"/>
+                <constraint firstItem="yuA-MA-VnN" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="fdG-Pp-rLc"/>
+                <constraint firstItem="iNh-gx-88A" firstAttribute="top" secondItem="AKD-hb-zpk" secondAttribute="bottom" id="gaJ-Rl-xlD"/>
+                <constraint firstItem="8JS-y8-xta" firstAttribute="top" secondItem="kqS-vf-f9a" secondAttribute="bottom" id="lZm-7R-xrc"/>
+                <constraint firstItem="YRj-Zk-4KA" firstAttribute="centerX" secondItem="jWG-xU-An2" secondAttribute="centerX" id="mo1-Co-sU1"/>
+                <constraint firstItem="BR5-mQ-5at" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="qwX-aF-iBf"/>
+                <constraint firstItem="yuA-MA-VnN" firstAttribute="top" secondItem="BR5-mQ-5at" secondAttribute="bottom" id="sOC-W7-CSi"/>
+                <constraint firstItem="kao-j0-r6m" firstAttribute="centerY" secondItem="8JS-y8-xta" secondAttribute="centerY" id="uH2-J8-zuf"/>
+                <constraint firstItem="8JS-y8-xta" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="x0w-1m-YEd"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="096-Co-3fq"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-306.92307692307691" y="-660.42654028436016"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="background_card_details" width="40" height="25"/>
+        <image name="icon_close_eye" width="25" height="25"/>
+        <image name="rectangle.portrait.on.rectangle.portrait" catalog="system" width="118" height="128"/>
+        <namedColor name="AlwaysWhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textColor">
+            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
