@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  CardManagementSDK
+
+  Created by Paula Radu on 24.10.2022.
+  
+*/
+
+"card_number" = "رقم البطاقة";
+"card_expiry" = "تاريخ الانتهاء";
+"card_cvv" = "رقم التحقق من البطاقة (CVV)";
+"card_name" = "الإسم";
+
+"set_pin_title" = "تعيين الرقم السري";
+"set_pin_description" = "الرجاء ادخال الرقم السري للبطاقة (PIN)";
+"set_pin_error_message" = "Set pin failed, please try again";
+
+"change_pin_title" = "تغيير الرقم السري (PIN)";
+"change_pin_description_step1" = "الرجاء ادخال الرقم السري الحالي (PIN)";
+"change_pin_description_step2" = "الرجاء ادخال الرقم السري الجديد (PIN)";
+"change_pin_error_message" = "Change pin failed, please try again";
+
+"alert_button_ok" = "OK";
+"toast_message" = "تم النسخ إلى الحافظة";
