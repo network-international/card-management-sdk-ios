@@ -6,10 +6,10 @@
   
 */
 
-"card_number" = "Card Number";
-"card_expiry" = "Expiry date";
+"card_number" = "CARD NUMBER";
+"card_expiry" = "VALID THRU";
 "card_cvv" = "CVV";
-"card_name" = "Name";
+"card_name" = "NAME";
 
 "set_pin_title" = "Set PIN";
 "set_pin_description" = "Please enter the desired PIN for your card";
