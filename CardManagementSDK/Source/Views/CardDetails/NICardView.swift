@@ -63,8 +63,9 @@ public final class NICardView: UIView {
     /// To be used ONLY if NICardView is added in storyboard or xib
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public func setInput(input: NIInput) {
+    public func setInput(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?) -> Void) {
         viewModel = CardDetailsViewModel(input: input)
+        viewModel?.callback = completion
         activityIndicator.startAnimating()
         configureCardView()
     }
