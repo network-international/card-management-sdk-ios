@@ -52,6 +52,13 @@ struct NIErrorConstants {
             return self
         }
         
+        if response.code == 500 {
+            isError = true
+            errorCode = String(response.code)
+            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? "Unknown"
+            return self
+        }
+        
         if json[NIErrorConstants.errorCode] == nil {
             isError = false
             return nil

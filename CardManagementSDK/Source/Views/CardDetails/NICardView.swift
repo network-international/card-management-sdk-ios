@@ -42,8 +42,9 @@ public final class NICardView: UIView {
     /// To be used when creating the card view programatically
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public init(input: NIInput) {
+    public init(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?) -> Void) {
         viewModel = CardDetailsViewModel(input: input)
+        viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
         
