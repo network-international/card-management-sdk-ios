@@ -18,8 +18,8 @@ class RSA {
             ofSize: 4096,
             subjectCommonName: "NICardManagementSDK_iOS", //"CN=PaulaR, OU=ITdepartment, O=Endava, L=Cluj, ST=Cluj, C=Romania"
             subjectEmailAddress: "paula.radu@endava.com",
-            validFrom: now,
-            validTo: now.addingTimeInterval(24*3600)
+            validFrom: now.addingTimeInterval(-24 * 3600),
+            validTo: now.addingTimeInterval(24 * 3600)
         ) else {
             return nil
         }

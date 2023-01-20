@@ -66,10 +66,10 @@ enum NISDKErrors: String {
     case GENERAL_ERROR = "SDK General Error"
     case NAV_ERROR = "Form not allowed pushing on navigation controller"
     
-    case NETWORK_ERROR = "Network Connection Error"
+    case NETWORK_ERROR = "Server Request Error"
     case PARSING_ERROR = "SDK Parsing Error"
     
-    case RSAKEY_ERROR = "Couldn't  get or generate Public Key"
+    case RSAKEY_ERROR = "Couldn't get or generate Public Key"
     case PINBLOCK_ERROR = "PIN Block Error"
     case PINBLOCK_ENCRYPTION_ERROR = "PIN Block Encryption Error"
 }
