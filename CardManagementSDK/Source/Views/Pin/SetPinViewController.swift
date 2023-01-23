@@ -49,6 +49,7 @@ class SetPinViewController: UIViewController {
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
+        view.addSubview(activityIndicator)
         pinView.alignConstraintsToView(view: view)
     }
     
