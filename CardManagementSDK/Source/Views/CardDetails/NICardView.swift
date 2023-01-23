@@ -42,7 +42,7 @@ public final class NICardView: UIView {
     /// To be used when creating the card view programatically
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public init(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?) -> Void) {
+    public init(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         viewModel = CardDetailsViewModel(input: input)
         viewModel?.callback = completion
         super.init(frame: .zero)
@@ -64,7 +64,7 @@ public final class NICardView: UIView {
     /// To be used ONLY if NICardView is added in storyboard or xib
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public func setInput(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?) -> Void) {
+    public func setInput(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         viewModel = CardDetailsViewModel(input: input)
         viewModel?.callback = completion
         activityIndicator.startAnimating()

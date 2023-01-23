@@ -15,7 +15,7 @@ class ChangePinViewController: UIViewController {
     private var previousPin: String?
     private var pinView: PinView?
     
-    var callback: ((NISuccessResponse?, NIErrorResponse?) -> Void)?
+    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
     init(viewModel: ChangePinViewModel) {
@@ -69,11 +69,14 @@ extension ChangePinViewController: PinViewProtocol {
         
         if let oldPin = previousPin {
             activityIndicator.startAnimating()
-            viewModel.changePin(oldPin: oldPin, newPin: pin) { [weak self] response, err in
+            viewModel.changePin(oldPin: oldPin, newPin: pin) { [weak self] sucess, error, callback in
                 guard let self = self else { return }
                 self.activityIndicator.stopAnimating()
-                self.callback?(response, err)
-                self.navigationController?.popViewController(animated: true)
+                self.callback?(sucess, error){
+                    if (sucess != nil) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
             }
         } else {
             previousPin = pin

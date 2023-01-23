@@ -18,7 +18,7 @@ enum Route {
 class FormCoordinator: NSObject, Coordinator {
     var navigationController: UIViewController
     var route: Route
-    var completion: ((NISuccessResponse?, NIErrorResponse?) -> Void)?
+    var completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     func start() {
         switch route {
@@ -42,7 +42,7 @@ class FormCoordinator: NSObject, Coordinator {
         }
     }
     
-    init(navigationController: UIViewController, route: Route, completion: ((NISuccessResponse?, NIErrorResponse?) -> Void)?) {
+    init(navigationController: UIViewController, route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
         self.navigationController = navigationController
         self.route = route
         self.completion = completion

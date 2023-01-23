@@ -17,9 +17,9 @@ class SetPinViewModel {
         self.formType = formType
     }
     
-    func setPin(_ pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?)->()) {
-        NICardManagementAPI.setPin(pin: pin, input: input) { response, error in
-            completion(response, error)
+    func setPin(_ pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
+        NICardManagementAPI.setPin(pin: pin, input: input) { success, error, callback in
+            completion(success, error, callback)
         }
     }
 }
