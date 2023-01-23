@@ -17,9 +17,9 @@ class ChangePinViewModel {
         self.formType = formType
     }
     
-    func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?)->()) {
-        NICardManagementAPI.changePin(oldPin: oldPin, newPin: newPin, input: input) { response, error in
-            completion(response, error)
+    func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
+        NICardManagementAPI.changePin(oldPin: oldPin, newPin: newPin, input: input) { success, error, callback in
+            completion(success, error, callback)
         }
     }
 }
@@ -46,5 +46,4 @@ extension ChangePinViewModel {
     var theme: NITheme { /// default is light
         return input.displayAttributes?.theme ?? .light
     }
-    
 }

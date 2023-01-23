@@ -14,7 +14,7 @@ class SetPinViewController: UIViewController {
     private var viewModel: SetPinViewModel
     private var pinView: PinView?
     
-    var callback: ((NISuccessResponse?, NIErrorResponse?) -> Void)?
+    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
     init(viewModel: SetPinViewModel) {
@@ -66,11 +66,15 @@ extension SetPinViewController: PinViewProtocol {
     func pinFilled(pin: String) {
         pinView?.disableButtons()
         activityIndicator.startAnimating()
-        viewModel.setPin(pin) { [weak self] response, err in
+        viewModel.setPin(pin) { [weak self] success, error, callback in
             guard let self = self else { return }
             self.activityIndicator.stopAnimating()
-            self.callback?(response, err)
-            self.navigationController?.popViewController(animated: true)
+            self.pinView?.enableButtons()
+            self.callback?(success, error){
+                if (success != nil) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
     }
 }

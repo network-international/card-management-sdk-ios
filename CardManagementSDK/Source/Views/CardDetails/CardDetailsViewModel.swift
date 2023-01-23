@@ -11,7 +11,7 @@ import UIKit
 class CardDetailsViewModel: NSObject {
     
     var input: NIInput
-    var callback: ((NISuccessResponse?, NIErrorResponse?) -> Void)?
+    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     private (set) var cardDetails: CardDetails? {
         didSet {
@@ -34,14 +34,14 @@ class CardDetailsViewModel: NSObject {
                                   cardholderNameLabel: "card_name".localized)
         
         
-        NICardManagementAPI.getCardDetails(input: input) { [weak self] response, error in
+        NICardManagementAPI.getCardDetails(input: input) { [weak self] success, error, callback in
             guard let self = self else { return }
             
-            if let response = response {
+            if let response = success {
                 self.mapResponseToCardDetails(response)
-                self.callback?(NISuccessResponse(message: "Card details retrieved with success!"), error)
+                self.callback?(NISuccessResponse(message: "Card details retrieved with success!"), error){}
             } else {
-                self.callback?(nil, error)
+                self.callback?(nil, error){}
                 self.cardDetails?.cardNumber = "-"
                 self.cardDetails?.cardholderName = "-"
                 self.cardDetails?.cardExpiry = "-"

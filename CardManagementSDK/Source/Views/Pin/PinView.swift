@@ -74,6 +74,12 @@ class PinView: UIView {
         confirmButton.isEnabled = false
         deleteButton.isUserInteractionEnabled = false
     }
+
+    func enableButtons() {
+        enableButtons(true)
+        confirmButton.isEnabled = true
+        deleteButton.isUserInteractionEnabled = true
+    }
     
     // MARK: - Private methods
     private func updateUI() {
