@@ -66,13 +66,18 @@ extension SetPinViewController: PinViewProtocol {
     func pinFilled(pin: String) {
         pinView?.disableButtons()
         activityIndicator.startAnimating()
-        viewModel.setPin(pin) { [weak self] success, error, callback in
-            guard let self = self else { return }
-            self.activityIndicator.stopAnimating()
-            self.pinView?.enableButtons()
-            self.callback?(success, error){
-                if (success != nil) {
-                    self.navigationController?.popViewController(animated: true)
+
+        DispatchQueue.main.async {
+            self.viewModel.setPin(pin) { [weak self] success, error, callback in
+                guard let self = self else {
+                    return
+                }
+                self.activityIndicator.stopAnimating()
+                self.pinView?.enableButtons()
+                self.callback?(success, error) {
+                    if (success != nil) {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }
