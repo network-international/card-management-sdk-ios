@@ -65,6 +65,7 @@ public final class NICardView: UIView {
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     public func setInput(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        hideUI(true)
         viewModel = CardDetailsViewModel(input: input)
         viewModel?.callback = completion
         activityIndicator.startAnimating()
@@ -104,9 +105,9 @@ extension NICardView {
     private func updateUI(_ viewModel: CardDetailsViewModel) {
         viewModel.bindCardDetailsViewModel = {
             DispatchQueue.main.async {
-                self.updateTexts(viewModel)
                 self.activityIndicator.stopAnimating()
                 self.hideUI(false)
+                self.updateTexts(viewModel)
                 self.eyeButton.isHidden = !viewModel.shouldMask
             }
         }
@@ -134,6 +135,18 @@ extension NICardView {
         self.cvv2Label.text = cardDetails?.cvv2Label
         self.cvv2.text = cardDetails?.cvv2
         self.nameTagLabel.text = cardDetails?.cardholderNameLabel
+        
+        if cardNumber.text == nil || cardNumber.text == "-" {
+            copyButton.isHidden = true
+        } else {
+            copyButton.isHidden = false
+        }
+        
+        if nameLabel.text == nil || nameLabel.text == "-" {
+            nameCopyButton.isHidden = true
+        } else {
+            nameCopyButton.isHidden = false
+        }
     }
     
     private func hideUI(_ shouldHide: Bool) {

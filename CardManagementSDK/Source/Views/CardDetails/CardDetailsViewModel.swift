@@ -75,7 +75,7 @@ extension CardDetailsViewModel {
         var maskedHolder = ""
         if let holderNames = self.cardDetails?.cardholderName?.components(separatedBy: " ") {
             for name in holderNames {
-                maskedHolder.append("\(name.masked(offset: 2)) ")
+                maskedHolder.append("\(name.masked(offset: 2))")
             }
         }
         
