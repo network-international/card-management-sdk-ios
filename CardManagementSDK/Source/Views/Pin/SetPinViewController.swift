@@ -67,13 +67,17 @@ extension SetPinViewController: PinViewProtocol {
         pinView?.disableButtons()
         activityIndicator.startAnimating()
 
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .default).async {
             self.viewModel.setPin(pin) { [weak self] success, error, callback in
                 guard let self = self else {
                     return
                 }
-                self.activityIndicator.stopAnimating()
-                self.pinView?.enableButtons()
+                
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.pinView?.enableButtons()
+                }
+                
                 self.callback?(success, error) {
                     if (success != nil) {
                         self.navigationController?.popViewController(animated: true)
