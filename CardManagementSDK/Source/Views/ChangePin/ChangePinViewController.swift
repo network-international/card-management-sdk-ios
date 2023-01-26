@@ -69,12 +69,17 @@ extension ChangePinViewController: PinViewProtocol {
         
         if let oldPin = previousPin {
             activityIndicator.startAnimating()
-            DispatchQueue.main.async {
+            
+            DispatchQueue.global(qos: .default).async {
                 self.viewModel.changePin(oldPin: oldPin, newPin: pin) { [weak self] sucess, error, callback in
                     guard let self = self else {
                         return
                     }
-                    self.activityIndicator.stopAnimating()
+                    
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                    }
+                    
                     self.callback?(sucess, error) {
                         if (sucess != nil) {
                             self.navigationController?.popViewController(animated: true)
