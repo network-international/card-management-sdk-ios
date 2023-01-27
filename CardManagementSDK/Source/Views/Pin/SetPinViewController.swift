@@ -75,13 +75,10 @@ extension SetPinViewController: PinViewProtocol {
                 
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
-                    self.pinView?.enableButtons()
                 }
                 
                 self.callback?(success, error) {
-                    if (success != nil) {
-                        self.navigationController?.popViewController(animated: true)
-                    }
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }

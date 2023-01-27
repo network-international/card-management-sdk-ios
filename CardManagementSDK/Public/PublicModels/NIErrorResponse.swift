@@ -75,6 +75,7 @@ enum NISDKErrors: String {
     
     case NETWORK_ERROR = "Server Request Error"
     case PARSING_ERROR = "SDK Parsing Error"
+    case NO_DATA_ERROR = "No Data Found"
     
     case RSAKEY_ERROR = "Couldn't get or generate Public Key"
     case PINBLOCK_ERROR = "PIN Block Error"

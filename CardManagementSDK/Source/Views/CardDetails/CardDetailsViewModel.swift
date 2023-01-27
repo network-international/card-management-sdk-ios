@@ -38,22 +38,22 @@ class CardDetailsViewModel: NSObject {
             guard let self = self else { return }
             
             if let response = success {
-                self.mapResponseToCardDetails(response)
-                self.callback?(NISuccessResponse(message: "Card details retrieved with success!"), error){}
+                if self.mapResponseToCardDetails(response) {
+                    self.callback?(NISuccessResponse(message: "Card details retrieved with success!"), error){}
+                } else {
+                    self.callback?(nil, NIErrorResponse(error: NISDKErrors.NO_DATA_ERROR)){}
+                }
             } else {
                 self.callback?(nil, error){}
-                self.cardDetails?.cardNumber = "-"
-                self.cardDetails?.cardholderName = "-"
-                self.cardDetails?.cardExpiry = "-"
-                self.cardDetails?.cvv2 = "-"
-                self.cardDetails?.maskedCardNumber = "-"
+                self.mapNoDataResponseToCardDetails()
             }
         }
     }
     
-    private func mapResponseToCardDetails(_ response: NICardDetailsResponse) {
+    private func mapResponseToCardDetails(_ response: NICardDetailsResponse) -> Bool {
         guard let cardNumber = response.clearPan, let maskedCardNumber = response.maskedPan, let expiry = response.expiry, let cvv2 = response.clearCVV2, let cardholderName = response.cardholderName else {
-            return
+            mapNoDataResponseToCardDetails()
+            return false
         }
         
         self.cardDetails?.cardNumber = cardNumber.separate(every: 4, with: " ")
@@ -61,6 +61,15 @@ class CardDetailsViewModel: NSObject {
         self.cardDetails?.cardholderName = cardholderName
         self.cardDetails?.cardExpiry = expiry
         self.cardDetails?.cvv2 = cvv2
+        return true
+    }
+    
+    private func mapNoDataResponseToCardDetails() {
+        self.cardDetails?.cardNumber = "-"
+        self.cardDetails?.cardholderName = "-"
+        self.cardDetails?.cardExpiry = "-"
+        self.cardDetails?.cvv2 = "-"
+        self.cardDetails?.maskedCardNumber = "-"
     }
     
 }
