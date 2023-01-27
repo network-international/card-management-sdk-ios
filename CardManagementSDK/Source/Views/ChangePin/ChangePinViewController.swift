@@ -81,9 +81,7 @@ extension ChangePinViewController: PinViewProtocol {
                     }
                     
                     self.callback?(sucess, error) {
-                        if (sucess != nil) {
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }
