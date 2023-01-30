@@ -72,6 +72,10 @@ public final class NICardView: UIView {
         configureCardView()
     }
     
+    public func setBackgroundImage(image: UIImage) {
+        backgroundCardImage.image = image
+    }
+    
 }
 
 // MARK: - Private
@@ -136,13 +140,13 @@ extension NICardView {
         self.cvv2.text = cardDetails?.cvv2
         self.nameTagLabel.text = cardDetails?.cardholderNameLabel
         
-        if cardNumber.text == nil || cardNumber.text == "-" {
+        if cardNumber.text == nil || cardNumber.text == "-" || cardNumber.text == "" {
             copyButton.isHidden = true
         } else {
             copyButton.isHidden = false
         }
         
-        if nameLabel.text == nil || nameLabel.text == "-" {
+        if nameLabel.text == nil || nameLabel.text == "-" || nameLabel.text == "" {
             nameCopyButton.isHidden = true
         } else {
             nameCopyButton.isHidden = false
