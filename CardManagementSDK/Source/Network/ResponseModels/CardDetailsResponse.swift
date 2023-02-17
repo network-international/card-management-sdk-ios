@@ -68,8 +68,8 @@ extension CardDetailsResponse {
     }
     
     var expiryDate: String {
-        guard let expiry = expiry else { return "-" }
-        var value = expiry
+        guard let expiry = expiry, expiry != "" else { return "-" }
+        var value = String(expiry.suffix(2) + expiry.prefix(2))
         let separator: Character = "/"
         let i = value.index(value.startIndex, offsetBy: 2)
         value.insert(separator, at: i)
