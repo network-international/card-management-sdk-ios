@@ -15,6 +15,9 @@
 "set_pin_description" = "Please enter the desired PIN for your card";
 "set_pin_error_message" = "Set pin failed, please try again";
 
+"verify_pin_title" = "Verify PIN";
+"verify_pin_description" = "Please enter your card PIN for verification";
+
 "change_pin_title" = "Change PIN";
 "change_pin_description_step1" = "Please enter your current PIN";
 "change_pin_description_step2" = "Please enter the new PIN";

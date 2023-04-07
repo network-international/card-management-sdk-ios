@@ -5,6 +5,7 @@ The current supported features are:
 1. Get Secured Card Details : Display a card component providing the ability to show card number, expiry date, CVV and cardholder name. This supports full end to end encryption to securely transport this sensitive information.
 2. Set PIN : Displays a PIN pad to allow cardholder to set a PIN on their new card. The PIN is end to end encrypted to securely transport this sensitive information
 3. Change PIN: Displays two PIN pad to allow the cardholder to change their PIN by providing old & new PIN. The PINs are end to end encrypted to securely transport this sensitive information
+4. Verify PIN: Displays a PIN pad to allow cardholder to verify PIN on their card. The PIN is end to end encrypted to securely transport this sensitive information
 
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 12 and above.
@@ -75,7 +76,6 @@ Swift:
 
 ##### Set PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController). 
-A message will be displayed in case of success and failure.
 
 Swift:
 ```swift
@@ -91,13 +91,12 @@ NICardManagementAPI.setPinForm(input: input, viewController: self) { successResp
 ```
 
 
-
 ##### Change PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController).
 Change PIN is a two step flow:
 1.Capture current PIN 
 2.Capture new PIN 
-A message will be displayed in case of success and failure.
+
 ```swift
 NICardManagementAPI.changePinForm(input: input, type: pinType, viewController: self) { successResponse, errorResponse in
 	//  handle here error and success
@@ -107,5 +106,22 @@ or without specifying the type (pin length)
 ```swift
 NICardManagementAPI.changePinForm(input: input, viewController: self) { successResponse, errorResponse in
 	// handle here error and success
+}
+```
+
+
+##### Verify PIN Form 
+A PIN-pad will be displayed into a separate screen (UIViewController). 
+
+Swift:
+```swift
+NICardManagementAPI.verifyPinForm(input: input, type: pinType, viewController: self) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
+or without specifying the type (pin length)
+```swift
+NICardManagementAPI.verifyPinForm(input: input, viewController: self) { successResponse, errorResponse in
+    // handle here error and success
 }
 ```

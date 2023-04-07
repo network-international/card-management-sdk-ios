@@ -14,7 +14,8 @@ enum APIEndpoint {
     case cardsLookup(lookupParams: CardLookupParams, bankCode: String, connection: NIConnectionProperties)
     case cardDetails(cardParams: CardDetailsParams, identifier: String, type: String, bankCode: String, connection: NIConnectionProperties)
     case pinCertificate(bankCode: String, connection: NIConnectionProperties)
-    case setPin(params: SetPinParams, bankCode: String, connection: NIConnectionProperties)
+    case setPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
+    case verifyPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
     case changePin(params: ChangePinParams, bankCode: String, connection: NIConnectionProperties)
 }
 
@@ -22,7 +23,7 @@ extension APIEndpoint: APIEndpointProtocol {
     
     var method: WSHTTPMethod {
         switch self {
-        case .cardDetails, .cardsLookup, .setPin, .changePin:
+        case .cardDetails, .cardsLookup, .setPin, .verifyPin, .changePin:
             return .POST
         case .pinCertificate:
             return .GET
@@ -39,6 +40,8 @@ extension APIEndpoint: APIEndpointProtocol {
             return "/security/pin_certificate"
         case .setPin:
             return "/security/set_pin"
+        case .verifyPin:
+            return "/security/verify_pin"
         case .changePin:
             return "/security/change_pin"
         }
@@ -51,6 +54,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .cardDetails(let cardParams, _, _, _, _):
             return cardParams.toJson()
         case .setPin(let params, _, _):
+            return params.toJson()
+        case .verifyPin(let params, _, _):
             return params.toJson()
         case .changePin(let params, _, _):
             return params.toJson()
@@ -78,6 +83,8 @@ extension APIEndpoint: APIEndpointProtocol {
             return connection.token
         case .setPin( _, _, let connection):
             return connection.token
+        case .verifyPin( _, _, let connection):
+            return connection.token
         case .changePin( _, _, let connection):
             return connection.token
         }
@@ -92,6 +99,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .pinCertificate(_, let connection):
             return connection.rootUrl
         case .setPin( _, _, let connection):
+            return connection.rootUrl
+        case .verifyPin( _, _, let connection):
             return connection.rootUrl
         case .changePin( _, _, let connection):
             return connection.rootUrl
@@ -123,6 +132,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .pinCertificate(let bankCode, _):
             return bankCode
         case .setPin(_, let bankCode, _):
+            return bankCode
+        case .verifyPin(_, let bankCode, _):
             return bankCode
         case .changePin(_, let bankCode, _):
             return bankCode

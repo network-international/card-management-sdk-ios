@@ -15,6 +15,9 @@
 "set_pin_description" = "الرجاء ادخال الرقم السري للبطاقة (PIN)";
 "set_pin_error_message" = "Set pin failed, please try again";
 
+"verify_pin_title" = "التحقق من رقم السري لبطاقتك";
+"verify_pin_description" = "الرجاء إدخال رقم السري لبطاقتك للتحقق (PIN)";
+
 "change_pin_title" = "تغيير الرقم السري (PIN)";
 "change_pin_description_step1" = "الرجاء ادخال الرقم السري الحالي (PIN)";
 "change_pin_description_step2" = "الرجاء ادخال الرقم السري الجديد (PIN)";

@@ -35,6 +35,9 @@ import UIKit
     /// Set PIN
     case setPinDescriptionLabel
     
+    /// Verify PIN
+    case verifyPinDescriptionLabel
+    
     /// Cahnge PIN
     case changePinDescriptionLabel
 }
