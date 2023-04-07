@@ -12,6 +12,7 @@ import UIKit
 enum Route {
     case cardDetails(input: NIInput)
     case setPin(input: NIInput, type: NIPinFormType)
+    case verifyPin(input: NIInput, type: NIPinFormType)
     case changePin(input: NIInput, type: NIPinFormType)
 }
 
@@ -31,6 +32,12 @@ class FormCoordinator: NSObject, Coordinator {
         case .setPin(let input, let type):
             let viewModel = makeSetPinViewModel(input: input, pinFormType: type)
             let vc = SetPinViewController(viewModel: viewModel)
+            vc.callback = completion
+            push(vc)
+            
+        case .verifyPin(let input, let type):
+            let viewModel = makeVerifyPinViewModel(input: input, pinFormType: type)
+            let vc = VerifyPinViewController(viewModel: viewModel)
             vc.callback = completion
             push(vc)
             
@@ -56,6 +63,10 @@ class FormCoordinator: NSObject, Coordinator {
     
     private func makeSetPinViewModel(input: NIInput, pinFormType: NIPinFormType) -> SetPinViewModel {
         return SetPinViewModel(input: input, formType: pinFormType)
+    }
+    
+    private func makeVerifyPinViewModel(input: NIInput, pinFormType: NIPinFormType) -> VerifyPinViewModel {
+        return VerifyPinViewModel(input: input, formType: pinFormType)
     }
     
     private func makeChangePinViewModel(input: NIInput, pinFormType: NIPinFormType) -> ChangePinViewModel {

@@ -26,11 +26,6 @@ struct NIErrorConstants {
     
     func withResponse(response: Response) -> NIErrorResponse? {
         
-        if response.code == 200 {
-            isError = false
-            return nil
-        }
-        
         guard let data = response.data else {
             isError = true
             errorCode = String(response.code)
@@ -38,33 +33,23 @@ struct NIErrorConstants {
             return self
         }
         
-        guard let json = try? JSON.dataToJson(data).toDictionary() else {
-            isError = true
-            errorCode = String(response.code)
-            errorMessage = String(data: data, encoding: .utf8) ?? "Unknown (JSON error)"
-            return self
-        }
-        
-        if response.code == 400 {
-            isError = true
-            errorCode = json[NIErrorConstants.errorCode] as? String ?? String(response.code)
-            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? "Unknown"
-            return self
-        }
-        
-        if response.code == 500 {
-            isError = true
-            errorCode = String(response.code)
-            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? "Unknown"
-            return self
-        }
-        
-        if json[NIErrorConstants.errorCode] == nil {
+        if response.code == 200 {
             isError = false
             return nil
+        } else {
+            
+            guard let json = try? JSON.dataToJson(data).toDictionary() else {
+                isError = true
+                errorCode = String(response.code)
+                errorMessage = String(data: data, encoding: .utf8) ?? "Unknown (JSON error)"
+                return self
+            }
+            
+            isError = true
+            errorCode = json[NIErrorConstants.errorCode] as? String ?? String(response.code)
+            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? json[ResponseConstants.message] as? String ?? "Unknown"
+            return self
         }
-        
-        return self
     }
 }
 

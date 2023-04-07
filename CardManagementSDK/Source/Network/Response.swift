@@ -9,6 +9,7 @@ import Foundation
 
 struct ResponseConstants {
     static let ErrorJson = "Unexpected error trying to parse Data to Json"
+    static let message = "message"
 }
 
 class Response {

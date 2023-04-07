@@ -78,6 +78,7 @@ extension NIDisplayAttributes {
             case .cvvValueLabel: return DefaultFonts.cardCvvValueLabel.font
             case .cardholderNameLabel: return DefaultFonts.cardNameLabel.font
             case .setPinDescriptionLabel: return DefaultFonts.description.font
+            case .verifyPinDescriptionLabel: return DefaultFonts.description.font
             case .changePinDescriptionLabel: return DefaultFonts.description.font
             case .cardholderNameTagLabel: return DefaultFonts.cardNameTagLabel.font
             }
