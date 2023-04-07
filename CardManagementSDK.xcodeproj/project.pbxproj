@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2A106D15290B4056005972AA /* ChangePinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A106D14290B4056005972AA /* ChangePinParams.swift */; };
+		2A17CB4F29DC28D700AD04EC /* VerifyPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A17CB4D29DC28D700AD04EC /* VerifyPinViewController.swift */; };
+		2A17CB5029DC28D700AD04EC /* VerifyPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A17CB4E29DC28D700AD04EC /* VerifyPinViewController.xib */; };
 		2A21795928F07FBA002D807C /* CardDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21795828F07FBA002D807C /* CardDetailsViewModel.swift */; };
+		2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */; };
 		2A7821F528F9A996006B54F7 /* PinViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */; };
 		2A82D06D28F584D700F57DC6 /* SetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */; };
 		2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */; };
@@ -53,7 +56,7 @@
 		F447E44B28F84E9A005A5F46 /* PinBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E44A28F84E9A005A5F46 /* PinBlock.swift */; };
 		F447E45E28FD3ABE005A5F46 /* NICardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E45D28FD3ABE005A5F46 /* NICardDetailsResponse.swift */; };
 		F447E46828FEB0A4005A5F46 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E46728FEB0A4005A5F46 /* RSA.swift */; };
-		F447E46E290043E0005A5F46 /* SetPinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E46D290043E0005A5F46 /* SetPinParams.swift */; };
+		F447E46E290043E0005A5F46 /* PinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E46D290043E0005A5F46 /* PinParams.swift */; };
 		F447E4722901288A005A5F46 /* PinEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E4712901288A005A5F46 /* PinEncryption.swift */; };
 		F447E4772901923F005A5F46 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E4762901923F005A5F46 /* UIViewController+Alerts.swift */; };
 		F447E47929019CF2005A5F46 /* NIPinFormType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F447E47829019CF2005A5F46 /* NIPinFormType.swift */; };
@@ -113,7 +116,10 @@
 
 /* Begin PBXFileReference section */
 		2A106D14290B4056005972AA /* ChangePinParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinParams.swift; sourceTree = "<group>"; };
+		2A17CB4D29DC28D700AD04EC /* VerifyPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPinViewController.swift; sourceTree = "<group>"; };
+		2A17CB4E29DC28D700AD04EC /* VerifyPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerifyPinViewController.xib; sourceTree = "<group>"; };
 		2A21795828F07FBA002D807C /* CardDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewModel.swift; sourceTree = "<group>"; };
+		2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPinViewModel.swift; sourceTree = "<group>"; };
 		2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewViewModel.swift; sourceTree = "<group>"; };
 		2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
 		2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetPinViewController.xib; sourceTree = "<group>"; };
@@ -159,7 +165,7 @@
 		F447E44A28F84E9A005A5F46 /* PinBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinBlock.swift; sourceTree = "<group>"; };
 		F447E45D28FD3ABE005A5F46 /* NICardDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardDetailsResponse.swift; sourceTree = "<group>"; };
 		F447E46728FEB0A4005A5F46 /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
-		F447E46D290043E0005A5F46 /* SetPinParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinParams.swift; sourceTree = "<group>"; };
+		F447E46D290043E0005A5F46 /* PinParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinParams.swift; sourceTree = "<group>"; };
 		F447E4712901288A005A5F46 /* PinEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinEncryption.swift; sourceTree = "<group>"; };
 		F447E4762901923F005A5F46 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		F447E47829019CF2005A5F46 /* NIPinFormType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIPinFormType.swift; sourceTree = "<group>"; };
@@ -228,6 +234,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A4C17C729DC1EB9005CD9A0 /* VerifyPin */ = {
+			isa = PBXGroup;
+			children = (
+				2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */,
+				2A17CB4D29DC28D700AD04EC /* VerifyPinViewController.swift */,
+				2A17CB4E29DC28D700AD04EC /* VerifyPinViewController.xib */,
+			);
+			path = VerifyPin;
+			sourceTree = "<group>";
+		};
 		2A82D06A28F5848A00F57DC6 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,7 +351,7 @@
 			children = (
 				F447E44128F7197C005A5F46 /* CardDetailsParams.swift */,
 				F447E44328F80177005A5F46 /* CardLookupParams.swift */,
-				F447E46D290043E0005A5F46 /* SetPinParams.swift */,
+				F447E46D290043E0005A5F46 /* PinParams.swift */,
 				2A106D14290B4056005972AA /* ChangePinParams.swift */,
 			);
 			path = Parameters;
@@ -453,6 +469,7 @@
 		F4E7698428EC7A7300CDC7E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2A4C17C729DC1EB9005CD9A0 /* VerifyPin */,
 				2AD494ED2906A6D500E25695 /* ChangePin */,
 				2A82D06A28F5848A00F57DC6 /* Pin */,
 				F4E76A0728EDE16400CDC7E4 /* CardDetails */,
@@ -649,6 +666,7 @@
 				2ACE7F7028F837E500A8B01D /* PinView.xib in Resources */,
 				2AB28EF6290027A90078E75C /* Assets.xcassets in Resources */,
 				2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */,
+				2A17CB5029DC28D700AD04EC /* VerifyPinViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +741,7 @@
 				F45A7E0128EF24AE00B3486E /* NSError+Utils.swift in Sources */,
 				F45A7E0C28F40C7300B3486E /* WebServices.swift in Sources */,
 				F4E76A1428EEC7E200CDC7E4 /* NISuccessResponse.swift in Sources */,
+				2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */,
 				F45A7E0328F0321400B3486E /* APIEndpointProtocol.swift in Sources */,
 				2AD494F32906A93500E25695 /* ChangePinViewModel.swift in Sources */,
 				F42E80BF294B442800640860 /* Digest.swift in Sources */,
@@ -738,8 +757,9 @@
 				F42E809A29461F0B00640860 /* SecKey+Crypt.swift in Sources */,
 				F44559AD2907C5DB00384188 /* NILanguage.swift in Sources */,
 				F4E76A0428EDDFC000CDC7E4 /* Coordinator.swift in Sources */,
-				F447E46E290043E0005A5F46 /* SetPinParams.swift in Sources */,
+				F447E46E290043E0005A5F46 /* PinParams.swift in Sources */,
 				F447E47C2901AA5E005A5F46 /* PinManager.swift in Sources */,
+				2A17CB4F29DC28D700AD04EC /* VerifyPinViewController.swift in Sources */,
 				F42E80662943665600640860 /* DEREncoding.swift in Sources */,
 				F4DE3B44290BDA4600BF4727 /* RSAUtils+Certificate.swift in Sources */,
 				F42E808D29461D7300640860 /* OID.swift in Sources */,

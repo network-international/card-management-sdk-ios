@@ -120,11 +120,35 @@ class NIMobileAPI {
             return
         }
         
-        let params = SetPinParams(cardIdentifierId: input.cardIdentifierId,
+        let params = PinParams(cardIdentifierId: input.cardIdentifierId,
                                   cardIdentifierType: input.cardIdentifierType,
                                   encryptedPin: encryptedPin,
                                   encryptionMethod: encryption.method)
         let request = Request(.setPin(params: params, bankCode: input.bankCode, connection: input.connectionProperties))
+        
+        request.sendAsync { response, error in
+            guard let response = response else {
+                if error != nil {
+                    completion(nil, error)
+                }
+                return
+            }
+            completion(response, error)
+        }
+    }
+    
+    func verifyPin(_ encryption: PinEncryption, input: NIInput, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
+        
+        guard let encryptedPin = encryption.encryptedPinBlock else {
+            completion(nil, NIErrorResponse(error: NISDKErrors.PINBLOCK_ENCRYPTION_ERROR))
+            return
+        }
+        
+        let params = PinParams(cardIdentifierId: input.cardIdentifierId,
+                                  cardIdentifierType: input.cardIdentifierType,
+                                  encryptedPin: encryptedPin,
+                                  encryptionMethod: encryption.method)
+        let request = Request(.verifyPin(params: params, bankCode: input.bankCode, connection: input.connectionProperties))
         
         request.sendAsync { response, error in
             guard let response = response else {

@@ -1,5 +1,5 @@
 //
-//  SetPinParams.swift
+//  PinParams.swift
 //  NICardManagementSDK
 //
 //  Created by Paula Radu on 19.10.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SetPinParams: Codable {
+struct PinParams: Codable {
     
     var cardIdentifierId: String
     var cardIdentifierType: String
