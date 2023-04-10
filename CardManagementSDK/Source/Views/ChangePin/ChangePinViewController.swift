@@ -46,7 +46,7 @@ class ChangePinViewController: UIViewController {
         pinView.descriptionLabel.font = viewModel.font(for: .changePinDescriptionLabel)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: "change_pin_description_step1".localized,
+                                             descriptionText: "change_pin_description_enter_current_pin".localized,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
@@ -88,7 +88,7 @@ extension ChangePinViewController: PinViewProtocol {
         } else {
             previousPin = pin
             guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = "change_pin_description_step2".localized
+            pinView.viewmodel?.descriptionText = "change_pin_description_enter_new_pin".localized
             pinView.resetView()
         }
     }
