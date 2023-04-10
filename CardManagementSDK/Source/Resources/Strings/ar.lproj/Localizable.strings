@@ -10,17 +10,19 @@
 "card_expiry" = "تاريخ الانتهاء";
 "card_cvv" = "رقم التحقق من البطاقة (CVV)";
 "card_name" = "الإسم";
+"card_details_title" = "معلومات البطاقة";
 
 "set_pin_title" = "تعيين الرقم السري";
-"set_pin_description" = "الرجاء ادخال الرقم السري للبطاقة (PIN)";
-"set_pin_error_message" = "Set pin failed, please try again";
+"set_pin_description_enter_pin" = "الرجاء ادخال الرقم السري للبطاقة (PIN)";
+"set_pin_description_re_enter_pin" = "يرجى إعادة إدخال رقم السري لبطاقتك (PIN)";
+"set_pin_description_pin_not_match" = "الرقم السري لبطاقتك غير متطابق\nيرجى إعادة إدخال رقم السري لبطاقتك (PIN)";
 
 "verify_pin_title" = "التحقق من رقم السري لبطاقتك";
 "verify_pin_description" = "الرجاء إدخال رقم السري لبطاقتك للتحقق (PIN)";
 
 "change_pin_title" = "تغيير الرقم السري (PIN)";
-"change_pin_description_step1" = "الرجاء ادخال الرقم السري الحالي (PIN)";
-"change_pin_description_step2" = "الرجاء ادخال الرقم السري الجديد (PIN)";
+"change_pin_description_enter_current_pin" = "الرجاء ادخال الرقم السري الحالي (PIN)";
+"change_pin_description_enter_new_pin" = "الرجاء ادخال الرقم السري الجديد (PIN)";
 "change_pin_error_message" = "Change pin failed, please try again";
 
 "alert_button_ok" = "OK";
