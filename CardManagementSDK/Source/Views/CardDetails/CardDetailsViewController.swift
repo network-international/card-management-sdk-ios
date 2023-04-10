@@ -27,6 +27,7 @@ class CardDetailsViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "card_details_title".localized
         setupCloseButton()
         
         customNICardView.viewModel = viewModel

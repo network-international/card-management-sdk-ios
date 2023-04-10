@@ -13,6 +13,7 @@ class SetPinViewController: UIViewController {
     
     private var viewModel: SetPinViewModel
     private var pinView: PinView?
+    private var previousPin: String?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
@@ -45,7 +46,7 @@ class SetPinViewController: UIViewController {
         pinView.descriptionLabel.font = viewModel.font(for: .setPinDescriptionLabel)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: "set_pin_description".localized,
+                                             descriptionText: "set_pin_description_enter_pin".localized,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
@@ -65,22 +66,36 @@ class SetPinViewController: UIViewController {
 extension SetPinViewController: PinViewProtocol {
     func pinFilled(pin: String) {
         pinView?.disableButtons()
-        activityIndicator.startAnimating()
-
-        DispatchQueue.global(qos: .default).async {
-            self.viewModel.setPin(pin) { [weak self] success, error, callback in
-                guard let self = self else {
-                    return
-                }
+        
+        if let oldPin = previousPin {
+            
+            if oldPin == pin {
+                activityIndicator.startAnimating()
                 
-                DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
+                DispatchQueue.global(qos: .default).async {
+                    self.viewModel.setPin(pin) { [weak self] success, error, callback in
+                        guard let self = self else {
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.activityIndicator.stopAnimating()
+                        }
+                        
+                        self.callback?(success, error) {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
                 }
-                
-                self.callback?(success, error) {
-                    self.navigationController?.popViewController(animated: true)
-                }
+            } else {
+                pinView?.viewmodel?.descriptionText = "set_pin_description_pin_not_match".localized
+                pinView?.resetView()
             }
+        } else {
+            previousPin = pin
+            guard let pinView = pinView else { return }
+            pinView.viewmodel?.descriptionText = "set_pin_description_re_enter_pin".localized
+            pinView.resetView()
         }
     }
 }
