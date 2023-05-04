@@ -21,9 +21,10 @@
 "verify_pin_description" = "Please enter your card PIN for verification";
 
 "change_pin_title" = "Change PIN";
-"change_pin_description_enter_current_pin" = "Please enter your current PIN";
-"change_pin_description_enter_new_pin" = "Please enter the new PIN";
-"change_pin_error_message" = "Change pin failed, please try again";
+"change_pin_description_enter_current_pin" = "Please enter your current card PIN";
+"change_pin_description_enter_new_pin" = "Please enter the new card PIN";
+"change_pin_description_re_enter_new_pin" = "Please re-enter the new card PIN";
+"change_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the new card PIN";
 
 "alert_button_ok" = "OK";
 "toast_message" = "Copied to clipboard";
