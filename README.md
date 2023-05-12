@@ -97,12 +97,12 @@ For the card background image, we expect a UIImage to be set. The recommended si
 ```
  - Possibility to set the text position as grouped labels
  
- The card details labels are grouped as follows: 
-     - Card Number Group 
-     - Expiry Date & CVV Group
-     - Card Holder Name Group
+The card details labels are grouped as follows:
+    - Card Number Group
+    - Expiry Date & CVV Group
+    - Card Holder Name Group
      
-    In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
+In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
 
 ```swift
     let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
