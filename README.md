@@ -57,34 +57,40 @@ Swift:
         // handle error and success
     }
 ```
+
 ###### Display attributes  
 Display attributes parameter is optional. You can set one or more attributes, or even none of them.  
 
 1. Theme
+
 We support dark and light mode, by setting the theme parameter from the display attributes. If the Customer App is in dark mode, then you should use our SDK with dark theme. If the Customer App is in light mode, then you should use our SDK with light theme.  
 
 2. Language
+
 Languages supported are English and Arabic. You can either set the desired language or not. 
 If you don’t set any language, it will use the device language, if supported, otherwise will default to English. 
 
 3. Fonts
+
 We support customization of fonts. System and custom fonts can be set for the labels of each form view.  
 
 4. Card Attributes
-Card Attributes is optional. It can be set if customisation of the card details view is wanted.   
+
+Card Attributes is optional. It can be set if customisation of the card details view is wanted. 
+    
 We offer:  
     - Possibility to show or hide card details by default 
     To directly show the card details (not masked) when card view is displayed, we expect the ```shouldHide``` property to be set to false, otherwise to be set to false. If ```shouldHide``` property is not set, the default value is true.
     E.g.:  
     ```
-    let cardAttributes = NICardAttributes(shouldHide: false) 
+    let cardAttributes = NICardAttributes(shouldHide: false)
     ```
 
     - Background image customization 
     For the card background image, we expect a UIImage to be set. The recommended size would be 343 x 182. 
     E.g.:  
     ```
-    let image = UIImage(named:"background_image") 
+    let image = UIImage(named:"background_image")
     let cardAttributes = NICardAttributes(backgroundImage: image)) 
     ```
     - Possibility to set the text position as grouped labels on card view
