@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,11 +16,15 @@
                 <outlet property="cardExpiry" destination="yuA-MA-VnN" id="y2N-47-t1e"/>
                 <outlet property="cardExpiryLabel" destination="BR5-mQ-5at" id="6pi-lb-5xM"/>
                 <outlet property="cardNumber" destination="8qN-ge-L3F" id="kJY-6A-oNm"/>
+                <outlet property="cardNumberGroupTopConstraint" destination="25g-qb-wfF" id="JOh-Ao-7SX"/>
                 <outlet property="cardNumberLabel" destination="yeZ-3R-Jwn" id="vYp-xl-oC3"/>
                 <outlet property="copyButton" destination="I1B-sk-vQA" id="9lv-Vg-Bac"/>
                 <outlet property="cvv2" destination="iNh-gx-88A" id="7af-EN-Cro"/>
                 <outlet property="cvv2Label" destination="AKD-hb-zpk" id="58m-rf-LJD"/>
+                <outlet property="dateCvvGroupTopConstraint" destination="AAe-WP-op3" id="aef-eW-AaI"/>
                 <outlet property="eyeButton" destination="KtI-J8-WUC" id="zD5-2z-Hed"/>
+                <outlet property="holderNameTopConstraint" destination="QTC-0c-574" id="4C2-Od-0I3"/>
+                <outlet property="leftAlignmentConstraint" destination="BW6-Vr-pM0" id="Ix1-TG-isK"/>
                 <outlet property="nameCopyButton" destination="kao-j0-r6m" id="12f-9y-LbB"/>
                 <outlet property="nameLabel" destination="8JS-y8-xta" id="uSK-Ld-oem"/>
                 <outlet property="nameTagLabel" destination="kqS-vf-f9a" id="vqC-eU-dWg"/>
@@ -29,7 +32,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="jWG-xU-An2">
+        <view contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jWG-xU-An2">
             <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_card_details" translatesAutoresizingMaskIntoConstraints="NO" id="MNR-pL-Ypb">
@@ -101,7 +104,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KtI-J8-WUC" customClass="EyeButton" customModule="NICardManagementSDK" customModuleProvider="target">
-                    <rect key="frame" x="339" y="146" width="20" height="20"/>
+                    <rect key="frame" x="154" y="102.33333333333333" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="agV-hZ-IJT"/>
                         <constraint firstAttribute="height" constant="20" id="sLZ-5L-agD"/>
@@ -136,37 +139,36 @@
                     </connections>
                 </button>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="XSr-Sr-MTh"/>
             <constraints>
                 <constraint firstItem="I1B-sk-vQA" firstAttribute="centerY" secondItem="8qN-ge-L3F" secondAttribute="centerY" id="00S-TQ-1mY"/>
                 <constraint firstAttribute="height" constant="208" id="096-Co-3fq"/>
                 <constraint firstItem="yeZ-3R-Jwn" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" constant="64" id="25g-qb-wfF"/>
                 <constraint firstItem="8qN-ge-L3F" firstAttribute="top" secondItem="yeZ-3R-Jwn" secondAttribute="bottom" id="5FC-Ei-lr5"/>
-                <constraint firstAttribute="trailing" secondItem="KtI-J8-WUC" secondAttribute="trailing" constant="16" id="77P-4N-9jz"/>
-                <constraint firstItem="8qN-ge-L3F" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="82Z-8g-Alb"/>
+                <constraint firstItem="8qN-ge-L3F" firstAttribute="leading" secondItem="yeZ-3R-Jwn" secondAttribute="leading" id="82Z-8g-Alb"/>
                 <constraint firstItem="I1B-sk-vQA" firstAttribute="leading" secondItem="8qN-ge-L3F" secondAttribute="trailing" constant="24" id="9qv-bT-SZq"/>
+                <constraint firstItem="BR5-mQ-5at" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" constant="105" id="AAe-WP-op3"/>
                 <constraint firstItem="yeZ-3R-Jwn" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="BW6-Vr-pM0"/>
-                <constraint firstItem="kqS-vf-f9a" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="FIO-Xc-nTO"/>
+                <constraint firstItem="kqS-vf-f9a" firstAttribute="leading" secondItem="yeZ-3R-Jwn" secondAttribute="leading" id="FIO-Xc-nTO"/>
                 <constraint firstAttribute="bottom" secondItem="MNR-pL-Ypb" secondAttribute="bottom" id="FcW-Xr-bED"/>
                 <constraint firstItem="AKD-hb-zpk" firstAttribute="leading" secondItem="BR5-mQ-5at" secondAttribute="trailing" constant="64" id="H5s-od-q5e"/>
                 <constraint firstItem="iNh-gx-88A" firstAttribute="leading" secondItem="AKD-hb-zpk" secondAttribute="leading" id="Jfh-6x-SSg"/>
                 <constraint firstItem="MNR-pL-Ypb" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" id="K0e-8S-Pv7"/>
+                <constraint firstItem="kqS-vf-f9a" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" constant="143" id="QTC-0c-574"/>
+                <constraint firstItem="KtI-J8-WUC" firstAttribute="centerY" secondItem="AKD-hb-zpk" secondAttribute="centerY" id="QY2-pZ-4Oy"/>
                 <constraint firstItem="kao-j0-r6m" firstAttribute="leading" secondItem="8JS-y8-xta" secondAttribute="trailing" constant="24" id="St6-Fs-ZY4"/>
                 <constraint firstItem="BR5-mQ-5at" firstAttribute="centerY" secondItem="AKD-hb-zpk" secondAttribute="centerY" id="V4r-Bq-ngP"/>
                 <constraint firstItem="YRj-Zk-4KA" firstAttribute="centerY" secondItem="jWG-xU-An2" secondAttribute="centerY" id="YeD-RI-gyV"/>
-                <constraint firstItem="KtI-J8-WUC" firstAttribute="bottom" secondItem="MNR-pL-Ypb" secondAttribute="bottom" constant="-16" id="b7a-dS-b9P"/>
-                <constraint firstItem="kqS-vf-f9a" firstAttribute="top" secondItem="yuA-MA-VnN" secondAttribute="bottom" constant="4" id="bqO-Le-wXc"/>
                 <constraint firstAttribute="trailing" secondItem="MNR-pL-Ypb" secondAttribute="trailing" id="c1W-kj-2do"/>
-                <constraint firstItem="BR5-mQ-5at" firstAttribute="top" secondItem="8qN-ge-L3F" secondAttribute="bottom" constant="4" id="d8H-U0-UOh"/>
                 <constraint firstItem="MNR-pL-Ypb" firstAttribute="top" secondItem="jWG-xU-An2" secondAttribute="top" id="fGa-mH-hVN"/>
-                <constraint firstItem="yuA-MA-VnN" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="fdG-Pp-rLc"/>
+                <constraint firstItem="yuA-MA-VnN" firstAttribute="leading" secondItem="BR5-mQ-5at" secondAttribute="leading" id="fdG-Pp-rLc"/>
                 <constraint firstItem="iNh-gx-88A" firstAttribute="top" secondItem="AKD-hb-zpk" secondAttribute="bottom" id="gaJ-Rl-xlD"/>
                 <constraint firstItem="8JS-y8-xta" firstAttribute="top" secondItem="kqS-vf-f9a" secondAttribute="bottom" id="lZm-7R-xrc"/>
                 <constraint firstItem="YRj-Zk-4KA" firstAttribute="centerX" secondItem="jWG-xU-An2" secondAttribute="centerX" id="mo1-Co-sU1"/>
-                <constraint firstItem="BR5-mQ-5at" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="qwX-aF-iBf"/>
+                <constraint firstItem="KtI-J8-WUC" firstAttribute="leading" secondItem="iNh-gx-88A" secondAttribute="trailing" constant="24" id="nZg-nv-3xz"/>
+                <constraint firstItem="BR5-mQ-5at" firstAttribute="leading" secondItem="yeZ-3R-Jwn" secondAttribute="leading" id="qwX-aF-iBf"/>
                 <constraint firstItem="yuA-MA-VnN" firstAttribute="top" secondItem="BR5-mQ-5at" secondAttribute="bottom" id="sOC-W7-CSi"/>
                 <constraint firstItem="kao-j0-r6m" firstAttribute="centerY" secondItem="8JS-y8-xta" secondAttribute="centerY" id="uH2-J8-zuf"/>
-                <constraint firstItem="8JS-y8-xta" firstAttribute="leading" secondItem="jWG-xU-An2" secondAttribute="leading" constant="16" id="x0w-1m-YEd"/>
+                <constraint firstItem="8JS-y8-xta" firstAttribute="leading" secondItem="kqS-vf-f9a" secondAttribute="leading" constant="5.3290705182007514e-15" id="x0w-1m-YEd"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

@@ -13,6 +13,7 @@
 		2A21795928F07FBA002D807C /* CardDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A21795828F07FBA002D807C /* CardDetailsViewModel.swift */; };
 		2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */; };
 		2A7821F528F9A996006B54F7 /* PinViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */; };
+		2A7993272A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */; };
 		2A82D06D28F584D700F57DC6 /* SetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */; };
 		2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */; };
 		2A82D07028F5854600F57DC6 /* SetPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82D06F28F5854600F57DC6 /* SetPinViewModel.swift */; };
@@ -121,6 +122,7 @@
 		2A21795828F07FBA002D807C /* CardDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewModel.swift; sourceTree = "<group>"; };
 		2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPinViewModel.swift; sourceTree = "<group>"; };
 		2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewViewModel.swift; sourceTree = "<group>"; };
+		2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardDetailsTextPositioning.swift; sourceTree = "<group>"; };
 		2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
 		2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetPinViewController.xib; sourceTree = "<group>"; };
 		2A82D06F28F5854600F57DC6 /* SetPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinViewModel.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				F4DE3B8D2912CBDA00BF4727 /* NIFontLabelPair.swift */,
 				F4DE3BCF29157C5600BF4727 /* NITheme.swift */,
 				F4C725A529377062001B28A8 /* NICardAttributes.swift */,
+				2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */,
 			);
 			path = InputModels;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */,
 				F45A7E0328F0321400B3486E /* APIEndpointProtocol.swift in Sources */,
 				2AD494F32906A93500E25695 /* ChangePinViewModel.swift in Sources */,
+				2A7993272A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift in Sources */,
 				F42E80BF294B442800640860 /* Digest.swift in Sources */,
 				F4E7698D28EC82EB00CDC7E4 /* NIDisplayAttributes.swift in Sources */,
 				F45A7DF928EF1E8800B3486E /* Request.swift in Sources */,
