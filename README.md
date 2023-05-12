@@ -79,21 +79,21 @@ We support customization of fonts. System and custom fonts can be set for the la
 Card Attributes is optional. It can be set if customisation of the card details view is wanted. 
     
 We offer:  
-    - Possibility to show or hide card details by default 
-    To directly show the card details (not masked) when card view is displayed, we expect the ```shouldHide``` property to be set to false, otherwise to be set to false. If ```shouldHide``` property is not set, the default value is true.
+ - Possibility to show or hide card details by default 
+    To directly show the card details (not masked) when card view is displayed, we expect the ```swift shouldHide ``` property to be set to false, otherwise to be set to false. If ```swift shouldHide ``` property is not set, the default value is true.
     E.g.:  
-    ```
+    ```swift
     let cardAttributes = NICardAttributes(shouldHide: false)
     ```
 
-    - Background image customization 
+ - Background image customization 
     For the card background image, we expect a UIImage to be set. The recommended size would be 343 x 182. 
     E.g.:  
-    ```
+    ```swift
     let image = UIImage(named:"background_image")
     let cardAttributes = NICardAttributes(backgroundImage: image)) 
     ```
-    - Possibility to set the text position as grouped labels on card view
+ - Possibility to set the text position as grouped labels on card view
     The card details labels are grouped as follows: 
      - Card Number Group 
      - Expiry Date & CVV Group
@@ -101,7 +101,7 @@ We offer:
      
     In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
     E.g.:  
-    ```
+    ```swift
     let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
     let cardAttributes = NICardAttributes(textPositioning: textPosition)
     ```
@@ -110,7 +110,7 @@ We offer:
 
     If all properties are wanted, initialization NICardAttributes is made with all properties. 
     E.g.:  
-    ```
+    ```swift
     let image = UIImage(named:"background_image") 
     let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
     let cardAttributes = NICardAttributes(shouldHide: false, backgroundImage: image, textPositioning: textPosition) 
