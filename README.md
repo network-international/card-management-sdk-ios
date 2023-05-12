@@ -99,7 +99,9 @@ For the card background image, we expect a UIImage to be set. The recommended si
  
 The card details labels are grouped as follows:
     - Card Number Group
+    
     - Expiry Date & CVV Group
+    
     - Card Holder Name Group
      
 In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
