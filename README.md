@@ -82,19 +82,19 @@ We offer:
  - Possibility to show or hide card details by default
  
  To directly show the card details (not masked) when card view is displayed, we expect the ```shouldHide``` property to be set to false, otherwise to be set to false. If ```shouldHide``` property is not set, the default value is true.
-    E.g.:  
-    ```swift
+ 
+```swift
     let cardAttributes = NICardAttributes(shouldHide: false)
-    ```
+```
 
  - Background image customization
 
 For the card background image, we expect a UIImage to be set. The recommended size would be 343 x 182. 
-    E.g.:  
-    ```swift
+
+```swift
     let image = UIImage(named:"background_image")
     let cardAttributes = NICardAttributes(backgroundImage: image)) 
-    ```
+```
  - Possibility to set the text position as grouped labels
  
  The card details labels are grouped as follows: 
@@ -103,21 +103,21 @@ For the card background image, we expect a UIImage to be set. The recommended si
      - Card Holder Name Group
      
     In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
-    E.g.:  
-    ```swift
+
+```swift
     let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
     let cardAttributes = NICardAttributes(textPositioning: textPosition)
-    ```
+```
 
-    All are optional. 
+All are optional. 
 
-    If all properties are wanted, initialization NICardAttributes is made with all properties. 
-    E.g.:  
-    ```swift
+If all properties are wanted, initialization NICardAttributes is made with all properties. 
+    
+```swift
     let image = UIImage(named:"background_image") 
     let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
     let cardAttributes = NICardAttributes(shouldHide: false, backgroundImage: image, textPositioning: textPosition) 
-    ```
+```
 
 #### Form Factory Interface
 ##### Display Card Details Form
