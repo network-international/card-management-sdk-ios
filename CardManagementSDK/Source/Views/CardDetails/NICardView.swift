@@ -23,8 +23,11 @@ public final class NICardView: UIView {
     @IBOutlet weak var backgroundCardImage: UIImageView!
     @IBOutlet weak var nameTagLabel: UILabel!
     @IBOutlet weak var nameCopyButton: UIButton!
-    
-   
+    @IBOutlet weak var leftAlignmentConstraint: NSLayoutConstraint!
+    @IBOutlet weak var cardNumberGroupTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dateCvvGroupTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var holderNameTopConstraint: NSLayoutConstraint!
+
     var viewModel: CardDetailsViewModel?
     
     public override func layoutSubviews() {
@@ -113,6 +116,15 @@ extension NICardView {
                 self.hideUI(false)
                 self.updateTexts(viewModel)
                 self.eyeButton.isHidden = !viewModel.shouldMask
+                self.copyButton.isHidden = viewModel.shouldMask
+                self.nameCopyButton.isHidden = viewModel.shouldMask
+                
+                if let constraints = viewModel.textPositioning {
+                    self.leftAlignmentConstraint.constant = CGFloat(constraints.leftAlignment * self.view.bounds.height)
+                    self.cardNumberGroupTopConstraint.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.view.bounds.height)
+                    self.dateCvvGroupTopConstraint.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.view.bounds.height)
+                    self.holderNameTopConstraint.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.view.bounds.height)
+                }
             }
         }
         
@@ -187,11 +199,15 @@ extension NICardView {
             self.cardNumber.text = card.cardNumber
             self.cardExpiry.text = card.cardExpiry
             self.cvv2.text = card.cvv2
+            self.copyButton.isHidden = false
+            self.nameCopyButton.isHidden = false
         } else {
             self.cardNumber.text = card.maskedCardNumber
             self.nameLabel.text = viewModel?.maskedDetails.cardholderName
             self.cardExpiry.text = viewModel?.maskedDetails.cardExpiry
             self.cvv2.text = viewModel?.maskedDetails.cvv2
+            self.copyButton.isHidden = true
+            self.nameCopyButton.isHidden = true
         }
     }
     

@@ -115,6 +115,10 @@ extension CardDetailsViewModel {
         return input.displayAttributes?.cardAttributes?.shouldHide ?? true
     }
     
+    var textPositioning: NICardDetailsTextPositioning? {
+        return input.displayAttributes?.cardAttributes?.textPositioning ?? nil
+    }
+    
 }
 
 private extension String {
