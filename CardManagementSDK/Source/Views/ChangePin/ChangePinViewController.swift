@@ -12,7 +12,8 @@ class ChangePinViewController: UIViewController {
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel: ChangePinViewModel
-    private var previousPin: String?
+    private var oldPin: String?
+    private var newPin: String?
     private var pinView: PinView?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
@@ -67,26 +68,38 @@ extension ChangePinViewController: PinViewProtocol {
     func pinFilled(pin: String) {
         pinView?.disableButtons()
         
-        if let oldPin = previousPin {
-            activityIndicator.startAnimating()
-            
-            DispatchQueue.global(qos: .default).async {
-                self.viewModel.changePin(oldPin: oldPin, newPin: pin) { [weak self] sucess, error, callback in
-                    guard let self = self else {
-                        return
-                    }
+        if let oldPin = oldPin {
+            if let newPin = newPin {
+                if newPin == pin {
+                    activityIndicator.startAnimating()
                     
-                    DispatchQueue.main.async {
-                        self.activityIndicator.stopAnimating()
+                    DispatchQueue.global(qos: .default).async {
+                        self.viewModel.changePin(oldPin: oldPin, newPin: newPin) { [weak self] sucess, error, callback in
+                            guard let self = self else {
+                                return
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self.activityIndicator.stopAnimating()
+                            }
+                            
+                            self.callback?(sucess, error) {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
                     }
-                    
-                    self.callback?(sucess, error) {
-                        self.navigationController?.popViewController(animated: true)
-                    }
+                } else {
+                    pinView?.viewmodel?.descriptionText = "change_pin_description_pin_not_match".localized
+                    pinView?.resetView()
                 }
+            } else {
+                newPin = pin
+                guard let pinView = pinView else { return }
+                pinView.viewmodel?.descriptionText = "change_pin_description_re_enter_new_pin".localized
+                pinView.resetView()
             }
         } else {
-            previousPin = pin
+            oldPin = pin
             guard let pinView = pinView else { return }
             pinView.viewmodel?.descriptionText = "change_pin_description_enter_new_pin".localized
             pinView.resetView()
