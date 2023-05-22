@@ -188,3 +188,47 @@ NICardManagementAPI.verifyPinForm(input: input, viewController: self) { successR
     // handle here error and success
 }
 ```
+#### Programatic Interface
+##### Retrieve Card Details
+The programmatic interface of the card details will return the card details in an object (NICardDetailsResponse).
+The card info returned are: Card Number, Expiry Date, CVV and Cardholder Name.
+
+Swift:
+```swift
+NICardManagementAPI.getCardDetails(input: input) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
+
+
+##### Set PIN 
+The programmatic interface for the Set PIN functionality will return a success or failure response.
+
+Swift:
+```swift
+NICardManagementAPI.setPin(pin: pin, input: input) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
+
+
+##### Change PIN
+The programmatic interface for the Change PIN functionality will return a success or failure response.
+
+Swift:
+```swift
+NICardManagementAPI.changePin(oldPin: oldPin, newPin: newPin, input: input) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
+
+
+##### Verify PIN
+The programmatic interface for the Verify PIN functionality will return a success or failure response.
+
+Swift:
+```swift
+NICardManagementAPI.verifyPin(pin: pin, input: input) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
