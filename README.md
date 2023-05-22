@@ -189,6 +189,8 @@ NICardManagementAPI.verifyPinForm(input: input, viewController: self) { successR
 }
 ```
 #### Programatic Interface
+The customer application will be responsible to handle the UI part.
+
 ##### Retrieve Card Details
 The programmatic interface of the card details will return the card details in an object (NICardDetailsResponse).
 The card info returned are: Card Number, Expiry Date, CVV and Cardholder Name.
