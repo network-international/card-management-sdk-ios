@@ -19,12 +19,21 @@ import UIKit
     /// if set, the card details labels will be positioned accordingly
     public var textPositioning: NICardDetailsTextPositioning?
     
+    @objc public init(shouldHide: Bool) {
+        self.shouldHide = shouldHide
+    }
+    
     @objc public init(shouldHide: Bool, backgroundImage: UIImage) {
         self.shouldHide = shouldHide
         self.backgroundImage = backgroundImage
     }
     
-     public init(shouldHide: Bool?, backgroundImage: UIImage?, textPositioning: NICardDetailsTextPositioning?) {
+    public init(shouldHide: Bool?, textPositioning: NICardDetailsTextPositioning?) {
+        self.shouldHide = shouldHide
+        self.textPositioning = textPositioning
+    }
+    
+    public init(shouldHide: Bool?, backgroundImage: UIImage?, textPositioning: NICardDetailsTextPositioning?) {
         self.shouldHide = shouldHide
         self.backgroundImage = backgroundImage
         self.textPositioning = textPositioning
