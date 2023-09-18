@@ -122,7 +122,7 @@ class PinView: UIView {
             descriptionLabel.textColor = .darkerGrayLight
             deleteButton.imageView?.tintColor = UIColor.darkerGrayLight
         case .dark:
-            backgroundColor = UIColor.darkerGrayLight
+            backgroundColor = UIColor.black
             descriptionLabel.textColor = .white
             deleteButton.imageView?.tintColor = UIColor.darkerGrayDark
         }

@@ -54,7 +54,7 @@ class VerifyPinViewController: UIViewController {
     
     // MARK: - Private
     private func updateUI(for theme: NITheme) {
-        view.backgroundColor = theme == .light ? .white : UIColor.darkerGrayLight
+        view.backgroundColor = theme == .light ? .white : UIColor.black
     }
     
 }

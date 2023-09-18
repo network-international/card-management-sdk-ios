@@ -11,15 +11,15 @@ class PinManager {
     
     func setPin(_ pin: String, input: NIInput, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
         /// 1. get clear pan
-        getClearPan(input) { clearPan in
+        getClearPan(input) { clearPan, error in
             guard let clearPan = clearPan else {
-                completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                completion(nil, error)
                 return
             }
             /// 2. get pin certificate
-            self.getPinCertificate(input: input) { certificate in
+            self.getPinCertificate(input: input) { certificate, error in
                 guard let certificate = certificate else {
-                    completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                    completion(nil, error)
                     return
                 }
                 /// 3. create and encrypt pin block
@@ -38,15 +38,15 @@ class PinManager {
     
     func verifyPin(_ pin: String, input: NIInput, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
         /// 1. get clear pan
-        getClearPan(input) { clearPan in
+        getClearPan(input) { clearPan, error in
             guard let clearPan = clearPan else {
-                completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                completion(nil, error)
                 return
             }
             /// 2. get pin certificate
-            self.getPinCertificate(input: input) { certificate in
+            self.getPinCertificate(input: input) { certificate, error in
                 guard let certificate = certificate else {
-                    completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                    completion(nil, error)
                     return
                 }
                 /// 3. create and encrypt pin block
@@ -65,15 +65,15 @@ class PinManager {
     
     func changePin(oldPin: String, newPin: String, input: NIInput, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
         /// 1. get clear pan
-        getClearPan(input) { clearPan in
+        getClearPan(input) { clearPan, error  in
             guard let clearPan = clearPan else {
-                completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                completion(nil, error)
                 return
             }
             /// 2. get pin certificate
-            self.getPinCertificate(input: input) { certificate in
+            self.getPinCertificate(input: input) { certificate, error in
                 guard let certificate = certificate else {
-                    completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR)) 
+                    completion(nil, error)
                     return
                 }
                 /// 3. create and encrypt old pin block
@@ -93,23 +93,25 @@ class PinManager {
     }
     
     /// get card details for the card number and expiry
-    private func getClearPan(_ input: NIInput, completion: @escaping (String?) -> Void) {
+    private func getClearPan(_ input: NIInput, completion: @escaping (String?, NIErrorResponse?) -> Void) {
         NIMobileAPI.shared.cardLookup(identifier: input.cardIdentifierId, type: input.cardIdentifierType, bankCode: input.bankCode, input.connectionProperties) { response, error in
-            if error != nil {
-                completion(nil)
+            if let error = error {
+                completion(nil, error)
+            } else {
+                let clearPan = response?.cardNumber
+                completion(clearPan, error)
             }
-            let clearPan = response?.cardNumber
-            completion(clearPan)
         }
     }
     
     /// get pin certificate used for pin block encryption
-    private func getPinCertificate(input: NIInput, completion: @escaping (String?) -> Void) {
+    private func getPinCertificate(input: NIInput, completion: @escaping (String?, NIErrorResponse?) -> Void) {
         NIMobileAPI.shared.retrievePinCertificate(bankCode: input.bankCode, input.connectionProperties) { response, error in
-            if error != nil {
-                completion(nil)
+            if let error = error {
+                completion(nil, error)
+            } else {
+                completion(response?.certificate, error)
             }
-            completion(response?.certificate)
         }
     }
 }

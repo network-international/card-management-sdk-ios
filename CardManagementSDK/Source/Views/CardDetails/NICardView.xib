@@ -63,7 +63,7 @@
                     <color key="highlightedColor" name="textColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cvv" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKD-hb-zpk">
-                    <rect key="frame" x="99.666666666666671" y="105" width="15" height="14.333333333333329"/>
+                    <rect key="frame" x="99.666666666666671" y="105" width="30.333333333333329" height="14.333333333333329"/>
                     <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="10"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="highlightedColor" name="textColor"/>
@@ -165,6 +165,7 @@
                 <constraint firstItem="8JS-y8-xta" firstAttribute="top" secondItem="kqS-vf-f9a" secondAttribute="bottom" id="lZm-7R-xrc"/>
                 <constraint firstItem="YRj-Zk-4KA" firstAttribute="centerX" secondItem="jWG-xU-An2" secondAttribute="centerX" id="mo1-Co-sU1"/>
                 <constraint firstItem="KtI-J8-WUC" firstAttribute="leading" secondItem="iNh-gx-88A" secondAttribute="trailing" constant="24" id="nZg-nv-3xz"/>
+                <constraint firstItem="KtI-J8-WUC" firstAttribute="leading" secondItem="AKD-hb-zpk" secondAttribute="trailing" priority="750" constant="24" id="qCE-g2-QfR"/>
                 <constraint firstItem="BR5-mQ-5at" firstAttribute="leading" secondItem="yeZ-3R-Jwn" secondAttribute="leading" id="qwX-aF-iBf"/>
                 <constraint firstItem="yuA-MA-VnN" firstAttribute="top" secondItem="BR5-mQ-5at" secondAttribute="bottom" id="sOC-W7-CSi"/>
                 <constraint firstItem="kao-j0-r6m" firstAttribute="centerY" secondItem="8JS-y8-xta" secondAttribute="centerY" id="uH2-J8-zuf"/>
