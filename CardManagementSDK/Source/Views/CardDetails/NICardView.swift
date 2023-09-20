@@ -109,6 +109,7 @@ extension NICardView {
         
         updateUI(viewModel)
         updateTexts(viewModel)
+        self.view.semanticContentAttribute = .forceLeftToRight
     }
     
     private func updateUI(_ viewModel: CardDetailsViewModel) {
