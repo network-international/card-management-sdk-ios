@@ -263,6 +263,8 @@
                 <outlet property="dot4" destination="jNn-0F-NXb" id="3dT-iU-NCM"/>
                 <outlet property="dot5" destination="ZfR-0s-dBY" id="958-g0-47S"/>
                 <outlet property="dot6" destination="zFY-N0-hTq" id="Fkg-kq-h6E"/>
+                <outlet property="dotsStackView" destination="4SC-Va-n2O" id="P1a-qN-ikN"/>
+                <outlet property="keyboardStackView" destination="rVn-BV-HcI" id="srv-FV-WMD"/>
             </connections>
             <point key="canvasLocation" x="-546.15384615384619" y="74.644549763033169"/>
         </view>
