@@ -50,6 +50,7 @@ public final class NICardView: UIView {
         viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
+        GlobalConfig.shared.language = input.displayAttributes?.language
         
         if self.view != nil {
             activityIndicator.startAnimating()
@@ -73,6 +74,7 @@ public final class NICardView: UIView {
         viewModel?.callback = completion
         activityIndicator.startAnimating()
         configureCardView()
+        GlobalConfig.shared.language = input.displayAttributes?.language
     }
     
     public func setBackgroundImage(image: UIImage) {
@@ -107,6 +109,7 @@ extension NICardView {
         
         updateUI(viewModel)
         updateTexts(viewModel)
+        self.view.semanticContentAttribute = .forceLeftToRight
     }
     
     private func updateUI(_ viewModel: CardDetailsViewModel) {
@@ -133,7 +136,7 @@ extension NICardView {
             overrideUserInterfaceStyle = viewModel.input.displayAttributes?.theme == .light ? .light : .dark
             copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
         } else {
-            view.backgroundColor = viewModel.input.displayAttributes?.theme == .light ? .white : UIColor.darkerGrayLight
+            view.backgroundColor = viewModel.input.displayAttributes?.theme == .light ? .white : UIColor.black
             let image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
             copyButton.setImage(image, for: .normal)
         }
