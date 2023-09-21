@@ -33,6 +33,8 @@ class PinView: UIView {
     @IBOutlet private weak var deleteButton: KeyboardButton!
     @IBOutlet private weak var confirmButton: KeyboardButton!
     
+    @IBOutlet weak var dotsStackView: UIStackView!
+    @IBOutlet weak var keyboardStackView: UIStackView!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private let MIN_COUNT = 4
@@ -113,6 +115,8 @@ class PinView: UIView {
             setupTheme(viewmodel.theme)
         }
         
+        dotsStackView.semanticContentAttribute = .forceLeftToRight
+        keyboardStackView.semanticContentAttribute = .forceLeftToRight
     }
     
     private func setupTheme(_ theme: NITheme) {
@@ -122,7 +126,7 @@ class PinView: UIView {
             descriptionLabel.textColor = .darkerGrayLight
             deleteButton.imageView?.tintColor = UIColor.darkerGrayLight
         case .dark:
-            backgroundColor = UIColor.darkerGrayLight
+            backgroundColor = UIColor.black
             descriptionLabel.textColor = .white
             deleteButton.imageView?.tintColor = UIColor.darkerGrayDark
         }

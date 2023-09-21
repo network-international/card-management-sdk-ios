@@ -10,13 +10,13 @@ import Foundation
 
 @objc public class NICardDetailsResponse: NSObject {
     
-    var clearPan: String?
-    var maskedPan: String?
-    var expiry: String?
-    var clearCVV2: String?
-    var cardholderName: String?
+    public var clearPan: String?
+    public var maskedPan: String?
+    public var expiry: String?
+    public var clearCVV2: String?
+    public var cardholderName: String?
     
-    init(clearPan: String?, maskedPan: String?, expiry: String?, clearCVV2: String?, cardholderName: String?) {
+    public init(clearPan: String?, maskedPan: String?, expiry: String?, clearCVV2: String?, cardholderName: String?) {
         self.clearPan = clearPan
         self.maskedPan = maskedPan
         self.expiry = expiry

@@ -23,7 +23,8 @@
 "change_pin_title" = "تغيير الرقم السري (PIN)";
 "change_pin_description_enter_current_pin" = "الرجاء ادخال الرقم السري الحالي (PIN)";
 "change_pin_description_enter_new_pin" = "الرجاء ادخال الرقم السري الجديد (PIN)";
-"change_pin_error_message" = "Change pin failed, please try again";
+"change_pin_description_re_enter_new_pin" = "يرجى إعادة إدخال رقم السري لبطاقتك (PIN)";
+"change_pin_description_pin_not_match" = "الرقم السري لبطاقتك غير متطابق\nيرجى إعادة إدخال رقم السري لبطاقتك (PIN)";
 
 "alert_button_ok" = "OK";
 "toast_message" = "تم النسخ إلى الحافظة";
