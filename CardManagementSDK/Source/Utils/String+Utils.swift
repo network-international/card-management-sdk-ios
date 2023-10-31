@@ -31,4 +31,7 @@ extension String {
         return String(characters)
     }
     
+    subscript(_ characterIndex: Int) -> Self {
+          return String(self[index(startIndex, offsetBy: characterIndex)])
+       }
 }
