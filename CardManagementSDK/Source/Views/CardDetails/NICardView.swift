@@ -117,10 +117,10 @@ extension NICardView {
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.hideUI(false)
-                self.updateTexts(viewModel)
                 self.eyeButton.isHidden = !viewModel.shouldMask
                 self.copyButton.isHidden = viewModel.shouldMask
                 self.nameCopyButton.isHidden = viewModel.shouldMask
+                self.updateTexts(viewModel)
                 
                 if let constraints = viewModel.textPositioning {
                     self.leftAlignmentConstraint.constant = CGFloat(constraints.leftAlignment * self.view.bounds.height)
@@ -157,14 +157,18 @@ extension NICardView {
         
         if cardNumber.text == nil || cardNumber.text == "-" || cardNumber.text == "" {
             copyButton.isHidden = true
+            eyeButton.isHidden = true
         } else {
             copyButton.isHidden = false
+            eyeButton.isHidden = !viewModel.shouldMask
         }
         
         if nameLabel.text == nil || nameLabel.text == "-" || nameLabel.text == "" {
             nameCopyButton.isHidden = true
+            eyeButton.isHidden = true
         } else {
             nameCopyButton.isHidden = false
+            eyeButton.isHidden = !viewModel.shouldMask
         }
     }
     
@@ -177,7 +181,7 @@ extension NICardView {
         cvv2Label.isHidden = shouldHide
         cvv2.isHidden = shouldHide
         nameTagLabel.isHidden = shouldHide
-        
+        eyeButton.isHidden = shouldHide
         copyButton.isHidden = shouldHide
         nameCopyButton.isHidden = shouldHide
     }

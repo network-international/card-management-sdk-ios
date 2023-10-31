@@ -26,5 +26,8 @@
 "change_pin_description_re_enter_new_pin" = "Please re-enter the new card PIN";
 "change_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the new card PIN";
 
+"view_pin_countdown_description" = "PIN will be hidden in";
+"view_pin_countdown_unit" = "seconds";
+
 "alert_button_ok" = "OK";
 "toast_message" = "Copied to clipboard";

@@ -79,6 +79,10 @@ import UIKit
         shared.changePin(oldPin: oldPin, newPin: newPin, input: input, completion: completion)
     }
     
+    @objc public static func getPin(input: NIInput, completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        retrievePin(input: input, completion: completion)
+    }
+    
     
     // MARK: - Private
     private static func retrieveCardDetails(input: NIInput, completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
@@ -121,6 +125,18 @@ import UIKit
                 completion(nil, error){}
             } else if response != nil {
                 let result = NISuccessResponse(message: "Pin changed successfully!")
+                completion(result, nil){}
+            }
+        }
+    }
+    
+    private static func retrievePin(input: NIInput, completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        NIMobileAPI.shared.retrievePin(input: input) { response, error in
+            if let error = error {
+                completion(nil, error){}
+            }
+            if let response = response {
+                let result = response.pin
                 completion(result, nil){}
             }
         }
