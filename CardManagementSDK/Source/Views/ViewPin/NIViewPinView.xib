@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NIViewPinView" customModule="NICardManagementSDK" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="41q-PP-YTL" id="QN6-vd-q1i"/>
+                <outlet property="borderView" destination="TpM-Wa-bp7" id="kz7-9s-Q2x"/>
+                <outlet property="countDownDecription" destination="KWx-xI-oT5" id="V8u-VQ-8Uj"/>
+                <outlet property="fifthDigit" destination="fYP-E6-xBP" id="Lrr-K5-fz9"/>
+                <outlet property="fifthSeparator" destination="fec-RR-6er" id="4mK-KS-GsV"/>
+                <outlet property="firstDigit" destination="Nlx-qw-spH" id="Mqn-wh-1FI"/>
+                <outlet property="firstSeparator" destination="02j-VF-YBZ" id="CcB-iw-6AZ"/>
+                <outlet property="fourthDigit" destination="xVq-iB-mFb" id="72z-5b-nem"/>
+                <outlet property="fourthSeparator" destination="Jfb-q4-qlr" id="gNx-82-qfh"/>
+                <outlet property="secondDigit" destination="gL0-yG-1Ec" id="r2A-xC-X0t"/>
+                <outlet property="secondSeparator" destination="upF-Aa-4og" id="Utn-sb-cld"/>
+                <outlet property="sixthDigit" destination="r2a-cj-gXi" id="Zac-Qp-dCI"/>
+                <outlet property="stackView" destination="7Hw-vv-ehq" id="C0t-26-zZP"/>
+                <outlet property="thirdDigit" destination="Qgt-Tc-7dT" id="IES-yO-NxW"/>
+                <outlet property="thirdSeparator" destination="EDs-Kx-FoT" id="8ms-Sy-0Gw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RHm-NF-VNw">
+            <rect key="frame" x="0.0" y="0.0" width="703" height="306"/>
+            <subviews>
+                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="7Hw-vv-ehq">
+                    <rect key="frame" x="16" y="75" width="671" height="50"/>
+                    <subviews>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szX-87-n6U">
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="2ml-ip-8Wt"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlx-qw-spH">
+                            <rect key="frame" x="31.333333333333336" y="0.0" width="50.000000000000007" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="02j-VF-YBZ">
+                            <rect key="frame" x="111.66666666666667" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="aeB-VB-eLW"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gL0-yG-1Ec">
+                            <rect key="frame" x="143" y="0.0" width="50" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upF-Aa-4og">
+                            <rect key="frame" x="223.33333333333334" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="4pQ-wL-cVx"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgt-Tc-7dT">
+                            <rect key="frame" x="254.66666666666669" y="0.0" width="50" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDs-Kx-FoT">
+                            <rect key="frame" x="335" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="0Hp-pO-ePV"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVq-iB-mFb">
+                            <rect key="frame" x="366.33333333333331" y="0.0" width="50" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jfb-q4-qlr">
+                            <rect key="frame" x="446.66666666666669" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="dwR-VL-fzm"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYP-E6-xBP">
+                            <rect key="frame" x="478" y="0.0" width="50" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fec-RR-6er">
+                            <rect key="frame" x="558.33333333333337" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="LZP-33-TtY"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2a-cj-gXi">
+                            <rect key="frame" x="589.66666666666663" y="0.0" width="50" height="50"/>
+                            <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l08-K3-O6j">
+                            <rect key="frame" x="670" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="A3C-KM-4Sf"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TpM-Wa-bp7">
+                    <rect key="frame" x="0.0" y="59" width="703" height="82"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="41q-PP-YTL">
+                    <rect key="frame" x="333" y="81.666666666666671" width="37" height="37"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Your view will be hidden in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWx-xI-oT5">
+                    <rect key="frame" x="276.66666666666669" y="149" width="149.66666666666669" height="17"/>
+                    <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="P3n-Ih-Yyg"/>
+            <constraints>
+                <constraint firstItem="7Hw-vv-ehq" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="P3n-Ih-Yyg" secondAttribute="trailing" constant="-16" id="3sg-uH-3aL"/>
+                <constraint firstItem="41q-PP-YTL" firstAttribute="centerX" secondItem="P3n-Ih-Yyg" secondAttribute="centerX" id="C7t-ci-j2S"/>
+                <constraint firstItem="41q-PP-YTL" firstAttribute="centerY" secondItem="TpM-Wa-bp7" secondAttribute="centerY" id="XUH-UI-axH"/>
+                <constraint firstItem="TpM-Wa-bp7" firstAttribute="bottom" secondItem="7Hw-vv-ehq" secondAttribute="bottom" constant="16" id="cbO-F7-KAh"/>
+                <constraint firstItem="TpM-Wa-bp7" firstAttribute="trailing" secondItem="7Hw-vv-ehq" secondAttribute="trailing" constant="16" id="eyh-Wr-rrh"/>
+                <constraint firstItem="TpM-Wa-bp7" firstAttribute="top" secondItem="7Hw-vv-ehq" secondAttribute="top" constant="-16" id="gOC-Cc-8uo"/>
+                <constraint firstItem="7Hw-vv-ehq" firstAttribute="leading" secondItem="P3n-Ih-Yyg" secondAttribute="leading" constant="16" id="rBj-ld-3C8"/>
+                <constraint firstItem="TpM-Wa-bp7" firstAttribute="leading" secondItem="7Hw-vv-ehq" secondAttribute="leading" constant="-16" id="rY2-xB-7JU"/>
+                <constraint firstItem="KWx-xI-oT5" firstAttribute="centerX" secondItem="TpM-Wa-bp7" secondAttribute="centerX" id="uh9-wB-gQ7"/>
+                <constraint firstItem="7Hw-vv-ehq" firstAttribute="top" secondItem="P3n-Ih-Yyg" secondAttribute="top" constant="16" id="wvg-DH-wQm"/>
+                <constraint firstItem="KWx-xI-oT5" firstAttribute="top" secondItem="TpM-Wa-bp7" secondAttribute="bottom" constant="8" id="yfj-wR-Xrk"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-826.71755725190837" y="-1227.4647887323945"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
