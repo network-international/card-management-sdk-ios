@@ -32,7 +32,7 @@ class ViewPinResponse: NSObject, Codable {
             print("Type '\(type)' mismatch:", context.debugDescription)
             print("codingPath:", context.codingPath)
         } catch {
-//            print("error: ", error)
+            print("error: ", error)
         }
         
         return nil

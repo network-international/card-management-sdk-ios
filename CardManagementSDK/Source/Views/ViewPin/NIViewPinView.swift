@@ -53,6 +53,8 @@ public final class NIViewPinView: UIView {
         hideUI(true)
         GlobalConfig.shared.language = input.displayAttributes?.language
         
+        digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
+        
         if self.borderView != nil {
             activityIndicator.startAnimating()
             updateUI()
@@ -78,6 +80,7 @@ public final class NIViewPinView: UIView {
         viewModel?.callback = completion
         activityIndicator.startAnimating()
         GlobalConfig.shared.language = input.displayAttributes?.language
+        digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         updateUI()
     }
     
@@ -98,12 +101,12 @@ public final class NIViewPinView: UIView {
     }
     
     private func maskPIN() {
-        firstDigit.text = "＊"
-        secondDigit.text = "＊"
-        thirdDigit.text = "＊"
-        fourthDigit.text = "＊"
-        fifthDigit.text = "＊"
-        sixthDigit.text = "＊"
+        if let digits = digits {
+            for digit in digits {
+                digit.text = "＊"
+            }
+        }
+        
         countDownDecription.isHidden = true
     }
     
@@ -162,12 +165,11 @@ public final class NIViewPinView: UIView {
                 
         //set fonts
         countDownDecription.font = viewModel.font(for: .viewPinCountDownDescription)
-        firstDigit.font = viewModel.font(for: .pinDigitLabel)
-        secondDigit.font = viewModel.font(for: .pinDigitLabel)
-        thirdDigit.font = viewModel.font(for: .pinDigitLabel)
-        fourthDigit.font = viewModel.font(for: .pinDigitLabel)
-        fifthDigit.font = viewModel.font(for: .pinDigitLabel)
-        sixthDigit.font =  viewModel.font(for: .pinDigitLabel)
+        if let digits = digits {
+            for digit in digits {
+                digit.font = viewModel.font(for: .pinDigitLabel)
+            }
+        }
         
         if let color = colorInput {
             borderColor(color: color)
@@ -213,12 +215,12 @@ public final class NIViewPinView: UIView {
     }
     
     private func textColor(color: UIColor) {
-        firstDigit.textColor = color
-        secondDigit.textColor = color
-        thirdDigit.textColor = color
-        fourthDigit.textColor = color
-        fifthDigit.textColor = color
-        sixthDigit.textColor = color
+        if let digits = digits {
+            for digit in digits {
+                digit.textColor = color
+            }
+        }
+        
         countDownDecription.textColor = color
     }
     
