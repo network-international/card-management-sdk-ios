@@ -38,6 +38,10 @@ import UIKit
     /// Verify PIN
     case verifyPinDescriptionLabel
     
-    /// Cahnge PIN
+    /// Change PIN
     case changePinDescriptionLabel
+    
+    /// View PIN
+    case viewPinCountDownDescription
+    case pinDigitLabel
 }

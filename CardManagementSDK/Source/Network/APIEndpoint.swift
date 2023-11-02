@@ -17,13 +17,14 @@ enum APIEndpoint {
     case setPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
     case verifyPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
     case changePin(params: ChangePinParams, bankCode: String, connection: NIConnectionProperties)
+    case viewPin(params: ViewPinParams, identifier: String, type: String, bankCode: String, connection: NIConnectionProperties)
 }
 
 extension APIEndpoint: APIEndpointProtocol {
     
     var method: WSHTTPMethod {
         switch self {
-        case .cardDetails, .cardsLookup, .setPin, .verifyPin, .changePin:
+        case .cardDetails, .cardsLookup, .setPin, .verifyPin, .changePin, .viewPin:
             return .POST
         case .pinCertificate:
             return .GET
@@ -44,6 +45,8 @@ extension APIEndpoint: APIEndpointProtocol {
             return "/security/verify_pin"
         case .changePin:
             return "/security/change_pin"
+        case .viewPin:
+            return "/security/view_pin"
         }
     }
     
@@ -58,6 +61,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .verifyPin(let params, _, _):
             return params.toJson()
         case .changePin(let params, _, _):
+            return params.toJson()
+        case .viewPin(let params, _, _, _, _):
             return params.toJson()
         default:
             return nil
@@ -87,6 +92,8 @@ extension APIEndpoint: APIEndpointProtocol {
             return connection.token
         case .changePin( _, _, let connection):
             return connection.token
+        case .viewPin(_, _, _, _, let connection):
+            return connection.token
         }
     }
     
@@ -103,6 +110,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .verifyPin( _, _, let connection):
             return connection.rootUrl
         case .changePin( _, _, let connection):
+            return connection.rootUrl
+        case .viewPin(_, _, _, _, let connection):
             return connection.rootUrl
         }
     }
@@ -136,6 +145,8 @@ extension APIEndpoint: APIEndpointProtocol {
         case .verifyPin(_, let bankCode, _):
             return bankCode
         case .changePin(_, let bankCode, _):
+            return bankCode
+        case .viewPin(_, _, _, let bankCode, _):
             return bankCode
         }
     }
