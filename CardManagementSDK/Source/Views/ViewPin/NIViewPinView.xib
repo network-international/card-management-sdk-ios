@@ -137,7 +137,7 @@
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="41q-PP-YTL">
                     <rect key="frame" x="333" y="81.666666666666671" width="37" height="37"/>
                 </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Your view will be hidden in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWx-xI-oT5">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Your view will be hidden in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWx-xI-oT5">
                     <rect key="frame" x="276.66666666666669" y="149" width="149.66666666666669" height="17"/>
                     <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="12"/>
                     <nil key="textColor"/>
