@@ -26,6 +26,13 @@ struct NIErrorConstants {
     
     func withResponse(response: Response) -> NIErrorResponse? {
         
+        if let responseError = response.error {
+            isError = true
+            errorCode = String(responseError.code)
+            errorMessage = responseError.localizedDescription
+            return self
+        }
+        
         guard let data = response.data else {
             isError = true
             errorCode = String(response.code)

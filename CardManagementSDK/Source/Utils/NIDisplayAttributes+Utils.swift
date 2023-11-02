@@ -17,6 +17,8 @@ private enum DefaultFonts {
     case cardExpiryValueLabel
     case cardCvvValueLabel
     case description
+    case pinDigitLabel
+    case viewPinCounter
     
     private var fontName: String {
         if #available(iOS 13.0, *) { // "NotoSansOriya" font is available form ios 13.0 and above
@@ -30,6 +32,8 @@ private enum DefaultFonts {
             case .cardCvvValueLabel: return "NotoSansOriya-Bold"        //"OCRA"
             case .description: return "NotoSansOriya"
             case .cardNameTagLabel: return "NotoSansOriya"
+            case .pinDigitLabel: return "NotoSansOriya-Bold"
+            case .viewPinCounter: return "NotoSansOriya"
             }
         } else {
             switch self {
@@ -42,6 +46,8 @@ private enum DefaultFonts {
             case .cardCvvValueLabel: return "OCRA"
             case .description: return "Helvetica"
             case .cardNameTagLabel: return "Helvetica"
+            case .pinDigitLabel: return "OCRA"
+            case .viewPinCounter: return "Helvetica"
             }
         }
     }
@@ -57,6 +63,8 @@ private enum DefaultFonts {
         case .cardCvvValueLabel: return 14.0
         case .description: return 18.0
         case .cardNameTagLabel: return 10.0
+        case .pinDigitLabel: return 20.0
+        case .viewPinCounter: return 12.0
         }
     }
     
@@ -81,6 +89,8 @@ extension NIDisplayAttributes {
             case .verifyPinDescriptionLabel: return DefaultFonts.description.font
             case .changePinDescriptionLabel: return DefaultFonts.description.font
             case .cardholderNameTagLabel: return DefaultFonts.cardNameTagLabel.font
+            case .viewPinCountDownDescription: return DefaultFonts.viewPinCounter.font
+            case .pinDigitLabel: return DefaultFonts.pinDigitLabel.font
             }
         }
         return pair.font

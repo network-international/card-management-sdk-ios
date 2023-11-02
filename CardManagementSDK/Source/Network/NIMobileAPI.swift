@@ -108,6 +108,41 @@ class NIMobileAPI {
         }
     }
     
+    func retrievePin(input: NIInput, completion: @escaping (ViewPinResponse?, NIErrorResponse?) -> Void) {
+        
+        guard let publicKey = retrievePublicKey() else {
+            completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
+            return
+        }
+        
+        let params = ViewPinParams(publicKey: publicKey, cardIdentifierId: input.cardIdentifierId, cardIdentifierType: input.cardIdentifierType)
+        let request = Request(.viewPin(params: params,
+                                           identifier: input.cardIdentifierId, type: input.cardIdentifierType,
+                                           bankCode: input.bankCode, connection: input.connectionProperties))
+        
+        request.sendAsync { response, error in
+            
+            guard let response = response else {
+                if error != nil {
+                    completion(nil, error)
+                }
+                return
+            }
+            
+            guard let data = response.data else {
+                completion(nil, NIErrorResponse(error: NISDKErrors.NETWORK_ERROR))
+                return
+            }
+            
+            if let pin = ViewPinResponse().parse(json: data) {
+                completion(pin, error)
+            } else {
+                completion(nil, NIErrorResponse(error: NISDKErrors.PARSING_ERROR))
+            }
+            
+        }
+    }
+    
     // MARK: - Private Utils
     private func retrievePublicKey() -> String? {
         return RSA.generatePublicKeyx509()
