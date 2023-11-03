@@ -6,6 +6,7 @@ The current supported features are:
 2. Set PIN : Displays a PIN pad to allow cardholder to set a PIN on their new card. The PIN is end to end encrypted to securely transport this sensitive information
 3. Change PIN: Displays two PIN pad to allow the cardholder to change their PIN by providing old & new PIN. The PINs are end to end encrypted to securely transport this sensitive information
 4. Verify PIN: Displays a PIN pad to allow cardholder to verify PIN on their card. The PIN is end to end encrypted to securely transport this sensitive information
+5. View PIN: Displays a component providing the ability to show PIN card. The PIN is end to end encrypted to securely transport this sensitive information
 
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 12 and above.
@@ -188,6 +189,46 @@ NICardManagementAPI.verifyPinForm(input: input, viewController: self) { successR
     // handle here error and success
 }
 ```
+
+#### Display as a view
+The customer application can integrate Card Details and View Pin as a view into a UIViewController
+
+##### Display Card Details View
+A view of NICardView type can be added into storyboard, then set the input and start the flow as below:
+```swift
+cardView.setInput(input: input) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+or the NICardView can be created programmatically and initialized as below:
+```swift
+let cardView = NICardView(input: input) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+Parameters: 
+- input - type NIInput - see the explanation above. This is a required parameter.
+
+##### Display View Pin View
+
+A view of NIViewPinView type can be added into storyboard, then set the input and start the flow as below:
+```swift
+viewPinView.setInput(input: input, timer: 5, color: .black) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+or the NIViewPinView can be created programmatically and initialized as below:
+```swift
+let viewPinView = NIViewPinView(input: cardViewInput, timer: 5, color: .red) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+Parameters: 
+- input - type NIInput - see the explanation above. This is a required parameter.
+- timer - type Double - offers possibility to set the display time of the PIN, expressed in seconds. Using value "0" for this parameter, the PIN will be displayed indefinitely. After the countdown, the PIN will be masked.
+This is a required parameter.
+- color - type UIColor - offers possibility to set the color of the elements contained in the view. This is an optional parameter.
+
 #### Programatic Interface
 The customer application will be responsible to handle the UI part.
 
@@ -231,6 +272,17 @@ The programmatic interface for the Verify PIN functionality will return a succes
 Swift:
 ```swift
 NICardManagementAPI.verifyPin(pin: pin, input: input) { successResponse, errorResponse in
+    //  handle here error and success
+}
+```
+
+
+##### View PIN
+The programmatic interface for the View PIN functionality will return a String value representing the PIN or failure response.
+
+Swift:
+```swift
+NICardManagementAPI.getPin(input: input) { pin, errorResponse in
     //  handle here error and success
 }
 ```
