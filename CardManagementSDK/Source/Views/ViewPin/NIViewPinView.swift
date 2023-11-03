@@ -31,6 +31,7 @@ public final class NIViewPinView: UIView {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var digits: [UILabel]?
+    private var separators: [UIView]?
     private var counter: Double = 0
     private var timer: Timer?
     private var colorInput: UIColor?
@@ -52,8 +53,8 @@ public final class NIViewPinView: UIView {
         fromNib()
         hideUI(true)
         GlobalConfig.shared.language = input.displayAttributes?.language
-        
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
+        separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         
         if self.borderView != nil {
             activityIndicator.startAnimating()
@@ -81,6 +82,7 @@ public final class NIViewPinView: UIView {
         activityIndicator.startAnimating()
         GlobalConfig.shared.language = input.displayAttributes?.language
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
+        separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         updateUI()
     }
     
@@ -193,6 +195,18 @@ public final class NIViewPinView: UIView {
     private func hideUI(_ shouldHide: Bool) {
         borderView.isHidden = shouldHide
         countDownDecription.isHidden = shouldHide
+        
+        if let separators = separators {
+            for separator in separators {
+                separator.isHidden = shouldHide
+            }
+        }
+        
+        if let digits = digits {
+            for digit in digits {
+                digit.isHidden = shouldHide
+            }
+        }
     }
     
     private func setupTheme(_ theme: NITheme) {
