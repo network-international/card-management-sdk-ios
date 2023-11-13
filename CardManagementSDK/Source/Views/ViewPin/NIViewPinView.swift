@@ -114,7 +114,9 @@ public final class NIViewPinView: UIView {
     
     private func updateUI() {
         guard let viewModel = viewModel else { return }
-        
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        }
         UIFont.registerDefaultFonts()
         stackView.semanticContentAttribute = .forceLeftToRight
         
