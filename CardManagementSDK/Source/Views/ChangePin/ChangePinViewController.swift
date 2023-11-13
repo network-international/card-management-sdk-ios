@@ -24,13 +24,7 @@ class ChangePinViewController: UIViewController {
         super.init(nibName: "ChangePinViewController", bundle: Bundle(for: ChangePinViewController.self))
         
         // theme (dark / light mode setups)
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            self.view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-        } else {
-            /// Fallback on earlier versions
-            updateUI(for: viewModel.theme)
-        }
+        updateUI(for: viewModel.theme)
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +51,15 @@ class ChangePinViewController: UIViewController {
     
     // MARK: - Private
     private func updateUI(for theme: NITheme) {
-        view.backgroundColor = theme == .light ? .white : UIColor.black
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.backgroundColor
+            view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.style = .whiteLarge
+            activityIndicator.color = theme == .light ? .gray : .white
+            view.backgroundColor = theme == .light ? .white : .black
+        }
     }
     
 }
