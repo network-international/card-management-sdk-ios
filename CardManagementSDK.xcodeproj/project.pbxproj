@@ -94,7 +94,6 @@
 		F4DE3B8E2912CBDA00BF4727 /* NIFontLabelPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8D2912CBDA00BF4727 /* NIFontLabelPair.swift */; };
 		F4DE3BCE2915773300BF4727 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3BCD2915773300BF4727 /* UIColor+Utils.swift */; };
 		F4DE3BD029157C5600BF4727 /* NITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3BCF29157C5600BF4727 /* NITheme.swift */; };
-		F4E7696A28EBF9E800CDC7E4 /* CardManagementSDK.docc in Sources */ = {isa = PBXBuildFile; fileRef = F4E7696928EBF9E800CDC7E4 /* CardManagementSDK.docc */; };
 		F4E7697028EBF9E800CDC7E4 /* NICardManagementSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E7696528EBF9E800CDC7E4 /* NICardManagementSDK.framework */; };
 		F4E7697528EBF9E800CDC7E4 /* CardManagementSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E7697428EBF9E800CDC7E4 /* CardManagementSDKTests.swift */; };
 		F4E7697628EBF9E800CDC7E4 /* CardManagementSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = F4E7696828EBF9E800CDC7E4 /* CardManagementSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -746,7 +745,6 @@
 				F42E807729461C4A00640860 /* SecCertificate+Keychain.swift in Sources */,
 				F42E809429461EC500640860 /* SecCertificate.swift in Sources */,
 				2A21795928F07FBA002D807C /* CardDetailsViewModel.swift in Sources */,
-				F4E7696A28EBF9E800CDC7E4 /* CardManagementSDK.docc in Sources */,
 				F42E809029461E4D00640860 /* SecKey+Keychain.swift in Sources */,
 				F447E48129025E05005A5F46 /* RSAUtils.swift in Sources */,
 				2A82D07228F59DE300F57DC6 /* DotView.swift in Sources */,
@@ -754,7 +752,6 @@
 				F447E44B28F84E9A005A5F46 /* PinBlock.swift in Sources */,
 				F45A7E0A28F40C2200B3486E /* WSHTTPMethod.swift in Sources */,
 				F447E4772901923F005A5F46 /* UIViewController+Alerts.swift in Sources */,
-				F4E7696A28EBF9E800CDC7E4 /* CardManagementSDK.docc in Sources */,
 				2AAA25B22A8ED2AB0068466D /* ViewPinViewModel.swift in Sources */,
 				F4DE3BD029157C5600BF4727 /* NITheme.swift in Sources */,
 				F447E44428F80177005A5F46 /* CardLookupParams.swift in Sources */,

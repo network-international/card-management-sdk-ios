@@ -50,6 +50,9 @@ public final class NICardView: UIView {
         viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        }
         GlobalConfig.shared.language = input.displayAttributes?.language
         
         if self.view != nil {
