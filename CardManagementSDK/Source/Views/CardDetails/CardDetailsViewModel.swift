@@ -8,10 +8,16 @@
 import Foundation
 import UIKit
 
-class CardDetailsViewModel: NSObject {
-    
-    var input: NIInput
+public protocol CardDetailsService {
+    func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+}
+
+class CardDetailsViewModel {
+
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    
+    private let displayAttributes: NIDisplayAttributes?
+    private let service: CardDetailsService
     
     private (set) var cardDetails: CardDetails? {
         didSet {
@@ -22,11 +28,18 @@ class CardDetailsViewModel: NSObject {
     var bindCardDetailsViewModel = {}
     var backgroundImage: UIImage?
     
-    init(input: NIInput) {
-        self.input = input
-        super.init()
+    var closeButtonImageName: String {
+        displayAttributes?.theme == .light ? "icon_close" : "icon_close_white"
+    }
+    var isThemeLight: Bool {
+        displayAttributes?.theme == .light
+    }
+    
+    init(displayAttributes: NIDisplayAttributes?, service: CardDetailsService) {
+        self.displayAttributes = displayAttributes
+        self.service = service
         
-        self.backgroundImage = input.displayAttributes?.cardAttributes?.backgroundImage
+        self.backgroundImage = displayAttributes?.cardAttributes?.backgroundImage
         
         cardDetails = CardDetails(cardNumberLabel: "card_number".localized,
                                   cardExpiryLabel: "card_expiry".localized,
@@ -34,7 +47,7 @@ class CardDetailsViewModel: NSObject {
                                   cardholderNameLabel: "card_name".localized)
         
         
-        NICardManagementAPI.getCardDetails(input: input) { [weak self] success, error, callback in
+        service.getCardDetails { [weak self] success, error, callback in
             guard let self = self else { return }
             
             if let response = success {
@@ -77,7 +90,7 @@ class CardDetailsViewModel: NSObject {
 // MARK: - Helpers/Utils
 extension CardDetailsViewModel {
     func font(for label: NILabels) -> UIFont? {
-        input.displayAttributes?.font(for: label)
+        displayAttributes?.font(for: label)
     }
     
     var maskedDetails: CardDetails {
@@ -112,11 +125,11 @@ extension CardDetailsViewModel {
     }
     
     var shouldMask: Bool {
-        return input.displayAttributes?.cardAttributes?.shouldHide ?? true
+        return displayAttributes?.cardAttributes?.shouldHide ?? true
     }
     
     var textPositioning: NICardDetailsTextPositioning? {
-        return input.displayAttributes?.cardAttributes?.textPositioning ?? nil
+        return displayAttributes?.cardAttributes?.textPositioning ?? nil
     }
     
 }

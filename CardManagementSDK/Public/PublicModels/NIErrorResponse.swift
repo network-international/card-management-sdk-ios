@@ -22,6 +22,7 @@ struct NIErrorConstants {
     
     init(error: NISDKErrors) {
         errorMessage = error.rawValue
+        isError = true
     }
     
     func withResponse(response: Response) -> NIErrorResponse? {
@@ -72,4 +73,6 @@ enum NISDKErrors: String {
     case RSAKEY_ERROR = "Couldn't get or generate Public Key"
     case PINBLOCK_ERROR = "PIN Block Error"
     case PINBLOCK_ENCRYPTION_ERROR = "PIN Block Encryption Error"
+    
+    case TOKEN_ERROR = "Token Error"
 }

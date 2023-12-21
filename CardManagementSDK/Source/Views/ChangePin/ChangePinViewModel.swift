@@ -8,17 +8,23 @@
 import Foundation
 import UIKit
 
+protocol ChangePinService {
+    func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+}
+
 class ChangePinViewModel {
-    var input: NIInput
-    var formType: NIPinFormType
+    private let displayAttributes: NIDisplayAttributes?
+    private let formType: NIPinFormType
+    private let service: ChangePinService
     
-    init(input: NIInput, formType: NIPinFormType) {
-        self.input = input
+    init(displayAttributes: NIDisplayAttributes?, formType: NIPinFormType, service: ChangePinService) {
+        self.displayAttributes = displayAttributes
         self.formType = formType
+        self.service = service
     }
     
     func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
-        NICardManagementAPI.changePin(oldPin: oldPin, newPin: newPin, input: input) { success, error, callback in
+        service.changePin(oldPin: oldPin, newPin: newPin) { success, error, callback in
             completion(success, error, callback)
         }
     }
@@ -40,10 +46,10 @@ extension ChangePinViewModel {
     }
     
     func font(for label: NILabels) -> UIFont? {
-        input.displayAttributes?.font(for: label)
+        displayAttributes?.font(for: label)
     }
     
     var theme: NITheme { /// default is light
-        return input.displayAttributes?.theme ?? .light
+        return displayAttributes?.theme ?? .light
     }
 }
