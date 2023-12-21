@@ -43,20 +43,62 @@ Swift:
 ```swift
 import NICardManagementSDK
 ```
+#### Migration from 1.0 version to 1.1
+1) NIInput was deleted, it's parameters divided between SDK's instance initialisations 
+```
+NICardManagementAPI(
+            rootUrl: rootUrl,
+            cardIdentifierId: cardIdentifierId,
+            cardIdentifierType: cardIdentifierType,
+            bankCode: bankCode,
+            tokenFetchable: NICardManagementTokenFetchable
+        )
+```
+and `displayAttributes` that used for showing forms
+
+2) Since `NIInput` deleted
+- input argument was also removed from all public methods (see (3))
+
+3) Instead of static methods, use sdk's instance methods
+`NICardManagementAPI.displayCardDetailsForm(input:, viewController:, completion:)`
+use 
+`sdk.displayCardDetailsForm(viewController:, completion:)`
+same for other methods:
+`NICardManagementAPI.setPinForm` --> `sdk.setPinForm`
+`NICardManagementAPI.changePinForm` --> `sdk.changePinForm`
+`NICardManagementAPI.verifyPinForm` --> `sdk.verifyPinForm`
+
+4) `NIViewPinView` and `NICardView` configuration changed
+`view.setInput(input:)` --> `view.configure(displayAttributes:)`
+also pass `sdk` instance as view's `service` parameter
+
 
 #### Usage
 
-###### Create NIInput model
+###### Decide how `token` will be provided - create `tokenFetchable`(`NICardManagementTokenFetchable`), available options:
+1) Implement you own provider that meet protocol requiremets
+2) If you have permanent token - you can use simple wrapper
+```
+TokenFetcherFactory.makeSimpleWrapper(tokenValue: "your token")
+```
+3) Use sdk's provider that will try to fetch token with POST request and cache it in device's keychain
+```
+TokenFetcherFactory.makeNetworkWithCache(
+    urlString: "your url", 
+    credentials: ClientCredentials // clientId, clientSecret
+)
+```
+
+###### Create SDK instance
 Swift:
 ```swift
-    let input = NIInput(bankCode: bankCode,
-                        cardIdentifierId: cardIdentifierId,
-                        cardIdentifierType: cardIdentifierType,
-                        connectionProperties: NIConnectionProperties(rootUrl: rootUrl, token: token),
-                        displayAttributes: NIDisplayAttributes(theme: .light, language: language))
-    NICardManagementAPI.displayCardDetailsForm(input: input, viewController: self) { successResponse, errorResponse in
-        // handle error and success
-    }
+    let sdk = NICardManagementAPI(
+            rootUrl: rootUrl,
+            cardIdentifierId: cardIdentifierId,
+            cardIdentifierType: cardIdentifierType,
+            bankCode: bankCode,
+            tokenFetchable: NICardManagementTokenFetchable
+        )
 ```
 
 ###### Display attributes  
@@ -141,16 +183,11 @@ Swift:
 ##### Set PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController). 
 
-Swift:
+specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
+
 ```swift
-NICardManagementAPI.setPinForm(input: input, type: pinType, viewController: self) { successResponse, errorResponse in
+sdk.setPinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
 	//  handle here error and success
-}
-```
-or without specifying the type (pin length)
-```swift
-NICardManagementAPI.setPinForm(input: input, viewController: self) { successResponse, errorResponse in
-	// handle here error and success
 }
 ```
 
@@ -161,14 +198,10 @@ Change PIN is a two step flow:
 1.Capture current PIN 
 2.Capture new PIN 
 
+specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
+
 ```swift
-NICardManagementAPI.changePinForm(input: input, type: pinType, viewController: self) { successResponse, errorResponse in
-	//  handle here error and success
-}
-```
-or without specifying the type (pin length)
-```swift
-NICardManagementAPI.changePinForm(input: input, viewController: self) { successResponse, errorResponse in
+sdk.changePinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
 	// handle here error and success
 }
 ```
@@ -177,16 +210,11 @@ NICardManagementAPI.changePinForm(input: input, viewController: self) { successR
 ##### Verify PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController). 
 
-Swift:
+specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
+
 ```swift
-NICardManagementAPI.verifyPinForm(input: input, type: pinType, viewController: self) { successResponse, errorResponse in
-    //  handle here error and success
-}
-```
-or without specifying the type (pin length)
-```swift
-NICardManagementAPI.verifyPinForm(input: input, viewController: self) { successResponse, errorResponse in
-    // handle here error and success
+sdk.verifyPinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
+	// handle here error and success
 }
 ```
 
@@ -196,35 +224,35 @@ The customer application can integrate Card Details and View Pin as a view into 
 ##### Display Card Details View
 A view of NICardView type can be added into storyboard, then set the input and start the flow as below:
 ```swift
-cardView.setInput(input: input) { successResponse, errorResponse in
+cardView.configure(displayAttributes: displayAttributes, service: sdk) { successResponse, errorResponse in
 // handle here error and success
 }
 ```
 or the NICardView can be created programmatically and initialized as below:
 ```swift
-let cardView = NICardView(input: input) { successResponse, errorResponse in
+let cardView = NICardView(displayAttributes: displayAttributes, service: sdk) { successResponse, errorResponse in
 // handle here error and success
 }
 ```
 Parameters: 
-- input - type NIInput - see the explanation above. This is a required parameter.
+- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
 
 ##### Display View Pin View
 
 A view of NIViewPinView type can be added into storyboard, then set the input and start the flow as below:
 ```swift
-viewPinView.setInput(input: input, timer: 5, color: .black) { successResponse, errorResponse in
+viewPinView.configure(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .black) { successResponse, errorResponse in
 // handle here error and success
 }
 ```
 or the NIViewPinView can be created programmatically and initialized as below:
 ```swift
-let viewPinView = NIViewPinView(input: cardViewInput, timer: 5, color: .red) { successResponse, errorResponse in
+let viewPinView = NIViewPinView(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .red) { successResponse, errorResponse in
 // handle here error and success
 }
 ```
 Parameters: 
-- input - type NIInput - see the explanation above. This is a required parameter.
+- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
 - timer - type Double - offers possibility to set the display time of the PIN, expressed in seconds. Using value "0" for this parameter, the PIN will be displayed indefinitely. After the countdown, the PIN will be masked.
 This is a required parameter.
 - color - type UIColor - offers possibility to set the color of the elements contained in the view. This is an optional parameter.
@@ -238,7 +266,7 @@ The card info returned are: Card Number, Expiry Date, CVV and Cardholder Name.
 
 Swift:
 ```swift
-NICardManagementAPI.getCardDetails(input: input) { successResponse, errorResponse in
+sdk.getCardDetails { successResponse, errorResponse in
     //  handle here error and success
 }
 ```
@@ -249,7 +277,7 @@ The programmatic interface for the Set PIN functionality will return a success o
 
 Swift:
 ```swift
-NICardManagementAPI.setPin(pin: pin, input: input) { successResponse, errorResponse in
+sdk.setPin(pin: pin) { successResponse, errorResponse in
     //  handle here error and success
 }
 ```
@@ -260,7 +288,7 @@ The programmatic interface for the Change PIN functionality will return a succes
 
 Swift:
 ```swift
-NICardManagementAPI.changePin(oldPin: oldPin, newPin: newPin, input: input) { successResponse, errorResponse in
+sdk.changePin(oldPin: oldPin, newPin: newPin) { successResponse, errorResponse in
     //  handle here error and success
 }
 ```
@@ -271,7 +299,7 @@ The programmatic interface for the Verify PIN functionality will return a succes
 
 Swift:
 ```swift
-NICardManagementAPI.verifyPin(pin: pin, input: input) { successResponse, errorResponse in
+sdk.verifyPin(pin: pin) { successResponse, errorResponse in
     //  handle here error and success
 }
 ```
@@ -282,7 +310,7 @@ The programmatic interface for the View PIN functionality will return a String v
 
 Swift:
 ```swift
-NICardManagementAPI.getPin(input: input) { pin, errorResponse in
+sdk.getPin { pin, errorResponse in
     //  handle here error and success
 }
 ```
