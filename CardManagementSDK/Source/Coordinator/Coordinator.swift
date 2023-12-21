@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-@objc protocol Coordinator {
+protocol Coordinator {
     var navigationController: UIViewController { get set }
-    func start()
+    func coordinate(route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?)
 }
 
 

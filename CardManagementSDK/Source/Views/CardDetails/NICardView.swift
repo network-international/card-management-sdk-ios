@@ -45,15 +45,15 @@ public final class NICardView: UIView {
     /// To be used when creating the card view programatically
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public init(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        viewModel = CardDetailsViewModel(input: input)
+    ///   - service: sdk instance
+    public init(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
         viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
         if #available(iOS 13.0, *) {
             activityIndicator.style = .large
         }
-        GlobalConfig.shared.language = input.displayAttributes?.language
         
         if self.view != nil {
             activityIndicator.startAnimating()
@@ -71,13 +71,13 @@ public final class NICardView: UIView {
     /// To be used ONLY if NICardView is added in storyboard or xib
     /// - Parameters:
     ///   - input: input needed for the card details visualization
-    public func setInput(input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    ///   - service: sdk instance
+    public func configure(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         hideUI(true)
-        viewModel = CardDetailsViewModel(input: input)
+        viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
         viewModel?.callback = completion
         activityIndicator.startAnimating()
         configureCardView()
-        GlobalConfig.shared.language = input.displayAttributes?.language
     }
     
     public func setBackgroundImage(image: UIImage) {
@@ -136,10 +136,10 @@ extension NICardView {
         
         if #available(iOS 13.0, *) {
             view.backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = viewModel.input.displayAttributes?.theme == .light ? .light : .dark
+            overrideUserInterfaceStyle = viewModel.isThemeLight ? .light : .dark
             copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
         } else {
-            view.backgroundColor = viewModel.input.displayAttributes?.theme == .light ? .white : UIColor.black
+            view.backgroundColor = viewModel.isThemeLight ? .white : UIColor.black
             let image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
             copyButton.setImage(image, for: .normal)
         }

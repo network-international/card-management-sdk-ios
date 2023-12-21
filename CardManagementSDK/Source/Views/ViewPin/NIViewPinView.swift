@@ -42,17 +42,17 @@ public final class NIViewPinView: UIView {
     /// Initialization of NIViewPinView
     /// To be used when creating the PIN view programatically
     /// - Parameters:
-    ///   - input: input needed for the PIN visualization
+    ///   - displayAttributes: input needed for the PIN visualization
+    ///   - service: sdk instance
     ///   - timer: seconds needed for the PIN visualization
-    public init(input: NIInput, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public init(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         counter = timer
         colorInput = color
-        viewModel = ViewPinViewModel(input: input)
+        viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
         viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
         hideUI(true)
-        GlobalConfig.shared.language = input.displayAttributes?.language
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         
@@ -68,19 +68,19 @@ public final class NIViewPinView: UIView {
     }
     
     // MARK: - Public
-    /// Set the input for the NIViewPinView
+    /// Configure the NIViewPinView
     /// To be used ONLY if NIViewPinView is added in storyboard or xib
     /// - Parameters:
+    ///   - service: sdk instance
     ///   - input: input needed for the PIN visualization
     ///   - timer: seconds needed for the PIN visualization
-    public func setInput(input: NIInput, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func configure(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         hideUI(true)
         counter = timer
         colorInput = color
-        viewModel = ViewPinViewModel(input: input)
+        viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
         viewModel?.callback = completion
         activityIndicator.startAnimating()
-        GlobalConfig.shared.language = input.displayAttributes?.language
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         updateUI()

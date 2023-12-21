@@ -38,8 +38,7 @@ class CardDetailsViewController: UIViewController {
     // MARK: - Private
     private func setupCloseButton() {
         let closeButton = UIButton(type: .custom)
-        let imageName = viewModel.input.displayAttributes?.theme == .light ? "icon_close" : "icon_close_white"
-        let image = UIImage(named: imageName, in: Bundle.sdkBundle, compatibleWith: .none)
+        let image = UIImage(named: viewModel.closeButtonImageName, in: Bundle.sdkBundle, compatibleWith: .none)
         closeButton.setImage(image, for: .normal)
         closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         let barCloseButton = UIBarButtonItem(customView: closeButton)

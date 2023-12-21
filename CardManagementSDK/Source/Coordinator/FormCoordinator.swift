@@ -10,67 +10,51 @@ import Foundation
 import UIKit
 
 enum Route {
-    case cardDetails(input: NIInput)
-    case setPin(input: NIInput, type: NIPinFormType)
-    case verifyPin(input: NIInput, type: NIPinFormType)
-    case changePin(input: NIInput, type: NIPinFormType)
+    case cardDetails
+    case setPin(type: NIPinFormType)
+    case verifyPin(type: NIPinFormType)
+    case changePin(type: NIPinFormType)
 }
 
-class FormCoordinator: NSObject, Coordinator {
+typealias FormCoordinatorService = CardDetailsService & SetPinService & VerifyPinService & ChangePinService
+
+class FormCoordinator: Coordinator {
     var navigationController: UIViewController
-    var route: Route
-    var completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    private let service: FormCoordinatorService
+    private let displayAttributes: NIDisplayAttributes?
     
-    func start() {
+    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes?, service: FormCoordinatorService) {
+        self.navigationController = navigationController
+        self.displayAttributes = displayAttributes
+        self.service = service
+    }
+    
+    func coordinate(route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
         switch route {
-        case .cardDetails(let input):
-            let viewModel = makeCardDetailsViewModel(input: input)
+        case .cardDetails:
+            let viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
             let vc = CardDetailsViewController(viewModel: viewModel)
             viewModel.callback = completion
             present(vc)
             
-        case .setPin(let input, let type):
-            let viewModel = makeSetPinViewModel(input: input, pinFormType: type)
+        case let .setPin(pinFormType):
+            let viewModel = SetPinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
             let vc = SetPinViewController(viewModel: viewModel)
             vc.callback = completion
             push(vc)
             
-        case .verifyPin(let input, let type):
-            let viewModel = makeVerifyPinViewModel(input: input, pinFormType: type)
+        case let .verifyPin(pinFormType):
+            let viewModel = VerifyPinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
             let vc = VerifyPinViewController(viewModel: viewModel)
             vc.callback = completion
             push(vc)
             
-        case .changePin(let input, let type):
-            let viewModel = makeChangePinViewModel(input: input, pinFormType: type)
+        case let .changePin(pinFormType):
+            let viewModel = ChangePinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
             let vc = ChangePinViewController(viewModel: viewModel)
             vc.callback = completion
             push(vc)
         }
-    }
-    
-    init(navigationController: UIViewController, route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
-        self.navigationController = navigationController
-        self.route = route
-        self.completion = completion
-    }
-    
-    
-    // MARK: - Private
-    private func makeCardDetailsViewModel(input: NIInput) -> CardDetailsViewModel {
-        return CardDetailsViewModel(input: input)
-    }
-    
-    private func makeSetPinViewModel(input: NIInput, pinFormType: NIPinFormType) -> SetPinViewModel {
-        return SetPinViewModel(input: input, formType: pinFormType)
-    }
-    
-    private func makeVerifyPinViewModel(input: NIInput, pinFormType: NIPinFormType) -> VerifyPinViewModel {
-        return VerifyPinViewModel(input: input, formType: pinFormType)
-    }
-    
-    private func makeChangePinViewModel(input: NIInput, pinFormType: NIPinFormType) -> ChangePinViewModel {
-        return ChangePinViewModel(input: input, formType: pinFormType)
     }
 }
 

@@ -8,17 +8,23 @@
 import Foundation
 import UIKit
 
+protocol VerifyPinService {
+    func verifyPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+}
+
 class VerifyPinViewModel {
-    var input: NIInput
-    var formType: NIPinFormType
+    private let displayAttributes: NIDisplayAttributes?
+    private let formType: NIPinFormType
+    private let service: VerifyPinService
     
-    init(input: NIInput, formType: NIPinFormType) {
-        self.input = input
+    init(displayAttributes: NIDisplayAttributes?, formType: NIPinFormType, service: VerifyPinService) {
+        self.displayAttributes = displayAttributes
         self.formType = formType
+        self.service = service
     }
     
     func verifyPin(_ pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
-        NICardManagementAPI.verifyPin(pin: pin, input: input) { success, error, callback in
+        service.verifyPin(pin: pin) { success, error, callback in
             completion(success, error, callback)
         }
     }
@@ -40,11 +46,11 @@ extension VerifyPinViewModel {
     }
     
     func font(for label: NILabels) -> UIFont? {
-        input.displayAttributes?.font(for: label)
+        displayAttributes?.font(for: label)
     }
     
     var theme: NITheme { /// default is light
-        return input.displayAttributes?.theme ?? .light
+        return displayAttributes?.theme ?? .light
     }
     
 }
