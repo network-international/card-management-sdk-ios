@@ -17,7 +17,7 @@ enum APIEndpoint {
     case setPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
     case verifyPin(params: PinParams, bankCode: String, connection: NIConnectionProperties)
     case changePin(params: ChangePinParams, bankCode: String, connection: NIConnectionProperties)
-    case viewPin(params: ViewPinParams, identifier: String, type: String, bankCode: String, connection: NIConnectionProperties)
+    case viewPin(params: ViewPinParams, bankCode: String, connection: NIConnectionProperties)
 }
 
 extension APIEndpoint: APIEndpointProtocol {
@@ -62,7 +62,7 @@ extension APIEndpoint: APIEndpointProtocol {
             return params.toJson()
         case .changePin(let params, _, _):
             return params.toJson()
-        case .viewPin(let params, _, _, _, _):
+        case .viewPin(let params, _, _):
             return params.toJson()
         default:
             return nil
@@ -92,7 +92,7 @@ extension APIEndpoint: APIEndpointProtocol {
             return connection.token
         case .changePin( _, _, let connection):
             return connection.token
-        case .viewPin(_, _, _, _, let connection):
+        case .viewPin(_, _, let connection):
             return connection.token
         }
     }
@@ -111,7 +111,7 @@ extension APIEndpoint: APIEndpointProtocol {
             return connection.rootUrl
         case .changePin( _, _, let connection):
             return connection.rootUrl
-        case .viewPin(_, _, _, _, let connection):
+        case .viewPin(_, _, let connection):
             return connection.rootUrl
         }
     }
@@ -146,7 +146,7 @@ extension APIEndpoint: APIEndpointProtocol {
             return bankCode
         case .changePin(_, let bankCode, _):
             return bankCode
-        case .viewPin(_, _, _, let bankCode, _):
+        case .viewPin(_, let bankCode, _):
             return bankCode
         }
     }

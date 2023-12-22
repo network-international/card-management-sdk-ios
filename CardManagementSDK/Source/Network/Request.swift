@@ -22,10 +22,9 @@ class Request {
                 guard let request = try self.endpoint.asURLRequest() else { return }
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     let res = Response(data: data, response: response, error: error as NSError?)
-                    
+                    var error = NIErrorResponse()
+                    error = error.withResponse(response: res) ?? error
                     DispatchQueue.main.async {
-                        var error = NIErrorResponse()
-                        error = error.withResponse(response: res) ?? error
                         if error.isError {
                             completionHandler(nil, error)
                         } else {

@@ -8,85 +8,64 @@
 import Foundation
 import UIKit
 
-@objc public class NICardManagementAPI: NSObject {
+public final class NICardManagementAPI {
     
-    /// Singleton instance: internal use
-    static let shared = NICardManagementAPI()
+    private let mobileApi: NIMobileAPI
+    
+    public init(
+        rootUrl: String,
+        cardIdentifierId: String,
+        cardIdentifierType: String,
+        bankCode: String,
+        tokenFetchable: NICardManagementTokenFetchable
+    ) {
+        self.mobileApi = NIMobileAPI(
+            rootUrl: rootUrl,
+            cardIdentifierId: cardIdentifierId,
+            cardIdentifierType: cardIdentifierType,
+            bankCode: bankCode,
+            tokenFetchable: tokenFetchable
+        )
+        UIFont.registerDefaultFonts()
+    }
     
     // MARK: - Form Factories Interface
-    @objc public static func displayCardDetailsForm(input: NIInput, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        setupDisplayAttributes(input.displayAttributes)
-        FormCoordinator(navigationController: viewController, route: .cardDetails(input: input), completion: completion).start()
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+            .coordinate(route: .cardDetails, completion: completion)
     }
     
-    @objc public static func setPinForm(input: NIInput, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        setupDisplayAttributes(input.displayAttributes)
-        setPinForm(input: input, type: .dynamic, viewController: viewController, completion: completion)
-    }
-    
-    @objc public static func setPinForm(input: NIInput, type: NIPinFormType, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        setupDisplayAttributes(input.displayAttributes)
-        FormCoordinator(navigationController: viewController, route: .setPin(input: input, type: type), completion: completion).start()
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+            .coordinate(route: .setPin(type: type), completion: completion)
     }
     
-    @objc public static func verifyPinForm(input: NIInput, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        setupDisplayAttributes(input.displayAttributes)
-        verifyPinForm(input: input, type: .dynamic, viewController: viewController, completion: completion)
-    }
-    
-    @objc public static func verifyPinForm(input: NIInput, type: NIPinFormType, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        setupDisplayAttributes(input.displayAttributes)
-        FormCoordinator(navigationController: viewController, route: .verifyPin(input: input, type: type), completion: completion).start()
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+            .coordinate(route: .verifyPin(type: type), completion: completion)
     }
     
-    @objc public static func changePinForm(input: NIInput, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        setupDisplayAttributes(input.displayAttributes)
-        changePinForm(input: input, type: .dynamic, viewController: viewController, completion: completion)
-    }
-    
-    @objc public static func changePinForm(input: NIInput, type: NIPinFormType, viewController: UIViewController, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        setupDisplayAttributes(input.displayAttributes)
-        FormCoordinator(navigationController: viewController, route: .changePin(input: input, type: type), completion: completion).start()
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+            .coordinate(route: .changePin(type: type), completion: completion)
     }
     
     // MARK: - Programatic Interface
-    @objc public static func getCardDetails(input: NIInput, completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        retrieveCardDetails(input: input, completion: completion)
-    }
-    
-    @objc public static func setPin(pin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        shared.setPin(pin, input: input, completion: completion)
-    }
-    
-    @objc public static func verifyPin(pin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        shared.verifyPin(pin, input: input, completion: completion)
-    }
-    
-    @objc public static func changePin(oldPin: String, newPin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        shared.changePin(oldPin: oldPin, newPin: newPin, input: input, completion: completion)
-    }
-    
-    @objc public static func getPin(input: NIInput, completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        retrievePin(input: input, completion: completion)
-    }
-    
-    
-    // MARK: - Private
-    private static func retrieveCardDetails(input: NIInput, completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        NIMobileAPI.shared.retrieveCardDetails(input: input) { response, error in
+    public func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        mobileApi.retrieveCardDetails { response, error in
             if let error = error {
                 completion(nil, error){}
             }
@@ -97,8 +76,8 @@ import UIKit
         }
     }
     
-    private func setPin(_ pin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        PinManager().setPin(pin, input: input) { response, error in
+    public func setPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        mobileApi.setPin(pin) { response, error in
             if let error = error {
                 completion(nil, error){}
             } else if response != nil {
@@ -108,8 +87,8 @@ import UIKit
         }
     }
     
-    private func verifyPin(_ pin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        PinManager().verifyPin(pin, input: input) { response, error in
+    public func verifyPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        mobileApi.verifyPin(pin) { response, error in
             if let error = error {
                 completion(nil, error){}
             } else if response != nil {
@@ -119,8 +98,8 @@ import UIKit
         }
     }
     
-    private func changePin(oldPin: String, newPin: String, input: NIInput, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        PinManager().changePin(oldPin: oldPin, newPin: newPin, input: input) { response, error in
+    public func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        mobileApi.changePin(oldPin: oldPin, newPin: newPin) { response, error in
             if let error = error {
                 completion(nil, error){}
             } else if response != nil {
@@ -130,8 +109,8 @@ import UIKit
         }
     }
     
-    private static func retrievePin(input: NIInput, completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        NIMobileAPI.shared.retrievePin(input: input) { response, error in
+    public func getPin(completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        mobileApi.retrievePin { response, error in
             if let error = error {
                 completion(nil, error){}
             }
@@ -141,15 +120,19 @@ import UIKit
             }
         }
     }
-    
-    private static func setLanguage(_ language: NILanguage?) {
-        GlobalConfig.shared.language = language
-    }
-    
-    private static func setupDisplayAttributes(_ attributes: NIDisplayAttributes?) {
-        setLanguage(attributes?.language)
-        
-        UIFont.registerDefaultFonts()
-    }
-    
 }
+
+// MARK: - Private
+private extension NICardManagementAPI {
+    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes?) -> FormCoordinator {
+        GlobalConfig.shared.language = displayAttributes?.language
+        return FormCoordinator(
+            navigationController: navigationController,
+            displayAttributes: displayAttributes,
+            service: self
+        )
+    }
+}
+
+extension NICardManagementAPI: FormCoordinatorService {}
+extension NICardManagementAPI: ViewPinService {}
