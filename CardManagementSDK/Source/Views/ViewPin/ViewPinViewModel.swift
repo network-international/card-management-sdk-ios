@@ -8,12 +8,18 @@
 import Foundation
 import UIKit
 
-class ViewPinViewModel: NSObject {
-    var input: NIInput
+public protocol ViewPinService {
+    func getPin(completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void)
+}
+
+class ViewPinViewModel {
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     var startTimer = false
     
-    private (set) var pin: String? {
+    private let displayAttributes: NIDisplayAttributes?
+    private let service: ViewPinService
+    
+    private(set) var pin: String? {
         didSet {
             self.bindCardDetailsViewModel()
         }
@@ -21,11 +27,14 @@ class ViewPinViewModel: NSObject {
     
     var bindCardDetailsViewModel = {}
     
-    init(input: NIInput) {
-        self.input = input
-        super.init()
-                
-        NICardManagementAPI.getPin(input: input) { [weak self] success, error, callback in
+    init(displayAttributes: NIDisplayAttributes?, service: ViewPinService) {
+        self.displayAttributes = displayAttributes
+        self.service = service
+        getPin()
+    }
+    
+    func getPin() {
+        service.getPin { [weak self] success, error, callback in
             guard let self = self else { return }
             
             if let response = success {
@@ -50,10 +59,10 @@ class ViewPinViewModel: NSObject {
 // MARK: - Helpers/Utils
 extension ViewPinViewModel {
     func font(for label: NILabels) -> UIFont? {
-        input.displayAttributes?.font(for: label)
+        displayAttributes?.font(for: label)
     }
     
     var theme: NITheme { /// default is light
-        return input.displayAttributes?.theme ?? .light
+        return displayAttributes?.theme ?? .light
     }
 }
