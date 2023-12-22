@@ -268,12 +268,12 @@ extension NIMobileAPI {
                     completion(response, error)
                 }
             case let .failure(tokenError):
-                var errorRespose = NIErrorResponse(error: NISDKErrors.TOKEN_ERROR)
+                let errorRespose = NIErrorResponse(error: NISDKErrors.TOKEN_ERROR)
                 if case let .networkError(error) = tokenError {
                     errorRespose.errorCode = (error as NSError).code.description
                 }
                 // if we got token error, there are no need to retry request
-                completion(nil, NIErrorResponse(error: NISDKErrors.TOKEN_ERROR))
+                completion(nil, errorRespose)
             }
         }
     }
