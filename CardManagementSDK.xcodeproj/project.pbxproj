@@ -412,13 +412,6 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
-		F447E47A2901AA51005A5F46 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		F45A7E0428F0366600B3486E /* ResponseModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,7 +531,6 @@
 		F4E7698628EC7A8A00CDC7E4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				F447E47A2901AA51005A5F46 /* Managers */,
 				F447E44028F7196B005A5F46 /* Parameters */,
 				F45A7E1228F437DE00B3486E /* GlobalConfig.swift */,
 				F45A7DF428EF008B00B3486E /* NIMobileAPI.swift */,
