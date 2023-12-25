@@ -165,20 +165,18 @@ If all properties are wanted, initialization NICardAttributes is made with all p
 ```
 
 #### Form Factory Interface
-##### Display Card Details Form
-The form interface will display the card details in a new screen (UIViewController).
+##### Display Card Details in a new screen (UIViewController).
 The card info displayed are: Card Number, Expiry Date, CVV and Cardholder Name.
 
 ```swift
-func displayCardDetailsForm(input: NICardManagementSDK.NIInput, viewController: UIViewController, completion: @escaping (NICardManagementSDK.NISuccessResponse?, NICardManagementSDK.NIErrorResponse?) -> Void)
+func displayCardDetailsForm(viewController: UIViewController, completion: @escaping (NICardManagementSDK.NISuccessResponse?, NICardManagementSDK.NIErrorResponse?) -> Void)
 ```
 Swift: 
 ```swift
-    NICardManagementAPI.displayCardDetailsForm(input: input, viewController: self) { successResponse, errorResponse in
+    sdk.displayCardDetailsForm(viewController: self) { successResponse, errorResponse in
         // handle error and success
     }
 ```
-
 
 ##### Set PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController). 
@@ -221,7 +219,7 @@ sdk.verifyPinForm(type: pinType, viewController: self, displayAttributes: displa
 #### Display as a view
 The customer application can integrate Card Details and View Pin as a view into a UIViewController
 
-##### Display Card Details View
+##### Constructing Card Details view.
 A view of NICardView type can be added into storyboard, then set the input and start the flow as below:
 ```swift
 cardView.configure(displayAttributes: displayAttributes, service: sdk) { successResponse, errorResponse in
