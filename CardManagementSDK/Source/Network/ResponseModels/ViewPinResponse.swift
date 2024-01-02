@@ -8,43 +8,30 @@
 import Foundation
 
 class ViewPinResponse: NSObject, Codable {
-    
-    var encryptedPin: String?                   /// Encrypted PIN under the provided public key
- 
-    enum CodingKeys: String, CodingKey {
-        case encryptedPin = "encrypted_pin"
+    private struct ViewPin: Codable {
+        var encryptedPin: String?                   /// Encrypted PIN under the provided public key
+     
+        enum CodingKeys: String, CodingKey {
+            case encryptedPin = "encrypted_pin"
+        }
     }
     
-    func parse(json: Data) -> ViewPinResponse? {
-        let decoder = JSONDecoder()
-        do {
-            let response = try decoder.decode(ViewPinResponse.self, from: json)
-            return response
-        } catch DecodingError.dataCorrupted(let context) {
-            print(context)
-        } catch DecodingError.keyNotFound(let key, let context) {
-            print("Key '\(key)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch DecodingError.valueNotFound(let value, let context) {
-            print("Value '\(value)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch DecodingError.typeMismatch(let type, let context) {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch {
-            print("error: ", error)
-        }
-        
-        return nil
+    let encryptedPin: String?
+    private let privateKeychainTag: String?
+    
+    init?(json: Data, privateKeychainTag: String?) {
+        guard let viewpin = try? JSONDecoder().decode(ViewPin.self, from: json) else { return nil }
+        encryptedPin = viewpin.encryptedPin
+        self.privateKeychainTag = privateKeychainTag
     }
 }
 
 extension ViewPinResponse {
     
-    var pin: String {
-        guard let encryptedPin = encryptedPin else { return "" }
+    var pin: String? {
+        guard let encryptedPin = encryptedPin else { return nil }
         let data = encryptedPin.hexaData
-        guard let decryptedValue = RSAUtils.decrypt(cipherText: data, keyTag: GlobalConfig.shared.privateKeychainTag, algorithm: GlobalConfig.NIRSAAlgorithm) else { return "" }
+        guard let decryptedValue = RSAUtils.decrypt(cipherText: data, keyTag: privateKeychainTag, algorithm: GlobalConfig.NIRSAAlgorithm) else { return nil }
         return decryptedValue
     }
 }

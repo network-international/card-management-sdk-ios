@@ -27,9 +27,10 @@ class RSAUtils {
         var error: Unmanaged<CFError>?
         
         /// check if the text size is compatible with the key size
-        guard cipherText.count == SecKeyGetBlockSize(privateKey) else {
-            return nil
-        }
+        // This check happens with SecKeyCreateDecryptedData call, so need to update whole function to return error
+//        guard cipherText.count == SecKeyGetBlockSize(privateKey) else {
+//            return nil
+//        }
         
         /// perform decrypt, the return is Data
         guard let clearTextData = SecKeyCreateDecryptedData(privateKey,
@@ -42,9 +43,9 @@ class RSAUtils {
         guard let clearText = String(data: clearTextData, encoding: .utf8) else { return nil }
         return clearText
     }
-    
-    private static func encrypt(_ textToEncrypt: String, keyName: String, algorithm: SecKeyAlgorithm) -> Data? {
-        guard let tag = GlobalConfig.shared.publicKeychainTag else { return nil }
+    // Internal
+    static func encrypt(_ textToEncrypt: String, keyName: String, algorithm: SecKeyAlgorithm, publicKeychainTag: String?) -> Data? {
+        guard let tag = publicKeychainTag else { return nil }
         guard let publicKey = SecKey.loadFromKeychain(tag: tag) else {
             /// no public key
             return nil

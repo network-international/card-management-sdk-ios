@@ -13,11 +13,11 @@ public struct AccessToken: Codable {
     public let expiresIn: TimeInterval
     public let created: TimeInterval
     
-    public init(value: String, type: String? = nil, expiresIn: TimeInterval) {
+    public init(value: String, type: String? = nil, expiresIn: TimeInterval, created: TimeInterval = Date().timeIntervalSince1970) {
         self.value = value
         self.type = type
         self.expiresIn = expiresIn
-        self.created = Date().timeIntervalSince1970
+        self.created = created
     }
     /**
      {

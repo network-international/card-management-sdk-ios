@@ -40,6 +40,9 @@
 		BA70A1542B31C9FE00A196C9 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1532B31C9FE00A196C9 /* TokenStorage.swift */; };
 		BA70A1582B330DCD00A196C9 /* TokenNetworkFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1572B330DCD00A196C9 /* TokenNetworkFetcher.swift */; };
 		BA70A15A2B33103E00A196C9 /* ClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1592B33103E00A196C9 /* ClientCredentials.swift */; };
+		BA70A15C2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A15B2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift */; };
+		BA70A15E2B3EC2E500A196C9 /* AccessTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A15D2B3EC2E500A196C9 /* AccessTokenTests.swift */; };
+		BADE78BE2B4691150072EE48 /* EncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE78BD2B4691150072EE48 /* EncryptionTests.swift */; };
 		F42E80372943613300640860 /* CertificateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80362943613300640860 /* CertificateRequest.swift */; };
 		F42E80662943665600640860 /* DEREncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80652943665600640860 /* DEREncoding.swift */; };
 		F42E80682943668D00640860 /* CertificateName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80672943668D00640860 /* CertificateName.swift */; };
@@ -159,6 +162,9 @@
 		BA70A1532B31C9FE00A196C9 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		BA70A1572B330DCD00A196C9 /* TokenNetworkFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenNetworkFetcher.swift; sourceTree = "<group>"; };
 		BA70A1592B33103E00A196C9 /* ClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
+		BA70A15B2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFetchIntegrationTests.swift; sourceTree = "<group>"; };
+		BA70A15D2B3EC2E500A196C9 /* AccessTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenTests.swift; sourceTree = "<group>"; };
+		BADE78BD2B4691150072EE48 /* EncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTests.swift; sourceTree = "<group>"; };
 		F42E80362943613300640860 /* CertificateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequest.swift; sourceTree = "<group>"; };
 		F42E80652943665600640860 /* DEREncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEREncoding.swift; sourceTree = "<group>"; };
 		F42E80672943668D00640860 /* CertificateName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateName.swift; sourceTree = "<group>"; };
@@ -465,6 +471,9 @@
 			isa = PBXGroup;
 			children = (
 				F4E7697428EBF9E800CDC7E4 /* CardManagementSDKTests.swift */,
+				BA70A15D2B3EC2E500A196C9 /* AccessTokenTests.swift */,
+				BA70A15B2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift */,
+				BADE78BD2B4691150072EE48 /* EncryptionTests.swift */,
 			);
 			path = CardManagementSDKTests;
 			sourceTree = "<group>";
@@ -828,6 +837,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA70A15C2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift in Sources */,
+				BA70A15E2B3EC2E500A196C9 /* AccessTokenTests.swift in Sources */,
+				BADE78BE2B4691150072EE48 /* EncryptionTests.swift in Sources */,
 				F4E7697528EBF9E800CDC7E4 /* CardManagementSDKTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
