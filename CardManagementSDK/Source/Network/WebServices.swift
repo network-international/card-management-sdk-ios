@@ -9,7 +9,62 @@ import Foundation
 
 enum WebServices {
     
-    static func createRequest(_ baseUrl: URL, _ path: String, _ method: String, _ headers: Headers, _ token: String) -> URLRequest? {
+    static func createRequest(
+        baseUrl: URL?,
+        path: String,
+        method: WSHTTPMethod,
+        headers: Headers,
+        parameters: [String: Any]?,
+        postQuery: [String: Any]?,
+        token: String?
+    ) throws -> URLRequest {
+        
+        guard
+            let url = baseUrl?.appendingPathComponent(path), // Could not build the URL
+            let token = token, // Token is nil
+            var urlComponents = URLComponents(
+                url: url,
+                resolvingAgainstBaseURL: true
+            )
+        else {
+            throw NSError(domain: "MyDomain", code: 0)
+        }
+        
+        var queryItems = [URLQueryItem]()
+        var httpBody: Data?
+
+        postQuery?.forEach({ (key, value) in
+            queryItems.append(URLQueryItem(name: key, value: "\(value)"))
+        })
+         
+        if let params = parameters, !params.isEmpty {
+            if method == .GET {
+                for (key, value) in params {
+                    if let values = value as? [String] {
+                        values.forEach { item in
+                            queryItems.append(URLQueryItem(name: key, value: "\(item)"))
+                        }
+                    } else {
+                        queryItems.append(URLQueryItem(name: key, value: "\(value)"))
+                    }
+                }
+            } else {
+                let body = params.compactMapValues({ $0 })
+                httpBody = JSON(from: body).toData()
+            }
+        }
+        
+        if !queryItems.isEmpty {
+            urlComponents.queryItems = queryItems
+        }
+        
+        guard
+            let requestUrl = urlComponents.url
+        else {
+            throw NSError(domain: "MyDomain", code: 0)
+        }
+        var request = URLRequest(url: requestUrl)
+        request.httpBody = httpBody
         
         let authorization = "Bearer \(token)"
         let contentType = headers.contentType
@@ -19,17 +74,16 @@ enum WebServices {
         let financialId = headers.financialId
         let channelId = headers.channelId
         
-        var request = URLRequest(url: baseUrl.appendingPathComponent(path))
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         request.setValue(authorization, forHTTPHeaderField: WSConstants.HeaderKeys.authorization)
         request.setValue(contentType, forHTTPHeaderField: WSConstants.HeaderKeys.contentType)
         request.setValue(accept, forHTTPHeaderField: WSConstants.HeaderKeys.accept)
         request.setValue(uniqueReferenceCode, forHTTPHeaderField: WSConstants.HeaderKeys.uniqueReferenceCode)
         request.setValue(financialId, forHTTPHeaderField: WSConstants.HeaderKeys.financialId)
         request.setValue(channelId, forHTTPHeaderField: WSConstants.HeaderKeys.channelId)
+        //print("========== uniqueReferenceCode \(uniqueReferenceCode) =============")
         return request
     }
-    
 }
 
 

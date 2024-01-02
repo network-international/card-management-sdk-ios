@@ -18,13 +18,13 @@ public protocol NICardManagementTokenFetchable {
 }
 
 public struct TokenFetcherFactory {
-    public static func makeNetworkWithCache(urlString: String, credentials: ClientCredentials) -> NICardManagementTokenFetchable {
+    public static func makeNetworkWithCache(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval = 30) -> NICardManagementTokenFetchable {
         let storage = TokenKeychainStogage(credentials: credentials)
-        let network = TokenNetworkFetcher(urlString: urlString, credentials: credentials, timeoutInterval: 30)
+        let network = TokenNetworkFetcher(urlString: urlString, credentials: credentials, timeoutInterval: timeoutInterval)
         let repository = TokenRepository(tokenStorage: storage, networkFetcher: network)
         return repository
     }
-    public static func makeSimpleWrapper(tokenValue: String) -> NICardManagementTokenFetchable {
-        TokenFetcherSimple.make(token: tokenValue)
+    public static func makeSimpleWrapper(tokenValue: String, expiresIn: TimeInterval = 1800) -> NICardManagementTokenFetchable {
+        TokenFetcherSimple.make(token: tokenValue, expiresIn: expiresIn)
     }
 }

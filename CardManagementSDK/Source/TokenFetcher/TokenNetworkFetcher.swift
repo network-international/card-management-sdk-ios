@@ -17,7 +17,7 @@ class TokenNetworkFetcher: NICardManagementTokenFetchable {
     private let decoder = JSONDecoder()
     private var task: URLSessionDataTask?
     
-    init(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval = 30) {
+    init(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval) {
         if let url = URL(string: urlString) {
             var urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeoutInterval)
             urlRequest.httpMethod = WSHTTPMethod.POST.rawValue
