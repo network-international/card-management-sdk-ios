@@ -312,3 +312,6 @@ sdk.getPin { pin, errorResponse in
     //  handle here error and success
 }
 ```
+
+# Sample application
+Check example of usage in [Sample application](https://github.com/network-international/card-management-sdk-ios-sample-app)

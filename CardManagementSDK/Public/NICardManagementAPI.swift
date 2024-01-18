@@ -8,24 +8,32 @@
 import Foundation
 import UIKit
 
+public protocol NICardManagementLogger {
+    func logNICardManagementMessage(_ message: String)
+}
+
 public final class NICardManagementAPI {
     
     private let mobileApi: NIMobileAPI
+    private let logger: NICardManagementLogger?
     
     public init(
         rootUrl: String,
         cardIdentifierId: String,
         cardIdentifierType: String,
         bankCode: String,
-        tokenFetchable: NICardManagementTokenFetchable
+        tokenFetchable: NICardManagementTokenFetchable,
+        logger: NICardManagementLogger? = nil
     ) {
         self.mobileApi = NIMobileAPI(
             rootUrl: rootUrl,
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType,
             bankCode: bankCode,
-            tokenFetchable: tokenFetchable
+            tokenFetchable: tokenFetchable, 
+            logger: logger
         )
+        self.logger = logger
         UIFont.registerDefaultFonts()
     }
     

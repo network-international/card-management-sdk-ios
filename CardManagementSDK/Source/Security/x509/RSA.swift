@@ -7,11 +7,17 @@
 
 import Foundation
 
+struct RSAKeyx509 {
+    let value: String
+    let privateKeychainTag: String?
+    let publicKeychainTag: String?
+}
+
 class RSA {
     
     private init() { }
     
-    static func generatePublicKeyx509() -> String? {
+    static func generatePublicKeyx509() -> RSAKeyx509? {
         
         let now = Date()
         guard let identity = SecIdentity.create(
@@ -27,11 +33,11 @@ class RSA {
         if let cert = identity.certificate {
             let certData = SecCertificateCopyData(cert)
             
-            GlobalConfig.shared.privateKeychainTag = identity.privateKey?.keychainTag
-            GlobalConfig.shared.publicKeychainTag = cert.publicKey?.keychainTag
+            let privateKeychainTag = identity.privateKey?.keychainTag
+            let publicKeychainTag = cert.publicKey?.keychainTag
             
             let certBase64 = (certData as Data).base64EncodedString()
-            return certBase64
+            return RSAKeyx509(value: certBase64, privateKeychainTag: privateKeychainTag, publicKeychainTag: publicKeychainTag)
         }
         
         return nil

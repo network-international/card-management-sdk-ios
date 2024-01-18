@@ -18,36 +18,45 @@ class NIMobileAPI {
     private let cardIdentifierType: String
     private let bankCode: String
     
+    private var rsaKeysProvider: () -> RSAKeyx509?
+    private let logger: NICardManagementLogger?
+    
+    
     required init(
         rootUrl: String,
         cardIdentifierId: String,
         cardIdentifierType: String,
         bankCode: String,
-        tokenFetchable: NICardManagementTokenFetchable
+        tokenFetchable: NICardManagementTokenFetchable,
+        logger: NICardManagementLogger?
     ) {
         self.tokenFetchable = tokenFetchable
         self.cardIdentifierId = cardIdentifierId
         self.cardIdentifierType = cardIdentifierType
         self.bankCode = bankCode
         self.rootUrl = rootUrl
+        self.logger = logger
+        rsaKeysProvider = {
+            RSA.generatePublicKeyx509() // regenerate on each keys request
+        }
     }
     
     func retrieveCardDetails(completion: @escaping (CardDetailsResponse?, NIErrorResponse?) -> Void) {
         
-        guard let publicKey = retrievePublicKey() else {
+        guard let publicKey = rsaKeysProvider() else {
             completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
             return
         }
         
-        let cardParams = CardDetailsParams(publicKey: publicKey)
-        let requestBuilder: (NIConnectionProperties) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode] connectionProperties in
+        let cardParams = CardDetailsParams(publicKey: publicKey.value)
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode] connectionProperties, requestLogger in
             Request(.cardDetails(
                 cardParams: cardParams,
                 identifier: cardIdentifierId,
                 type: cardIdentifierType,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -63,7 +72,7 @@ class NIMobileAPI {
                 return
             }
             
-            if let cardDetails = CardDetailsResponse().parse(json: data) {
+            if let cardDetails = CardDetailsResponse(json: data, privateKeychainTag: publicKey.privateKeychainTag) {
                 completion(cardDetails, error)
             } else {
                 completion(nil, NIErrorResponse(error: NISDKErrors.PARSING_ERROR))
@@ -74,17 +83,20 @@ class NIMobileAPI {
     
     func cardLookup(completion: @escaping (CardLookupResponse?, NIErrorResponse?) -> Void) {
         
-        guard let publicKey = retrievePublicKey() else {
+        guard let publicKey = rsaKeysProvider() else {
             completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
             return
         }
         let params = CardLookupParams(
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType,
-            publicKey: publicKey
+            publicKey: publicKey.value
         )
-        let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
-            Request(.cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties))
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+            Request(
+                .cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties),
+                logger: requestLogger
+            )
         }
         sendRequest(builder: requestBuilder) { response, error in
             guard let response = response else {
@@ -97,7 +109,7 @@ class NIMobileAPI {
                 return
             }
             
-            if let res = CardLookupResponse().parse(json: data) {
+            if let res = CardLookupResponse(json: data, privateKeychainTag: publicKey.privateKeychainTag) {
                 completion(res, error)
             } else {
                 completion(nil, NIErrorResponse(error: NISDKErrors.PARSING_ERROR))
@@ -106,8 +118,8 @@ class NIMobileAPI {
     }
     
     func retrievePinCertificate(completion: @escaping (PinCertificateResponse?, NIErrorResponse?) -> Void) {
-        let requestBuilder: (NIConnectionProperties) -> Request = { [bankCode] connectionProperties in
-            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties))
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [bankCode] connectionProperties, requestLogger in
+            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -132,22 +144,22 @@ class NIMobileAPI {
     
     func retrievePin(completion: @escaping (ViewPinResponse?, NIErrorResponse?) -> Void) {
         
-        guard let publicKey = retrievePublicKey() else {
+        guard let publicKey = rsaKeysProvider() else {
             completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
             return
         }
         
         let params = ViewPinParams(
-            publicKey: publicKey,
+            publicKey: publicKey.value,
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType
         )
-        let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.viewPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -161,8 +173,9 @@ class NIMobileAPI {
                 return
             }
             
-            if let pin = ViewPinResponse().parse(json: data) {
-                completion(pin, error)
+            
+            if let resp = ViewPinResponse(json: data, privateKeychainTag: publicKey.privateKeychainTag) {
+                completion(resp, error)
             } else {
                 completion(nil, NIErrorResponse(error: NISDKErrors.PARSING_ERROR))
             }
@@ -170,10 +183,6 @@ class NIMobileAPI {
         }
     }
     
-    // MARK: - Private Utils
-    private func retrievePublicKey() -> String? {
-        return RSA.generatePublicKeyx509()
-    }
     
     func setPin(_ encryption: PinEncryption, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
         
@@ -188,12 +197,12 @@ class NIMobileAPI {
             encryptedPin: encryptedPin,
             encryptionMethod: encryption.method
         )
-        let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.setPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -211,12 +220,12 @@ class NIMobileAPI {
             encryptedPin: encryptedPin,
             encryptionMethod: encryption.method
         )
-        let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.verifyPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -234,32 +243,35 @@ class NIMobileAPI {
             encryptedNewPin: encryptedPin,
             encryptionMethod: encryption.0.method
         )
-        let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.changePin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
 }
 
 extension NIMobileAPI {
-    func sendRequest(retryAndRefreshToken: Bool = false, builder: @escaping (NIConnectionProperties) -> Request, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
+    func sendRequest(retryAndRefreshToken: Bool = false, builder: @escaping (NIConnectionProperties, RequestLogger) -> Request, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
         if retryAndRefreshToken { tokenFetchable.clearToken() }
         // retain self explicitry
         tokenFetchable.fetchToken { [self] result in
             switch result {
             case let .success(token):
-                let request = builder(.init(rootUrl: self.rootUrl, token: token.value))
+                let request = builder(.init(rootUrl: self.rootUrl, token: token.value), RequestLoggerAdapter(logger: self.logger))
                 request.sendAsync { response, error in
                     // if it is first attempt and we got 401 (auth error) - retry
                     if let error = error, error.errorCode == "401", !retryAndRefreshToken {
                         self.sendRequest(retryAndRefreshToken: true, builder: builder, completion: completion)
                         return
                     }
+                    self.logger?.logNICardManagementMessage("### used token: \(token.value)")
                     guard let response = response else {
+                        // clear old token if no response or error
+                        self.tokenFetchable.clearToken()
                         if error != nil {
                             completion(nil, error)
                         }
@@ -387,5 +399,27 @@ extension NIMobileAPI {
                 }
             }
         }
+    }
+}
+
+struct RequestLoggerAdapter: RequestLogger {
+    let logger: NICardManagementLogger?
+    
+    // MARK: - RequestLogger
+    
+    func logRequestStarted(_ request: URLRequest) {
+        logger?.logNICardManagementMessage(
+            "### request: \(request)"
+            + "headers: \(request.allHTTPHeaderFields ?? [:])"
+            + "httpBody: \(String(describing: request.httpBody.flatMap({ String(data: $0, encoding: .utf8) })))"
+        )
+    }
+    
+    func logRequestCompleted(_ request: URLRequest, response: URLResponse?, data: Data?, error: Error?) {
+        logger?.logNICardManagementMessage(
+            "### response: \(String(describing: response))\n"
+            + "error: \(String(describing: error))\n"
+            + "data: \(String(describing: data.flatMap({ String(data: $0, encoding: .utf8) })))"
+        )
     }
 }
