@@ -7,20 +7,28 @@
 
 import Foundation
 
+protocol RequestLogger {
+    func logRequestStarted(_ request: URLRequest)
+    func logRequestCompleted(_ request: URLRequest, response: URLResponse?, data: Data?, error: Error?)
+}
 
 class Request {
     
     var endpoint: APIEndpoint
+    private let logger: RequestLogger
     
-    init(_ endpoint: APIEndpoint) {
+    init(_ endpoint: APIEndpoint, logger: RequestLogger) {
         self.endpoint = endpoint
+        self.logger = logger
     }
     
     func sendAsync(_ completionHandler: @escaping (Response?, NIErrorResponse?) -> Void) {
         DispatchQueue.global(qos: .default).async {
             do {
                 guard let request = try self.endpoint.asURLRequest() else { return }
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                self.logger.logRequestStarted(request)
+                let task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
+                    self.logger.logRequestCompleted(request, response: response, data: data, error: error)
                     let res = Response(data: data, response: response, error: error as NSError?)
                     var error = NIErrorResponse()
                     error = error.withResponse(response: res) ?? error

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import CardManagementSDK
+@testable import NICardManagementSDK
 
 final class CardManagementSDKTests: XCTestCase {
 

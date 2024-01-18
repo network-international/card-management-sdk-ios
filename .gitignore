@@ -2,3 +2,4 @@
 /.idea
 UserInterfaceState.xcuserstate
 xcschememanagement.plist
+*.xcbkptlist

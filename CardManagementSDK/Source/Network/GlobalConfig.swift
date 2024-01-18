@@ -21,10 +21,6 @@ class GlobalConfig {
     
     static let NIRSAAlgorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1
     
-    // Keychain tag
-    var privateKeychainTag: String? = nil
-    var publicKeychainTag: String? = nil
-    
     // Language
     var language: NILanguage? = nil
     
