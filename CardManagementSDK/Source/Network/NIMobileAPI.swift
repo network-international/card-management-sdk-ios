@@ -268,7 +268,6 @@ extension NIMobileAPI {
                         self.sendRequest(retryAndRefreshToken: true, builder: builder, completion: completion)
                         return
                     }
-                    self.logger?.logNICardManagementMessage("### used token: \(token.value)")
                     guard let response = response else {
                         // clear old token if no response or error
                         self.tokenFetchable.clearToken()
@@ -408,18 +407,52 @@ struct RequestLoggerAdapter: RequestLogger {
     // MARK: - RequestLogger
     
     func logRequestStarted(_ request: URLRequest) {
+        let headers = request.allHTTPHeaderFields?.keys.joined(separator: ", ") ?? ""
+        let bodyFields = request.httpBody
+            .flatMap({
+                try? JSONSerialization.jsonObject(with: $0, options: []) as? [String : Any]
+            })
+            .flatMap({ "[" + $0.keys.joined(separator: ", ") + "]" })
+        let refCode = request.allHTTPHeaderFields?["Unique-Reference-Code"] ?? "-"
+        let authorization: String
+        let authorizationParts = request.allHTTPHeaderFields?["Authorization"]?.split(separator: " ")
+        if let authorizationParts = authorizationParts,
+            authorizationParts.count == 2,
+            authorizationParts[0] == "Bearer"
+        {
+            let token = authorizationParts[1]
+            let masked = token.count > 8
+            ? (token.prefix(4) + "****" + token.suffix(4))
+            : "****"
+            authorization = "\(authorizationParts[0]) \(masked)"
+        } else {
+            authorization = "unknown"
+        }
         logger?.logNICardManagementMessage(
-            "### request: \(request)"
-            + "headers: \(request.allHTTPHeaderFields ?? [:])"
-            + "httpBody: \(String(describing: request.httpBody.flatMap({ String(data: $0, encoding: .utf8) })))"
+            "\n### request: \(request.url?.absoluteString ?? "")"
+            + "\nheaders (keys): [\(headers)]"
+            + "\nReference code: \(refCode)"
+            + "\nAuthorization: \(authorization)"
+            + "\nbody fields: \(bodyFields ?? "")"
+            + "\n"
         )
     }
     
     func logRequestCompleted(_ request: URLRequest, response: URLResponse?, data: Data?, error: Error?) {
+        let statusCode = (response as? HTTPURLResponse)?.statusCode
+        let responseData = statusCode == 200
+        ? data
+            .flatMap({
+                (try? JSONSerialization.jsonObject(with: $0, options: []) as? [String : Any])
+            })
+            .flatMap({ "[" + $0.keys.joined(separator: ", ") + "]" })
+        : data.flatMap({ String(data: $0, encoding: .utf8) })
         logger?.logNICardManagementMessage(
-            "### response: \(String(describing: response))\n"
-            + "error: \(String(describing: error))\n"
-            + "data: \(String(describing: data.flatMap({ String(data: $0, encoding: .utf8) })))"
+            "\n### response: \(response?.url?.absoluteString ?? "")"
+            + "\nstatus code: \(statusCode?.description ?? "")"
+            + "\nerror: \(String(describing: error))"
+            + "\nresponse fields: \(responseData ?? "")"
+            + "\n"
         )
     }
 }
