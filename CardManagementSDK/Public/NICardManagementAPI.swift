@@ -78,7 +78,7 @@ public final class NICardManagementAPI {
                 completion(nil, error){}
             }
             if let response = response {
-                let result = NICardDetailsResponse(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.holderName)
+                let result = NICardDetailsResponse(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
                 completion(result, nil){}
             }
         }
