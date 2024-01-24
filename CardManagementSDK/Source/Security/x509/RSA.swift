@@ -8,39 +8,53 @@
 import Foundation
 
 struct RSAKeyx509 {
-    let value: String
-    let privateKeychainTag: String?
-    let publicKeychainTag: String?
+    let cert: String
+    let privateKey: SecKey
 }
 
 class RSA {
     
     private init() { }
     
-    static func generatePublicKeyx509() -> RSAKeyx509? {
+    static func generateRSAKeyx509(tag: Data, isPermanent: Bool) throws -> RSAKeyx509 {
         
         let now = Date()
-        guard let identity = SecIdentity.create(
+        let certInfo = try SecCertificate.create(
             ofSize: 4096,
             subjectCommonName: "NICardManagementSDK_iOS", //"CN=PaulaR, OU=ITdepartment, O=Endava, L=Cluj, ST=Cluj, C=Romania"
             subjectEmailAddress: "paula.radu@endava.com",
             validFrom: now.addingTimeInterval(-24 * 3600),
-            validTo: now.addingTimeInterval(24 * 3600)
-        ) else {
-            return nil
-        }
+            // consider self.validFrom.addingTimeInterval(365*24*3600)
+            validTo: now.addingTimeInterval(24 * 3600),
+            tag: tag,
+            isPermanent: isPermanent
+        )
         
-        if let cert = identity.certificate {
-            let certData = SecCertificateCopyData(cert)
-            
-            let privateKeychainTag = identity.privateKey?.keychainTag
-            let publicKeychainTag = cert.publicKey?.keychainTag
-            
-            let certBase64 = (certData as Data).base64EncodedString()
-            return RSAKeyx509(value: certBase64, privateKeychainTag: privateKeychainTag, publicKeychainTag: publicKeychainTag)
-        }
         
-        return nil
+        /*
+        if use keychain and identity approach {
+            let pubKey = try certInfo.cert.publicKey()
+            let privKey = certInfo.privKey // SecKey.loadFromKeychain(tag: privtag)
+            let identity = SecIdentity.findIdentity(forPrivateKey:privKey, publicKey:pubKey)
+            if let cert = identity.certificate {
+                let certData = SecCertificateCopyData(cert)
+                
+                let privateKeychainTag = identity.privateKey?.keychainTag
+                let publicKeychainTag = cert.publicKey?.keychainTag
+                
+                return RSAKeyx509(cert: certBase64, privateKey: privKey)
+            }
+        }
+         */
+        
+        let certData = SecCertificateCopyData(certInfo.cert)
+        let certBase64 = (certData as Data).base64EncodedString()
+        // alternativelly only public key could be used
+        // instead of it's wrapper
+        // let pubKeyData = SecKeyCopyExternalRepresentation(cert.publicKey, &error)
+        return RSAKeyx509(cert: certBase64, privateKey: certInfo.privKey)
     }
     
 }
+
+

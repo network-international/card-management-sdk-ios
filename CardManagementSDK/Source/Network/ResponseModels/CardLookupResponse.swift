@@ -8,6 +8,9 @@
 import Foundation
 
 class CardLookupResponse {
+    private struct ClearInfo {
+        let cardNumber: String
+    }
     private struct CardLookup: Codable {
         ///Card Identifier Type:
         /// - EXID - External Id
@@ -24,35 +27,21 @@ class CardLookupResponse {
         }
     }
     
-    ///Card Identifier Type:
-    /// - EXID - External Id
-    /// - CONTRACT_NUMBER - Clear PAN
-    let cardIdentifierId: String?
+    let cardNumber: String
+    private let cardIdentifierType: String?
     
-    /// Identifier related to the Identifier Type
-    let cardIdentifierType: String?
-    
-    private let privateKeychainTag: String?
-    
-    init?(json: Data, privateKeychainTag: String?) {
-        guard let parsed = try? JSONDecoder().decode(CardLookup.self, from: json) else { return nil }
-        cardIdentifierId = parsed.cardIdentifierId
+    init(json: Data, privateKey: SecKey) throws {
+        let parsed = try JSONDecoder().decode(CardLookup.self, from: json)
+        cardNumber = try Self.decrypt(privateKey: privateKey, from: parsed).cardNumber
         cardIdentifierType = parsed.cardIdentifierType
-        self.privateKeychainTag = privateKeychainTag
     }
     
-}
-
-extension CardLookupResponse {
-    
-    var cardNumber: String? {
-        guard let encryptedCardIdentifierId = cardIdentifierId else { return nil }
-        let data = encryptedCardIdentifierId.hexaData
-        guard let decryptedValue = RSAUtils.decrypt(cipherText: data, keyTag: privateKeychainTag, algorithm: GlobalConfig.NIRSAAlgorithm) else {
-            return nil
-        }
-        let clearCardIdentifierId = decryptedValue.hexStringtoAscii()
-        return clearCardIdentifierId
+    private static func decrypt(privateKey: SecKey, from cardLookup: CardLookup) throws -> ClearInfo {
+        guard
+            let encryptedCardIdentifierId = cardLookup.cardIdentifierId
+        else { throw RSADecryptError.emptyData }
+        let algorithm = GlobalConfig.NIRSAAlgorithm
+        let decryptedValue = try RSAUtils.decrypt(cipherText: encryptedCardIdentifierId.hexaData, privateKey: privateKey, algorithm: algorithm)
+        return .init(cardNumber: decryptedValue.hexStringtoAscii())
     }
-    
 }

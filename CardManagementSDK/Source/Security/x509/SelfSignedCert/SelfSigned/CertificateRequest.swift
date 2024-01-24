@@ -41,22 +41,12 @@ struct CertificateRequest {
     var keyUsage: KeyUsage
     
     init(forPublicKey key:SecKey, subjectCommonName:String, subjectEmailAddress:String, keyUsage:KeyUsage,
-                      validFrom:Date? = nil, validTo:Date? = nil, serialNumber:UInt64? = nil) {
+                      validFrom:Date, validTo:Date, serialNumber:UInt64? = nil) {
         self.publicKey = key
         self.subjectCommonName = subjectCommonName
         self.subjectEmailAddress = subjectEmailAddress
-        if let from = validFrom {
-            self.validFrom = from
-        }
-        else {
-            self.validFrom = Date()
-        }
-        if let to = validTo {
-            self.validTo = to
-        }
-        else {
-            self.validTo = self.validFrom.addingTimeInterval(365*24*3600)
-        }
+        self.validFrom = validFrom
+        self.validTo = validTo
         
         if let serial = serialNumber {
             self.serialNumber = serial
@@ -70,7 +60,19 @@ struct CertificateRequest {
     }
     
     func encodePublicKey(_ key:SecKey) -> [UInt8]? {
-        return key.keyData
+        // try use key itself
+        // key should be extractable, so it is not suitable for private by default
+        var error: Unmanaged<CFError>?
+        guard let data = SecKeyCopyExternalRepresentation(key, &error) as? Data else {
+            // print(error!.takeRetainedValue() as Error)
+            // fallback to keychain scenario - DER format
+            return key.keyDataOfRefInKeychain
+        }
+        
+        // kSecAttrKeyTypeRSA    PKCS#1 format
+        var bytes = [UInt8](repeating: 0, count: data.count)
+        (data as NSData).getBytes(&bytes, length:data.count)
+        return bytes
     }
     
     func selfSign(withPrivateKey key:SecKey) -> [UInt8]? {

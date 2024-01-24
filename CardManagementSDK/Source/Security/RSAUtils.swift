@@ -7,53 +7,42 @@
 
 import Foundation
 
+enum RSADecryptError: Error {
+    case algorithmNotSupported(SecKeyAlgorithm)
+    case decryptError(Error)
+    case emptyData
+}
 
 class RSAUtils {
     
     private init() { }
     
-    static func decrypt(cipherText: Data, keyTag: String?, algorithm: SecKeyAlgorithm) -> String? {
-        guard let tag = keyTag else { return nil }
-        guard let privateKey = SecKey.loadFromKeychain(tag: tag) else {
-            /// no private key
-            return nil
-        }
+    static func decrypt(cipherText: Data, privateKey: SecKey, algorithm: SecKeyAlgorithm) throws -> String {
         /// check if the private key can decrypt
         guard SecKeyIsAlgorithmSupported(privateKey, .decrypt, algorithm) else {
-//            print("Algorithm \(algorithm) NOT Supported")
-            return nil
+            throw RSADecryptError.algorithmNotSupported(algorithm)
         }
         
         var error: Unmanaged<CFError>?
-        
-        /// check if the text size is compatible with the key size
-        // This check happens with SecKeyCreateDecryptedData call, so need to update whole function to return error
-//        guard cipherText.count == SecKeyGetBlockSize(privateKey) else {
-//            return nil
-//        }
-        
         /// perform decrypt, the return is Data
         guard let clearTextData = SecKeyCreateDecryptedData(privateKey,
                                                             algorithm,
                                                             cipherText as CFData,
                                                             &error) as Data? else {
-            return nil
+            throw RSADecryptError.decryptError(error!.takeRetainedValue() as Error)
         }
         
-        guard let clearText = String(data: clearTextData, encoding: .utf8) else { return nil }
+        guard 
+            let clearText = String(data: clearTextData, encoding: .utf8)
+        else { 
+            throw RSADecryptError.emptyData
+        }
         return clearText
     }
     // Internal
-    static func encrypt(_ textToEncrypt: String, keyName: String, algorithm: SecKeyAlgorithm, publicKeychainTag: String?) -> Data? {
-        guard let tag = publicKeychainTag else { return nil }
-        guard let publicKey = SecKey.loadFromKeychain(tag: tag) else {
-            /// no public key
-            return nil
-        }
-        /// check if the private key can decrypt
+    static func encrypt(_ textToEncrypt: String, publicKey: SecKey, algorithm: SecKeyAlgorithm) throws -> Data {
         guard SecKeyIsAlgorithmSupported(publicKey, .encrypt, algorithm) else {
-//            print("Algorithm \(algorithm) NOT Supported")
-            return nil
+            throw RSADecryptError.algorithmNotSupported(algorithm)
         }
         
         var error: Unmanaged<CFError>?
@@ -63,7 +52,7 @@ class RSAUtils {
                                                          algorithm,
                                                          textToEncryptData as CFData,
                                                          &error) as Data? else {
-            return nil
+            throw RSADecryptError.decryptError(error!.takeRetainedValue() as Error)
         }
         return cipherText
     }
