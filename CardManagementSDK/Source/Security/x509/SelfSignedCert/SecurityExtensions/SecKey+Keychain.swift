@@ -12,7 +12,7 @@ extension SecKey {
      * - returns: the tag of the key
      */
     public var keychainTag: String? {
-        guard let keyData = self.keyData else {
+        guard let keyData = self.keyDataOfRefInKeychain else {
             return nil
         }
         return SecKey.keychainTag(forKeyData: keyData)

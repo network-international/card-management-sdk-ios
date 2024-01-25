@@ -5,55 +5,25 @@ import Foundation
 import Security
 
 
+public enum KeychainError: Error {
+    /**
+     * Indicates that generating a key pair has failed. The associated osStatus is the return value
+     * of `SecKeyGeneratePair`.
+     *
+     * - parameter status: The return value of SecKeyGeneratePair. If this is `errSecSuccess`
+     *                       then something else failed.
+     */
+    case unhandledError(status: OSStatus?)
+    // public key is not available for specified key.
+    case publicKeyNotAvailable
+    // See "Security Error Codes" (SecBase.h).
+    case generateKeyFailed(error: Error)
+    // status = save to keychain status
+    case certCreationFailed(status: OSStatus?)
+}
+
 extension SecIdentity
 {
-
-    /**
-     * Create an identity using a self-signed certificate. This can fail in many ways, in which case it will return `nil`.
-     * Since potential failures are non-recoverable, no details are provided in that case.
-     *
-     * - parameter ofSize: size of the keys, in bits; default is 3072
-     * - parameter subjectCommonName: the common name of the subject of the self-signed certificate that is created
-     * - parameter subjectEmailAddress: the email address of the subject of the self-signed certificate that is created
-     * - returns: The created identity, or `nil` when there was an error.
-     */
-    public static func create(
-        ofSize bits:UInt = 4096,
-        subjectCommonName name:String,
-        subjectEmailAddress email:String,
-        validFrom:Date? = nil,
-        validTo:Date? = nil
-    ) -> SecIdentity? {
-        let privKey: SecKey
-        let pubKey: SecKey
-        do {
-            (privKey,pubKey) = try SecKey.generateKeyPair(ofSize: bits)
-        }
-        catch {
-            return nil
-        }
-        let certRequest = CertificateRequest(
-            forPublicKey:pubKey,
-            subjectCommonName: name,
-            subjectEmailAddress: email,
-            keyUsage: [.DigitalSignature, .DataEncipherment],
-            validFrom: validFrom,
-            validTo: validTo
-        )
-
-        guard let signedBytes = certRequest.selfSign(withPrivateKey:privKey),
-            let signedCert = SecCertificateCreateWithData(nil, Data(signedBytes) as CFData) else {
-            return nil
-        }
-
-        let err = signedCert.storeInKeychain()
-        guard err == errSecSuccess else {
-            return nil
-        }
-
-        return findIdentity(forPrivateKey:privKey, publicKey:pubKey)
-    }
-
     /**
      * Helper method that tries to load an identity from the keychain.
      *
@@ -69,8 +39,8 @@ extension SecIdentity
         // Since the way identities are stored in the keychain is sparsely documented at best,
         // double-check that this identity is the one we're looking for.
         guard let priv = identity.privateKey,
-            let retrievedKeyData = priv.keyData,
-            let originalKeyData = privKey.keyData, retrievedKeyData == originalKeyData else {
+            let retrievedKeyData = priv.keyDataOfRefInKeychain,
+            let originalKeyData = privKey.keyDataOfRefInKeychain, retrievedKeyData == originalKeyData else {
             return nil
         }
 
@@ -102,7 +72,7 @@ extension SecIdentity
      * - returns: an array of identities if found, or `nil`
      */
     static func findAll(withPublicKey pubKey:SecKey) -> [SecIdentity]? {
-        guard let keyData = pubKey.keyData else {
+        guard let keyData = pubKey.keyDataOfRefInKeychain else {
             return nil
         }
         let sha1 = Digest(algorithm: .sha1)

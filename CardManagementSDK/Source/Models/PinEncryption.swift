@@ -8,30 +8,29 @@
 import Foundation
 
 struct PinEncryption {
-    var pin: String
-    var pan: String
-    var certificate: String
+    let pin: String
+    let pan: String
+    let certificate: String
     
-    var encryptedPinBlock: String? {
-        /// Create  pin block
-        let pinBlock = PinBlock.createPinBlock(pin, pan)
-        /// Encrypt pin block
-        let encrypted = encryptPin(pinBlock, certificate: certificate)
-        return encrypted
-    }
+    let encryptedPinBlock: String
     
     let method: String = "ASYMMETRIC_ENC"
     let algorithm: String = ""  // TODO: will be a constant value; IT IS NOT USED YET IN THE API - no need to send it in the request body
     
-    init(pin: String, pan: String, certificate: String) {
+    init(pin: String, pan: String, certificate: String) throws {
         self.pin = pin
         self.pan = pan
         self.certificate = certificate
+        
+        /// Create  pin block
+        let pinBlock = PinBlock.createPinBlock(pin, pan)
+        /// Encrypt pin block
+        encryptedPinBlock = try Self.encryptPin(pinBlock, certificate: certificate)
     }
     
     /// Create & encrypt pin block
-    private func encryptPin(_ pinBlock: String, certificate: String) -> String? {
-        let encryptedPinBlock = RSAUtils.encrypt(string: pinBlock, certificate: certificate)
+    private static func encryptPin(_ pinBlock: String, certificate: String) throws -> String {
+        let encryptedPinBlock = try RSAUtils.encrypt(string: pinBlock, certificate: certificate)
         return encryptedPinBlock
     }
     

@@ -8,30 +8,31 @@
 import Foundation
 
 class ViewPinResponse: NSObject, Codable {
+    private struct ClearInfo {
+        let pin: String
+    }
+    
     private struct ViewPin: Codable {
-        var encryptedPin: String?                   /// Encrypted PIN under the provided public key
+        let encryptedPin: String?                   /// Encrypted PIN under the provided public key
      
         enum CodingKeys: String, CodingKey {
             case encryptedPin = "encrypted_pin"
         }
     }
     
-    let encryptedPin: String?
-    private let privateKeychainTag: String?
+    let pin: String
     
-    init?(json: Data, privateKeychainTag: String?) {
-        guard let viewpin = try? JSONDecoder().decode(ViewPin.self, from: json) else { return nil }
-        encryptedPin = viewpin.encryptedPin
-        self.privateKeychainTag = privateKeychainTag
+    init(json: Data, privateKey: SecKey) throws {
+        let viewpin = try JSONDecoder().decode(ViewPin.self, from: json)
+        pin = try Self.decrypt(privateKey: privateKey, from: viewpin).pin
     }
-}
-
-extension ViewPinResponse {
     
-    var pin: String? {
-        guard let encryptedPin = encryptedPin else { return nil }
-        let data = encryptedPin.hexaData
-        guard let decryptedValue = RSAUtils.decrypt(cipherText: data, keyTag: privateKeychainTag, algorithm: GlobalConfig.NIRSAAlgorithm) else { return nil }
-        return decryptedValue
+    private static func decrypt(privateKey: SecKey, from viewpin: ViewPin) throws -> ClearInfo {
+        guard
+            let encryptedPin = viewpin.encryptedPin
+        else { throw RSADecryptError.emptyData }
+        let algorithm = GlobalConfig.NIRSAAlgorithm
+        let decryptedValue = try RSAUtils.decrypt(cipherText: encryptedPin.hexaData, privateKey: privateKey, algorithm: algorithm)
+        return .init(pin: decryptedValue)
     }
 }
