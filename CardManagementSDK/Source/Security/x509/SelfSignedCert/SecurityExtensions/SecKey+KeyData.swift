@@ -18,7 +18,7 @@ extension SecKey {
      *
      * - returns: the key's raw data if it could be retrieved from the keychain, or `nil`
      */
-    public var keyData: [UInt8]? {
+    public var keyDataOfRefInKeychain: [UInt8]? {
         let query = [ kSecValueRef as String : self, kSecReturnData as String : true ] as [String : Any]
         var out: AnyObject?
         guard errSecSuccess == SecItemCopyMatching(query as CFDictionary, &out) else {
@@ -34,13 +34,14 @@ extension SecKey {
     }
 
     /**
-     * Creates a SecKey based on its raw data, as provided by `keyData`. The key is also
+     * Creates a SecKey based on its raw data, as provided by `keyDataOfRefInKeychain`. The key is also
      * imported into the keychain. If the key already existed in the keychain, it will simply
      * be returned.
      *
-     * - parameter data: the raw key data as returned by `keyData`
+     * - parameter data: the raw key data as returned by `keyDataOfRefInKeychain`
      * - returns: the key if it was successfully created and imported, or nil
      */
+    // TODO: consider using `SecKeyCreateWithData`
     static public func create(withData data: [UInt8]) -> SecKey? {
         let tag = SecKey.keychainTag(forKeyData: data)
         let cfData = CFDataCreate(kCFAllocatorDefault, data, data.count)

@@ -7,6 +7,65 @@ import Foundation
 public extension SecCertificate {
 
     /**
+     * Create an identity using a self-signed certificate. This can fail in many ways, in which case it will return `nil`.
+     * Since potential failures are non-recoverable, no details are provided in that case.
+     *
+     * - parameter ofSize: size of the keys, in bits; default is 3072
+     * - parameter subjectCommonName: the common name of the subject of the self-signed certificate that is created
+     * - parameter subjectEmailAddress: the email address of the subject of the self-signed certificate that is created
+     * - parameter tag: "com.example.keys.bankCode".data(using: .utf8)!
+     * - parameter isPermanent: if it should be stored in keychain
+     * - returns: The created identity, or `nil` when there was an error.
+     */
+    // Note: SecItemDelete blocks the calling thread, so it can cause your app’s UI to hang if called from the main thread.
+    static func create(
+        ofSize bits:UInt = 4096,
+        subjectCommonName name:String,
+        subjectEmailAddress email:String,
+        validFrom: Date,
+        validTo: Date,
+        tag: Data,
+        isPermanent: Bool
+    ) throws -> (cert: SecCertificate, privKey: SecKey) {
+        // consider deleting old key
+        if isPermanent {
+            let query: NSDictionary = [
+                kSecClass as String: kSecClassKey,
+                kSecAttrApplicationTag as String: tag as AnyObject,
+                kSecAttrKeyType as String: kSecAttrKeyTypeRSA
+            ]
+            let delstatus = SecItemDelete(query as CFDictionary)
+            guard delstatus == errSecSuccess || delstatus == errSecItemNotFound else {
+                throw KeychainError.unhandledError(status: delstatus)
+            }
+        }
+        let keyPair = try SecKey.generateKeyPair(ofSize: bits, tag: tag, isPermanent: isPermanent)
+        let certRequest = CertificateRequest(
+            forPublicKey:keyPair.publicKey,
+            subjectCommonName: name,
+            subjectEmailAddress: email,
+            keyUsage: [.DigitalSignature, .DataEncipherment],
+            validFrom: validFrom,
+            validTo: validTo
+        )
+
+        guard
+            let signedBytes = certRequest.selfSign(withPrivateKey:keyPair.privateKey),
+            let signedCert = SecCertificateCreateWithData(nil, Data(signedBytes) as CFData)
+        else {
+            throw KeychainError.certCreationFailed(status: nil)
+        }
+        
+        if isPermanent {
+            let err = signedCert.storeInKeychain()
+            guard err == errSecSuccess else {
+                throw KeychainError.certCreationFailed(status: err)
+            }
+        }
+
+        return (signedCert, keyPair.privateKey)
+    }
+    /**
      * Loads a certificate from a DER encoded file. Wraps `SecCertificateCreateWithData`.
      *
      * - parameter file: The DER encoded file from which to load the certificate
@@ -35,15 +94,18 @@ public extension SecCertificate {
      *
      * - returns: the public key if possible
      */
-    var publicKey: SecKey? {
+    func publicKey() throws -> SecKey {
         let policy: SecPolicy = SecPolicyCreateBasicX509()
-        var uTrust: SecTrust?
-        let resultCode = SecTrustCreateWithCertificates([self] as CFArray, policy, &uTrust)
-        if (resultCode != errSecSuccess) {
-            return nil
+        var trust: SecTrust?
+        let resultCode = SecTrustCreateWithCertificates([self] as CFArray, policy, &trust)
+        guard resultCode == errSecSuccess else {
+            throw KeychainError.certCreationFailed(status: resultCode)
         }
-        let trust: SecTrust = uTrust!
-        return SecTrustCopyPublicKey(trust)
+        guard let result = SecTrustCopyPublicKey(trust!) else {
+            // this can happen if the public key algorithm is not supported
+            throw KeychainError.publicKeyNotAvailable
+        }
+        return result
     }
 
 }
