@@ -23,9 +23,8 @@ public class TokenFetcherSimple {
 }
 
 extension TokenFetcherSimple: NICardManagementTokenFetchable {
-    public func fetchToken(completion: @escaping (Result<AccessToken, TokenError>) -> Void) {
-        let token = AccessToken(value: tokenString, type: "bearer", expiresIn: expiresIn)
-        DispatchQueue.main.async { completion(.success(token)) }
+    public func fetchToken() async throws -> NIAccessToken {
+        NIAccessToken(value: tokenString, type: "bearer", expiresIn: expiresIn)
     }
     public func clearToken() {
         tokenString = ""

@@ -29,7 +29,7 @@ open class Digest : Updateable
     /// For CommonCrypto this will always be `.Success`.
     /// It is here to provide for engines which can fail.
     ///
-    open var status = Status.success
+    open var status = NICryptoStatus.success
 
     ///
     /// Enumerates available Digest algorithms

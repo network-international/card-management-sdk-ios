@@ -13,7 +13,7 @@ import Foundation
 ///
 public protocol Updateable {
     /// Status of the calculation.
-    var status : Status { get }
+    var status : NICryptoStatus { get }
     /// Low-level update routine.
     /// Updates the calculation with the contents of a data buffer.
     /// - parameter buffer: pointer to the data buffer 
@@ -34,7 +34,7 @@ extension Updateable {
     public func update(data: Data) -> Self?
     {
         update(buffer: (data as NSData).bytes, byteCount:size_t(data.count))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift array.
@@ -44,7 +44,7 @@ extension Updateable {
     public func update(byteArray: [UInt8]) -> Self?
     {
         update(buffer: byteArray, byteCount: size_t(byteArray.count))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift string.
@@ -55,7 +55,7 @@ extension Updateable {
     public func update(string: String) -> Self?
     {
         update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
     
     ///
@@ -66,7 +66,7 @@ extension Updateable {
     public func update(_ data: Data) -> Self?
     {
         update(buffer: (data as NSData).bytes, byteCount:size_t(data.count))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift array.
@@ -76,7 +76,7 @@ extension Updateable {
     public func update(_ byteArray: [UInt8]) -> Self?
     {
         update(buffer: byteArray, byteCount: size_t(byteArray.count))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift string.
@@ -87,6 +87,6 @@ extension Updateable {
     public func update(_ string: String) -> Self?
     {
         update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
-        return self.status == Status.success ? self : nil
+        return self.status == NICryptoStatus.success ? self : nil
     }
 }

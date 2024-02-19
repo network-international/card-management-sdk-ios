@@ -9,8 +9,8 @@ import Foundation
 import Security
 
 protocol TokenStorage {
-    func saveToken(_ token: AccessToken) throws
-    func getToken() throws -> AccessToken?
+    func saveToken(_ token: NIAccessToken) throws
+    func getToken() throws -> NIAccessToken?
     func clearToken()
 }
 
@@ -27,14 +27,14 @@ class TokenInMemoryStogage: TokenStorage {
     }
     
     // MARK: - TokenStorage
-    func saveToken(_ token: AccessToken) throws {
+    func saveToken(_ token: NIAccessToken) throws {
         let encoded = try encoder.encode(token)
         cache.setObject(encoded as NSData, forKey: key)
     }
     
-    func getToken() throws -> AccessToken? {
+    func getToken() throws -> NIAccessToken? {
         guard let savedData = cache.object(forKey: key) as? Data else { return nil }
-        let token = try decoder.decode(AccessToken.self, from: savedData)
+        let token = try decoder.decode(NIAccessToken.self, from: savedData)
         return token
     }
     
@@ -48,7 +48,7 @@ class TokenKeychainStogage: TokenStorage {
         case saveError
     }
     
-    private let credentials: ClientCredentials
+    private let credentials: NIClientCredentials
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
@@ -56,12 +56,12 @@ class TokenKeychainStogage: TokenStorage {
         "\(credentials.clientId):\(credentials.clientSecret)"
     }
     
-    init(credentials: ClientCredentials) {
+    init(credentials: NIClientCredentials) {
         self.credentials = credentials
     }
     
     // MARK: - TokenStorage
-    func saveToken(_ token: AccessToken) throws {
+    func saveToken(_ token: NIAccessToken) throws {
         let encoded = try encoder.encode(token)
         
         // check if saved and update
@@ -82,7 +82,7 @@ class TokenKeychainStogage: TokenStorage {
         }
     }
     
-    func getToken() throws -> AccessToken? {
+    func getToken() throws -> NIAccessToken? {
         let query = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: accountAttr,
@@ -101,7 +101,7 @@ class TokenKeychainStogage: TokenStorage {
             let savedData = existingItem[kSecValueData as String] as? Data
         else { return nil }
 
-        let token = try decoder.decode(AccessToken.self, from: savedData)
+        let token = try decoder.decode(NIAccessToken.self, from: savedData)
         return token
     }
     

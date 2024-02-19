@@ -11,7 +11,7 @@ import XCTest
 final class AccessTokenTests: XCTestCase {
     func testTokenCreation() throws {
         let createdNow = Date().timeIntervalSince1970
-        let token = AccessToken(value: "my token", expiresIn: 3, created: createdNow)
+        let token = NIAccessToken(value: "my token", expiresIn: 3, created: createdNow)
         XCTAssertEqual(token.value, "my token")
         XCTAssertEqual(token.expiresIn, 3)
         XCTAssertEqual(token.created, createdNow)
@@ -20,7 +20,7 @@ final class AccessTokenTests: XCTestCase {
 
     func testTokenNotExpired() throws {
         let createdNow = Date().timeIntervalSince1970
-        let token = AccessToken(value: "my token", expiresIn: 3, created: createdNow)
+        let token = NIAccessToken(value: "my token", expiresIn: 3, created: createdNow)
         XCTAssertEqual(token.value, "my token")
         XCTAssertEqual(token.expiresIn, 3)
         XCTAssertEqual(token.created, createdNow)
@@ -29,7 +29,7 @@ final class AccessTokenTests: XCTestCase {
 
     func testTokenExpired() throws {
         let created4secondsAgo = Date().timeIntervalSince1970 - 4
-        let token = AccessToken(value: "my token", expiresIn: 3, created: created4secondsAgo)
+        let token = NIAccessToken(value: "my token", expiresIn: 3, created: created4secondsAgo)
         XCTAssertEqual(token.isExpired, true)
     }
 }

@@ -24,7 +24,7 @@ final class TokenFetchIntegrationTests: XCTestCase {
         // Arrange
         tokenFetcher = TokenFetcherFactory.makeSimpleWrapper(tokenValue: "my Token value$", expiresIn: 25)
         let expectetion = expectation(description: "Got token")
-        var token: AccessToken?
+        var token: NIAccessToken?
         // Act
         tokenFetcher.fetchToken { result in
             token = try? result.get()
@@ -44,11 +44,11 @@ final class TokenFetchIntegrationTests: XCTestCase {
     func testNetworkFetcher() throws {
         // Arrange
         let urlString = "https://apitest.network.ae/CardServices/v2/Token"
-        let credentials = ClientCredentials(clientId: "6rxqcbjuejesgw95htm4r3vg",
+        let credentials = NIClientCredentials(clientId: "6rxqcbjuejesgw95htm4r3vg",
                                             clientSecret: "hnCqJYwuzt")
         tokenFetcher = TokenNetworkFetcher(urlString: urlString, credentials: credentials, timeoutInterval: 30)
         let expectetion = expectation(description: "Got token")
-        var token: AccessToken?
+        var token: NIAccessToken?
         // Act
         tokenFetcher.fetchToken { result in
             token = try? result.get()

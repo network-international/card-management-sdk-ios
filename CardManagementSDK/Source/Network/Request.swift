@@ -22,14 +22,14 @@ class Request {
         self.logger = logger
     }
     
-    func sendAsync(_ completionHandler: @escaping (Response?, NIErrorResponse?) -> Void) {
+    func sendAsync(_ completionHandler: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
         DispatchQueue.global(qos: .default).async {
             do {
                 guard let request = try self.endpoint.asURLRequest() else { return }
                 self.logger.logRequestStarted(request)
                 let task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
                     self.logger.logRequestCompleted(request, response: response, data: data, error: error)
-                    let res = Response(data: data, response: response, error: error as NSError?)
+                    let res = NIResponse(data: data, response: response, error: error as NSError?)
                     var error = NIErrorResponse()
                     error = error.withResponse(response: res) ?? error
                     DispatchQueue.main.async {

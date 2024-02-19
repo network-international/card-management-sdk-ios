@@ -10,14 +10,13 @@ import Foundation
 // Simple network client
 class TokenNetworkFetcher: NICardManagementTokenFetchable {
     private let urlRequest: URLRequest?
-    private let credentials: ClientCredentials
+    private let credentials: NIClientCredentials
     
     private let session: URLSession
     private let validStatus = 200...299
     private let decoder = JSONDecoder()
-    private var task: URLSessionDataTask?
     
-    init(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval) {
+    init(urlString: String, credentials: NIClientCredentials, timeoutInterval: TimeInterval) {
         if let url = URL(string: urlString) {
             var urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeoutInterval)
             urlRequest.httpMethod = WSHTTPMethod.POST.rawValue
@@ -40,41 +39,30 @@ class TokenNetworkFetcher: NICardManagementTokenFetchable {
         session = URLSession(configuration: sessionConfig)
     }
     
-    func fetchToken(completion: @escaping (Result<AccessToken, TokenError>) -> Void) {
+    public func fetchToken() async throws -> NIAccessToken {
         guard let urlRequest = urlRequest else {
-            completion(.failure(TokenError.networkError(NSError.niError("bad url"))))
-            return
+            throw TokenError.networkError(NSError.niError("bad url"))
         }
-        task?.cancel()
-        task = session.dataTask(with: urlRequest, completionHandler: { [weak self] data, response, httpError in
-            guard let self = self, let task = self.task, !task.progress.isCancelled else { return }
-            if let httpError = httpError {
-                completion(.failure(TokenError.networkError(httpError as NSError)))
-                return
-            }
-            guard
-                let httpResponse = response as? HTTPURLResponse,
-                    self.validStatus.contains(httpResponse.statusCode)
-            else {
-                completion(.failure(TokenError.networkError(NSError.niError("invalid http status code \((response as? HTTPURLResponse)?.statusCode.description ?? "(no code)")"))))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(TokenError.networkError(NSError.niError("no data received"))))
-                return
-            }
-            do {
-                let token = try self.decoder.decode(AccessToken.self, from: data)
-                completion(.success(token))
-            } catch {
-                completion(.failure(TokenError.networkError(error)))
-            }
-        })
-        task?.resume()
+        let result: (data: Data, response: URLResponse)
+        do {
+            result = try await session.data(for: urlRequest)
+        } catch {
+            throw TokenError.networkError(error as NSError)
+        }
+        
+        guard
+            let httpResponse = result.response as? HTTPURLResponse,
+                self.validStatus.contains(httpResponse.statusCode)
+        else {
+            throw TokenError.networkError(NSError.niError("invalid http status code \((result.response as? HTTPURLResponse)?.statusCode.description ?? "(no code)")"))
+        }
+        do {
+            let token = try self.decoder.decode(NIAccessToken.self, from: result.data)
+            return token
+        } catch {
+            throw TokenError.networkError(error)
+        }
     }
     
-    func clearToken() {
-        task?.cancel()
-        task = nil
-    }
+    func clearToken() {}
 }

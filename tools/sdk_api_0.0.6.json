@@ -1,0 +1,939 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API Definition for Network International Mobile SDK designed to allow gaining access to secured card details (Clear PAN, Card Expiry, Encrypted CVV2), Setting the PIN for a card, Changing the PIN for a card  and Verifying the PIN for a card",
+    "version": "0.0.5",
+    "title": "NI Mobile SDK"
+  },
+  "host": "apitest.network.ae",
+  "tags": [
+    {
+      "name": "cards",
+      "description": "Manages Card entity",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://developer.network.ae"
+      }
+    },
+    {
+      "name": "security",
+      "description": "Dynamic Key management"
+    }
+  ],
+  "security": [
+    {
+      "network_auth": []
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/cards/lookup": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "summary": "Fetches alternative identifier for specified card",
+        "description": "Provides alternative identifier for provided input. If EXID is provided in input, this API will return the clear PAN (type: CONTRACT_NUMBER). If clear PAN (type: CONTRACT_NUMBER) is provided, will return EXID. Supported card_identifier_type: EXID/CONTRACT_NUMBER",
+        "operationId": "cardLookup",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CardLookupRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/CardLookupResponse"
+            }
+          },
+          "404": {
+            "description": "Card not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/cards/{card_identifier_id}/secured": {
+      "post": {
+        "tags": [
+          "cards"
+        ],
+        "summary": "Retrieves secured card details such as Encrypted PAN, Card Expiry and Encrypted CVV2 and card product information",
+        "description": "",
+        "operationId": "securedCardDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "card_identifier_id",
+            "in": "path",
+            "description": "ID of card to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "card_identifier_type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "EXID",
+              "CONTRACT_NUMBER"
+            ],
+            "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Public Key required to encrypt the CVV2",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CardDetailsSecuredRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/CardDetailsSecuredResponse"
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Card not found",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/security/pin_certificate": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Returns a public key in a X.509 certificate which must be used to encrypt the generated PIN Block",
+        "description": "",
+        "operationId": "getPINCertificate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PINCertificateResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/security/set_pin": {
+      "post": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Sets a new PIN for an existing card",
+        "description": "This API should be called to set a new PIN to an existing Card. The value exchanged here is the PIN Block (ISO9564) generated by the consumer of this API and encrypted using either symmetric or asymmetric key.",
+        "operationId": "setPIN",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PINSetRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/security/change_pin": {
+      "post": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Change PIN for an existing card",
+        "description": "This API should be called to change PIN to an existing Card with old PIN validation. The values exchanged here are both old and new PIN Block (ISO9564) generated by the consumer of this API and encrypted using either symmetric or asymmetric key.",
+        "operationId": "changePIN",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PINChangeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/security/verify_pin": {
+      "post": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Verifies a PIN for a card against the Card Management System",
+        "description": "This API should be called to verify the identity of a cardholder through your channels.  The value exchanged here is the PIN Block (ISO9564) generated by the consumer of this API and encrypted using either symmetric or asymmetric key.",
+        "operationId": "verifyPIN",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PINVerificationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/security/view_pin": {
+      "post": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Fetches an encrypted PIN for a card against the Card Management System",
+        "description": "This API should be called to fetch the PIN of a card through your channels.  The value exchanged here is the PIN retrieved by the Card Management System and encrypted using the X509 Certificate provided in input.",
+        "operationId": "viewPIN",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authentication Token to be passed as Bearer",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Unique-Reference-Code",
+            "in": "header",
+            "description": "Unique Reference Code for identification of each request sent to API",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Financial-Id",
+            "in": "header",
+            "description": "Source Entity",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Channel-Id",
+            "in": "header",
+            "description": "Requesting Channel",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PINViewRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PINViewResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/Sandbox/CardServices/V1/Token": {
+      "post": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Request OAuth2.0 Token",
+        "description": "Get your access token to access other APIs",
+        "operationId": "authorize",
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/TokenResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "network_auth": {
+      "type": "oauth2",
+      "tokenUrl": "https://apitest.network.ae/CardServices/V2/Token",
+      "flow": "application",
+      "scopes": {}
+    }
+  },
+  "definitions": {
+    "TokenRequest": {
+      "type": "object",
+      "properties": {
+        "grant_type": {
+          "type": "string",
+          "description": "Grant type"
+        },
+        "client_id": {
+          "type": "string",
+          "description": "Fill the client ID"
+        },
+        "client_secret": {
+          "type": "string",
+          "description": "Fill the client Secret"
+        }
+      },
+      "required": [
+        "grant_type",
+        "client_id",
+        "client_secret"
+      ]
+    },
+    "TokenResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "integer"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error_code": {
+          "type": "string"
+        },
+        "error_description": {
+          "type": "string"
+        },
+        "stack_trace": {
+          "type": "string"
+        }
+      }
+    },
+    "CardLookupRequest": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        },
+        "publicKey": {
+          "type": "string",
+          "description": "Optional - Public Key which will be used to encrypt the returned identifier. This public key must be directly linked to the private key you will use to decrypt the identifier in your application. If not provided, the data will be returned in clear text Supported Encryption:\n  RSA(4096)\n"
+        }
+      },
+      "required": [
+        "card_identifier_type",
+        "card_identifier_id"
+      ]
+    },
+    "CardLookupResponse": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        }
+      }
+    },
+    "CardDetailsSecuredRequest": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "string",
+          "description": "Public Key which will be used to encrypt the PAN and CVV2. This public key must be directly linked to the private key you will use to decrypt the PAN and CVV2 in your application. Supported Encryption:\n  RSA(4096)\n"
+        }
+      },
+      "required": [
+        "publicKey"
+      ]
+    },
+    "CardDetailsSecuredResponse": {
+      "type": "object",
+      "properties": {
+        "encrypted_pan": {
+          "type": "string",
+          "description": "Encrypted PAN under the provided public key\n"
+        },
+        "masked_pan": {
+          "type": "string"
+        },
+        "expiry": {
+          "type": "string",
+          "description": "Card Expiry Date YYMM format\n"
+        },
+        "encrypted_cvv2": {
+          "type": "string",
+          "description": "CVV2 Encrypted under the provided public key\n"
+        },
+        "cardholder_name": {
+          "type": "string",
+          "description": "Embossing name on the card\n"
+        },
+        "embossing_line4": {
+          "type": "string",
+          "description": "Fourth line embossing (e.g. company name, loyalty membership number)\n"
+        },
+        "product_code": {
+          "type": "string",
+          "description": "Full produce code for the card\n"
+        },
+        "product_short_code": {
+          "type": "string",
+          "description": "Short code for the product of the card (E.g. 001)\n"
+        },
+        "product_name": {
+          "type": "string",
+          "description": "Product display name (e.g. VISA Classic)\n"
+        },
+        "card_brand": {
+          "type": "string",
+          "description": "Card Brand (E.g. Visa, MasterCard, etc.). Can be used to provide visual representation of the card\n"
+        }
+      }
+    },
+    "PINCertificateResponse": {
+      "type": "object",
+      "properties": {
+        "certificate": {
+          "type": "string",
+          "description": "X.509 Certificate\n"
+        }
+      }
+    },
+    "PINSetRequest": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        },
+        "card_sequence_number": {
+          "type": "string",
+          "description": "Optional"
+        },
+        "card_expiry_date": {
+          "type": "string",
+          "description": "Optional - Expiry date YYMM"
+        },
+        "encrypted_pin": {
+          "type": "string",
+          "description": "Encrypted PIN Block generated using ISO9564 algorithm. Encryption is governed by the encryption_method property"
+        },
+        "encryption_method": {
+          "type": "string",
+          "enum": [
+            "SYMMETRIC_ENC",
+            "ASYMMETRIC_ENC"
+          ],
+          "description": "* SYMMETRIC_ENC should be used if keys were exchanged between Network International and you \n * ASYMMETRIC_ENC should be used if key was obtained using /security/pin_certificate API\n"
+        },
+        "encryption_algorithm": {
+          "type": "string",
+          "enum": [
+            "TBD"
+          ],
+          "description": ""
+        }
+      },
+      "required": [
+        "card_identifier_id",
+        "encrypted_pin",
+        "encryption_method"
+      ]
+    },
+    "PINChangeRequest": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        },
+        "card_sequence_number": {
+          "type": "string",
+          "description": "Optional"
+        },
+        "card_expiry_date": {
+          "type": "string",
+          "description": "Optional - Expiry date YYMM"
+        },
+        "encrypted_old_pin": {
+          "type": "string",
+          "description": "Encrypted PIN Block for Old PIN generated using ISO9564 algorithm. Encryption is governed by the encryption_method property"
+        },
+        "encrypted_new_pin": {
+          "type": "string",
+          "description": "Encrypted PIN Block for New PIN generated using ISO9564 algorithm. Encryption is governed by the encryption_method property"
+        },
+        "encryption_method": {
+          "type": "string",
+          "enum": [
+            "SYMMETRIC_ENC",
+            "ASYMMETRIC_ENC"
+          ],
+          "description": "* SYMMETRIC_ENC should be used if keys were exchanged between Network International and you \n * ASYMMETRIC_ENC should be used if key was obtained using /security/pin_certificate API\n"
+        },
+        "encryption_algorithm": {
+          "type": "string",
+          "enum": [
+            "TBD"
+          ],
+          "description": ""
+        }
+      },
+      "required": [
+        "card_identifier_id",
+        "encrypted_old_pin",
+        "encrypted_new_pin",
+        "encryption_method"
+      ]
+    },
+    "PINVerificationRequest": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        },
+        "card_sequence_number": {
+          "type": "string",
+          "description": "Optional"
+        },
+        "card_expiry_date": {
+          "type": "string",
+          "description": "Optional - Expiry date YYMM"
+        },
+        "encrypted_pin": {
+          "type": "string",
+          "description": "Encrypted PIN Block generated using ISO9564 algorithm. Encryption is governed by the encryption_method property"
+        },
+        "encryption_method": {
+          "type": "string",
+          "enum": [
+            "SYMMETRIC_ENC",
+            "ASYMMETRIC_ENC"
+          ],
+          "description": "* SYMMETRIC_ENC should be used if keys were exchanged between Network International and you \n * ASYMMETRIC_ENC should be used if key was obtained using /security/pin_certificate API\n"
+        },
+        "encryption_algorithm": {
+          "type": "string",
+          "enum": [
+            "TBD"
+          ],
+          "description": ""
+        }
+      },
+      "required": [
+        "card_identifier_id",
+        "encrypted_pin",
+        "encryption_method"
+      ]
+    },
+    "PINViewRequest": {
+      "type": "object",
+      "properties": {
+        "card_identifier_type": {
+          "type": "string",
+          "enum": [
+            "EXID",
+            "CONTRACT_NUMBER"
+          ],
+          "description": "Card Identifier Type:\n * `EXID` - External Id\n * `CONTRACT_NUMBER` - Clear PAN\n"
+        },
+        "card_identifier_id": {
+          "type": "string",
+          "description": "Identifier related to the Identifier Type\n"
+        },
+        "publicKey": {
+          "type": "string",
+          "description": "Mandatory - Public Key which will be used to encrypt the returned identifier. This public key must be directly linked to the private key you will use to decrypt the PIN in your application. Supported Encryption:\n  RSA(4096)\n"
+        }
+      },
+      "required": [
+        "card_identifier_type",
+        "card_identifier_id",
+        "publicKey"
+      ]
+    },
+    "PINViewResponse": {
+      "type": "object",
+      "properties": {
+        "encrypted_pin": {
+          "type": "string",
+          "description": "Encrypted card PIN under the public key provided in the request of the API.\n"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "https://developer.network.ae"
+  }
+}

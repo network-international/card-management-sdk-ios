@@ -25,7 +25,7 @@ struct NIErrorConstants {
         isError = true
     }
     
-    func withResponse(response: Response) -> NIErrorResponse? {
+    func withResponse(response: NIResponse) -> NIErrorResponse? {
         
         if let responseError = response.error {
             isError = true

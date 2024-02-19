@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public protocol CardDetailsService {
-    func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+    func getCardDetails(completion: @escaping (NICardDetails?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
 class CardDetailsViewModel {
@@ -63,7 +63,7 @@ class CardDetailsViewModel {
         }
     }
     
-    private func mapResponseToCardDetails(_ response: NICardDetailsResponse) -> Bool {
+    private func mapResponseToCardDetails(_ response: NICardDetails) -> Bool {
         guard let cardNumber = response.clearPan, let maskedCardNumber = response.maskedPan, let expiry = response.expiry, let cvv2 = response.clearCVV2, let cardholderName = response.cardholderName else {
             mapNoDataResponseToCardDetails()
             return false

@@ -72,13 +72,13 @@ public final class NICardManagementAPI {
     }
     
     // MARK: - Programatic Interface
-    public func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func getCardDetails(completion: @escaping (NICardDetails?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         mobileApi.retrieveCardDetails { response, error in
             if let error = error {
                 completion(nil, error){}
             }
             if let response = response {
-                let result = NICardDetailsResponse(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
+                let result = NICardDetails(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
                 completion(result, nil){}
             }
         }
