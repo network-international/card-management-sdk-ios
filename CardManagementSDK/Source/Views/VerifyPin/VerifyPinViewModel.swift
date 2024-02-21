@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol VerifyPinService {
-    func verifyPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+    func verifyPin(pin: String) async throws
 }
 
 class VerifyPinViewModel {
@@ -23,10 +23,8 @@ class VerifyPinViewModel {
         self.service = service
     }
     
-    func verifyPin(_ pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
-        service.verifyPin(pin: pin) { success, error, callback in
-            completion(success, error, callback)
-        }
+    func verifyPin(_ pin: String) async throws {
+        try await service.verifyPin(pin: pin)
     }
 }
 

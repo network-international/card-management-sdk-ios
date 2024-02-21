@@ -11,13 +11,6 @@ class GlobalConfig {
     
     static let shared = GlobalConfig()
     
-    static let NIErrorDomain        = "net.networkinternational.CardManagementSDK"
-    static let NIErrorKey           = "NICardManagementSDKMessage"
-    static let NIErrorDebugKey      = "NICardManagementSDKDebugMessage"
-    
-    static let NIUniqueReferenceCodeLength = 12
-    static let NIChannelId = "sdk"
-    
     
     static let NIRSAAlgorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1
     

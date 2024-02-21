@@ -10,7 +10,7 @@ import UIKit
 
 protocol Coordinator {
     var navigationController: UIViewController { get set }
-    func coordinate(route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?)
+    func coordinate(route: Route, completion: @escaping (NIErrorResponse?) -> Void)
 }
 
 

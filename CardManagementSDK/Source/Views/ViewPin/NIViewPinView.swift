@@ -9,6 +9,10 @@ import Foundation
 
 import UIKit
 
+protocol NIViewPinViewDelegate: AnyObject {
+    func viewPinView(_ view: NIViewPinView, didRetrieveWith error: NISDKError?)
+}
+
 public final class NIViewPinView: UIView {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -38,6 +42,8 @@ public final class NIViewPinView: UIView {
     
     var viewModel: ViewPinViewModel?
     
+    weak var delegate: NIViewPinViewDelegate?
+    
     // MARK: - Init
     /// Initialization of NIViewPinView
     /// To be used when creating the PIN view programatically
@@ -45,21 +51,26 @@ public final class NIViewPinView: UIView {
     ///   - displayAttributes: input needed for the PIN visualization
     ///   - service: sdk instance
     ///   - timer: seconds needed for the PIN visualization
-    public init(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public init(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil) {
         counter = timer
         colorInput = color
         viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
         super.init(frame: .zero)
         fromNib()
         hideUI(true)
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         
+        activityIndicator.style = .large
+        UIFont.registerDefaultFonts()
+        stackView.semanticContentAttribute = .forceLeftToRight
+        
         if self.borderView != nil {
             activityIndicator.startAnimating()
             updateUI()
         }
+        
+        retrievePin()
     }
     
     required init?(coder: NSCoder) {
@@ -79,14 +90,30 @@ public final class NIViewPinView: UIView {
         counter = timer
         colorInput = color
         viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
         activityIndicator.startAnimating()
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
         updateUI()
+        retrievePin()
     }
     
     // MARK: - Private
+    
+    private func retrievePin() {
+        Task {
+            var resultError: NISDKError?
+            do {
+                try await viewModel?.getPin()
+            } catch {
+                resultError = error as? NISDKError
+            }
+            DispatchQueue.main.async {
+                self.handleVmChanged()
+                self.delegate?.viewPinView(self, didRetrieveWith: resultError)
+            }
+        }
+        
+    }
 
     private func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
@@ -112,57 +139,51 @@ public final class NIViewPinView: UIView {
         countDownDecription.isHidden = true
     }
     
+    private func handleVmChanged() {
+        guard let viewModel = viewModel else { return }
+        self.activityIndicator.stopAnimating()
+        self.hideUI(false)
+        
+        if viewModel.pin?.count == 4 {
+            self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit]
+            self.fourthSeparator.isHidden = true
+            self.fifthDigit.isHidden = true
+            self.fifthSeparator.isHidden = true
+            self.sixthDigit.isHidden = true
+            self.updateFirst4Digits(viewModel: viewModel)
+        } else if viewModel.pin?.count == 5 {
+            self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit, self.fifthDigit]
+            self.fourthSeparator.isHidden = false
+            self.fifthDigit.isHidden = false
+            self.fifthSeparator.isHidden = true
+            self.sixthDigit.isHidden = true
+            self.updateFirst4Digits(viewModel: viewModel)
+            self.fifthDigit.text = viewModel.pin?[4]
+        } else if viewModel.pin?.count == 6 {
+            self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit, self.fifthDigit, self.sixthDigit]
+            self.fourthSeparator.isHidden = false
+            self.fifthDigit.isHidden = false
+            self.fifthSeparator.isHidden = false
+            self.sixthDigit.isHidden = false
+            self.updateFirst4Digits(viewModel: viewModel)
+            self.fifthDigit.text = viewModel.pin?[4]
+            self.sixthDigit.text = viewModel.pin?[5]
+        }
+        
+        if viewModel.startTimer && self.counter != 0 {
+            self.startTimer()
+            let countDownDescriptionLocalized: String = "view_pin_countdown_description".localized + " "
+            let countDownUnitLocalized: String = " " + "view_pin_countdown_unit".localized
+            self.countDownDecription.text = countDownDescriptionLocalized + String(Int(self.counter)) + countDownUnitLocalized
+            self.counter -= 1
+        } else {
+            self.countDownDecription.isHidden = true
+        }
+    }
+    
     private func updateUI() {
         guard let viewModel = viewModel else { return }
-        if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
-        }
-        UIFont.registerDefaultFonts()
-        stackView.semanticContentAttribute = .forceLeftToRight
-        
-        viewModel.bindCardDetailsViewModel = {
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.hideUI(false)
-                
-                if viewModel.pin?.count == 4 {
-                    self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit]
-                    self.fourthSeparator.isHidden = true
-                    self.fifthDigit.isHidden = true
-                    self.fifthSeparator.isHidden = true
-                    self.sixthDigit.isHidden = true
-                    self.updateFirst4Digits(viewModel: viewModel)
-                } else if viewModel.pin?.count == 5 {
-                    self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit, self.fifthDigit]
-                    self.fourthSeparator.isHidden = false
-                    self.fifthDigit.isHidden = false
-                    self.fifthSeparator.isHidden = true
-                    self.sixthDigit.isHidden = true
-                    self.updateFirst4Digits(viewModel: viewModel)
-                    self.fifthDigit.text = viewModel.pin?[4]
-                } else if viewModel.pin?.count == 6 {
-                    self.digits = [self.firstDigit, self.secondDigit, self.thirdDigit, self.fourthDigit, self.fifthDigit, self.sixthDigit]
-                    self.fourthSeparator.isHidden = false
-                    self.fifthDigit.isHidden = false
-                    self.fifthSeparator.isHidden = false
-                    self.sixthDigit.isHidden = false
-                    self.updateFirst4Digits(viewModel: viewModel)
-                    self.fifthDigit.text = viewModel.pin?[4]
-                    self.sixthDigit.text = viewModel.pin?[5]
-                }
-                
-                if viewModel.startTimer && self.counter != 0 {
-                    self.startTimer()
-                    let countDownDescriptionLocalized: String = "view_pin_countdown_description".localized + " "
-                    let countDownUnitLocalized: String = " " + "view_pin_countdown_unit".localized
-                    self.countDownDecription.text = countDownDescriptionLocalized + String(Int(self.counter)) + countDownUnitLocalized
-                    self.counter -= 1
-                } else {
-                    self.countDownDecription.isHidden = true
-                }
-            }
-        }
-        
+
         borderView.layer.borderColor = UIColor.lightGray.cgColor
         borderView.layer.borderWidth = 1
         borderView.layer.cornerRadius = 15
@@ -180,16 +201,10 @@ public final class NIViewPinView: UIView {
             textColor(color: color)
         } else {
             // Theme
-            if #available(iOS 13.0, *) {
-                backgroundColor = UIColor.clear
-                overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-                
-                if viewModel.theme == .dark {
-                    borderColor(color: .white)
-                }
-            } else {
-                /// Fallback on earlier versions
-                setupTheme(viewModel.theme)
+            backgroundColor = UIColor.clear
+            overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
+            if viewModel.theme == .dark {
+                borderColor(color: .white)
             }
         }
     }

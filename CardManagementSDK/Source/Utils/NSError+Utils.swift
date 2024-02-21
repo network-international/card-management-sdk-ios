@@ -7,6 +7,11 @@
 
 import Foundation
 
+private enum Constants {
+    static let errorDomain        = "net.networkinternational.CardManagementSDK"
+    static let errorKey           = "NICardManagementSDKMessage"
+    static let errorDebugKey      = "NICardManagementSDKDebugMessage"
+}
 
 extension NSError {
     
@@ -15,18 +20,18 @@ extension NSError {
         return error
     }
     
-    class func niError(_ message: String? = nil, debugMessage: String? = nil, code: Int = ErrorCodes.Unknown) -> NSError {
+    class func niError(_ message: String? = nil, debugMessage: String? = nil, code: Int = ErrorCodes.unknown) -> NSError {
         var userInfo: [String: String] = [:]
         
         if message != nil {
-            userInfo[GlobalConfig.NIErrorKey] = message
+            userInfo[Constants.errorKey] = message
         }
         
         if debugMessage != nil {
-            userInfo[GlobalConfig.NIErrorDebugKey] = debugMessage
+            userInfo[Constants.errorDebugKey] = debugMessage
         }
         
-        let error = NSError(domain: GlobalConfig.NIErrorDomain,
+        let error = NSError(domain: Constants.errorDomain,
                             code: code,
                             userInfo: userInfo)
         return error
@@ -36,5 +41,5 @@ extension NSError {
 
 struct ErrorCodes {
     
-    static let Unknown = -1
+    static let unknown = -1
 }

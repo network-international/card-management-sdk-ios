@@ -7,12 +7,18 @@
 
 import UIKit
 
+protocol CardDetailsViewDelegate: AnyObject {
+    func cardDetailsView(_ vc: CardDetailsViewController, didCompleteWith error: NIErrorResponse?)
+    func cardDetailsViewDidClose(_ vc: CardDetailsViewController)
+}
+
 class CardDetailsViewController: UIViewController {
     
     @IBOutlet weak var customNICardView: NICardView!
     
-    private var viewModel: CardDetailsViewModel
+    private let viewModel: CardDetailsViewModel
     
+    weak var delegate: CardDetailsViewDelegate?
     
     // MARK: - Init
     init(viewModel: CardDetailsViewModel) {
@@ -30,6 +36,11 @@ class CardDetailsViewController: UIViewController {
         title = "card_details_title".localized
         setupCloseButton()
         
+        customNICardView.retrieveResult = { [weak self] error in
+            guard let self = self else { return }
+            self.delegate?.cardDetailsView(self, didCompleteWith: error)
+        }
+        
         customNICardView.viewModel = viewModel
         customNICardView.activityIndicator.startAnimating()
         customNICardView.configureCardView()
@@ -43,12 +54,11 @@ class CardDetailsViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         let barCloseButton = UIBarButtonItem(customView: closeButton)
         self.navigationItem.rightBarButtonItem = barCloseButton
-
     }
     
     // MARK: - Actions
     @objc private func closeAction() {
-        dismiss(animated: true, completion: nil)
+        delegate?.cardDetailsViewDidClose(self)
     }
     
 }

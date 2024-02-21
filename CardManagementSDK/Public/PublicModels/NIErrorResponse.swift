@@ -7,72 +7,115 @@
 
 import Foundation
 
-struct NIErrorConstants {
+private enum NIErrorConstants {
     static let errorCode = "error_code"
     static let errorDescription = "error_description"
+    static let message = "message"
 }
 
-@objc public class NIErrorResponse: NSObject {
+public class NIErrorResponse {
     
-    public var errorCode: String = ""
-    public var errorMessage: String = ""
-    var isError = false
+    public let errorCode: String
+    public let errorMessage: String
     
-    override init() {}
-    
-    init(error: NISDKErrors) {
-        errorMessage = error.rawValue
-        isError = true
+    convenience init(error: NISDKError) {
+        self.init(errorCode: error.legacyText, errorMessage: error.legacyCode)
     }
     
-    func withResponse(response: NIResponse) -> NIErrorResponse? {
-        
-        if let responseError = response.error {
-            isError = true
-            errorCode = String(responseError.code)
-            errorMessage = responseError.localizedDescription
-            return self
+    private init(errorCode: String, errorMessage: String) {
+        self.errorCode = errorCode
+        self.errorMessage = errorMessage
+    }
+    
+    static var wrondNavigation: NIErrorResponse {
+        NIErrorResponse(errorCode: "", errorMessage: "Navigation error")
+    }
+}
+
+
+enum NISDKError: Error {
+    case rsaKeyError(_ error: KeychainError?)
+    case cryptoError(_ error: RSADecryptError?)
+    case responseError(Int, Data?, URLResponse?, Error)
+    // TODO: get rid of it as it should be `responseError`
+    case networkError(_ error: Error?)
+    // TODO: remove it as it contains mostly network errors
+    case tokenError(_ error: TokenError)
+    
+    var legacyText: String {
+        switch self {
+        case .rsaKeyError: return "Couldn't get or generate Public Key"
+        case .cryptoError: return "Encryption Error"
+            // "SDK General Error"
+        case let .responseError(code, data, resp, error):
+            return Self.parseResponse(code: code, data: data, resp: resp, error: error).errorMessage
+        case .networkError: return "Server Request Error"
+        case .tokenError: return "Token Error"
         }
-        
-        guard let data = response.data else {
-            isError = true
-            errorCode = String(response.code)
-            errorMessage = "Unknown (no data)"
-            return self
+    }
+    
+    var legacyCode: String {
+        switch self {
+        case let .rsaKeyError(keychainError):
+            return keychainError.flatMap { "\($0.errorCode)" } ?? ""
+        case let .cryptoError(rsaError):
+            return rsaError.flatMap { "\($0.errorCode)" } ?? ""
+        case let .responseError(code, data, resp, error):
+            return Self.parseResponse(code: code, data: data, resp: resp, error: error).errorCode
+        case let .networkError(error):
+            return error.flatMap { "\(($0 as NSError).code)" } ?? ""
+        case let .tokenError(tokenError): 
+            return "\(tokenError.errorCode)"
         }
-        
-        if response.code == 200 {
-            isError = false
-            return nil
-        } else {
-            
-            guard let json = try? JSON.dataToJson(data).toDictionary() else {
-                isError = true
-                errorCode = String(response.code)
+    }
+    
+    private static func parseResponse(code: Int, data: Data?, resp: URLResponse?, error: Error) -> (errorCode: String, errorMessage: String) {
+        var errorCode: String
+        var errorMessage: String
+        // parse data
+        if let data = data {
+            if let json = try? JSON.dataToJson(data).toDictionary() {
+                errorCode = json[NIErrorConstants.errorCode] as? String ?? String(code)
+                errorMessage = json[NIErrorConstants.errorDescription] as? String ?? json[NIErrorConstants.message] as? String ?? error.localizedDescription //"Unknown"
+            } else {
+                errorCode = String(code) // (resp as? HTTPURLResponse)?.statusCode
                 errorMessage = String(data: data, encoding: .utf8) ?? "Unknown (JSON error)"
-                return self
             }
-            
-            isError = true
-            errorCode = json[NIErrorConstants.errorCode] as? String ?? String(response.code)
-            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? json[ResponseConstants.message] as? String ?? "Unknown"
-            return self
+        } else {
+            errorCode = String((error as NSError).code)
+            errorMessage = error.localizedDescription
+            //errorCode = String(code) // (resp as? HTTPURLResponse)?.statusCode
+            //errorMessage = "Unknown (no data)"
+        }
+        return (errorCode, errorMessage)
+    }
+}
+
+private extension KeychainError {
+    var errorCode: Int {
+        switch self {
+        case let .certCreationFailed(status): return Int(status ?? -1)
+        case let .unhandledError(status): return Int(status ?? -1)
+        case let .generateKeyFailed(error): return (error as NSError).code
+        default: return -1
         }
     }
 }
 
+private extension RSADecryptError {
+    var errorCode: Int {
+        switch self {
+        case let .decryptError(error): return (error as NSError).code
+        default: return -1
+        }
+    }
+}
 
-enum NISDKErrors: String {
-    case GENERAL_ERROR = "SDK General Error"
-    case NAV_ERROR = "Form not allowed pushing on navigation controller"
-    
-    case NETWORK_ERROR = "Server Request Error"
-    case PARSING_ERROR = "SDK Parsing Error"
-    case NO_DATA_ERROR = "No Data Found"
-    
-    case RSAKEY_ERROR = "Couldn't get or generate Public Key"
-    case PINBLOCK_ERROR = "PIN Block Error"
-    case PINBLOCK_ENCRYPTION_ERROR = "PIN Block Encryption Error"
-    
-    case TOKEN_ERROR = "Token Error"
+private extension TokenError {
+    var errorCode: Int {
+        switch self {
+        case let .networkError(error): return (error as NSError).code
+        default: return -1
+        }
+    }
 }

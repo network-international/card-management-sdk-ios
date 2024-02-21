@@ -32,7 +32,7 @@ extension RSAUtils {
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
         
         // Retrieve the SecKey using the trust hence generated
-        guard let secKey = SecTrustCopyPublicKey(trust!) else {
+        guard let secKey = SecTrustCopyKey(trust!) else {
             // this can happen if the public key algorithm is not supported
             throw KeychainError.publicKeyNotAvailable
         }

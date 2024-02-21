@@ -38,95 +38,62 @@ public final class NICardManagementAPI {
     }
     
     // MARK: - Form Factories Interface
-    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         
         if viewController is UINavigationController {
-            completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
+            completion(.wrondNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .cardDetails, completion: completion)
     }
     
-    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
+            completion(.wrondNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .setPin(type: type), completion: completion)
     }
     
-    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
+            completion(.wrondNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .verifyPin(type: type), completion: completion)
     }
     
-    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
+            completion(.wrondNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .changePin(type: type), completion: completion)
     }
     
     // MARK: - Programatic Interface
-    public func getCardDetails(completion: @escaping (NICardDetails?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        mobileApi.retrieveCardDetails { response, error in
-            if let error = error {
-                completion(nil, error){}
-            }
-            if let response = response {
-                let result = NICardDetails(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
-                completion(result, nil){}
-            }
-        }
-    }
     
-    public func setPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        mobileApi.setPin(pin) { response, error in
-            if let error = error {
-                completion(nil, error){}
-            } else if response != nil {
-                let result = NISuccessResponse(message: "Pin set successfully!")
-                completion(result, nil){}
-            }
-        }
+    /// NICardDetails on success, otherwise throws NISDKError
+    public func getCardDetails() async throws -> NICardDetails {
+        let response = try await mobileApi.retrieveCardDetails()
+        let result = NICardDetails(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
+        return result
     }
-    
-    public func verifyPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        mobileApi.verifyPin(pin) { response, error in
-            if let error = error {
-                completion(nil, error){}
-            } else if response != nil {
-                let result = NISuccessResponse(message: "Pin is correct!")
-                completion(result, nil){}
-            }
-        }
+    /// No error on success, otherwise throws NISDKError
+    public func setPin(pin: String) async throws {
+        try await mobileApi.setPin(pin)
     }
-    
-    public func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        mobileApi.changePin(oldPin: oldPin, newPin: newPin) { response, error in
-            if let error = error {
-                completion(nil, error){}
-            } else if response != nil {
-                let result = NISuccessResponse(message: "Pin changed successfully!")
-                completion(result, nil){}
-            }
-        }
+    /// No error on success, otherwise throws NISDKError
+    public func verifyPin(pin: String) async throws {
+        try await mobileApi.verifyPin(pin)
     }
-    
-    public func getPin(completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        mobileApi.retrievePin { response, error in
-            if let error = error {
-                completion(nil, error){}
-            }
-            if let response = response {
-                let result = response.pin
-                completion(result, nil){}
-            }
-        }
+    /// No error on success, otherwise throws NISDKError
+    public func changePin(oldPin: String, newPin: String) async throws {
+        try await mobileApi.changePin(oldPin: oldPin, newPin: newPin)
+    }
+    /// Pin string on success, otherwise throws NISDKError
+    public func getPin() async throws -> String {
+        try await mobileApi.retrievePin().pin
     }
 }
 

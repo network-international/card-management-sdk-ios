@@ -30,6 +30,8 @@ public final class NICardView: UIView {
 
     var viewModel: CardDetailsViewModel?
     
+    var retrieveResult: ((NIErrorResponse?) -> Void)?
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         view.layer.borderColor = UIColor.white.cgColor
@@ -46,15 +48,12 @@ public final class NICardView: UIView {
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
-    public init(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public init(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, retrieveResult: @escaping (NIErrorResponse?) -> Void) {
         viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
+        self.retrieveResult = retrieveResult
         super.init(frame: .zero)
         fromNib()
-        if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
-        }
-        
+        activityIndicator.style = .large
         if self.view != nil {
             activityIndicator.startAnimating()
             configureCardView()
@@ -72,10 +71,9 @@ public final class NICardView: UIView {
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
-    public func configure(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func configure(displayAttributes: NIDisplayAttributes?, service: CardDetailsService) {
         hideUI(true)
         viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
         activityIndicator.startAnimating()
         configureCardView()
     }
@@ -83,7 +81,6 @@ public final class NICardView: UIView {
     public func setBackgroundImage(image: UIImage) {
         backgroundCardImage.image = image
     }
-    
 }
 
 // MARK: - Private
@@ -113,36 +110,48 @@ extension NICardView {
         updateUI(viewModel)
         updateTexts(viewModel)
         self.view.semanticContentAttribute = .forceLeftToRight
+        
+        retrieveCardDetails()
+    }
+    
+    private func retrieveCardDetails() {
+        guard let viewModel = viewModel else { return }
+        Task {
+            var resError: NISDKError?
+            do {
+                try await viewModel.retrieveCardDetails()
+            } catch {
+                resError = error as? NISDKError
+            }
+            
+            DispatchQueue.main.async {
+                self.handleViewModelChanged()
+                self.retrieveResult?(resError.flatMap { NIErrorResponse(error: $0) } )
+            }
+        }
+    }
+    
+    private func handleViewModelChanged() {
+        guard let viewModel = viewModel else { return }
+        self.activityIndicator.stopAnimating()
+        self.hideUI(false)
+        self.eyeButton.isHidden = !viewModel.shouldMask
+        self.copyButton.isHidden = viewModel.shouldMask
+        self.nameCopyButton.isHidden = viewModel.shouldMask
+        self.updateTexts(viewModel)
+        
+        if let constraints = viewModel.textPositioning {
+            self.leftAlignmentConstraint.constant = CGFloat(constraints.leftAlignment * self.view.bounds.height)
+            self.cardNumberGroupTopConstraint.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.view.bounds.height)
+            self.dateCvvGroupTopConstraint.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.view.bounds.height)
+            self.holderNameTopConstraint.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.view.bounds.height)
+        }
     }
     
     private func updateUI(_ viewModel: CardDetailsViewModel) {
-        viewModel.bindCardDetailsViewModel = {
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.hideUI(false)
-                self.eyeButton.isHidden = !viewModel.shouldMask
-                self.copyButton.isHidden = viewModel.shouldMask
-                self.nameCopyButton.isHidden = viewModel.shouldMask
-                self.updateTexts(viewModel)
-                
-                if let constraints = viewModel.textPositioning {
-                    self.leftAlignmentConstraint.constant = CGFloat(constraints.leftAlignment * self.view.bounds.height)
-                    self.cardNumberGroupTopConstraint.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.view.bounds.height)
-                    self.dateCvvGroupTopConstraint.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.view.bounds.height)
-                    self.holderNameTopConstraint.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.view.bounds.height)
-                }
-            }
-        }
-        
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = viewModel.isThemeLight ? .light : .dark
-            copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
-        } else {
-            view.backgroundColor = viewModel.isThemeLight ? .white : UIColor.black
-            let image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-            copyButton.setImage(image, for: .normal)
-        }
+        view.backgroundColor = UIColor.backgroundColor
+        overrideUserInterfaceStyle = viewModel.isThemeLight ? .light : .dark
+        copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
     }
     
     private func updateTexts(_ viewModel: CardDetailsViewModel) {

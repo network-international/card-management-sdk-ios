@@ -9,21 +9,14 @@ import Foundation
 import UIKit
 
 public protocol CardDetailsService {
-    func getCardDetails(completion: @escaping (NICardDetails?, NIErrorResponse?, @escaping () -> Void) -> Void)
+    func getCardDetails() async throws -> NICardDetails
 }
 
 class CardDetailsViewModel {
-
-    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
-    
     private let displayAttributes: NIDisplayAttributes?
     private let service: CardDetailsService
     
-    private (set) var cardDetails: CardDetails? {
-        didSet {
-            self.bindCardDetailsViewModel()
-        }
-    }
+    private (set) var cardDetails: CardDetails?
     
     var bindCardDetailsViewModel = {}
     var backgroundImage: UIImage?
@@ -45,21 +38,15 @@ class CardDetailsViewModel {
                                   cardExpiryLabel: "card_expiry".localized,
                                   cvv2Label: "card_cvv".localized,
                                   cardholderNameLabel: "card_name".localized)
-        
-        
-        service.getCardDetails { [weak self] success, error, callback in
-            guard let self = self else { return }
-            
-            if let response = success {
-                if self.mapResponseToCardDetails(response) {
-                    self.callback?(NISuccessResponse(message: "Card details retrieved with success!"), error){}
-                } else {
-                    self.callback?(nil, NIErrorResponse(error: NISDKErrors.NO_DATA_ERROR)){}
-                }
-            } else {
-                self.callback?(nil, error){}
-                self.mapNoDataResponseToCardDetails()
-            }
+    }
+    
+    func retrieveCardDetails() async throws {
+        do {
+            let response = try await service.getCardDetails()
+            _ = mapResponseToCardDetails(response)
+        } catch {
+            mapNoDataResponseToCardDetails()
+            throw error
         }
     }
     

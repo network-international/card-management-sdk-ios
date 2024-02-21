@@ -7,13 +7,17 @@
 
 import UIKit
 
+protocol VerifyPinViewDelegate: AnyObject {
+    func verifyPinView(_ vc: VerifyPinViewController, didCompleteWith error: NIErrorResponse?)
+}
+
 class VerifyPinViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel: VerifyPinViewModel
     private var pinView: PinView?
     
-    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    weak var delegate: VerifyPinViewDelegate?
     
     // MARK: - Init
     init(viewModel: VerifyPinViewModel) {
@@ -68,19 +72,19 @@ extension VerifyPinViewController: PinViewProtocol {
         pinView?.disableButtons()
         activityIndicator.startAnimating()
 
-        DispatchQueue.global(qos: .default).async {
-            self.viewModel.verifyPin(pin) { [weak self] success, error, callback in
-                guard let self = self else {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
-                }
-                
-                self.callback?(success, error) {
-                    self.navigationController?.popViewController(animated: true)
-                }
+        Task {
+            var resultError: Error?
+            do {
+                try await viewModel.verifyPin(pin)
+            } catch {
+                resultError = error
+            }
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.delegate?.verifyPinView(
+                    self,
+                    didCompleteWith: (resultError as? NISDKError).flatMap { NIErrorResponse(error: $0) }
+                )
             }
         }
     }

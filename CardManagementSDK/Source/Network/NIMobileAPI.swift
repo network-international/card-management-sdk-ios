@@ -9,6 +9,7 @@ import Foundation
 
 
 /// Contains request creators for NI Mobile API.
+/// Can propagate NISDKError
 
 class NIMobileAPI {
     
@@ -18,7 +19,6 @@ class NIMobileAPI {
     private let cardIdentifierType: String
     private let bankCode: String
     
-    private var rsaKeysProvider: () throws -> RSAKeyx509
     private let logger: NICardManagementLogger?
     
     
@@ -36,24 +36,12 @@ class NIMobileAPI {
         self.bankCode = bankCode
         self.rootUrl = rootUrl
         self.logger = logger
-        rsaKeysProvider = {
-            // regenerate on each keys request
-            let tag = "com.\(Bundle.sdkBundle.bundleIdentifier ?? "NISDK").keys.\(bankCode)".data(using: .utf8)!
-            return try RSA.generateRSAKeyx509(tag: tag, isPermanent: false)
-        }
         
         OpenAPIClientAPI.basePath = rootUrl
     }
     
-    func retrieveCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?) -> Void) {
-        let rsaInfo: RSAKeyx509
-        do {
-            rsaInfo = try rsaKeysProvider()
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
-            return
-        }
+    func retrieveCardDetails() async throws -> NICardDetailsResponse {
+        let rsaInfo = try getRSAKeys()
         // capture self explicitly
         let requestBuilder: (_ token: NIAccessToken) async throws -> NICardDetailsResponse = { [self] token in
             let body = CardDetailsSecuredRequest(publicKey: rsaInfo.cert)
@@ -61,21 +49,11 @@ class NIMobileAPI {
             let niresp = try NICardDetailsResponse(secured: response, privateKey: rsaInfo.privateKey)
             return niresp
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        return try await wrapRequest(requestBuilder: requestBuilder)
     }
     
-    func cardLookup(completion: @escaping (NICardLookupResponse?, NIErrorResponse?) -> Void) {
-        let rsaInfo: RSAKeyx509
-        do {
-            rsaInfo = try rsaKeysProvider()
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
-            return
-        }
+    func cardLookup() async throws -> NICardLookupResponse {
+        let rsaInfo = try getRSAKeys()
         // capture self explicitly
         let requestBuilder: (_ token: NIAccessToken) async throws -> NICardLookupResponse = { [self] token in
             let body = CardLookupRequest(cardIdentifierType: cardIdentifierType, cardIdentifierId: cardIdentifierId, publicKey: rsaInfo.cert)
@@ -84,35 +62,21 @@ class NIMobileAPI {
             let niresp = try NICardLookupResponse(encryptedCardIdentifier: response.cardIdentifierId, privateKey: rsaInfo.privateKey)
             return niresp
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        return try await wrapRequest(requestBuilder: requestBuilder)
     }
     
-    func retrievePinCertificate(completion: @escaping (NIPinCertificateResponse?, NIErrorResponse?) -> Void) {
+    func retrievePinCertificate() async throws -> NIPinCertificateResponse {
         // capture self explicitly
         let requestBuilder: (_ token: NIAccessToken) async throws -> NIPinCertificateResponse = { [self] token in
             let response = try await SecurityAPI.getPINCertificate(authorization: token.value, uniqueReferenceCode: uniqueReferenceCode, financialId: bankCode, channelId: channelId)
             let niresp = NIPinCertificateResponse(certificate: response.certificate)
             return niresp
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        return try await wrapRequest(requestBuilder: requestBuilder)
     }
     
-    func retrievePin(completion: @escaping (NIViewPinResponse?, NIErrorResponse?) -> Void) {
-        let rsaInfo: RSAKeyx509
-        do {
-            rsaInfo = try rsaKeysProvider()
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
-            return
-        }
-        
+    func retrievePin() async throws -> NIViewPinResponse {
+        let rsaInfo = try getRSAKeys()
         // capture self explicitly
         let requestBuilder: (_ token: NIAccessToken) async throws -> NIViewPinResponse = { [self] token in
             let body = PINViewRequest(cardIdentifierType: cardIdentifierType, cardIdentifierId: cardIdentifierId, publicKey: rsaInfo.cert)
@@ -120,219 +84,128 @@ class NIMobileAPI {
             let niresp = try NIViewPinResponse(encryptedPin: response.encryptedPin, privateKey: rsaInfo.privateKey)
             return niresp
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        return try await wrapRequest(requestBuilder: requestBuilder)
     }
     
     
-    func setPin(pin: String, pan: String, certificate: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        let pinEncryption: PinEncryption
-        do {
-            pinEncryption = try PinEncryption(pin: pin, pan: pan, certificate: certificate)
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.PINBLOCK_ENCRYPTION_ERROR))
-            return
-        }
-        
+    func setPin(pin: String, pan: String, certificate: String) async throws {
         // capture self explicitly
-        let requestBuilder: (_ token: NIAccessToken) async throws -> NIResponse = { [self] token in
+        let requestBuilder: (_ token: NIAccessToken) async throws -> Void = { [self] token in
+            let pinEncryption = try PinEncryption(pin: pin, pan: pan, certificate: certificate)
             let body = PINSetRequest(cardIdentifierId: cardIdentifierId, encryptedPin: pinEncryption.encryptedPinBlock, encryptionMethod: PINSetRequest.EncryptionMethod(rawValue: pinEncryption.method) ?? .asymmetricEnc)
             try await SecurityAPI.setPIN(authorization: token.value, uniqueReferenceCode: uniqueReferenceCode, financialId: bankCode, channelId: channelId, body: body)
-            return NIResponse(data: nil, response: nil, error: nil)
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        try await wrapRequest(requestBuilder: requestBuilder)
     }
     
-    func verifyPin(pin: String, pan: String, certificate: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        let pinEncryption: PinEncryption
-        do {
-            pinEncryption = try PinEncryption(pin: pin, pan: pan, certificate: certificate)
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.PINBLOCK_ENCRYPTION_ERROR))
-            return
-        }
-        
+    func verifyPin(pin: String, pan: String, certificate: String) async throws {
         // capture self explicitly
-        let requestBuilder: (_ token: NIAccessToken) async throws -> NIResponse = { [self] token in
+        let requestBuilder: (_ token: NIAccessToken) async throws -> Void = { [self] token in
+            let pinEncryption = try PinEncryption(pin: pin, pan: pan, certificate: certificate)
             let body = PINVerificationRequest(cardIdentifierType: cardIdentifierType, cardIdentifierId: cardIdentifierId, encryptedPin: pinEncryption.encryptedPinBlock, encryptionMethod: PINVerificationRequest.EncryptionMethod(rawValue: pinEncryption.method) ?? .asymmetricEnc)
             try await SecurityAPI.verifyPIN(authorization: token.value, uniqueReferenceCode: uniqueReferenceCode, financialId: bankCode, channelId: channelId, body: body)
-            return NIResponse(data: nil, response: nil, error: nil)
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
+        try await wrapRequest(requestBuilder: requestBuilder)
     }
     
-    func changePin(oldPin: String, newPin: String, pan: String, certificate: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        let oldPinEncryption: PinEncryption
-        let newPinEncryption: PinEncryption
-        do {
-            oldPinEncryption = try PinEncryption(pin: oldPin, pan: pan, certificate: certificate)
-            newPinEncryption = try PinEncryption(pin: newPin, pan: pan, certificate: certificate)
-        } catch {
-            logger?.logNICardManagementMessage("RSA error \(error)")
-            completion(nil, NIErrorResponse(error: NISDKErrors.PINBLOCK_ENCRYPTION_ERROR))
-            return
-        }
-        
+    func changePin(oldPin: String, newPin: String, pan: String, certificate: String) async throws {
         // capture self explicitly
-        let requestBuilder: (_ token: NIAccessToken) async throws -> NIResponse = { [self] token in
+        let requestBuilder: (_ token: NIAccessToken) async throws -> Void = { [self] token in
+            let oldPinEncryption = try PinEncryption(pin: oldPin, pan: pan, certificate: certificate)
+            let newPinEncryption = try PinEncryption(pin: newPin, pan: pan, certificate: certificate)
             let body = PINChangeRequest(cardIdentifierId: cardIdentifierType, encryptedOldPin: oldPinEncryption.encryptedPinBlock, encryptedNewPin: newPinEncryption.encryptedPinBlock, encryptionMethod: PINChangeRequest.EncryptionMethod(rawValue: newPinEncryption.method) ?? .asymmetricEnc)
             try await SecurityAPI.changePIN(authorization: token.value, uniqueReferenceCode: uniqueReferenceCode, financialId: bankCode, channelId: channelId, body: body)
-            return NIResponse(data: nil, response: nil, error: nil)
         }
-        Task {
-            let result = await wrapRequest(requestBuilder: requestBuilder)
-            completion(result.0, result.1)
-        }
-    }
-}
-
-extension NIMobileAPI {
-    func wrapRequest<T: Any>(requestBuilder: (_ token: NIAccessToken) async throws -> T) async -> (T?, NIErrorResponse?) {
-        do {
-            let token = try await tokenFetchable.fetchToken()
-            let result = try await requestBuilder(token)
-            return (result, nil)
-        } catch {
-            let resultError: NIErrorResponse
-            if case ErrorResponse.error(_, let data, let urlResp, let respError) = error {
-                let res = NIResponse(data: data, response: urlResp, error: respError as NSError?)
-                let nierror = NIErrorResponse().withResponse(response: res) ?? NIErrorResponse(error: NISDKErrors.NETWORK_ERROR)
-                resultError = nierror.isError ? nierror : NIErrorResponse(error: NISDKErrors.NETWORK_ERROR)
-            } else if error is RSADecryptError {
-                resultError = NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR)
-            } else if let tokenError = error as? TokenError {
-                let errorRespose = NIErrorResponse(error: NISDKErrors.TOKEN_ERROR)
-                if case let .networkError(error) = tokenError {
-                    errorRespose.errorCode = (error as NSError).code.description
-                }
-                resultError = errorRespose
-            } else {
-                let res = NIResponse(data: nil, response: nil, error: error as NSError?)
-                resultError = NIErrorResponse().withResponse(response: res) ?? NIErrorResponse(error: NISDKErrors.NETWORK_ERROR)
-            }
-            // clear old token if no response or error
-            self.tokenFetchable.clearToken()
-            return (nil, resultError)
-        }
+        try await wrapRequest(requestBuilder: requestBuilder)
     }
 }
 
 // MARK: - PinManager
 extension NIMobileAPI {
-    /// get card details for the card number and expiry
-    private func getClearPan(completion: @escaping (String?, NIErrorResponse?) -> Void) {
-        cardLookup { response, error in
-            if let error = error {
-                completion(nil, error)
-            } else {
-                completion(response?.cardNumber, error)
-            }
+    func setPin(_ pin: String) async throws {
+        /// get clear pan
+        let pan = try await getClearPan()
+        /// get pin certificate
+        let cert = try await getPinCertificate()
+        /// set pin
+        try await setPin(pin: pin, pan: pan, certificate: cert)
+    }
+    
+    func verifyPin(_ pin: String) async throws {
+        /// get clear pan
+        let pan = try await getClearPan()
+        /// get pin certificate
+        let cert = try await getPinCertificate()
+        /// verify pin
+        try await verifyPin(pin: pin, pan: pan, certificate: cert)
+    }
+    
+    func changePin(oldPin: String, newPin: String) async throws {
+        /// get clear pan
+        let pan = try await getClearPan()
+        /// get pin certificate
+        let cert = try await getPinCertificate()
+        /// change pin
+        try await changePin(oldPin: oldPin, newPin: newPin, pan: pan, certificate: cert)
+    }
+}
+
+private extension NIMobileAPI {
+    var uniqueReferenceCode: String {
+        APIEndpoint.uniqueReferenceCode
+    }
+    var channelId: String {
+        APIEndpoint.channelId
+    }
+    
+    func getRSAKeys() throws -> RSAKeyx509 {
+        do {
+            // regenerate on each keys request
+            let tag = "com.\(Bundle.sdkBundle.bundleIdentifier ?? "NISDK").keys.\(bankCode)".data(using: .utf8)!
+            return try RSA.generateRSAKeyx509(tag: tag, isPermanent: false)
+        } catch {
+            logger?.logNICardManagementMessage("RSA error \(error)")
+            throw NISDKError.rsaKeyError(error as? KeychainError)
         }
+    }
+    
+    /// get card details for the card number and expiry
+    func getClearPan() async throws -> String {
+        try await cardLookup().cardNumber
     }
     
     /// get pin certificate used for pin block encryption
-    private func getPinCertificate(completion: @escaping (String?, NIErrorResponse?) -> Void) {
-        retrievePinCertificate { response, error in
-            if let error = error {
-                completion(nil, error)
+    func getPinCertificate() async throws -> String {
+        guard let cert = try await retrievePinCertificate().certificate, !cert.isEmpty else {
+            throw RSADecryptError.emptyData
+        }
+        return cert
+    }
+    
+    /// Convert error to NISDKError
+    func wrapRequest<T: Any>(requestBuilder: (_ token: NIAccessToken) async throws -> T) async throws -> T {
+        do {
+            let token = try await tokenFetchable.fetchToken()
+            let result = try await requestBuilder(token)
+            return result
+        } catch {
+            // clear old token if no response or error
+            self.tokenFetchable.clearToken()
+            
+            if case ErrorResponse.error(let status, let data, let urlResp, let respError) = error {
+                throw NISDKError.responseError(status, data, urlResp, respError)
+            } else if error is RSADecryptError {
+                throw NISDKError.cryptoError(error as? RSADecryptError)
+            } else if let tokenError = error as? TokenError {
+                throw NISDKError.tokenError(tokenError)
             } else {
-                completion(response?.certificate, error)
-            }
-        }
-    }
-    
-    func setPin(_ pin: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        /// 1. get clear pan
-        // retain `self` by capture list
-        getClearPan { [self] clearPan, error in
-            guard let clearPan = clearPan else {
-                completion(nil, error)
-                return
-            }
-            /// 2. get pin certificate
-            self.getPinCertificate { [self] certificate, error in
-                guard let certificate = certificate else {
-                    completion(nil, error)
-                    return
-                }
-                /// 3. create and encrypt pin block
-                /// 4. set pin
-                self.setPin(pin: pin, pan: clearPan, certificate: certificate) { response, error in
-                    if let error = error {
-                        completion(nil, error)
-                    } else if response != nil {
-                        completion(response, nil)
-                    }
-                }
-            }
-        }
-    }
-    
-    func verifyPin(_ pin: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        /// 1. get clear pan
-        // retain `self` by capture list
-        getClearPan { [self] clearPan, error in
-            guard let clearPan = clearPan else {
-                completion(nil, error)
-                return
-            }
-            /// 2. get pin certificate
-            self.getPinCertificate { [self] certificate, error in
-                guard let certificate = certificate else {
-                    completion(nil, error)
-                    return
-                }
-                /// 3. create and encrypt pin block
-                /// 4. set pin
-                self.verifyPin(pin: pin, pan: clearPan, certificate: certificate) { response, error in
-                    if let error = error {
-                        completion(nil, error)
-                    } else if response != nil {
-                        completion(response, nil)
-                    }
-                }
-            }
-        }
-    }
-    
-    func changePin(oldPin: String, newPin: String, completion: @escaping (NIResponse?, NIErrorResponse?) -> Void) {
-        /// 1. get clear pan
-        // retain `self` by capture list
-        getClearPan { [self] clearPan, error  in
-            guard let clearPan = clearPan else {
-                completion(nil, error)
-                return
-            }
-            /// 2. get pin certificate
-            self.getPinCertificate { [self] certificate, error in
-                guard let certificate = certificate else {
-                    completion(nil, error)
-                    return
-                }
-                /// 3. set pin
-                self.changePin(oldPin: oldPin, newPin: newPin, pan: clearPan, certificate: certificate) { response, error in
-                    if let error = error {
-                        completion(nil, error)
-                    } else if response != nil {
-                        completion(response, nil)
-                    }
-                }
+                throw NISDKError.networkError(error)
             }
         }
     }
 }
 
-struct RequestLoggerAdapter: RequestLogger {
+struct RequestLoggerAdapter {
     let logger: NICardManagementLogger?
     
     // MARK: - RequestLogger
@@ -385,14 +258,5 @@ struct RequestLoggerAdapter: RequestLogger {
             + "\nresponse fields: \(responseData ?? "")"
             + "\n"
         )
-    }
-}
-
-private extension NIMobileAPI {
-    var uniqueReferenceCode: String {
-        String.randomString(length: GlobalConfig.NIUniqueReferenceCodeLength)
-    }
-    var channelId: String {
-        GlobalConfig.NIChannelId
     }
 }

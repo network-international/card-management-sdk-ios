@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol SetPinService {
-    func setPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+    func setPin(pin: String) async throws
 }
 
 class SetPinViewModel {
@@ -23,10 +23,8 @@ class SetPinViewModel {
         self.service = service
     }
     
-    func setPin(_ pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
-        service.setPin(pin: pin) { success, error, callback in
-            completion(success, error, callback)
-        }
+    func setPin(_ pin: String) async throws {
+        try await service.setPin(pin: pin)
     }
 }
 

@@ -20,6 +20,11 @@ enum APIEndpoint {
     case viewPin(params: ViewPinParams, bankCode: String, connection: NIConnectionProperties)
 }
 
+extension APIEndpoint {
+    static var channelId: String { "sdk" }
+    static var uniqueReferenceCode: String { String.randomString(length: 12) }
+}
+
 extension APIEndpoint: APIEndpointProtocol {
     
     var method: WSHTTPMethod {
@@ -117,7 +122,7 @@ extension APIEndpoint: APIEndpointProtocol {
     }
     
     var headers: Headers {
-        return Headers(contentType: contentType, accept: accept, uniqueReferenceCode: uniqueReferenceCode, financialId: financialId, channelId: channelId)
+        return Headers(contentType: contentType, accept: accept, uniqueReferenceCode: Self.uniqueReferenceCode, financialId: financialId, channelId: Self.channelId)
     }
     
     private var accept: String {
@@ -126,10 +131,6 @@ extension APIEndpoint: APIEndpointProtocol {
     
     private var contentType: String {
         return "application/json"
-    }
-    
-    private var uniqueReferenceCode: String {
-        return String.randomString(length: GlobalConfig.NIUniqueReferenceCodeLength)
     }
     
     private var financialId: String {
@@ -150,9 +151,4 @@ extension APIEndpoint: APIEndpointProtocol {
             return bankCode
         }
     }
-    
-    private var channelId: String {
-        return GlobalConfig.NIChannelId
-    }
-    
 }

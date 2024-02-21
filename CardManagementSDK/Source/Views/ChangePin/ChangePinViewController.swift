@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ChangePinViewDelegate: AnyObject {
+    func changePinView(_ view: ChangePinViewController, didChangePinWith error: NIErrorResponse?)
+}
+
 class ChangePinViewController: UIViewController {
     
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
@@ -16,7 +20,7 @@ class ChangePinViewController: UIViewController {
     private var newPin: String?
     private var pinView: PinView?
     
-    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    weak var delegate: ChangePinViewDelegate?
     
     // MARK: - Init
     init(viewModel: ChangePinViewModel) {
@@ -69,42 +73,36 @@ class ChangePinViewController: UIViewController {
 extension ChangePinViewController: PinViewProtocol {
     func pinFilled(pin: String) {
         pinView?.disableButtons()
-        
-        if let oldPin = oldPin {
-            if let newPin = newPin {
-                if newPin == pin {
-                    activityIndicator.startAnimating()
-                    
-                    DispatchQueue.global(qos: .default).async {
-                        self.viewModel.changePin(oldPin: oldPin, newPin: newPin) { [weak self] sucess, error, callback in
-                            guard let self = self else {
-                                return
-                            }
-                            
-                            DispatchQueue.main.async {
-                                self.activityIndicator.stopAnimating()
-                            }
-                            
-                            self.callback?(sucess, error) {
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    }
-                } else {
-                    pinView?.viewmodel?.descriptionText = "change_pin_description_pin_not_match".localized
-                    pinView?.resetView()
-                }
-            } else {
-                newPin = pin
-                guard let pinView = pinView else { return }
-                pinView.viewmodel?.descriptionText = "change_pin_description_re_enter_new_pin".localized
-                pinView.resetView()
-            }
-        } else {
+        guard let oldPin = oldPin else {
             oldPin = pin
-            guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = "change_pin_description_enter_new_pin".localized
-            pinView.resetView()
+            pinView?.viewmodel?.descriptionText = "change_pin_description_enter_new_pin".localized
+            pinView?.resetView()
+            return
+        }
+        guard let newPin = newPin else {
+            newPin = pin
+            pinView?.viewmodel?.descriptionText = "change_pin_description_re_enter_new_pin".localized
+            pinView?.resetView()
+            return
+        }
+        guard newPin == pin else {
+            pinView?.viewmodel?.descriptionText = "change_pin_description_pin_not_match".localized
+            pinView?.resetView()
+            return
+        }
+        activityIndicator.startAnimating()
+        Task {
+            var resultError: Error?
+            do {
+                try await viewModel.changePin(oldPin: oldPin, newPin: newPin)
+            } catch {
+                resultError = error
+            }
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                let resp = (resultError as? NISDKError).flatMap { NIErrorResponse(error: $0) }
+                self.delegate?.changePinView(self, didChangePinWith: resp)
+            }
         }
     }
 }

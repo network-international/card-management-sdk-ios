@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol ChangePinService {
-    func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
+    func changePin(oldPin: String, newPin: String) async throws
 }
 
 class ChangePinViewModel {
@@ -23,10 +23,8 @@ class ChangePinViewModel {
         self.service = service
     }
     
-    func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> ()) {
-        service.changePin(oldPin: oldPin, newPin: newPin) { success, error, callback in
-            completion(success, error, callback)
-        }
+    func changePin(oldPin: String, newPin: String) async throws {
+        try await service.changePin(oldPin: oldPin, newPin: newPin)
     }
 }
 

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SetPinViewDelegate: AnyObject {
+    func setPinView(_ vc: SetPinViewController, didCompleteWith error: NIErrorResponse?)
+}
+
 class SetPinViewController: UIViewController {
         
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
@@ -15,7 +19,7 @@ class SetPinViewController: UIViewController {
     private var pinView: PinView?
     private var previousPin: String?
     
-    var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    weak var delegate: SetPinViewDelegate?
     
     // MARK: - Init
     init(viewModel: SetPinViewModel) {
@@ -73,20 +77,16 @@ extension SetPinViewController: PinViewProtocol {
             
             if oldPin == pin {
                 activityIndicator.startAnimating()
-                
-                DispatchQueue.global(qos: .default).async {
-                    self.viewModel.setPin(pin) { [weak self] success, error, callback in
-                        guard let self = self else {
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.activityIndicator.stopAnimating()
-                        }
-                        
-                        self.callback?(success, error) {
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                Task {
+                    var resError: NISDKError?
+                    do {
+                        try await viewModel.setPin(pin)
+                    } catch {
+                        resError = error as? NISDKError
+                    }
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                        self.delegate?.setPinView(self, didCompleteWith: resError.flatMap { NIErrorResponse(error: $0) })
                     }
                 }
             } else {
