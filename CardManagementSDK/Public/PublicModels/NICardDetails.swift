@@ -8,20 +8,19 @@
 import Foundation
 
 
-@objc public class NICardDetails: NSObject {
+public class NICardDetails {
     
-    public var clearPan: String?
-    public var maskedPan: String?
-    public var expiry: String?
-    public var clearCVV2: String?
-    public var cardholderName: String?
+    public let clearPan: String?
+    public let maskedPan: String?
+    public let expiry: String?
+    public let clearCVV2: String?
+    public let cardholderName: String?
     
-    public init(clearPan: String?, maskedPan: String?, expiry: String?, clearCVV2: String?, cardholderName: String?) {
-        self.clearPan = clearPan
-        self.maskedPan = maskedPan
-        self.expiry = expiry
-        self.clearCVV2 = clearCVV2
-        self.cardholderName = cardholderName
+    init(response: NICardDetailsClearResponse) {
+        self.clearPan = response.cardNumber
+        self.maskedPan = response.maskedPan
+        self.expiry = response.expiryDate
+        self.clearCVV2 = response.cvv2
+        self.cardholderName = response.cardholderName
     }
-    
 }

@@ -7,9 +7,9 @@
 
 import Foundation
 
-@objc public class NISuccessResponse: NSObject {
+public class NISuccessResponse {
     
-    public var message: String
+    public let message: String
     
     init(message: String) {
         self.message = message

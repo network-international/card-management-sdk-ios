@@ -18,18 +18,12 @@ public class NIErrorResponse {
     public let errorCode: String
     public let errorMessage: String
     
-    convenience init(error: NISDKError) {
-        self.init(errorCode: error.legacyText, errorMessage: error.legacyCode)
+    init(error: NISDKError) {
+        errorCode = error.legacyCode
+        errorMessage = error.legacyText
     }
     
-    private init(errorCode: String, errorMessage: String) {
-        self.errorCode = errorCode
-        self.errorMessage = errorMessage
-    }
-    
-    static var wrondNavigation: NIErrorResponse {
-        NIErrorResponse(errorCode: "", errorMessage: "Navigation error")
-    }
+    static var wrongNavigation: NIErrorResponse { .init(error: .navigationError) }
 }
 
 
@@ -42,15 +36,18 @@ enum NISDKError: Error {
     // TODO: remove it as it contains mostly network errors
     case tokenError(_ error: TokenError)
     
+    case navigationError
+    
     var legacyText: String {
         switch self {
         case .rsaKeyError: return "Couldn't get or generate Public Key"
         case .cryptoError: return "Encryption Error"
-            // "SDK General Error"
+        // "SDK General Error"
         case let .responseError(code, data, resp, error):
             return Self.parseResponse(code: code, data: data, resp: resp, error: error).errorMessage
         case .networkError: return "Server Request Error"
         case .tokenError: return "Token Error"
+        case .navigationError: return "Navigation error"
         }
     }
     
@@ -66,6 +63,7 @@ enum NISDKError: Error {
             return error.flatMap { "\(($0 as NSError).code)" } ?? ""
         case let .tokenError(tokenError): 
             return "\(tokenError.errorCode)"
+        case .navigationError: return "-2"
         }
     }
     

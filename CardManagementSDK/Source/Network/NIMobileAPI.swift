@@ -40,13 +40,13 @@ class NIMobileAPI {
         OpenAPIClientAPI.basePath = rootUrl
     }
     
-    func retrieveCardDetails() async throws -> NICardDetailsResponse {
+    func retrieveCardDetails() async throws -> NICardDetailsClearResponse {
         let rsaInfo = try getRSAKeys()
         // capture self explicitly
-        let requestBuilder: (_ token: NIAccessToken) async throws -> NICardDetailsResponse = { [self] token in
+        let requestBuilder: (_ token: NIAccessToken) async throws -> NICardDetailsClearResponse = { [self] token in
             let body = CardDetailsSecuredRequest(publicKey: rsaInfo.cert)
             let response = try await CardsAPI.securedCardDetails(authorization: token.value, uniqueReferenceCode: uniqueReferenceCode, financialId: bankCode, channelId: channelId, cardIdentifierId: cardIdentifierId, body: body, cardIdentifierType: cardIdentifierType)
-            let niresp = try NICardDetailsResponse(secured: response, privateKey: rsaInfo.privateKey)
+            let niresp = try NICardDetailsClearResponse(secured: response, privateKey: rsaInfo.privateKey)
             return niresp
         }
         return try await wrapRequest(requestBuilder: requestBuilder)

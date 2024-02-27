@@ -41,7 +41,7 @@ public final class NICardManagementAPI {
     public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         
         if viewController is UINavigationController {
-            completion(.wrondNavigation)
+            completion(.wrongNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .cardDetails, completion: completion)
@@ -49,7 +49,7 @@ public final class NICardManagementAPI {
     
     public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(.wrondNavigation)
+            completion(.wrongNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .setPin(type: type), completion: completion)
@@ -57,7 +57,7 @@ public final class NICardManagementAPI {
     
     public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(.wrondNavigation)
+            completion(.wrongNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .verifyPin(type: type), completion: completion)
@@ -65,7 +65,7 @@ public final class NICardManagementAPI {
     
     public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NIErrorResponse?) -> Void) {
         if viewController is UINavigationController {
-            completion(.wrondNavigation)
+            completion(.wrongNavigation)
         }
         makeCoordinator(with: viewController, displayAttributes: displayAttributes)
             .coordinate(route: .changePin(type: type), completion: completion)
@@ -76,8 +76,7 @@ public final class NICardManagementAPI {
     /// NICardDetails on success, otherwise throws NISDKError
     public func getCardDetails() async throws -> NICardDetails {
         let response = try await mobileApi.retrieveCardDetails()
-        let result = NICardDetails(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
-        return result
+        return NICardDetails(response: response)
     }
     /// No error on success, otherwise throws NISDKError
     public func setPin(pin: String) async throws {

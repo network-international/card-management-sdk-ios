@@ -511,6 +511,7 @@
 		BA391B3B2B848CA7009BB698 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA391B382B848CA7009BB698 /* AnyCodable.swift */; };
 		BA391B3C2B848CA7009BB698 /* AnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA391B392B848CA7009BB698 /* AnyDecodable.swift */; };
 		BA391B3D2B848CA7009BB698 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA391B3A2B848CA7009BB698 /* AnyEncodable.swift */; };
+		BA391B412B8DCEEA009BB698 /* NICardManagementAPI+Legacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA391B402B8DCEEA009BB698 /* NICardManagementAPI+Legacy.swift */; };
 		BA70A1492B306F8300A196C9 /* NIAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1482B306F8300A196C9 /* NIAccessToken.swift */; };
 		BA70A14D2B31C53500A196C9 /* NICardManagementTokenFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */; };
 		BA70A1502B31C5B600A196C9 /* TokenFetcherSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14F2B31C5B600A196C9 /* TokenFetcherSimple.swift */; };
@@ -563,7 +564,7 @@
 		F45A7DFF28EF22E100B3486E /* JSONSerialiation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7DFE28EF22E100B3486E /* JSONSerialiation+Extensions.swift */; };
 		F45A7E0128EF24AE00B3486E /* NSError+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7E0028EF24AE00B3486E /* NSError+Utils.swift */; };
 		F45A7E0328F0321400B3486E /* APIEndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7E0228F0321400B3486E /* APIEndpointProtocol.swift */; };
-		F45A7E0628F0369A00B3486E /* NICardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7E0528F0369A00B3486E /* NICardDetailsResponse.swift */; };
+		F45A7E0628F0369A00B3486E /* NICardDetailsClearResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7E0528F0369A00B3486E /* NICardDetailsClearResponse.swift */; };
 		F45A7E1328F437DE00B3486E /* GlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A7E1228F437DE00B3486E /* GlobalConfig.swift */; };
 		F48CFC20292F8DB8000DEF69 /* NICardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CFC1F292F8DB8000DEF69 /* NICardView.swift */; };
 		F48CFC22292F8DDD000DEF69 /* NICardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F48CFC21292F8DDD000DEF69 /* NICardView.xib */; };
@@ -1107,6 +1108,7 @@
 		BA391B382B848CA7009BB698 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		BA391B392B848CA7009BB698 /* AnyDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDecodable.swift; sourceTree = "<group>"; };
 		BA391B3A2B848CA7009BB698 /* AnyEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
+		BA391B402B8DCEEA009BB698 /* NICardManagementAPI+Legacy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NICardManagementAPI+Legacy.swift"; sourceTree = "<group>"; };
 		BA70A1482B306F8300A196C9 /* NIAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIAccessToken.swift; sourceTree = "<group>"; };
 		BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardManagementTokenFetchable.swift; sourceTree = "<group>"; };
 		BA70A14F2B31C5B600A196C9 /* TokenFetcherSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFetcherSimple.swift; sourceTree = "<group>"; };
@@ -1160,7 +1162,7 @@
 		F45A7DFE28EF22E100B3486E /* JSONSerialiation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONSerialiation+Extensions.swift"; sourceTree = "<group>"; };
 		F45A7E0028EF24AE00B3486E /* NSError+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Utils.swift"; sourceTree = "<group>"; };
 		F45A7E0228F0321400B3486E /* APIEndpointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointProtocol.swift; sourceTree = "<group>"; };
-		F45A7E0528F0369A00B3486E /* NICardDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardDetailsResponse.swift; sourceTree = "<group>"; };
+		F45A7E0528F0369A00B3486E /* NICardDetailsClearResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardDetailsClearResponse.swift; sourceTree = "<group>"; };
 		F45A7E1228F437DE00B3486E /* GlobalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConfig.swift; sourceTree = "<group>"; };
 		F48CFC1F292F8DB8000DEF69 /* NICardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardView.swift; sourceTree = "<group>"; };
 		F48CFC21292F8DDD000DEF69 /* NICardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NICardView.xib; sourceTree = "<group>"; };
@@ -1879,7 +1881,7 @@
 		F45A7E0428F0366600B3486E /* ResponseModels */ = {
 			isa = PBXGroup;
 			children = (
-				F45A7E0528F0369A00B3486E /* NICardDetailsResponse.swift */,
+				F45A7E0528F0369A00B3486E /* NICardDetailsClearResponse.swift */,
 				F447E44528F8324B005A5F46 /* NICardLookupResponse.swift */,
 				F447E44728F83BBA005A5F46 /* NIPinCertificateResponse.swift */,
 				2A26D2082A9DE413000C364E /* NIViewPinResponse.swift */,
@@ -1941,6 +1943,7 @@
 			children = (
 				F4E7698328EC7A5600CDC7E4 /* PublicModels */,
 				F4E7698128EC4BF500CDC7E4 /* NICardManagementAPI.swift */,
+				BA391B402B8DCEEA009BB698 /* NICardManagementAPI+Legacy.swift */,
 				BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */,
 				BA70A14F2B31C5B600A196C9 /* TokenFetcherSimple.swift */,
 			);
@@ -2197,6 +2200,7 @@
 				BA391A582B83A521009BB698 /* ResponseGetCvv2.swift in Sources */,
 				BA3919C12B83A521009BB698 /* ResponseCardCreate.swift in Sources */,
 				F447E4722901288A005A5F46 /* PinEncryption.swift in Sources */,
+				BA391B412B8DCEEA009BB698 /* NICardManagementAPI+Legacy.swift in Sources */,
 				BA391AD32B83A521009BB698 /* NISrvRequestAccountUpdate.swift in Sources */,
 				BA391B0A2B83A521009BB698 /* CardActivationHeader.swift in Sources */,
 				F45A7DF328EEFEEE00B3486E /* APIEndpoint.swift in Sources */,
@@ -2545,7 +2549,7 @@
 				BA391AB82B83A521009BB698 /* RequestAccountHierarchy.swift in Sources */,
 				BA391A782B83A521009BB698 /* CardStatementSummaryReq.swift in Sources */,
 				BA3919EE2B83A521009BB698 /* NISrvResponseClientUpdate.swift in Sources */,
-				F45A7E0628F0369A00B3486E /* NICardDetailsResponse.swift in Sources */,
+				F45A7E0628F0369A00B3486E /* NICardDetailsClearResponse.swift in Sources */,
 				BA391A5F2B83A521009BB698 /* SupplementaryDocuments.swift in Sources */,
 				BA391A5D2B83A521009BB698 /* Addresses.swift in Sources */,
 				BA391AA32B83A521009BB698 /* NISrvRequestCardStatementSummary.swift in Sources */,

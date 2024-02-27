@@ -1,5 +1,5 @@
 //
-//  NICardDetailsResponse.swift
+//  NICardDetailsClearResponse.swift
 //  NICardManagementSDK
 //
 //  Created by Paula Radu on 07.10.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NICardDetailsResponse {
+class NICardDetailsClearResponse {
     private struct ClearInfo {
         let cardNumber: String
         let cvv2: String
@@ -44,7 +44,7 @@ class NICardDetailsResponse {
     }
 }
 
-private extension NICardDetailsResponse {
+private extension NICardDetailsClearResponse {
     
     static func formatExpiryDate(_ expiry: String?) -> String {
         guard let expiry = expiry, expiry != "" else { return "-" }
