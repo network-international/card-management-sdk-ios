@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    static let alwaysWhite = UIColor(named: "AlwaysWhite", in: Bundle.sdkBundle, compatibleWith: .none)!
+    public static let niAlwaysWhite = UIColor(named: "AlwaysWhite", in: Bundle.sdkBundle, compatibleWith: .none)!
     static let darkerGray = UIColor(named: "DarkerGray", in: Bundle.sdkBundle, compatibleWith: .none)!
     static let backgroundColor = UIColor(named: "BackgroundColor", in: Bundle.sdkBundle, compatibleWith: .none)
     

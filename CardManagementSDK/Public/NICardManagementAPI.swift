@@ -38,7 +38,7 @@ public final class NICardManagementAPI {
     }
     
     // MARK: - Form Factories Interface
-    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
@@ -47,7 +47,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .cardDetails, completion: completion)
     }
     
-    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -55,7 +55,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .setPin(type: type), completion: completion)
     }
     
-    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -63,7 +63,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .verifyPin(type: type), completion: completion)
     }
     
-    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -71,15 +71,29 @@ public final class NICardManagementAPI {
             .coordinate(route: .changePin(type: type), completion: completion)
     }
     
+    // MARK: - Card UI elements presenter
+    /// use it to fill any custom layout by UI elements of this presenter
+    /// so the card details data is not passed in raw format
+    /// after building presenter, call `presenter.showCardDetails(completion:)`
+    public func buildCardDetailsPresenter(displayAttributes: NIDisplayAttributes = .zero) -> NICardElementsPresenter {
+        let presenter = NICardElementsPresenter()
+        presenter.setup(displayAttributes: displayAttributes, service: self)
+        return presenter
+    }
+    
     // MARK: - Programatic Interface
     public func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         mobileApi.retrieveCardDetails { response, error in
-            if let error = error {
-                completion(nil, error){}
-            }
+            var resp: NICardDetailsResponse?
             if let response = response {
-                let result = NICardDetailsResponse(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
-                completion(result, nil){}
+                resp = NICardDetailsResponse(clearPan: response.cardNumber, maskedPan: response.maskedPan, expiry: response.expiryDate, clearCVV2: response.cvv2, cardholderName: response.cardholderName)
+            }
+            if Thread.isMainThread {
+                completion(resp, error){}
+            } else {
+                DispatchQueue.main.async {
+                    completion(resp, error){}
+                }
             }
         }
     }
@@ -132,8 +146,8 @@ public final class NICardManagementAPI {
 
 // MARK: - Private
 private extension NICardManagementAPI {
-    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes?) -> FormCoordinator {
-        GlobalConfig.shared.language = displayAttributes?.language
+    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero) -> FormCoordinator {
+        GlobalConfig.shared.language = displayAttributes.language
         return FormCoordinator(
             navigationController: navigationController,
             displayAttributes: displayAttributes,
