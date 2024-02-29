@@ -8,76 +8,204 @@
 import UIKit
 
 public final class NICardView: UIView {
-    
-    @IBOutlet weak var view: UIView!
-    @IBOutlet weak var cardNumberLabel: UILabel!
-    @IBOutlet weak var cardNumber: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var cardExpiryLabel: UILabel!
-    @IBOutlet weak var cardExpiry: UILabel!
-    @IBOutlet weak var cvv2Label: UILabel!
-    @IBOutlet weak var cvv2: UILabel!
-    @IBOutlet weak var copyButton: UIButton!
-    @IBOutlet weak var eyeButton: EyeButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var backgroundCardImage: UIImageView!
-    @IBOutlet weak var nameTagLabel: UILabel!
-    @IBOutlet weak var nameCopyButton: UIButton!
-    @IBOutlet weak var leftAlignmentConstraint: NSLayoutConstraint!
-    @IBOutlet weak var cardNumberGroupTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var dateCvvGroupTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var holderNameTopConstraint: NSLayoutConstraint!
-
-    var viewModel: CardDetailsViewModel?
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        view.layer.borderColor = UIColor.white.cgColor
-        view.clipsToBounds = true
-        view.layer.borderWidth = 1.0
-        view.layer.cornerRadius = 20
-        eyeButton.isHidden = true
-        hideUI(true)
-    }
-    
-    // MARK: - Init
-    /// Initialization of NICardView
-    /// To be used when creating the card view programatically
-    /// - Parameters:
-    ///   - input: input needed for the card details visualization
-    ///   - service: sdk instance
-    public init(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
-        super.init(frame: .zero)
-        fromNib()
+    private lazy var cardNrCopyButton: UIButton = { // copyButton
+        let element = UIButton()
+        element.translatesAutoresizingMaskIntoConstraints = false
+        let image: UIImage?
         if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
+            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
+        } else {
+            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
         }
-        
-        if self.view != nil {
-            activityIndicator.startAnimating()
-            configureCardView()
+        element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        element.addTarget(self, action: #selector(cardNrCopyAction), for: .touchUpInside)
+        return element
+    }()
+    private lazy var eyeButton: EyeButton = {
+        let element = EyeButton()
+        element.translatesAutoresizingMaskIntoConstraints = false
+        element.addTarget(self, action: #selector(eyeButtonAction(_:)), for: .touchUpInside)
+        element.widthAnchor.constraint(equalToConstant: Constants.eyeImageSize.width).isActive = true
+        element.heightAnchor.constraint(equalToConstant: Constants.eyeImageSize.height).isActive = true
+        return element
+    }()
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let element = UIActivityIndicatorView()
+        element.translatesAutoresizingMaskIntoConstraints = false
+        element.hidesWhenStopped = true
+        element.tintColor = .white
+        if #available(iOS 13.0, *) {
+            element.style = .large
+        } else {
+            element.style = .whiteLarge
         }
+        return element
+    }()
+    private lazy var backgroundCardImage: UIImageView = {
+        let element = UIImageView()
+        element.translatesAutoresizingMaskIntoConstraints = false
+        return element
+    }()
+    private lazy var nameCopyButton: UIButton = {
+        let element = UIButton()
+        element.translatesAutoresizingMaskIntoConstraints = false
+        let image: UIImage?
+        if #available(iOS 13.0, *) {
+            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
+        } else {
+            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
+        }
+        element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        element.addTarget(self, action: #selector(nameCopyAction), for: .touchUpInside)
+        return element
+    }()
+    
+    private var leftAlignmentConstraint: NSLayoutConstraint?
+    private var cardNumberGroupTopConstraint: NSLayoutConstraint?
+    private var dateCvvGroupTopConstraint: NSLayoutConstraint?
+    private var holderNameTopConstraint: NSLayoutConstraint?
+
+    private var presenter = NICardElementsPresenter()
+    
+    override public init(frame: CGRect) {
+        super.init(frame: .zero)
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        fromNib()
+        commonInit()
     }
     
+    private func commonInit() {
+        layer.borderColor = UIColor.white.cgColor
+        clipsToBounds = true
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 20
+        semanticContentAttribute = .forceLeftToRight
+        /**
+         =================================
+         ||
+         ||
+         ||     c number
+         ||     1234            􀽰
+         ||
+         ||     date            cvv     􀋭                  􀇲[loading indicator]
+         ||     11 / 23         234
+         ||
+         ||     name
+         ||     Card Holder
+         ||
+         =================================
+         */
+        // cardNrGroup
+        let cardGr = UIStackView(arrangedSubviews: [presenter.cardNumber.title, presenter.cardNumber.value])
+        cardGr.translatesAutoresizingMaskIntoConstraints = false
+        cardGr.axis = .vertical
+        cardGr.spacing = 0
+        let cardCopyGr = UIStackView(arrangedSubviews: [UIView(), cardNrCopyButton])
+        cardCopyGr.translatesAutoresizingMaskIntoConstraints = false
+        cardCopyGr.axis = .vertical
+        cardCopyGr.alignment = .trailing
+        let cardNrGroup = UIStackView(arrangedSubviews: [cardGr, cardCopyGr])
+        cardNrGroup.axis = .horizontal
+        cardNrGroup.spacing = Constants.copyButtonHSpace
+        cardNrGroup.translatesAutoresizingMaskIntoConstraints = false
+        
+        // date cvv group
+        let dateGr = UIStackView(arrangedSubviews: [presenter.cardExpiry.title, presenter.cardExpiry.value])
+        dateGr.translatesAutoresizingMaskIntoConstraints = false
+        dateGr.axis = .vertical
+        dateGr.spacing = 0
+        let cvvGr = UIStackView(arrangedSubviews: [presenter.cardCvv.title, presenter.cardCvv.value])
+        cvvGr.translatesAutoresizingMaskIntoConstraints = false
+        cvvGr.axis = .vertical
+        cvvGr.spacing = 0
+        let eyeGr = UIStackView(arrangedSubviews: [eyeButton, UIView()])
+        eyeGr.translatesAutoresizingMaskIntoConstraints = false
+        eyeGr.axis = .vertical
+        eyeGr.alignment = .trailing
+        let dateCvvGroup = UIStackView(arrangedSubviews: [dateGr, cvvGr, eyeGr])
+        dateCvvGroup.axis = .horizontal
+        dateCvvGroup.spacing = Constants.dateCvvHSpace
+        dateCvvGroup.translatesAutoresizingMaskIntoConstraints = false
+        
+        // card holder group
+        let cardHolderGr = UIStackView(arrangedSubviews: [presenter.cardHolder.title, presenter.cardHolder.value])
+        cardHolderGr.translatesAutoresizingMaskIntoConstraints = false
+        cardHolderGr.axis = .vertical
+        cardHolderGr.spacing = 0
+        let cardHolderCopyGr = UIStackView(arrangedSubviews: [UIView(), nameCopyButton])
+        cardHolderCopyGr.translatesAutoresizingMaskIntoConstraints = false
+        cardHolderCopyGr.axis = .vertical
+        cardHolderCopyGr.alignment = .trailing
+        let cardNameWithCopyGr = UIStackView(arrangedSubviews: [cardHolderGr, cardHolderCopyGr])
+        cardNameWithCopyGr.axis = .horizontal
+        cardNameWithCopyGr.spacing = Constants.copyButtonHSpace
+        cardNameWithCopyGr.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        addSubview(backgroundCardImage)
+        layoutMargins = .zero
+        backgroundCardImage.alignConstraintsToView(view: self)
+        addSubview(cardNrGroup)
+        addSubview(dateCvvGroup)
+        addSubview(cardNameWithCopyGr)
+        addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
+        // TODO: I think it could be better to provide interitem spacing then space to upper edge of each group
+        leftAlignmentConstraint = cardNrGroup.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.InitialConstraints.leftAlignment)
+        leftAlignmentConstraint?.isActive = true
+        dateCvvGroup.leadingAnchor.constraint(equalTo: cardNrGroup.leadingAnchor).isActive = true
+        cardNameWithCopyGr.leadingAnchor.constraint(equalTo: cardNrGroup.leadingAnchor).isActive = true
+        
+        cardNumberGroupTopConstraint = cardNrGroup.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.cardNumberGroupTop)
+        cardNumberGroupTopConstraint?.isActive = true
+        dateCvvGroupTopConstraint = dateCvvGroup.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.dateCvvGroupTop)
+        dateCvvGroupTopConstraint?.isActive = true
+        holderNameTopConstraint = cardNameWithCopyGr.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.cardNumberGroupTop)
+        holderNameTopConstraint?.isActive = true
+        
+        hideUI(true)
+    }
     // MARK: - Public
     /// Set the input for the NICardView
-    /// To be used ONLY if NICardView is added in storyboard or xib
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
-    public func configure(displayAttributes: NIDisplayAttributes?, service: CardDetailsService, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func configure(displayAttributes: NIDisplayAttributes = .zero, service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
         hideUI(true)
-        viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
         activityIndicator.startAnimating()
-        configureCardView()
+        /// set background image
+        backgroundCardImage.image = displayAttributes.cardAttributes.backgroundImage
+        
+        presenter.setup(displayAttributes: displayAttributes, service: service)
+        // update colors of images
+        [eyeButton, cardNrCopyButton, nameCopyButton].forEach { button in
+            button.tintColor = displayAttributes.cardAttributes.elementsColor
+            button.imageView?.tintColor = displayAttributes.cardAttributes.elementsColor
+        }
+        
+        if #available(iOS 13.0, *) {
+            backgroundColor = UIColor.backgroundColor
+            overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
+        } else {
+            backgroundColor = self.presenter.isThemeLight ? .white : UIColor.black
+        }
+        
+        eyeButton.isSelected = !presenter.isMasked
+        
+        presenter.showCardDetails { [weak self] errorResponse in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.updatePositioning(displayAttributes.cardAttributes.textPositioning)
+                self?.hideUI(false)
+                completion(errorResponse)
+            }
+        }
     }
     
     public func setBackgroundImage(image: UIImage) {
@@ -87,141 +215,57 @@ public final class NICardView: UIView {
 }
 
 // MARK: - Private
-extension NICardView {
-    
-    func configureCardView() {
-        
-        guard let viewModel = viewModel else {
-            return
-        }
-        
-        /// set background image
-        if let image = viewModel.backgroundImage {
-            backgroundCardImage.image = image
-        }
-        
-        /// set fonts
-        cardNumberLabel.font = viewModel.font(for: .cardNumberLabel)
-        cardExpiryLabel.font = viewModel.font(for: .expiryDateLabel)
-        cvv2Label.font = viewModel.font(for: .cvvLabel)
-        cardNumber.font = viewModel.font(for: .cardNumberValueLabel)
-        nameLabel.font = viewModel.font(for: .cardholderNameLabel)
-        cardExpiry.font = viewModel.font(for: .expiryDateValueLabel)
-        cvv2.font = viewModel.font(for: .cvvValueLabel)
-        nameTagLabel.font = viewModel.font(for: .cardholderNameTagLabel)
-        
-        updateUI(viewModel)
-        updateTexts(viewModel)
-        self.view.semanticContentAttribute = .forceLeftToRight
-    }
-    
-    private func updateUI(_ viewModel: CardDetailsViewModel) {
-        viewModel.bindCardDetailsViewModel = {
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.hideUI(false)
-                self.eyeButton.isHidden = !viewModel.shouldMask
-                self.copyButton.isHidden = viewModel.shouldMask
-                self.nameCopyButton.isHidden = viewModel.shouldMask
-                self.updateTexts(viewModel)
-                
-                if let constraints = viewModel.textPositioning {
-                    self.leftAlignmentConstraint.constant = CGFloat(constraints.leftAlignment * self.view.bounds.height)
-                    self.cardNumberGroupTopConstraint.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.view.bounds.height)
-                    self.dateCvvGroupTopConstraint.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.view.bounds.height)
-                    self.holderNameTopConstraint.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.view.bounds.height)
-                }
-            }
-        }
-        
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = viewModel.isThemeLight ? .light : .dark
-            copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
-        } else {
-            view.backgroundColor = viewModel.isThemeLight ? .white : UIColor.black
-            let image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-            copyButton.setImage(image, for: .normal)
+private extension NICardView {
+    enum Constants {
+        static let eyeImageSize = CGSize(width: 20, height: 20)
+        static let copyButtonHSpace: CGFloat = 14
+        static let dateCvvHSpace: CGFloat = 24
+        enum InitialConstraints {
+            static let leftAlignment: CGFloat = 16
+            static let cardNumberGroupTop: CGFloat = 64
+            static let dateCvvGroupTop: CGFloat = 105
+            static let holderNameTop: CGFloat = 143
         }
     }
     
-    private func updateTexts(_ viewModel: CardDetailsViewModel) {
-        eyeButton.isSelected = !viewModel.shouldMask
-        
-        let cardDetails = viewModel.shouldMask ? viewModel.maskedDetails : viewModel.cardDetails
-        self.cardNumberLabel.text = cardDetails?.cardNumberLabel
-        self.cardNumber.text = cardDetails?.cardNumber
-        self.nameLabel.text = cardDetails?.cardholderName
-        self.cardExpiryLabel.text = cardDetails?.cardExpiryLabel
-        self.cardExpiry.text = cardDetails?.cardExpiry
-        self.cvv2Label.text = cardDetails?.cvv2Label
-        self.cvv2.text = cardDetails?.cvv2
-        self.nameTagLabel.text = cardDetails?.cardholderNameLabel
-        
-        if cardNumber.text == nil || cardNumber.text == "-" || cardNumber.text == "" {
-            copyButton.isHidden = true
-            eyeButton.isHidden = true
-        } else {
-            copyButton.isHidden = false
-            eyeButton.isHidden = !viewModel.shouldMask
-        }
-        
-        if nameLabel.text == nil || nameLabel.text == "-" || nameLabel.text == "" {
-            nameCopyButton.isHidden = true
-            eyeButton.isHidden = true
-        } else {
-            nameCopyButton.isHidden = false
-            eyeButton.isHidden = !viewModel.shouldMask
-        }
+    func updatePositioning(_ textPositioning: NICardDetailsTextPositioning?) {
+        guard let constraints = textPositioning else { return }
+        self.leftAlignmentConstraint?.constant = CGFloat(constraints.leftAlignment * self.bounds.height)
+        self.cardNumberGroupTopConstraint?.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.bounds.height)
+        self.dateCvvGroupTopConstraint?.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.bounds.height)
+        self.holderNameTopConstraint?.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.bounds.height)
     }
     
-    private func hideUI(_ shouldHide: Bool) {
-        cardNumberLabel.isHidden = shouldHide
-        cardNumber.isHidden = shouldHide
-        nameLabel.isHidden = shouldHide
-        cardExpiryLabel.isHidden = shouldHide
-        cardExpiry.isHidden = shouldHide
-        cvv2Label.isHidden = shouldHide
-        cvv2.isHidden = shouldHide
-        nameTagLabel.isHidden = shouldHide
+    func hideUI(_ shouldHide: Bool) {
+        presenter.toggle(isHidden: shouldHide)
         eyeButton.isHidden = shouldHide
-        copyButton.isHidden = shouldHide
-        nameCopyButton.isHidden = shouldHide
+        cardNrCopyButton.isHidden = shouldHide || presenter.isMasked
+        nameCopyButton.isHidden = shouldHide || presenter.isMasked
     }
     
     // MARK: - Actions
-    @IBAction func copyAction(_ sender: Any) {
-        UIPasteboard.general.string = viewModel?.cardDetails?.cardNumber?.removingWhitespaces()
+    @objc func cardNrCopyAction() {
+        UIPasteboard.general.string = presenter.getCardNumberText()?
+            .components(separatedBy: .whitespaces).joined()
         showToast(message: "toast_message".localized)
     }
     
-    @IBAction func nameCopyAction(_ sender: Any) {
-        UIPasteboard.general.string = viewModel?.cardDetails?.cardholderName
+    @objc func nameCopyAction() {
+        UIPasteboard.general.string = presenter.getCardHolderText()
         showToast(message: "toast_message".localized)
     }
     
-    @IBAction func eyeButtonAction(_ sender: EyeButton) {
+    @objc func eyeButtonAction(_ sender: EyeButton) {
         sender.isSelected.toggle()
+        presenter.toggle(isMasked: !sender.isSelected)
         
-        guard let card = viewModel?.cardDetails else { return }
-        if sender.isSelected {
-            self.nameLabel.text = card.cardholderName
-            self.cardNumber.text = card.cardNumber
-            self.cardExpiry.text = card.cardExpiry
-            self.cvv2.text = card.cvv2
-            self.copyButton.isHidden = false
-            self.nameCopyButton.isHidden = false
-        } else {
-            self.cardNumber.text = card.maskedCardNumber
-            self.nameLabel.text = viewModel?.maskedDetails.cardholderName
-            self.cardExpiry.text = viewModel?.maskedDetails.cardExpiry
-            self.cvv2.text = viewModel?.maskedDetails.cvv2
-            self.copyButton.isHidden = true
-            self.nameCopyButton.isHidden = true
-        }
+        cardNrCopyButton.isHidden = !sender.isSelected
+        nameCopyButton.isHidden = !sender.isSelected
     }
-    
-    private func showToast(message : String) {
+}
+
+private extension UIView {
+    func showToast(message: String) {
         let toastLabel = UILabel()
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         toastLabel.textColor = UIColor.white
@@ -229,39 +273,15 @@ extension NICardView {
         toastLabel.textAlignment = .center;
         toastLabel.text = message
         toastLabel.sizeToFit()
-        toastLabel.frame = CGRect(x: self.view.frame.midX - (toastLabel.frame.width + 40) / 2, y: self.view.frame.size.height - 80, width: toastLabel.frame.width + 40, height: toastLabel.frame.height + 24)
+        toastLabel.frame = CGRect(x: self.frame.midX - (toastLabel.frame.width + 40) / 2, y: self.frame.size.height - 80, width: toastLabel.frame.width + 40, height: toastLabel.frame.height + 24)
         toastLabel.alpha = 1.0
         toastLabel.layer.cornerRadius = 20
         toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
+        self.addSubview(toastLabel)
         UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()
         })
     }
-}
-
-
-extension UIView {
-    
-    @discardableResult
-    func fromNib<T : UIView>() -> T? {
-        guard let contentView = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else {
-            /// xib not loaded, or its top view is of the wrong type
-            return nil
-        }
-        self.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.layoutSetup()
-        return contentView
-    }
-    
-    private func layoutSetup() {
-        superview?.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        superview?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        superview?.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        superview?.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-    
 }

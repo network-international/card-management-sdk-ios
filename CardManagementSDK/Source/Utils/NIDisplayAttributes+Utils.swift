@@ -7,7 +7,7 @@
 
 import UIKit
 
-private enum DefaultFonts {
+internal enum DefaultFonts {
     case cardNumberLabel
     case cardNumberValueLabel
     case cardNameLabel
