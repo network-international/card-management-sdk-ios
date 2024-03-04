@@ -102,7 +102,7 @@ Swift:
 ```
 
 ###### Display attributes  
-Display attributes parameter is optional. You can set one or more attributes, or even none of them.  
+Display attributes parameter has default value `NIDisplayAttributes.zero`. You can set one or more attributes, or even none of them.  
 
 1. Theme
 
@@ -119,9 +119,15 @@ We support customization of fonts. System and custom fonts can be set for the la
 
 4. Card Attributes
 
-Card Attributes is optional. It can be set if customisation of the card details view is wanted. 
+Card Attributes has default value `NICardAttributes.zero`. It can be set if customisation of the card details view is wanted. 
     
 We offer:  
+ - Set color of card view elements, `.niAlwaysWhite` by default
+ 
+```swift
+    let cardAttributes = NICardAttributes(elementsColor: .niAlwaysWhite)
+```
+
  - Possibility to show or hide card details by default
  
  To directly show the card details (not masked) when card view is displayed, we expect the ```shouldHide``` property to be set to false, otherwise to be set to false. If ```shouldHide``` property is not set, the default value is true.
@@ -173,7 +179,7 @@ func displayCardDetailsForm(viewController: UIViewController, completion: @escap
 ```
 Swift: 
 ```swift
-    sdk.displayCardDetailsForm(viewController: self) { successResponse, errorResponse in
+    sdk.displayCardDetailsForm(viewController: navigationViewController) { successResponse, errorResponse in
         // handle error and success
     }
 ```
@@ -184,11 +190,10 @@ A PIN-pad will be displayed into a separate screen (UIViewController).
 specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
 
 ```swift
-sdk.setPinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
+sdk.setPinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
 	//  handle here error and success
 }
 ```
-
 
 ##### Change PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController).
@@ -199,11 +204,10 @@ Change PIN is a two step flow:
 specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
 
 ```swift
-sdk.changePinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
+sdk.changePinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
 	// handle here error and success
 }
 ```
-
 
 ##### Verify PIN Form 
 A PIN-pad will be displayed into a separate screen (UIViewController). 
@@ -211,7 +215,7 @@ A PIN-pad will be displayed into a separate screen (UIViewController).
 specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
 
 ```swift
-sdk.verifyPinForm(type: pinType, viewController: self, displayAttributes: displayAttributes) { successResponse, errorResponse in
+sdk.verifyPinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
 	// handle here error and success
 }
 ```
@@ -219,17 +223,38 @@ sdk.verifyPinForm(type: pinType, viewController: self, displayAttributes: displa
 #### Display as a view
 The customer application can integrate Card Details and View Pin as a view into a UIViewController
 
-##### Constructing Card Details view.
-A view of NICardView type can be added into storyboard, then set the input and start the flow as below:
+##### Constructing Custom layout Card Details view from given UI elements.
+SDK allows to build any layout for card details by getting UI elements with card details data, this will help to keep card details data protected and not pass it in a war data
 ```swift
-cardView.configure(displayAttributes: displayAttributes, service: sdk) { successResponse, errorResponse in
-// handle here error and success
+// toggle cardPresenter.isMasked (the way how information displayed) 
+// - by `displayAttributes.cardAttributes.shouldHide`
+let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: displayAttributes)
+// fetch data
+cardPresenter.showCardDetails { errorResponse in
+// check if errorResponse is not nil and handle error
 }
+// Composition of your layout by UI elements
+let customView = UIStackView()
+customView.axis = .vertical
+customView.addArrangedSubview(cardPresenter.cardNumber.title)
+customView.addArrangedSubview(cardPresenter.cardNumber.value)
+customView.addArrangedSubview(cardPresenter.cardCvv.title)
+customView.addArrangedSubview(cardPresenter.cardCvv.value)
+customView.addArrangedSubview(cardPresenter.cardExpiry.title)
+customView.addArrangedSubview(cardPresenter.cardExpiry.value)
+customView.addArrangedSubview(cardPresenter.cardHolder.title)
+customView.addArrangedSubview(cardPresenter.cardHolder.value)
 ```
-or the NICardView can be created programmatically and initialized as below:
+
+##### Constructing Card Details view.
+A view of NICardView type can be added into storyboard or created programmatically
 ```swift
-let cardView = NICardView(displayAttributes: displayAttributes, service: sdk) { successResponse, errorResponse in
-// handle here error and success
+let cardView = NICardView()
+```
+then start the flow as below:
+```swift
+cardView.configure(displayAttributes: displayAttributes, service: sdk) { errorResponse in
+// check if errorResponse is not nil and handle error
 }
 ```
 Parameters: 

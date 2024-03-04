@@ -21,9 +21,9 @@ typealias FormCoordinatorService = CardDetailsService & SetPinService & VerifyPi
 class FormCoordinator: Coordinator {
     var navigationController: UIViewController
     private let service: FormCoordinatorService
-    private let displayAttributes: NIDisplayAttributes?
+    private let displayAttributes: NIDisplayAttributes
     
-    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes?, service: FormCoordinatorService) {
+    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, service: FormCoordinatorService) {
         self.navigationController = navigationController
         self.displayAttributes = displayAttributes
         self.service = service
@@ -32,9 +32,7 @@ class FormCoordinator: Coordinator {
     func coordinate(route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
         switch route {
         case .cardDetails:
-            let viewModel = CardDetailsViewModel(displayAttributes: displayAttributes, service: service)
-            let vc = CardDetailsViewController(viewModel: viewModel)
-            viewModel.callback = completion
+            let vc = CardDetailsViewController(displayAttributes: displayAttributes, service: service, callback: completion)
             present(vc)
             
         case let .setPin(pinFormType):
