@@ -11,7 +11,7 @@ import Foundation
     
     public var message: String
     
-    init(message: String) {
+    public init(message: String) {
         self.message = message
     }
     

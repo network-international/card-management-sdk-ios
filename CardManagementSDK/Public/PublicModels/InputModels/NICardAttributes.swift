@@ -8,10 +8,12 @@
 import Foundation
 import UIKit
 
-@objc public class NICardAttributes: NSObject {
+public class NICardAttributes {
+    
+    public static var zero: NICardAttributes = .init()
     
     /// if true, the card details will be hidden/masked by default; if false, the card details will be visible by default
-    public var shouldHide: Bool? = true
+    public var shouldHide: Bool
     
     /// if set, this image will be used as background for the card details view; if not set, it will use default image from sdk
     public var backgroundImage: UIImage?
@@ -19,24 +21,14 @@ import UIKit
     /// if set, the card details labels will be positioned accordingly
     public var textPositioning: NICardDetailsTextPositioning?
     
-    @objc public init(shouldHide: Bool) {
-        self.shouldHide = shouldHide
-    }
+    /// Color for text labels, default is `.alwaysWhite`
+    public var elementsColor: UIColor
     
-    @objc public init(shouldHide: Bool, backgroundImage: UIImage) {
-        self.shouldHide = shouldHide
-        self.backgroundImage = backgroundImage
-    }
-    
-    public init(shouldHide: Bool?, textPositioning: NICardDetailsTextPositioning?) {
-        self.shouldHide = shouldHide
-        self.textPositioning = textPositioning
-    }
-    
-    public init(shouldHide: Bool?, backgroundImage: UIImage?, textPositioning: NICardDetailsTextPositioning?) {
+    public init(shouldHide: Bool = true, backgroundImage: UIImage? = nil, textPositioning: NICardDetailsTextPositioning? = nil, elementsColor: UIColor = .niAlwaysWhite) {
         self.shouldHide = shouldHide
         self.backgroundImage = backgroundImage
         self.textPositioning = textPositioning
+        self.elementsColor = elementsColor
     }
     
 }

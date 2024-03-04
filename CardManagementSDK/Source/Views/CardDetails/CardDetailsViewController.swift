@@ -11,12 +11,15 @@ class CardDetailsViewController: UIViewController {
     
     @IBOutlet weak var customNICardView: NICardView!
     
-    private var viewModel: CardDetailsViewModel
-    
+    private var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
+    private var displayAttributes: NIDisplayAttributes
+    private var service: CardDetailsService
     
     // MARK: - Init
-    init(viewModel: CardDetailsViewModel) {
-        self.viewModel = viewModel
+    init(displayAttributes: NIDisplayAttributes = .zero, service: CardDetailsService, callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
+        self.displayAttributes = displayAttributes
+        self.service = service
+        self.callback = callback
         super.init(nibName: "CardDetailsViewController", bundle: Bundle(for: CardDetailsViewController.self))
     }
     
@@ -29,21 +32,26 @@ class CardDetailsViewController: UIViewController {
         super.viewDidLoad()
         title = "card_details_title".localized
         setupCloseButton()
-        
-        customNICardView.viewModel = viewModel
-        customNICardView.activityIndicator.startAnimating()
-        customNICardView.configureCardView()
+        customNICardView.configure(displayAttributes: displayAttributes, service: service) { [weak self] errorResponse in
+            self?.callback?(
+                errorResponse == nil ? NISuccessResponse(message: "Card details retrieved with success!") : nil,
+                errorResponse
+            ){}
+        }
     }
     
     // MARK: - Private
     private func setupCloseButton() {
         let closeButton = UIButton(type: .custom)
-        let image = UIImage(named: viewModel.closeButtonImageName, in: Bundle.sdkBundle, compatibleWith: .none)
+        let image = UIImage(
+            named: (displayAttributes.theme == .light) ? "icon_close" : "icon_close_white",
+            in: Bundle.sdkBundle,
+            compatibleWith: .none
+        )
         closeButton.setImage(image, for: .normal)
         closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         let barCloseButton = UIBarButtonItem(customView: closeButton)
         self.navigationItem.rightBarButtonItem = barCloseButton
-
     }
     
     // MARK: - Actions
