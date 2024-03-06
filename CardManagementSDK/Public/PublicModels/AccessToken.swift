@@ -19,13 +19,7 @@ public struct AccessToken: Codable {
         self.expiresIn = expiresIn
         self.created = created
     }
-    /**
-     {
-                   "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrUV9BVG96UWc5cjRvOWw3QzJKVFRKU0FOUlV2U2JiTDNUcTRTeUh6T29RIn0.eyJleHAiOjE3MDI0Nzc3OTgsImlhdCI6MTcwMjQ3NTk5OCwianRpIjoiMTNhMDI4YjktNGRjYy00ODY1LWEzNDQtZTE2MTBhYzdjNmFjIiwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS1ub25wcm9kLm5ldHdvcmsuc2EvYXV0aC9yZWFsbXMvTkktTm9uUHJvZCIsInN1YiI6ImVlYmNiZGZiLTc3MDEtNDljMS1iYWVjLTcwZjYyYjU4ZWFiZSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImZhMGI1YTYzLTcyMjItNGU4Mi1hMDQ3LTQ3ZTJlZjY2NTdlZjMxIiwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRJZCI6ImZhMGI1YTYzLTcyMjItNGU4Mi1hMDQ3LTQ3ZTJlZjY2NTdlZjMxIiwib3JnX2lkIjoiQ1JPQVQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtZmEwYjVhNjMtNzIyMi00ZTgyLWEwNDctNDdlMmVmNjY1N2VmMzEifQ.OTRLdaKzNU5n_G_1OlcsVic7cBQXgUgbZZG7qHupc5Y70VXAwPGoqAZ8Rnn6T4fgLfJJPYeyjcKxMJ8PWnWPK9OoCKmBCIONIZhFLzeiFD4xU5DeXQnxpc7hBkgCcuLUs0P6XhU4qb71hYISNLFgaqrzjh23ax30yAx-XsbrcG0nckx_jsvLG533qX5l2IJJg2dN2SSC1KaDM0h8bbtxS6WJ3lMekG_gBvqLt9RCGOKIdXZOnlZVJimWPH1EtaRbhd_3TuEWqKpepTWLM8v6Ie07adBUiPCCJrDaPDtLFv-GCqRFBd3WBkI8ffJVbuQooHn11IQB5TP-9bA0vjlNPw",
-                   "token_type": "Bearer",
-                   "expires_in" : "1800"
-                   }
-     */
+    
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case type = "token_type"

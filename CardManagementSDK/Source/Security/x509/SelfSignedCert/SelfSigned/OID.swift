@@ -38,31 +38,16 @@ class OID : NSObject {
 extension OID {
     
     /** ALGORITHMS **/
-    @nonobjc static let rsaAlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 1])
-    @nonobjc static let rsaWithSHA1AlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 5])
-        static let rsaWithSHA256AlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 11])
-    //    static let rsaWithMD5AlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 4 ])
-    //    static let rsaWithMD2AlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 2])
+    static let rsaAlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 1])
+    static let rsaWithSHA256AlgorithmID = OID(components:[1, 2, 840, 113549, 1, 1, 11])
     
     /** SUBJECT **/
-    @nonobjc static let commonName = OID(components:[2, 5, 4, 3])
-    //    static let givenNameOID = OID(components:[2, 5, 4, 42])
-    //    static let surnameOID = OID(components:[2, 5, 4, 4])
-    //    static let descriptionOID = OID(components:[2, 5, 4, 13])
-    @nonobjc static let email = OID(components:[1, 2, 840, 113549, 1, 9, 1])
+    static let commonName = OID(components:[2, 5, 4, 3])
+
+    static let email = OID(components:[1, 2, 840, 113549, 1, 9, 1])
     
     /** USAGE **/
-    //    static let basicConstraintsOID = OID(components:[2, 5, 29, 19])
-    @nonobjc static let keyUsageOID = OID(components:[2, 5, 29, 15])
-    //    static let extendedKeyUsageOID = OID(components:[2, 5, 29, 37])
-
-    /** EXTENSIONS **/
-    //    static let extendedKeyUsageServerAuthOID = OID(components:[1, 3, 6, 1, 5, 5, 7, 3, 1])
-    //    static let extendedKeyUsageClientAuthOID = OID(components:[1, 3, 6, 1, 5, 5, 7, 3, 2])
-    //    static let extendedKeyUsageCodeSigningOID = OID(components:[1, 3, 6, 1, 5, 5, 7, 3, 3])
-    //    static let extendedKeyUsageEmailProtectionOID = OID(components:[1, 3, 6, 1, 5, 5, 7, 3, 4])
-    //    static let extendedKeyUsageAnyOID = OID(components:[2, 5, 29, 37, 0])
-    //    static let subjectAltNameOID = OID(components:[2, 5, 29, 17])
+    static let keyUsageOID = OID(components:[2, 5, 29, 15])
     
 }
 
