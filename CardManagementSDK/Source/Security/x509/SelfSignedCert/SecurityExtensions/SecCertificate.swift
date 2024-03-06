@@ -21,7 +21,6 @@ public extension SecCertificate {
     static func create(
         ofSize bits:UInt = 4096,
         subjectCommonName name:String,
-        subjectEmailAddress email:String,
         validFrom: Date,
         validTo: Date,
         tag: Data,
@@ -43,7 +42,6 @@ public extension SecCertificate {
         let certRequest = CertificateRequest(
             forPublicKey:keyPair.publicKey,
             subjectCommonName: name,
-            subjectEmailAddress: email,
             keyUsage: [.DigitalSignature, .DataEncipherment],
             validFrom: validFrom,
             validTo: validTo
@@ -108,4 +106,21 @@ public extension SecCertificate {
         return result
     }
 
+}
+
+public enum KeychainError: Error {
+    /**
+     * Indicates that generating a key pair has failed. The associated osStatus is the return value
+     * of `SecKeyGeneratePair`.
+     *
+     * - parameter status: The return value of SecKeyGeneratePair. If this is `errSecSuccess`
+     *                       then something else failed.
+     */
+    case unhandledError(status: OSStatus?)
+    // public key is not available for specified key.
+    case publicKeyNotAvailable
+    // See "Security Error Codes" (SecBase.h).
+    case generateKeyFailed(error: Error)
+    // status = save to keychain status
+    case certCreationFailed(status: OSStatus?)
 }
