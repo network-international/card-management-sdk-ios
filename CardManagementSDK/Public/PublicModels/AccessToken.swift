@@ -19,13 +19,7 @@ public struct AccessToken: Codable {
         self.expiresIn = expiresIn
         self.created = created
     }
-    /**
-     {
-                   "access_token": "YOUR TOKEN",
-                   "token_type": "Bearer",
-                   "expires_in" : "1800"
-                   }
-     */
+    
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case type = "token_type"

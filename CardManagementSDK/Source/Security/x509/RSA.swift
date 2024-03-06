@@ -21,8 +21,7 @@ class RSA {
         let now = Date()
         let certInfo = try SecCertificate.create(
             ofSize: 4096,
-            subjectCommonName: "NICardManagementSDK_iOS", //"CN=PaulaR, OU=ITdepartment, O=Endava, L=Cluj, ST=Cluj, C=Romania"
-            subjectEmailAddress: "paula.radu@endava.com",
+            subjectCommonName: "NICardManagementSDK_iOS",
             validFrom: now.addingTimeInterval(-24 * 3600),
             // consider self.validFrom.addingTimeInterval(365*24*3600)
             validTo: now.addingTimeInterval(24 * 3600),

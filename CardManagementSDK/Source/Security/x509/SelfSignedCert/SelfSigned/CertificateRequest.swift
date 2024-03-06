@@ -33,18 +33,16 @@ func ==(lhs: KeyUsage, rhs: KeyUsage) -> Bool {
 struct CertificateRequest {
     var publicKey : SecKey
     var subjectCommonName: String
-    var subjectEmailAddress: String
     var serialNumber: UInt64
     var validFrom: Date
     var validTo: Date
     var publicKeyDerEncoder: ((SecKey) -> [UInt8]?)?
     var keyUsage: KeyUsage
     
-    init(forPublicKey key:SecKey, subjectCommonName:String, subjectEmailAddress:String, keyUsage:KeyUsage,
+    init(forPublicKey key:SecKey, subjectCommonName:String, keyUsage:KeyUsage,
                       validFrom:Date, validTo:Date, serialNumber:UInt64? = nil) {
         self.publicKey = key
         self.subjectCommonName = subjectCommonName
-        self.subjectEmailAddress = subjectEmailAddress
         self.validFrom = validFrom
         self.validTo = validTo
         
@@ -109,8 +107,6 @@ extension CertificateRequest {
         let pubKeyBitStringArray : NSArray = [ [OID.rsaAlgorithmID, empty], BitString(data:encodedPubKey) ]
         let subject = CertificateName()
         subject.commonName = subjectCommonName
-//        subject.emailAddress = subjectEmailAddress
-//        let ext = ASN1Object(tag: 3, tagClass: 2, components: [extensions() as NSObject])
         let subjectComponents = subject.components
         let info : NSArray = [
             version, NSNumber(value: serialNumber as UInt64), [ OID.rsaWithSHA256AlgorithmID ], usingSubjectAsIssuer ? subjectComponents : [], [validFrom, validTo],
