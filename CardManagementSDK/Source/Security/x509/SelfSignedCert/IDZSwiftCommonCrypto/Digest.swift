@@ -36,18 +36,8 @@ open class Digest : Updateable
     ///
     public enum Algorithm
     {
-        /// Message Digest 2 See: http://en.wikipedia.org/wiki/MD2_(cryptography)
-        case md2,
-        /// Message Digest 4
-        md4,
-        /// Message Digest 5
-        md5,
-        /// Secure Hash Algorithm 1
-        sha1,
-        /// Secure Hash Algorithm 2 224-bit
-        sha224,
         /// Secure Hash Algorithm 2 256-bit
-        sha256,
+        case sha256,
         /// Secure Hash Algorithm 2 384-bit
         sha384,
         /// Secure Hash Algorithm 2 512-bit
@@ -62,16 +52,6 @@ open class Digest : Updateable
     public init(algorithm: Algorithm)
     {
         switch algorithm {
-        case .md2:
-            engine = DigestEngineCC<CC_MD2_CTX>(initializer:CC_MD2_Init, updater:CC_MD2_Update, finalizer:CC_MD2_Final, length:CC_MD2_DIGEST_LENGTH)
-        case .md4:
-            engine = DigestEngineCC<CC_MD4_CTX>(initializer:CC_MD4_Init, updater:CC_MD4_Update, finalizer:CC_MD4_Final, length:CC_MD4_DIGEST_LENGTH)
-        case .md5:
-            engine = DigestEngineCC<CC_MD5_CTX>(initializer:CC_MD5_Init, updater:CC_MD5_Update, finalizer:CC_MD5_Final, length:CC_MD5_DIGEST_LENGTH)
-        case .sha1:
-            engine = DigestEngineCC<CC_SHA1_CTX>(initializer:CC_SHA1_Init, updater:CC_SHA1_Update, finalizer:CC_SHA1_Final, length:CC_SHA1_DIGEST_LENGTH)
-        case .sha224:
-            engine = DigestEngineCC<CC_SHA256_CTX>(initializer:CC_SHA224_Init, updater:CC_SHA224_Update, finalizer:CC_SHA224_Final, length:CC_SHA224_DIGEST_LENGTH)
         case .sha256:
             engine = DigestEngineCC<CC_SHA256_CTX>(initializer:CC_SHA256_Init, updater:CC_SHA256_Update, finalizer:CC_SHA256_Final, length:CC_SHA256_DIGEST_LENGTH)
         case .sha384:

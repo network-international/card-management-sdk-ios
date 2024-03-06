@@ -45,7 +45,6 @@
 		F42E80372943613300640860 /* CertificateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80362943613300640860 /* CertificateRequest.swift */; };
 		F42E80662943665600640860 /* DEREncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80652943665600640860 /* DEREncoding.swift */; };
 		F42E80682943668D00640860 /* CertificateName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80672943668D00640860 /* CertificateName.swift */; };
-		F42E80722946198500640860 /* SecIdentity+SelfSigned.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80712946198500640860 /* SecIdentity+SelfSigned.swift */; };
 		F42E8074294619C500640860 /* SecKey+KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E8073294619C500640860 /* SecKey+KeyPair.swift */; };
 		F42E807729461C4A00640860 /* SecCertificate+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E807629461C4A00640860 /* SecCertificate+Keychain.swift */; };
 		F42E808929461D1D00640860 /* ASN1Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E808829461D1D00640860 /* ASN1Object.swift */; };
@@ -165,7 +164,6 @@
 		F42E80362943613300640860 /* CertificateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequest.swift; sourceTree = "<group>"; };
 		F42E80652943665600640860 /* DEREncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEREncoding.swift; sourceTree = "<group>"; };
 		F42E80672943668D00640860 /* CertificateName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateName.swift; sourceTree = "<group>"; };
-		F42E80712946198500640860 /* SecIdentity+SelfSigned.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SecIdentity+SelfSigned.swift"; sourceTree = "<group>"; };
 		F42E8073294619C500640860 /* SecKey+KeyPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyPair.swift"; sourceTree = "<group>"; };
 		F42E807629461C4A00640860 /* SecCertificate+Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Keychain.swift"; sourceTree = "<group>"; };
 		F42E808829461D1D00640860 /* ASN1Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Object.swift; sourceTree = "<group>"; };
@@ -333,7 +331,6 @@
 				F42E80362943613300640860 /* CertificateRequest.swift */,
 				F42E80652943665600640860 /* DEREncoding.swift */,
 				F42E807629461C4A00640860 /* SecCertificate+Keychain.swift */,
-				F42E80712946198500640860 /* SecIdentity+SelfSigned.swift */,
 			);
 			path = SelfSigned;
 			sourceTree = "<group>";
@@ -772,7 +769,6 @@
 				F42E809029461E4D00640860 /* SecKey+Keychain.swift in Sources */,
 				F447E48129025E05005A5F46 /* RSAUtils.swift in Sources */,
 				2A82D07228F59DE300F57DC6 /* DotView.swift in Sources */,
-				F42E80722946198500640860 /* SecIdentity+SelfSigned.swift in Sources */,
 				F447E44B28F84E9A005A5F46 /* PinBlock.swift in Sources */,
 				F45A7E0A28F40C2200B3486E /* WSHTTPMethod.swift in Sources */,
 				F447E4772901923F005A5F46 /* UIViewController+Alerts.swift in Sources */,

@@ -24,9 +24,9 @@ extension SecKey {
      * instead.
      */
     static public func keychainTag(forKeyData data: [UInt8]) -> String {
-        let sha1 = Digest(algorithm: .sha1)
-        _ = sha1.update(buffer: data, byteCount: data.count)
-        let digest = sha1.final()
+        let sha256 = Digest(algorithm: .sha256)
+        _ = sha256.update(buffer: data, byteCount: data.count)
+        let digest = sha256.final()
         return digest.hexString()
     }
 
