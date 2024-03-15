@@ -245,13 +245,12 @@ private extension NICardView {
     
     // MARK: - Actions
     @objc func cardNrCopyAction() {
-        UIPasteboard.general.string = presenter.getCardNumberText()?
-            .components(separatedBy: .whitespaces).joined()
+        presenter.cardNumber.copyToClipboard()
         showToast(message: "toast_message".localized)
     }
     
     @objc func nameCopyAction() {
-        UIPasteboard.general.string = presenter.getCardHolderText()
+        presenter.cardHolder.copyToClipboard()
         showToast(message: "toast_message".localized)
     }
     
