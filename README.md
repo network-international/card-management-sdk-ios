@@ -246,6 +246,14 @@ customView.addArrangedSubview(cardPresenter.cardHolder.title)
 customView.addArrangedSubview(cardPresenter.cardHolder.value)
 ```
 
+Each element of presenter allows copy value to clipbloard 
+```
+@objc func cardNrCopyAction() {
+        presenter.cardNumber.copyToClipboard()
+        showToast(message: "toast_message".localized)
+    }
+```
+
 ##### Constructing Card Details view.
 A view of NICardView type can be added into storyboard or created programmatically
 ```swift
