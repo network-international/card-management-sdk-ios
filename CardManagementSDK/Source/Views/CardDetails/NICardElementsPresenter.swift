@@ -16,9 +16,13 @@ public class NICardElementsPresenter {
     public class Element {
         public let title: UILabel
         public let value: TextValueContainer
-        init(title: UILabel, value: TextValueContainer) {
+        
+        private let shareProvider: () -> String?
+        
+        init(title: UILabel, value: TextValueContainer, shareProvider: @escaping () -> String?) {
             self.title = title
             self.value = value
+            self.shareProvider = shareProvider
         }
         func update(title: (font: UIFont, text: String?), value: (font: UIFont, text: String?), color: UIColor) {
             self.title.text = title.text
@@ -27,6 +31,10 @@ public class NICardElementsPresenter {
             self.value.wrappedFont = value.font
             self.value.wrappedText = value.text
             self.value.wrappedColor = color
+        }
+        
+        public func copyToClipboard() {
+            UIPasteboard.general.string = shareProvider()
         }
     }
     
@@ -40,7 +48,10 @@ public class NICardElementsPresenter {
             font: DefaultFonts.cardNumberValueLabel.font,
             text: nil,
             color: displayAttributes.cardAttributes.elementsColor
-        )
+        ), 
+        shareProvider: ({ [weak self] in
+            self?.cardDetails.cardNumber
+        })
     )
     public private(set) lazy var cardExpiry = Element(
         title: UIView.makeLabel(
@@ -52,7 +63,10 @@ public class NICardElementsPresenter {
             font: DefaultFonts.cardExpiryValueLabel.font,
             text: nil,
             color: displayAttributes.cardAttributes.elementsColor
-        )
+        ),
+        shareProvider: ({ [weak self] in
+            self?.cardDetails.cardExpiry
+        })
     )
     public private(set) lazy var cardCvv = Element(
         title: UIView.makeLabel(
@@ -64,7 +78,10 @@ public class NICardElementsPresenter {
             font: DefaultFonts.cardCvvValueLabel.font,
             text: nil,
             color: displayAttributes.cardAttributes.elementsColor
-        )
+        ),
+        shareProvider: ({ [weak self] in
+            self?.cardDetails.cvv2
+        })
     )
     public private(set) lazy var cardHolder = Element(
         title: UIView.makeLabel(
@@ -76,7 +93,10 @@ public class NICardElementsPresenter {
             font: DefaultFonts.cardNameLabel.font,
             text: nil,
             color: displayAttributes.cardAttributes.elementsColor
-        )
+        ),
+        shareProvider: ({ [weak self] in
+            self?.cardDetails.cardholderName
+        })
     )
     
     public var isMasked: Bool { displayAttributes.cardAttributes.shouldHide }
@@ -113,13 +133,6 @@ public class NICardElementsPresenter {
     }
     
     // MARK: - Actions
-    public func getCardNumberText() -> String? {
-        cardDetails.cardNumber
-    }
-    
-    public func getCardHolderText() -> String? {
-        cardDetails.cardholderName
-    }
     
     public func toggle(isMasked: Bool) {
         let data = isMasked ? cardDetails.masked : cardDetails
