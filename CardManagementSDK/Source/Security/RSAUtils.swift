@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RSADecryptError: Error {
+enum RSACryptoError: Error {
     case algorithmNotSupported(SecKeyAlgorithm)
     case decryptError(Error)
     case emptyData
@@ -20,7 +20,7 @@ class RSAUtils {
     static func decrypt(cipherText: Data, privateKey: SecKey, algorithm: SecKeyAlgorithm) throws -> String {
         /// check if the private key can decrypt
         guard SecKeyIsAlgorithmSupported(privateKey, .decrypt, algorithm) else {
-            throw RSADecryptError.algorithmNotSupported(algorithm)
+            throw RSACryptoError.algorithmNotSupported(algorithm)
         }
         
         var error: Unmanaged<CFError>?
@@ -29,20 +29,20 @@ class RSAUtils {
                                                             algorithm,
                                                             cipherText as CFData,
                                                             &error) as Data? else {
-            throw RSADecryptError.decryptError(error!.takeRetainedValue() as Error)
+            throw RSACryptoError.decryptError(error!.takeRetainedValue() as Error)
         }
         
         guard 
             let clearText = String(data: clearTextData, encoding: .utf8)
         else { 
-            throw RSADecryptError.emptyData
+            throw RSACryptoError.emptyData
         }
         return clearText
     }
     // Internal
     static func encrypt(_ textToEncrypt: String, publicKey: SecKey, algorithm: SecKeyAlgorithm) throws -> Data {
         guard SecKeyIsAlgorithmSupported(publicKey, .encrypt, algorithm) else {
-            throw RSADecryptError.algorithmNotSupported(algorithm)
+            throw RSACryptoError.algorithmNotSupported(algorithm)
         }
         
         var error: Unmanaged<CFError>?
@@ -52,7 +52,7 @@ class RSAUtils {
                                                          algorithm,
                                                          textToEncryptData as CFData,
                                                          &error) as Data? else {
-            throw RSADecryptError.decryptError(error!.takeRetainedValue() as Error)
+            throw RSACryptoError.decryptError(error!.takeRetainedValue() as Error)
         }
         return cipherText
     }

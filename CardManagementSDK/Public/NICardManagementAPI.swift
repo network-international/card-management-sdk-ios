@@ -38,7 +38,7 @@ public final class NICardManagementAPI {
     }
     
     // MARK: - Form Factories Interface
-    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes = .default, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
@@ -47,7 +47,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .cardDetails, completion: completion)
     }
     
-    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .default, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -55,7 +55,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .setPin(type: type), completion: completion)
     }
     
-    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .default, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -63,7 +63,7 @@ public final class NICardManagementAPI {
             .coordinate(route: .verifyPin(type: type), completion: completion)
     }
     
-    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .default, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
@@ -75,7 +75,7 @@ public final class NICardManagementAPI {
     /// use it to fill any custom layout by UI elements of this presenter
     /// so the card details data is not passed in raw format
     /// after building presenter, call `presenter.showCardDetails(completion:)`
-    public func buildCardDetailsPresenter(displayAttributes: NIDisplayAttributes = .zero) -> NICardElementsPresenter {
+    public func buildCardDetailsPresenter(displayAttributes: NIDisplayAttributes = .default) -> NICardElementsPresenter {
         let presenter = NICardElementsPresenter()
         presenter.setup(displayAttributes: displayAttributes, service: self)
         return presenter
@@ -146,7 +146,7 @@ public final class NICardManagementAPI {
 
 // MARK: - Private
 private extension NICardManagementAPI {
-    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero) -> FormCoordinator {
+    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .default) -> FormCoordinator {
         GlobalConfig.shared.language = displayAttributes.language
         return FormCoordinator(
             navigationController: navigationController,

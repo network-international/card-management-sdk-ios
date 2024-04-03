@@ -11,9 +11,8 @@ class EyeButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            let eyeOpen = UIImage(named: "icon_open_eye", in: Bundle.sdkBundle, compatibleWith: .none)?.withRenderingMode(.alwaysTemplate)
-            let eyeClosed = UIImage(named: "icon_close_eye", in: Bundle.sdkBundle, compatibleWith: .none)?.withRenderingMode(.alwaysTemplate)
-            self.setImage(isSelected ? eyeClosed : eyeOpen, for: .normal)
+            let image = isSelected ? NIResource.eyeClosedImage : NIResource.eyeOpenImage
+            self.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
 }

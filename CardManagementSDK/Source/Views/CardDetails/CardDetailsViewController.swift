@@ -16,7 +16,7 @@ class CardDetailsViewController: UIViewController {
     private var service: CardDetailsService
     
     // MARK: - Init
-    init(displayAttributes: NIDisplayAttributes = .zero, service: CardDetailsService, callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
+    init(displayAttributes: NIDisplayAttributes = .default, service: CardDetailsService, callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
         self.displayAttributes = displayAttributes
         self.service = service
         self.callback = callback

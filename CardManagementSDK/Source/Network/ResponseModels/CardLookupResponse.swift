@@ -39,7 +39,7 @@ class CardLookupResponse {
     private static func decrypt(privateKey: SecKey, from cardLookup: CardLookup) throws -> ClearInfo {
         guard
             let encryptedCardIdentifierId = cardLookup.cardIdentifierId
-        else { throw RSADecryptError.emptyData }
+        else { throw RSACryptoError.emptyData }
         let algorithm = GlobalConfig.NIRSAAlgorithm
         let decryptedValue = try RSAUtils.decrypt(cipherText: encryptedCardIdentifierId.hexaData, privateKey: privateKey, algorithm: algorithm)
         return .init(cardNumber: decryptedValue.hexStringtoAscii())

@@ -88,7 +88,7 @@ private extension CardDetailsResponse {
         guard
             let encryptedPan = cardDetails.encryptedPan,
             let encryptedCVV2 = cardDetails.encryptedCVV2
-        else { throw RSADecryptError.emptyData }
+        else { throw RSACryptoError.emptyData }
         let algorithm = GlobalConfig.NIRSAAlgorithm
         let decryptedPan = try RSAUtils.decrypt(cipherText: encryptedPan.hexaData, privateKey: privateKey, algorithm: algorithm)
         let clearPan = decryptedPan.hexStringtoAscii()

@@ -15,7 +15,6 @@
 		2A26D2092A9DE413000C364E /* ViewPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A26D2082A9DE413000C364E /* ViewPinResponse.swift */; };
 		2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */; };
 		2A7821F528F9A996006B54F7 /* PinViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */; };
-		2A7993272A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */; };
 		2A82D06D28F584D700F57DC6 /* SetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */; };
 		2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */; };
 		2A82D07028F5854600F57DC6 /* SetPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82D06F28F5854600F57DC6 /* SetPinViewModel.swift */; };
@@ -31,6 +30,7 @@
 		2AD494F02906A6F000E25695 /* ChangePinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD494EE2906A6F000E25695 /* ChangePinViewController.swift */; };
 		2AD494F12906A6F000E25695 /* ChangePinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AD494EF2906A6F000E25695 /* ChangePinViewController.xib */; };
 		2AD494F32906A93500E25695 /* ChangePinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD494F22906A93500E25695 /* ChangePinViewModel.swift */; };
+		BA2341182BB2C1C1003804B1 /* NIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2341172BB2C1C1003804B1 /* NIResource.swift */; };
 		BA70A1492B306F8300A196C9 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1482B306F8300A196C9 /* AccessToken.swift */; };
 		BA70A14B2B30793700A196C9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14A2B30793700A196C9 /* Environment.swift */; };
 		BA70A14D2B31C53500A196C9 /* NICardManagementTokenFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */; };
@@ -55,7 +55,6 @@
 		F42E809429461EC500640860 /* SecCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809329461EC500640860 /* SecCertificate.swift */; };
 		F42E809629461ED400640860 /* SecIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809529461ED400640860 /* SecIdentity.swift */; };
 		F42E809829461EEA00640860 /* SecIdentity+PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809729461EEA00640860 /* SecIdentity+PrivateKey.swift */; };
-		F42E809A29461F0B00640860 /* SecKey+Crypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809929461F0B00640860 /* SecKey+Crypt.swift */; };
 		F42E809C29461F3900640860 /* SecKey+KeyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809B29461F3900640860 /* SecKey+KeyData.swift */; };
 		F42E809E29461F6000640860 /* SecKey+Signing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E809D29461F6000640860 /* SecKey+Signing.swift */; };
 		F42E80BF294B442800640860 /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80BC294B442800640860 /* Digest.swift */; };
@@ -134,7 +133,6 @@
 		2A26D2082A9DE413000C364E /* ViewPinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPinResponse.swift; sourceTree = "<group>"; };
 		2A4C17C829DC1EE4005CD9A0 /* VerifyPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPinViewModel.swift; sourceTree = "<group>"; };
 		2A7821F428F9A996006B54F7 /* PinViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewViewModel.swift; sourceTree = "<group>"; };
-		2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardDetailsTextPositioning.swift; sourceTree = "<group>"; };
 		2A82D06B28F584D700F57DC6 /* SetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
 		2A82D06C28F584D700F57DC6 /* SetPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetPinViewController.xib; sourceTree = "<group>"; };
 		2A82D06F28F5854600F57DC6 /* SetPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinViewModel.swift; sourceTree = "<group>"; };
@@ -150,6 +148,7 @@
 		2AD494EE2906A6F000E25695 /* ChangePinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinViewController.swift; sourceTree = "<group>"; };
 		2AD494EF2906A6F000E25695 /* ChangePinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePinViewController.xib; sourceTree = "<group>"; };
 		2AD494F22906A93500E25695 /* ChangePinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinViewModel.swift; sourceTree = "<group>"; };
+		BA2341172BB2C1C1003804B1 /* NIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIResource.swift; sourceTree = "<group>"; };
 		BA70A1482B306F8300A196C9 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		BA70A14A2B30793700A196C9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardManagementTokenFetchable.swift; sourceTree = "<group>"; };
@@ -174,7 +173,6 @@
 		F42E809329461EC500640860 /* SecCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecCertificate.swift; sourceTree = "<group>"; };
 		F42E809529461ED400640860 /* SecIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecIdentity.swift; sourceTree = "<group>"; };
 		F42E809729461EEA00640860 /* SecIdentity+PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecIdentity+PrivateKey.swift"; sourceTree = "<group>"; };
-		F42E809929461F0B00640860 /* SecKey+Crypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecKey+Crypt.swift"; sourceTree = "<group>"; };
 		F42E809B29461F3900640860 /* SecKey+KeyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyData.swift"; sourceTree = "<group>"; };
 		F42E809D29461F6000640860 /* SecKey+Signing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecKey+Signing.swift"; sourceTree = "<group>"; };
 		F42E80BC294B442800640860 /* Digest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Digest.swift; sourceTree = "<group>"; };
@@ -342,7 +340,6 @@
 				F42E809329461EC500640860 /* SecCertificate.swift */,
 				F42E809529461ED400640860 /* SecIdentity.swift */,
 				F42E809729461EEA00640860 /* SecIdentity+PrivateKey.swift */,
-				F42E809929461F0B00640860 /* SecKey+Crypt.swift */,
 				F42E808F29461E4D00640860 /* SecKey+Keychain.swift */,
 				F42E809B29461F3900640860 /* SecKey+KeyData.swift */,
 				F42E8073294619C500640860 /* SecKey+KeyPair.swift */,
@@ -506,6 +503,7 @@
 				F4E76A1128EEC2D600CDC7E4 /* NIErrorResponse.swift */,
 				F447E45D28FD3ABE005A5F46 /* NICardDetailsResponse.swift */,
 				F4E76A1328EEC7E200CDC7E4 /* NISuccessResponse.swift */,
+				BA2341172BB2C1C1003804B1 /* NIResource.swift */,
 			);
 			path = PublicModels;
 			sourceTree = "<group>";
@@ -599,7 +597,6 @@
 				F4DE3B8D2912CBDA00BF4727 /* NIFontLabelPair.swift */,
 				F4DE3BCF29157C5600BF4727 /* NITheme.swift */,
 				F4C725A529377062001B28A8 /* NICardAttributes.swift */,
-				2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */,
 			);
 			path = InputModels;
 			sourceTree = "<group>";
@@ -746,6 +743,7 @@
 				2A82D07028F5854600F57DC6 /* SetPinViewModel.swift in Sources */,
 				F45A7DF728EF04EB00B3486E /* String+Utils.swift in Sources */,
 				F45A7DFB28EF1F1800B3486E /* Response.swift in Sources */,
+				BA2341182BB2C1C1003804B1 /* NIResource.swift in Sources */,
 				F4C725A629377062001B28A8 /* NICardAttributes.swift in Sources */,
 				F42E809C29461F3900640860 /* SecKey+KeyData.swift in Sources */,
 				F4E7698228EC4BF500CDC7E4 /* NICardManagementAPI.swift in Sources */,
@@ -793,7 +791,6 @@
 				2A4C17C929DC1EE4005CD9A0 /* VerifyPinViewModel.swift in Sources */,
 				F45A7E0328F0321400B3486E /* APIEndpointProtocol.swift in Sources */,
 				2AD494F32906A93500E25695 /* ChangePinViewModel.swift in Sources */,
-				2A7993272A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift in Sources */,
 				F42E80BF294B442800640860 /* Digest.swift in Sources */,
 				BA70A1542B31C9FE00A196C9 /* TokenStorage.swift in Sources */,
 				F4E7698D28EC82EB00CDC7E4 /* NIDisplayAttributes.swift in Sources */,
@@ -805,7 +802,6 @@
 				F447E46828FEB0A4005A5F46 /* RSA.swift in Sources */,
 				F447E47929019CF2005A5F46 /* NIPinFormType.swift in Sources */,
 				2ACE7F7228F8388800A8B01D /* PinView.swift in Sources */,
-				F42E809A29461F0B00640860 /* SecKey+Crypt.swift in Sources */,
 				F44559AD2907C5DB00384188 /* NILanguage.swift in Sources */,
 				F4E76A0428EDDFC000CDC7E4 /* Coordinator.swift in Sources */,
 				F447E46E290043E0005A5F46 /* PinParams.swift in Sources */,
@@ -990,6 +986,7 @@
 				INFOPLIST_FILE = "NICardManagementSDK-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1021,6 +1018,7 @@
 				INFOPLIST_FILE = "NICardManagementSDK-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

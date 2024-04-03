@@ -30,7 +30,7 @@ class ViewPinResponse: NSObject, Codable {
     private static func decrypt(privateKey: SecKey, from viewpin: ViewPin) throws -> ClearInfo {
         guard
             let encryptedPin = viewpin.encryptedPin
-        else { throw RSADecryptError.emptyData }
+        else { throw RSACryptoError.emptyData }
         let algorithm = GlobalConfig.NIRSAAlgorithm
         let decryptedValue = try RSAUtils.decrypt(cipherText: encryptedPin.hexaData, privateKey: privateKey, algorithm: algorithm)
         return .init(pin: decryptedValue)

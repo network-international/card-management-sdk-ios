@@ -114,9 +114,7 @@ public final class NIViewPinView: UIView {
     
     private func updateUI() {
         guard let viewModel = viewModel else { return }
-        if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
-        }
+        activityIndicator.style = .large
         UIFont.registerDefaultFonts()
         stackView.semanticContentAttribute = .forceLeftToRight
         
@@ -180,16 +178,10 @@ public final class NIViewPinView: UIView {
             textColor(color: color)
         } else {
             // Theme
-            if #available(iOS 13.0, *) {
-                backgroundColor = UIColor.clear
-                overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-                
-                if viewModel.theme == .dark {
-                    borderColor(color: .white)
-                }
-            } else {
-                /// Fallback on earlier versions
-                setupTheme(viewModel.theme)
+            backgroundColor = UIColor.clear
+            overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
+            if viewModel.theme == .dark {
+                borderColor(color: .white)
             }
         }
     }
@@ -208,18 +200,6 @@ public final class NIViewPinView: UIView {
             for digit in digits {
                 digit.isHidden = shouldHide
             }
-        }
-    }
-    
-    private func setupTheme(_ theme: NITheme) {
-        switch theme {
-        case .light:
-            backgroundColor = UIColor.clear
-            textColor(color: .darkerGrayLight!)
-        case .dark:
-            backgroundColor = UIColor.clear
-            textColor(color: .white)
-            borderColor(color: .white)
         }
     }
     
