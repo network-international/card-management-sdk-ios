@@ -7,27 +7,27 @@
 
 import Foundation
 
-public class NIDisplayAttributes {
+public struct NIDisplayAttributes {
     
-    public static var zero: NIDisplayAttributes = .init()
+    public static let `default`: NIDisplayAttributes = .init()
     
     /// is always required, default is `.light`
-    public var theme: NITheme
+    public let theme: NITheme
     
     /// if language is not set, the sdk will use the device language (english or arabic), other languages will default to english
-    public var language: NILanguage?
+    public let language: NILanguage?
     
     /// if set, these fonts will be used in the UI forms; if not set will use default fonts
-    public var fonts: [NIFontLabelPair]?
+    public let fonts: [NIFontLabelPair]?
     
     /// if set, the card details will take into account the attributes passed into this variable; if not set, will take the default values
-    public var cardAttributes: NICardAttributes
+    public let cardAttributes: NICardAttributes
     
     public init(
         theme: NITheme = .light,
         language: NILanguage? = nil,
         fonts: [NIFontLabelPair]? = nil,
-        cardAttributes: NICardAttributes = .zero
+        cardAttributes: NICardAttributes = .default
     ) {
         self.theme = theme
         self.language = language

@@ -21,34 +21,18 @@ internal enum DefaultFonts {
     case viewPinCounter
     
     private var fontName: String {
-        if #available(iOS 13.0, *) { // "NotoSansOriya" font is available form ios 13.0 and above
-            switch self {
-            case .cardNumberLabel: return "NotoSansOriya"
-            case .cardNumberValueLabel: return "NotoSansOriya-Bold"     //"OCRA"
-            case .cardNameLabel: return "NotoSansOriya-Bold"            //"OCRA"
-            case .cardExpiryLabel: return "NotoSansOriya"
-            case .cardCvvLabel: return "NotoSansOriya"
-            case .cardExpiryValueLabel: return "NotoSansOriya-Bold"     //"OCRA"
-            case .cardCvvValueLabel: return "NotoSansOriya-Bold"        //"OCRA"
-            case .description: return "NotoSansOriya"
-            case .cardNameTagLabel: return "NotoSansOriya"
-            case .pinDigitLabel: return "NotoSansOriya-Bold"
-            case .viewPinCounter: return "NotoSansOriya"
-            }
-        } else {
-            switch self {
-            case .cardNumberLabel: return "Helvetica"
-            case .cardNumberValueLabel: return "OCRA"
-            case .cardNameLabel: return "OCRA"
-            case .cardExpiryLabel: return "Helvetica"
-            case .cardCvvLabel: return "Helvetica"
-            case .cardExpiryValueLabel: return "OCRA"
-            case .cardCvvValueLabel: return "OCRA"
-            case .description: return "Helvetica"
-            case .cardNameTagLabel: return "Helvetica"
-            case .pinDigitLabel: return "OCRA"
-            case .viewPinCounter: return "Helvetica"
-            }
+        switch self {
+        case .cardNumberLabel: return "NotoSansOriya"
+        case .cardNumberValueLabel: return "NotoSansOriya-Bold"     //"OCRA"
+        case .cardNameLabel: return "NotoSansOriya-Bold"            //"OCRA"
+        case .cardExpiryLabel: return "NotoSansOriya"
+        case .cardCvvLabel: return "NotoSansOriya"
+        case .cardExpiryValueLabel: return "NotoSansOriya-Bold"     //"OCRA"
+        case .cardCvvValueLabel: return "NotoSansOriya-Bold"        //"OCRA"
+        case .description: return "NotoSansOriya"
+        case .cardNameTagLabel: return "NotoSansOriya"
+        case .pinDigitLabel: return "NotoSansOriya-Bold"
+        case .viewPinCounter: return "NotoSansOriya"
         }
     }
     

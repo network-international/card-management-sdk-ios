@@ -21,7 +21,7 @@ extension RSAUtils {
             // Create SecCertificate object using certificate data
             let cer = SecCertificateCreateWithData(nil, data as CFData)
         else {
-            throw RSADecryptError.emptyData
+            throw RSACryptoError.emptyData
         }
         
         var trust: SecTrust?
@@ -32,7 +32,7 @@ extension RSAUtils {
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
         
         // Retrieve the SecKey using the trust hence generated
-        guard let secKey = SecTrustCopyPublicKey(trust!) else {
+        guard let secKey = SecTrustCopyKey(trust!) else {
             // this can happen if the public key algorithm is not supported
             throw KeychainError.publicKeyNotAvailable
         }
@@ -44,7 +44,7 @@ extension RSAUtils {
                                                              GlobalConfig.NIRSAAlgorithm,
                                                              textToEncryptData as CFData,
                                                              &error) as Data? else {
-            throw RSADecryptError.decryptError(error!.takeRetainedValue() as Error)
+            throw RSACryptoError.decryptError(error!.takeRetainedValue() as Error)
         }
         return cipherTextData.hexString()
     }

@@ -130,17 +130,6 @@ class PinView: UIView {
             descriptionLabel.textColor = .white
             deleteButton.imageView?.tintColor = UIColor.darkerGrayDark
         }
-        
-        button0.setTheme(theme)
-        button1.setTheme(theme)
-        button2.setTheme(theme)
-        button3.setTheme(theme)
-        button4.setTheme(theme)
-        button5.setTheme(theme)
-        button6.setTheme(theme)
-        button7.setTheme(theme)
-        button8.setTheme(theme)
-        button9.setTheme(theme)
     }
     
     

@@ -102,7 +102,7 @@ public class NICardElementsPresenter {
     public var isMasked: Bool { displayAttributes.cardAttributes.shouldHide }
     public var isThemeLight: Bool { displayAttributes.theme == .light }
 
-    private var displayAttributes: NIDisplayAttributes = .zero
+    private var displayAttributes: NIDisplayAttributes = .default
     private var service: CardDetailsService?
     private var cardDetails = CardDetails()
     

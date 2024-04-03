@@ -51,15 +51,9 @@ class ChangePinViewController: UIViewController {
     
     // MARK: - Private
     private func updateUI(for theme: NITheme) {
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-            activityIndicator.style = .large
-        } else {
-            activityIndicator.style = .whiteLarge
-            activityIndicator.color = theme == .light ? .gray : .white
-            view.backgroundColor = theme == .light ? .white : .black
-        }
+        view.backgroundColor = UIColor.backgroundColor
+        view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
+        activityIndicator.style = .large
     }
     
 }

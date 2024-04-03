@@ -23,7 +23,7 @@ class FormCoordinator: Coordinator {
     private let service: FormCoordinatorService
     private let displayAttributes: NIDisplayAttributes
     
-    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, service: FormCoordinatorService) {
+    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .default, service: FormCoordinatorService) {
         self.navigationController = navigationController
         self.displayAttributes = displayAttributes
         self.service = service

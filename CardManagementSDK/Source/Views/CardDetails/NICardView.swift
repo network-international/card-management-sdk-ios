@@ -11,13 +11,7 @@ public final class NICardView: UIView {
     private lazy var cardNrCopyButton: UIButton = { // copyButton
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image: UIImage?
-        if #available(iOS 13.0, *) {
-            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
-        } else {
-            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-        }
-        element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        element.setImage(NIResource.copyImage.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(cardNrCopyAction), for: .touchUpInside)
         return element
     }()
@@ -34,11 +28,7 @@ public final class NICardView: UIView {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.hidesWhenStopped = true
         element.tintColor = .white
-        if #available(iOS 13.0, *) {
-            element.style = .large
-        } else {
-            element.style = .whiteLarge
-        }
+        element.style = .large
         return element
     }()
     private lazy var backgroundCardImage: UIImageView = {
@@ -49,13 +39,7 @@ public final class NICardView: UIView {
     private lazy var nameCopyButton: UIButton = {
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image: UIImage?
-        if #available(iOS 13.0, *) {
-            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
-        } else {
-            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-        }
-        element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        element.setImage(NIResource.copyImage.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(nameCopyAction), for: .touchUpInside)
         return element
     }()
@@ -174,9 +158,9 @@ public final class NICardView: UIView {
     // MARK: - Public
     /// Set the input for the NICardView
     /// - Parameters:
-    ///   - input: input needed for the card details visualization
+    ///   - displayAttributes: needed for the card details visualization
     ///   - service: sdk instance
-    public func configure(displayAttributes: NIDisplayAttributes = .zero, service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
+    public func configure(displayAttributes: NIDisplayAttributes = .default, service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
         hideUI(true)
         activityIndicator.startAnimating()
         /// set background image
@@ -189,12 +173,8 @@ public final class NICardView: UIView {
             button.imageView?.tintColor = displayAttributes.cardAttributes.elementsColor
         }
         
-        if #available(iOS 13.0, *) {
-            backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
-        } else {
-            backgroundColor = self.presenter.isThemeLight ? .white : UIColor.black
-        }
+        backgroundColor = UIColor.backgroundColor
+        overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
         
         eyeButton.isSelected = !presenter.isMasked
         
@@ -228,7 +208,7 @@ private extension NICardView {
         }
     }
     
-    func updatePositioning(_ textPositioning: NICardDetailsTextPositioning?) {
+    func updatePositioning(_ textPositioning: NICardAttributes.TextPositioning?) {
         guard let constraints = textPositioning else { return }
         self.leftAlignmentConstraint?.constant = CGFloat(constraints.leftAlignment * self.bounds.height)
         self.cardNumberGroupTopConstraint?.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.bounds.height)
