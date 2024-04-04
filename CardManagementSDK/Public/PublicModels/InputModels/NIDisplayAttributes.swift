@@ -5,7 +5,7 @@
 //  Created by Paula Radu on 04.10.2022.
 //
 
-import Foundation
+import UIKit
 
 public class NIDisplayAttributes {
     
@@ -18,7 +18,7 @@ public class NIDisplayAttributes {
     public var language: NILanguage?
     
     /// if set, these fonts will be used in the UI forms; if not set will use default fonts
-    public var fonts: [NIFontLabelPair]?
+    public var fonts: [UIElementFont]
     
     /// if set, the card details will take into account the attributes passed into this variable; if not set, will take the default values
     public var cardAttributes: NICardAttributes
@@ -26,7 +26,7 @@ public class NIDisplayAttributes {
     public init(
         theme: NITheme = .light,
         language: NILanguage? = nil,
-        fonts: [NIFontLabelPair]? = nil,
+        fonts: [UIElementFont] = [],
         cardAttributes: NICardAttributes = .zero
     ) {
         self.theme = theme

@@ -30,9 +30,9 @@ class CardDetailsViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "card_details_title".localized
+        title = NIResource.L10n.cardDetailsTitleKey.localized
         setupCloseButton()
-        customNICardView.configure(displayAttributes: displayAttributes, service: service) { [weak self] errorResponse in
+        customNICardView.configure(displayAttributes: displayAttributes, maskableValues: Set(UIElement.CardDetails.Value.allCases), service: service) { [weak self] errorResponse in
             self?.callback?(
                 errorResponse == nil ? NISuccessResponse(message: "Card details retrieved with success!") : nil,
                 errorResponse
