@@ -12,94 +12,43 @@ public protocol CardDetailsService {
     func getCardDetails(completion: @escaping (NICardDetailsResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
+typealias FontAndColorAssignable = FontAssignable & ColorAssignable
+
 public class NICardElementsPresenter {
-    public class Element {
-        public let title: UILabel
-        public let value: TextValueContainer
-        
-        private let shareProvider: () -> String?
-        
-        init(title: UILabel, value: TextValueContainer, shareProvider: @escaping () -> String?) {
-            self.title = title
-            self.value = value
-            self.shareProvider = shareProvider
-        }
-        func update(title: (font: UIFont, text: String?), value: (font: UIFont, text: String?), color: UIColor) {
-            self.title.text = title.text
-            self.title.font = title.font
-            self.title.textColor = color
-            self.value.wrappedFont = value.font
-            self.value.wrappedText = value.text
-            self.value.wrappedColor = color
-        }
-        
-        public func copyToClipboard() {
-            UIPasteboard.general.string = shareProvider()
-        }
-    }
-    
     public private(set) lazy var cardNumber = Element(
-        title: UIView.makeLabel(
-            font: DefaultFonts.cardNumberLabel.font,
-            text: nil, 
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
-        value: UIView.makeWrappedLabel(
-            font: DefaultFonts.cardNumberValueLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ), 
+        titleLabel: .cardNumber,
+        valueLabel: .cardNumber,
+        displayAttributes: displayAttributes,
         shareProvider: ({ [weak self] in
             self?.cardDetails.cardNumber
         })
     )
     public private(set) lazy var cardExpiry = Element(
-        title: UIView.makeLabel(
-            font: DefaultFonts.cardExpiryLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
-        value: UIView.makeWrappedLabel(
-            font: DefaultFonts.cardExpiryValueLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
+        titleLabel: .expiry,
+        valueLabel: .expiry,
+        displayAttributes: displayAttributes,
         shareProvider: ({ [weak self] in
             self?.cardDetails.cardExpiry
         })
     )
     public private(set) lazy var cardCvv = Element(
-        title: UIView.makeLabel(
-            font: DefaultFonts.cardCvvLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
-        value: UIView.makeWrappedLabel(
-            font: DefaultFonts.cardCvvValueLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
+        titleLabel: .cvv,
+        valueLabel: .cvv,
+        displayAttributes: displayAttributes,
         shareProvider: ({ [weak self] in
             self?.cardDetails.cvv2
         })
     )
     public private(set) lazy var cardHolder = Element(
-        title: UIView.makeLabel(
-            font: DefaultFonts.cardNameTagLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
-        value: UIView.makeWrappedLabel(
-            font: DefaultFonts.cardNameLabel.font,
-            text: nil,
-            color: displayAttributes.cardAttributes.elementsColor
-        ),
+        titleLabel: .cardHolder,
+        valueLabel: .cardHolder,
+        displayAttributes: displayAttributes,
         shareProvider: ({ [weak self] in
             self?.cardDetails.cardholderName
         })
     )
     
-    public var isMasked: Bool { displayAttributes.cardAttributes.shouldHide }
+    public private(set) var maskedElements = Set(UIElement.CardDetails.Value.allCases)
     public var isThemeLight: Bool { displayAttributes.theme == .light }
 
     private var displayAttributes: NIDisplayAttributes = .zero
@@ -109,6 +58,8 @@ public class NICardElementsPresenter {
     public func setup(displayAttributes: NIDisplayAttributes, service: CardDetailsService) {
         self.displayAttributes = displayAttributes
         self.service = service
+        maskedElements = displayAttributes.cardAttributes.shouldBeMaskedDefault
+        GlobalConfig.shared.language = displayAttributes.language
         cardDetails.setNoData()
         update()
     }
@@ -134,12 +85,13 @@ public class NICardElementsPresenter {
     
     // MARK: - Actions
     
-    public func toggle(isMasked: Bool) {
-        let data = isMasked ? cardDetails.masked : cardDetails
-        cardHolder.value.wrappedText = data.cardholderName
-        cardNumber.value.wrappedText = data.cardNumber
-        cardExpiry.value.wrappedText = data.cardExpiry
-        cardCvv.value.wrappedText = data.cvv2
+    public func toggle(isMasked maskedElements: Set<UIElement.CardDetails.Value>) {
+        self.maskedElements = maskedElements
+        update()
+    }
+    
+    public func isMasked(_ label: UIElement.CardDetails.Value) -> Bool {
+        maskedElements.contains(label)
     }
     
     public func toggle(isHidden: Bool) {
@@ -157,17 +109,52 @@ public class NICardElementsPresenter {
     }
 }
 
+extension NICardElementsPresenter {
+    public class Element {
+        public let title: UILabel
+        public let value: TextValueContainer
+        
+        private let shareProvider: () -> String?
+        
+        private let titleLabel: UIElement.CardDetails.Label
+        private let valueLabel: UIElement.CardDetails.Value
+        
+        init(
+            titleLabel: UIElement.CardDetails.Label,
+            valueLabel: UIElement.CardDetails.Value,
+            displayAttributes: NIDisplayAttributes,
+            shareProvider: @escaping () -> String?
+        ) {
+            self.titleLabel = titleLabel
+            self.valueLabel = valueLabel
+            self.title = UIView.makeLabel(element: titleLabel, displayAttributes: displayAttributes, text: nil)
+            self.value = UIView.makeWrappedLabel(element: valueLabel, displayAttributes: displayAttributes, text: nil)
+            self.shareProvider = shareProvider
+            
+            GlobalConfig.shared.language = displayAttributes.language
+        }
+        func update(title: String?, value: String?, with displayAttributes: NIDisplayAttributes) {
+            self.title.text = title
+            self.title.font = displayAttributes.fonts.font(for: titleLabel)
+            self.title.textColor = displayAttributes.cardAttributes.colors.color(for: titleLabel).fallback
+            self.value.wrappedFont = displayAttributes.fonts.font(for: valueLabel)
+            self.value.wrappedText = value
+            self.value.wrappedColor = displayAttributes.cardAttributes.colors.color(for: valueLabel).fallback
+        }
+        
+        public func copyToClipboard() {
+            UIPasteboard.general.string = shareProvider()
+        }
+    }
+}
+
 private extension NICardElementsPresenter {
     struct CardDetails {
-        var cardNumberLabel: String = "card_number".localized
         var cardNumber: String?
         var maskedCardNumber: String?
         var cardholderName: String?
-        var cardExpiryLabel: String = "card_expiry".localized
         var cardExpiry: String?
-        var cvv2Label: String = "card_cvv".localized
         var cvv2: String?
-        var cardholderNameLabel: String = "card_name".localized
         
         fileprivate mutating func setNoData() {
             cardNumber = "-"
@@ -204,34 +191,43 @@ private extension NICardElementsPresenter {
     }
     
     private func update() {
-        let data = isMasked ? cardDetails.masked : cardDetails
+        // TODO: introduce cardDetailsLiveData, similar to Android
+        var cardHolderData = cardDetails.cardholderName
+        var cardNumberData = cardDetails.cardNumber
+        var cardExpiryData = cardDetails.cardExpiry
+        var cardCvvData = cardDetails.cvv2
+        for maskedLabel in maskedElements {
+            switch maskedLabel {
+            case .cardHolder:
+                cardHolderData = cardDetails.masked.cardholderName
+            case .cardNumber:
+                cardNumberData = cardDetails.masked.cardNumber
+            case .expiry:
+                cardExpiryData = cardDetails.masked.cardExpiry
+            case .cvv:
+                cardCvvData = cardDetails.masked.cvv2
+            }
+        }
+        
         cardNumber.update(
-            title: (font: displayAttributes.font(for: .cardNumberLabel),
-                    text: data.cardNumberLabel),
-            value: (font: displayAttributes.font(for: .cardNumberValueLabel),
-                    text: data.cardNumber), 
-            color: displayAttributes.cardAttributes.elementsColor
+            title: displayAttributes.cardAttributes.labels[.cardNumber, default: NIResource.L10n.cardNumberKey.localized],
+            value: cardNumberData,
+            with: displayAttributes
         )
         cardExpiry.update(
-            title: (font: displayAttributes.font(for: .expiryDateLabel),
-                    text: data.cardExpiryLabel),
-            value: (font: displayAttributes.font(for: .expiryDateValueLabel),
-                    text: data.cardExpiry),
-            color: displayAttributes.cardAttributes.elementsColor
+            title: displayAttributes.cardAttributes.labels[.expiry, default: NIResource.L10n.cardExpiryKey.localized],
+            value: cardExpiryData,
+            with: displayAttributes
         )
         cardCvv.update(
-            title: (font: displayAttributes.font(for: .cvvLabel),
-                    text: data.cvv2Label),
-            value: (font: displayAttributes.font(for: .cvvValueLabel),
-                    text: data.cvv2),
-            color: displayAttributes.cardAttributes.elementsColor
+            title: displayAttributes.cardAttributes.labels[.cvv, default: NIResource.L10n.cardCvvKey.localized],
+            value: cardCvvData,
+            with: displayAttributes
         )
         cardHolder.update(
-            title: (font: displayAttributes.font(for: .cardholderNameTagLabel),
-                    text: data.cardholderNameLabel),
-            value: (font: displayAttributes.font(for: .cardholderNameLabel),
-                    text: data.cardholderName),
-            color: displayAttributes.cardAttributes.elementsColor
+            title: displayAttributes.cardAttributes.labels[.cardHolder, default: NIResource.L10n.cardNameKey.localized],
+            value: cardHolderData,
+            with: displayAttributes
         )
     }
 }
@@ -267,21 +263,21 @@ private extension String {
 }
 
 private extension UIView {
-    static func makeLabel(font: UIFont, text: String?, color: UIColor) -> UILabel {
+    static func makeLabel(element: any FontAndColorAssignable, displayAttributes: NIDisplayAttributes, text: String?) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = font
+        label.font = displayAttributes.fonts.font(for: element)
         label.text = text
-        label.textColor = color
+        label.textColor = displayAttributes.cardAttributes.colors.color(for: element).fallback
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }
     
-    static func makeWrappedLabel(font: UIFont, text: String?, color: UIColor) -> TextValueContainer {
+    static func makeWrappedLabel(element: UIElement.CardDetails.Value, displayAttributes: NIDisplayAttributes, text: String?) -> TextValueContainer {
         
-        let label = WrappedValueView(font: font, text: text, color: color)
+        let label = WrappedValueView(element: element, displayAttributes: displayAttributes, text: text)
         return label
     }
 }
@@ -336,8 +332,8 @@ private class WrappedValueView: UIView, TextValueContainer {
         set { label.textColor = newValue }
     }
     
-    init(font: UIFont, text: String?, color: UIColor) {
-        label = UIView.makeLabel(font: font, text: text, color: color)
+    init(element: UIElement.CardDetails.Value, displayAttributes: NIDisplayAttributes, text: String?) {
+        label = UIView.makeLabel(element: element, displayAttributes: displayAttributes, text: text)
         super.init(frame: .zero)
         addSubview(label)
         NSLayoutConstraint.activate([
@@ -350,5 +346,15 @@ private class WrappedValueView: UIView, TextValueContainer {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private extension Optional where Wrapped == UIColor {
+    var fallback: UIColor {
+        if #available(iOS 13.0, *) {
+            return self ?? UIColor.label
+        } else {
+            return self ?? UIColor.niAlwaysWhite
+        }
     }
 }

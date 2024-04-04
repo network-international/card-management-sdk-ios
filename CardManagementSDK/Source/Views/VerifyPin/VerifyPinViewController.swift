@@ -31,14 +31,14 @@ class VerifyPinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "verify_pin_title".localized
+        title = NIResource.L10n.verifyPinTitleKey.localized
         
         pinView = Bundle(for: VerifyPinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
         guard let pinView = pinView else { return }
-        pinView.descriptionLabel.font = viewModel.font(for: .verifyPinDescriptionLabel)
+        pinView.descriptionLabel.font = viewModel.font(for: .verifyPinDescription)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: "verify_pin_description".localized,
+                                             descriptionText: NIResource.L10n.verifyPinDescriptionKey.localized,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
