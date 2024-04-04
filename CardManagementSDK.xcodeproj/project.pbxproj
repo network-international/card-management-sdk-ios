@@ -42,6 +42,7 @@
 		BA70A15C2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A15B2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift */; };
 		BA70A15E2B3EC2E500A196C9 /* AccessTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A15D2B3EC2E500A196C9 /* AccessTokenTests.swift */; };
 		BA98DEFC2BBD551D00A0C434 /* NIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA98DEFA2BBD502700A0C434 /* NIResource.swift */; };
+		BA98DEFE2BBEDB3300A0C434 /* UIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA98DEFD2BBEDB3300A0C434 /* UIElement.swift */; };
 		BADE78BE2B4691150072EE48 /* EncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE78BD2B4691150072EE48 /* EncryptionTests.swift */; };
 		F42E80372943613300640860 /* CertificateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80362943613300640860 /* CertificateRequest.swift */; };
 		F42E80662943665600640860 /* DEREncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E80652943665600640860 /* DEREncoding.swift */; };
@@ -98,7 +99,6 @@
 		F4DE3B8529124B3A00BF4727 /* OCRA.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4DE3B8429124B2A00BF4727 /* OCRA.otf */; };
 		F4DE3B8829125A8900BF4727 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8729125A8900BF4727 /* UIFont+Utils.swift */; };
 		F4DE3B8A29125AAD00BF4727 /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8929125AAD00BF4727 /* Bundle+Utils.swift */; };
-		F4DE3B8E2912CBDA00BF4727 /* NILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8D2912CBDA00BF4727 /* NILabel.swift */; };
 		F4DE3BCE2915773300BF4727 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3BCD2915773300BF4727 /* UIColor+Utils.swift */; };
 		F4DE3BD029157C5600BF4727 /* NITheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3BCF29157C5600BF4727 /* NITheme.swift */; };
 		F4E7697028EBF9E800CDC7E4 /* NICardManagementSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E7696528EBF9E800CDC7E4 /* NICardManagementSDK.framework */; };
@@ -161,6 +161,7 @@
 		BA70A15B2B3EBEA600A196C9 /* TokenFetchIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFetchIntegrationTests.swift; sourceTree = "<group>"; };
 		BA70A15D2B3EC2E500A196C9 /* AccessTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenTests.swift; sourceTree = "<group>"; };
 		BA98DEFA2BBD502700A0C434 /* NIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIResource.swift; sourceTree = "<group>"; };
+		BA98DEFD2BBEDB3300A0C434 /* UIElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIElement.swift; sourceTree = "<group>"; };
 		BADE78BD2B4691150072EE48 /* EncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTests.swift; sourceTree = "<group>"; };
 		F42E80362943613300640860 /* CertificateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequest.swift; sourceTree = "<group>"; };
 		F42E80652943665600640860 /* DEREncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEREncoding.swift; sourceTree = "<group>"; };
@@ -219,7 +220,6 @@
 		F4DE3B8629124B5700BF4727 /* NICardManagementSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "NICardManagementSDK-Info.plist"; sourceTree = "<group>"; };
 		F4DE3B8729125A8900BF4727 /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		F4DE3B8929125AAD00BF4727 /* Bundle+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
-		F4DE3B8D2912CBDA00BF4727 /* NILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NILabel.swift; sourceTree = "<group>"; };
 		F4DE3BCD2915773300BF4727 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		F4DE3BCF29157C5600BF4727 /* NITheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NITheme.swift; sourceTree = "<group>"; };
 		F4E7696528EBF9E800CDC7E4 /* NICardManagementSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NICardManagementSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -595,8 +595,8 @@
 				F4E7698C28EC82EB00CDC7E4 /* NIDisplayAttributes.swift */,
 				F447E47829019CF2005A5F46 /* NIPinFormType.swift */,
 				F44559AC2907C5DB00384188 /* NILanguage.swift */,
-				F4DE3B8D2912CBDA00BF4727 /* NILabel.swift */,
 				F4DE3BCF29157C5600BF4727 /* NITheme.swift */,
+				BA98DEFD2BBEDB3300A0C434 /* UIElement.swift */,
 				F4C725A529377062001B28A8 /* NICardAttributes.swift */,
 				2A7993262A0E4C9C00EB4CAE /* NICardDetailsTextPositioning.swift */,
 				BA98DEFA2BBD502700A0C434 /* NIResource.swift */,
@@ -756,7 +756,6 @@
 				BA70A14D2B31C53500A196C9 /* NICardManagementTokenFetchable.swift in Sources */,
 				F45A7DFF28EF22E100B3486E /* JSONSerialiation+Extensions.swift in Sources */,
 				F4DE3BCE2915773300BF4727 /* UIColor+Utils.swift in Sources */,
-				F4DE3B8E2912CBDA00BF4727 /* NILabel.swift in Sources */,
 				F42E808B29461D4700640860 /* BitString.swift in Sources */,
 				F4E76A0F28EEC01200CDC7E4 /* FormCoordinator.swift in Sources */,
 				BA70A1522B31C6C900A196C9 /* TokenRepository.swift in Sources */,
@@ -778,6 +777,7 @@
 				F42E80C0294B442800640860 /* Updateable.swift in Sources */,
 				F447E44828F83BBA005A5F46 /* PinCertificateResponse.swift in Sources */,
 				F42E8074294619C500640860 /* SecKey+KeyPair.swift in Sources */,
+				BA98DEFE2BBEDB3300A0C434 /* UIElement.swift in Sources */,
 				BA70A14B2B30793700A196C9 /* Environment.swift in Sources */,
 				2AD494F02906A6F000E25695 /* ChangePinViewController.swift in Sources */,
 				2AAA25AC2A8E238C0068466D /* NIViewPinView.swift in Sources */,
