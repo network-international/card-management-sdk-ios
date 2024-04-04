@@ -94,7 +94,7 @@ public final class NIViewPinView: UIView {
     
     @objc private func updateCounter() {
         if counter > 0 {
-            countDownDecription.text = "view_pin_countdown_description".localized + " " + String(Int(counter)) + " " + "view_pin_countdown_unit".localized
+            countDownDecription.text = NIResource.L10n.pinCountdownDescriptionKey.localized + " " + String(Int(counter)) + " " + NIResource.L10n.pinCountdownUnitKey.localized
             counter -= 1
         } else {
             timer?.invalidate()
@@ -153,8 +153,8 @@ public final class NIViewPinView: UIView {
                 
                 if viewModel.startTimer && self.counter != 0 {
                     self.startTimer()
-                    let countDownDescriptionLocalized: String = "view_pin_countdown_description".localized + " "
-                    let countDownUnitLocalized: String = " " + "view_pin_countdown_unit".localized
+                    let countDownDescriptionLocalized: String = NIResource.L10n.pinCountdownDescriptionKey.localized + " "
+                    let countDownUnitLocalized: String = " " + NIResource.L10n.pinCountdownUnitKey.localized
                     self.countDownDecription.text = countDownDescriptionLocalized + String(Int(self.counter)) + countDownUnitLocalized
                     self.counter -= 1
                 } else {
@@ -171,7 +171,7 @@ public final class NIViewPinView: UIView {
         countDownDecription.font = viewModel.font(for: .viewPinCountDownDescription)
         if let digits = digits {
             for digit in digits {
-                digit.font = viewModel.font(for: .pinDigitLabel)
+                digit.font = viewModel.font(for: .pinDigit)
             }
         }
         

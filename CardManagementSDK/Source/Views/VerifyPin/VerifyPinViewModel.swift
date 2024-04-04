@@ -45,12 +45,11 @@ extension VerifyPinViewModel {
         return formType != .dynamic
     }
     
-    func font(for label: NILabels) -> UIFont? {
-        displayAttributes?.font(for: label)
+    func font(for label: UIElement.PinFormLabel) -> UIFont {
+        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
     }
     
     var theme: NITheme { /// default is light
         return displayAttributes?.theme ?? .light
     }
-    
 }
