@@ -67,6 +67,8 @@ public final class NICardView: UIView {
 
     private var presenter = NICardElementsPresenter()
     
+    private var maskableValues = Set(UIElement.CardDetails.Value.allCases)
+    
     override public init(frame: CGRect) {
         super.init(frame: .zero)
         commonInit()
@@ -176,18 +178,35 @@ public final class NICardView: UIView {
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
-    public func configure(displayAttributes: NIDisplayAttributes = .zero, service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
+    public func configure(displayAttributes: NIDisplayAttributes = .zero, elementsColor: UIColor = .niAlwaysWhite, maskableValues: Set<UIElement.CardDetails.Value> = Set(UIElement.CardDetails.Value.allCases), service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
+        self.maskableValues = maskableValues
         hideUI(true)
         activityIndicator.startAnimating()
+        // update colors of images
+        [eyeButton, cardNrCopyButton, nameCopyButton].forEach { button in
+            button.tintColor = elementsColor
+            button.imageView?.tintColor = elementsColor
+        }
+        
+        // if labels color not provided - use same as elementsColor
+        var missingColors = [UIElementColor]()
+        UIElement.CardDetails.Label.allCases.forEach { label in
+            if displayAttributes.cardAttributes.colors.color(for: label) == nil {
+                missingColors.append(UIElementColor(element: label, color: elementsColor))
+            }
+        }
+        UIElement.CardDetails.Value.allCases.forEach { label in
+            if displayAttributes.cardAttributes.colors.color(for: label) == nil {
+                missingColors.append(UIElementColor(element: label, color: elementsColor))
+            }
+        }
+        displayAttributes.cardAttributes.colors = displayAttributes.cardAttributes.colors + missingColors
+        
         /// set background image
         backgroundCardImage.image = displayAttributes.cardAttributes.backgroundImage
         
         presenter.setup(displayAttributes: displayAttributes, service: service)
-        // update colors of images
-        [eyeButton, cardNrCopyButton, nameCopyButton].forEach { button in
-            button.tintColor = displayAttributes.cardAttributes.elementsColor
-            button.imageView?.tintColor = displayAttributes.cardAttributes.elementsColor
-        }
+        
         
         if #available(iOS 13.0, *) {
             backgroundColor = UIColor.backgroundColor
@@ -196,7 +215,7 @@ public final class NICardView: UIView {
             backgroundColor = self.presenter.isThemeLight ? .white : UIColor.black
         }
         
-        eyeButton.isSelected = !presenter.isMasked
+        eyeButton.isSelected = presenter.maskedElements.isEmpty
         
         presenter.showCardDetails { [weak self] errorResponse in
             DispatchQueue.main.async {
@@ -239,24 +258,25 @@ private extension NICardView {
     func hideUI(_ shouldHide: Bool) {
         presenter.toggle(isHidden: shouldHide)
         eyeButton.isHidden = shouldHide
-        cardNrCopyButton.isHidden = shouldHide || presenter.isMasked
-        nameCopyButton.isHidden = shouldHide || presenter.isMasked
+        cardNrCopyButton.isHidden = shouldHide || presenter.isMasked(.cardNumber)
+        nameCopyButton.isHidden = shouldHide || presenter.isMasked(.cardHolder)
     }
     
     // MARK: - Actions
     @objc func cardNrCopyAction() {
         presenter.cardNumber.copyToClipboard()
-        showToast(message: "toast_message".localized)
+        showToast(message: NIResource.L10n.toastMessage.localized)
     }
     
     @objc func nameCopyAction() {
         presenter.cardHolder.copyToClipboard()
-        showToast(message: "toast_message".localized)
+        showToast(message: NIResource.L10n.toastMessage.localized)
     }
     
     @objc func eyeButtonAction(_ sender: EyeButton) {
         sender.isSelected.toggle()
-        presenter.toggle(isMasked: !sender.isSelected)
+        let maskedValues = sender.isSelected ? Set() : maskableValues
+        presenter.toggle(isMasked: maskedValues)
         
         cardNrCopyButton.isHidden = !sender.isSelected
         nameCopyButton.isHidden = !sender.isSelected

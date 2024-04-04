@@ -34,14 +34,14 @@ class ChangePinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "change_pin_title".localized
+        title = NIResource.L10n.changePinTitleKey.localized
         
         pinView = Bundle(for: ChangePinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
         guard let pinView = pinView else { return }
-        pinView.descriptionLabel.font = viewModel.font(for: .changePinDescriptionLabel)
+        pinView.descriptionLabel.font = viewModel.font(for: .changePinDescription)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: "change_pin_description_enter_current_pin".localized,
+                                             descriptionText: NIResource.L10n.changePinEnterCurrentKey.localized,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
@@ -91,19 +91,19 @@ extension ChangePinViewController: PinViewProtocol {
                         }
                     }
                 } else {
-                    pinView?.viewmodel?.descriptionText = "change_pin_description_pin_not_match".localized
+                    pinView?.viewmodel?.descriptionText = NIResource.L10n.changePinNotMatchKey.localized
                     pinView?.resetView()
                 }
             } else {
                 newPin = pin
                 guard let pinView = pinView else { return }
-                pinView.viewmodel?.descriptionText = "change_pin_description_re_enter_new_pin".localized
+                pinView.viewmodel?.descriptionText = NIResource.L10n.changePinReenterPinKey.localized
                 pinView.resetView()
             }
         } else {
             oldPin = pin
             guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = "change_pin_description_enter_new_pin".localized
+            pinView.viewmodel?.descriptionText = NIResource.L10n.changePinEnterNewPinKey.localized
             pinView.resetView()
         }
     }

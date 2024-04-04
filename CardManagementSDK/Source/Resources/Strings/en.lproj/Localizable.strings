@@ -6,28 +6,27 @@
   
 */
 
-"card_number" = "CARD NUMBER";
-"card_expiry" = "VALID THRU";
-"card_cvv" = "CVV";
-"card_name" = "NAME";
-"card_details_title" = "Card details";
+"cardmanagement_sdk_card_number" = "CARD NUMBER";
+"cardmanagement_sdk_card_expiry" = "VALID THRU";
+"cardmanagement_sdk_card_cvv" = "CVV";
+"cardmanagement_sdk_card_name" = "NAME";
+"cardmanagement_sdk_card_details_title" = "Card details";
 
-"set_pin_title" = "Set PIN";
-"set_pin_description_enter_pin" = "Please enter the desired PIN for your card";
-"set_pin_description_re_enter_pin" = "Please re-enter the desired card PIN";
-"set_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the card PIN";
+"cardmanagement_sdk_set_pin_title" = "Set PIN";
+"cardmanagement_sdk_set_pin_description_enter_pin" = "Please enter the desired PIN for your card";
+"cardmanagement_sdk_set_pin_description_re_enter_pin" = "Please re-enter the desired card PIN";
+"cardmanagement_sdk_set_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the card PIN";
 
-"verify_pin_title" = "Verify PIN";
-"verify_pin_description" = "Please enter your card PIN for verification";
+"cardmanagement_sdk_verify_pin_title" = "Verify PIN";
+"cardmanagement_sdk_verify_pin_description" = "Please enter your card PIN for verification";
 
-"change_pin_title" = "Change PIN";
-"change_pin_description_enter_current_pin" = "Please enter your current card PIN";
-"change_pin_description_enter_new_pin" = "Please enter the new card PIN";
-"change_pin_description_re_enter_new_pin" = "Please re-enter the new card PIN";
-"change_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the new card PIN";
+"cardmanagement_sdk_change_pin_title" = "Change PIN";
+"cardmanagement_sdk_change_pin_description_enter_current_pin" = "Please enter your current card PIN";
+"cardmanagement_sdk_change_pin_description_enter_new_pin" = "Please enter the new card PIN";
+"cardmanagement_sdk_change_pin_description_re_enter_new_pin" = "Please re-enter the new card PIN";
+"cardmanagement_sdk_change_pin_description_pin_not_match" = "PIN does not match.\nPlease re-enter the new card PIN";
 
-"view_pin_countdown_description" = "PIN will be hidden in";
-"view_pin_countdown_unit" = "seconds";
+"cardmanagement_sdk_view_pin_countdown_description" = "PIN will be hidden in";
+"cardmanagement_sdk_view_pin_countdown_unit" = "seconds";
 
-"alert_button_ok" = "OK";
-"toast_message" = "Copied to clipboard";
+"cardmanagement_sdk_toast_message" = "Copied to clipboard";

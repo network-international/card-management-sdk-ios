@@ -57,12 +57,11 @@ class ViewPinViewModel {
 }
 
 // MARK: - Helpers/Utils
-extension ViewPinViewModel {
-    func font(for label: NILabels) -> UIFont? {
-        displayAttributes?.font(for: label)
-    }
-    
+extension ViewPinViewModel {    
     var theme: NITheme { /// default is light
         return displayAttributes?.theme ?? .light
+    }
+    func font(for label: UIElement.PinFormLabel) -> UIFont {
+        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
     }
 }

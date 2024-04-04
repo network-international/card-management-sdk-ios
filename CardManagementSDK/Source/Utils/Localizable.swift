@@ -9,37 +9,33 @@ import Foundation
 
 
 protocol NILocalizable {
-    /// localized for device language
-    var deviceLocalized: String { get }
-    
-    /// forced localized for the Globla set language
+    /// forced localized for the Global set language, use app localisation as a fallback
     var localized: String { get }
-    
-    /// localized for the given language
-    func localized(for language: String) -> String
 }
 
 extension String: NILocalizable {
-    
-    var deviceLocalized: String {
-        return NSLocalizedString(self, bundle: Bundle(for: NICardManagementAPI.self), comment: "")
-    }
-    
+
     var localized: String {
-        if let language = GlobalConfig.shared.language {
-            return localized(for: language.name)
-        } else {
-            return deviceLocalized
-        }
+        GlobalConfig.shared.language.flatMap { localized(for: $0.name) }
+        ?? localized(for: "en")
+        ?? deviceLocalized
     }
     
-    func localized(for language: String) -> String {
-        let bundle = Bundle(for: NICardManagementAPI.self)
-        if let path = bundle.path(forResource: language, ofType: "lproj") {
+    private var deviceLocalized: String {
+        return NSLocalizedString(self, bundle: Bundle.main, comment: "")
+    }
+    
+    private func localized(for language: String) -> String? {
+        guard
+            let path = Bundle(for: NICardManagementAPI.self)
+                .path(forResource: language, ofType: "lproj"),
             let languageBundle = Bundle(path: path)
-            return languageBundle?.localizedString(forKey: self, value: self, table: nil) ?? ""
+        else { return nil }
+            
+        let result = languageBundle.localizedString(forKey: self, value: self, table: nil)
+        if result == self { // key not found
+            return nil
         }
-        return "" /// Language not supported
+        return result
     }
-    
 }

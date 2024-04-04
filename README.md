@@ -122,18 +122,29 @@ We support customization of fonts. System and custom fonts can be set for the la
 Card Attributes has default value `NICardAttributes.zero`. It can be set if customisation of the card details view is wanted. 
     
 We offer:  
- - Set color of card view elements, `.niAlwaysWhite` by default
+ - Set colors of card view elements, `.niAlwaysWhite` by default for cardView and `.label` for custom layout
  
 ```swift
-    let cardAttributes = NICardAttributes(elementsColor: .niAlwaysWhite)
+    let cardAttributes = NICardAttributes(colors: [UIElementColor(element: UIElement.CardDetails.Value.cardNumber, color: .purple)])
 ```
 
- - Possibility to show or hide card details by default
+ - Define which elements will be masked by default
  
- To directly show the card details (not masked) when card view is displayed, we expect the ```shouldHide``` property to be set to false, otherwise to be set to false. If ```shouldHide``` property is not set, the default value is true.
+ To directly show the card details (not masked) when card view is displayed, we expect the ```shouldBeMaskedDefault``` property to be set to emtpy set. Or concrete elements can be masked by default 
  
 ```swift
-    let cardAttributes = NICardAttributes(shouldHide: false)
+    let cardAttributes = NICardAttributes(shouldBeMaskedDefault: Set([.cvv]))
+```
+
+- Define labels for cardView elements
+ 
+ To define custom texts for cardView labels - use `labels` 
+ 
+```swift
+    let cardAttributes = NICardAttributes(labels: [
+                .cardNumber: "My card >>", // use localised strings here
+                .cvv: "My CVV >>"
+            ])
 ```
 
  - Background image customization

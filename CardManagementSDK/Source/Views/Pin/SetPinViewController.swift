@@ -33,14 +33,14 @@ class SetPinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "set_pin_title".localized
+        title = NIResource.L10n.setPinTitleKey.localized
         
         pinView = Bundle(for: SetPinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
         guard let pinView = pinView else { return }
-        pinView.descriptionLabel.font = viewModel.font(for: .setPinDescriptionLabel)
+        pinView.descriptionLabel.font = viewModel.font(for: .setPinDescription)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: "set_pin_description_enter_pin".localized,
+                                             descriptionText: NIResource.L10n.setPinEnterKey.localized,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
@@ -90,13 +90,13 @@ extension SetPinViewController: PinViewProtocol {
                     }
                 }
             } else {
-                pinView?.viewmodel?.descriptionText = "set_pin_description_pin_not_match".localized
+                pinView?.viewmodel?.descriptionText = NIResource.L10n.setPinNotMatchKey.localized
                 pinView?.resetView()
             }
         } else {
             previousPin = pin
             guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = "set_pin_description_re_enter_pin".localized
+            pinView.viewmodel?.descriptionText = NIResource.L10n.setPinReenterPinKey.localized
             pinView.resetView()
         }
     }
