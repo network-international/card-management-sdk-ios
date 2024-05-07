@@ -19,6 +19,9 @@ import UIKit
     /// if set, the card details labels will be positioned accordingly
     public var textPositioning: NICardDetailsTextPositioning?
     
+    /// if set, the card details elements will be colored accordingly
+    public var elementsColor: UIColor?
+    
     @objc public init(shouldHide: Bool, backgroundImage: UIImage) {
         self.shouldHide = shouldHide
         self.backgroundImage = backgroundImage
@@ -29,5 +32,12 @@ import UIKit
         self.backgroundImage = backgroundImage
         self.textPositioning = textPositioning
     }
+    
+    public init(shouldHide: Bool?, backgroundImage: UIImage?, textPositioning: NICardDetailsTextPositioning?, elementsColor: UIColor?) {
+       self.shouldHide = shouldHide
+       self.backgroundImage = backgroundImage
+       self.textPositioning = textPositioning
+       self.elementsColor = elementsColor
+   }
     
 }
