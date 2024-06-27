@@ -182,11 +182,13 @@ private extension NICardElementsPresenter {
                 }
             }
             
+            let maskedCvv = self.cvv2?.masked()
+            
             return CardDetails(cardNumber: self.maskedCardNumber,
                                maskedCardNumber: self.maskedCardNumber,
                                cardholderName: maskedHolder,
                                cardExpiry: maskedExpiry,
-                               cvv2: self.cvv2?.masked())
+                               cvv2: maskedCvv)
         }
     }
     
@@ -211,7 +213,7 @@ private extension NICardElementsPresenter {
         
         cardNumber.update(
             title: displayAttributes.cardAttributes.labels[.cardNumber, default: NIResource.L10n.cardNumberKey.localized],
-            value: cardNumberData,
+            value: cardNumberData?.separate(every: 4, with: " "),
             with: displayAttributes
         )
         cardExpiry.update(
@@ -239,8 +241,8 @@ private extension NICardDetailsResponse {
             return nil
         }
         return NICardElementsPresenter.CardDetails(
-            cardNumber: cardNumber.separate(every: 4, with: " "),
-            maskedCardNumber: maskedCardNumber.separate(every: 4, with: " "),
+            cardNumber: cardNumber,
+            maskedCardNumber: maskedCardNumber,
             cardholderName: cardholderName,
             cardExpiry: expiry,
             cvv2: cvv2
