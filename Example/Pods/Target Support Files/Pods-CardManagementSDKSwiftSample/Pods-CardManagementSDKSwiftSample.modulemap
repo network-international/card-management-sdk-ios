@@ -1,0 +1,6 @@
+framework module Pods_CardManagementSDKSwiftSample {
+  umbrella header "Pods-CardManagementSDKSwiftSample-umbrella.h"
+
+  export *
+  module * { export * }
+}

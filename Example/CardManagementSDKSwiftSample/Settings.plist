@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CardView</key>
+	<dict>
+		<key>cardIdentifier</key>
+		<dict>
+			<key>Id</key>
+			<string>12259219$$$8514AB521454A85D2D810EC5F4A63286BBB0E4E57357B4947F6E6E8646FDBCFD</string>
+			<key>type</key>
+			<string>EXID</string>
+		</dict>
+		<key>connection</key>
+		<dict>
+			<key>baseUrl</key>
+			<string>https://api-uat.egy.network.global/sdk/v2</string>
+			<key>bankCode</key>
+			<string>AXIS4</string>
+		</dict>
+		<key>credentials</key>
+		<dict>
+			<key>tokenUrl</key>
+			<string>https://api-uat.egy.network.global/v1/tokenkc/generate</string>
+			<key>clientSecret</key>
+			<string>tKa1q5LfVNAEYw20yqRiofbQZ2SHUrQD</string>
+			<key>clientId</key>
+			<string>6a8e04c2-a5d7-45db-9083-0aa403d4bfcf20758</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
