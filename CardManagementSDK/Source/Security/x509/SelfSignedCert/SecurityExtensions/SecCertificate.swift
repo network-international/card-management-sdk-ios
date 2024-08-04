@@ -96,10 +96,10 @@ public extension SecCertificate {
         let policy: SecPolicy = SecPolicyCreateBasicX509()
         var trust: SecTrust?
         let resultCode = SecTrustCreateWithCertificates([self] as CFArray, policy, &trust)
-        guard resultCode == errSecSuccess else {
+        guard resultCode == errSecSuccess, let trust = trust else {
             throw KeychainError.certCreationFailed(status: resultCode)
         }
-        guard let result = SecTrustCopyPublicKey(trust!) else {
+        guard let result = SecTrustCopyPublicKey(trust) else {
             // this can happen if the public key algorithm is not supported
             throw KeychainError.publicKeyNotAvailable
         }
