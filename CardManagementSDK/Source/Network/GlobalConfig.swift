@@ -19,9 +19,5 @@ class GlobalConfig {
     static let NIChannelId = "sdk"
     
     
-    static let NIRSAAlgorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1
-    
-    // Language
-    var language: NILanguage? = nil
-    
+    static let NIRSAAlgorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1    
 }

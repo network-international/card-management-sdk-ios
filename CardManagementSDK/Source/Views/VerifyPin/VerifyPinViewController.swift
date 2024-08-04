@@ -12,11 +12,13 @@ class VerifyPinViewController: UIViewController {
     
     private var viewModel: VerifyPinViewModel
     private var pinView: PinView?
+    private let language: NILanguage?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
-    init(viewModel: VerifyPinViewModel) {
+    init(language: NILanguage?, viewModel: VerifyPinViewModel) {
+        self.language = language
         self.viewModel = viewModel
         super.init(nibName: "VerifyPinViewController", bundle: Bundle(for: VerifyPinViewController.self))
         
@@ -31,14 +33,14 @@ class VerifyPinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NIResource.L10n.verifyPinTitleKey.localized
+        title = NIResource.L10n.verifyPinTitleKey.localized(with: language)
         
         pinView = Bundle(for: VerifyPinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
         guard let pinView = pinView else { return }
         pinView.descriptionLabel.font = viewModel.font(for: .verifyPinDescription)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: NIResource.L10n.verifyPinDescriptionKey.localized,
+                                             descriptionText: NIResource.L10n.verifyPinDescriptionKey.localized(with: language),
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)

@@ -101,7 +101,7 @@ private extension ExperimentsViewController {
             title: "Present form with card",
             action: UIAction { [weak self] _ in
                 guard let self = self else { return }
-                self.sdk.displayCardDetailsForm(viewController: self, displayAttributes: self.viewModel.displayAttributes, completion: self.cardViewCallback)
+                self.sdk.displayCardDetailsForm(viewController: self, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, cardViewBackground: viewModel.backgroundImage, cardViewTextPositioning: viewModel.textPositioning, completion: self.cardViewCallback)
             }
         ))
         
@@ -148,7 +148,7 @@ private extension ExperimentsViewController {
         
         // toggle cardPresenter.isMasked (the way how information displayed) 
         // - by `displayAttributes.cardAttributes.shouldHide`
-        let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: viewModel.displayAttributes)
+        let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: viewModel.displayAttributes, language: self.viewModel.language)
         let customView = UIStackView()
         customView.translatesAutoresizingMaskIntoConstraints = false
         customView.axis = .vertical
@@ -157,13 +157,17 @@ private extension ExperimentsViewController {
         let copyCardNumberBtn = UIButton(primaryAction: UIAction(
             image: UIImage(systemName: "square.and.arrow.up.circle"),
             handler: { [cardPresenter] _ in
-                cardPresenter.cardNumber.copyToClipboard()
+                let template = """
+                cardNumber: %@
+                cvv: %@
+                expiry: %@
+                """
+                cardPresenter.copyToClipboard([.cardNumber, .cvv, .expiry], template: template)
             }
         ))
         let maskCardNumberBtn = UIButton(primaryAction: UIAction(
             image: UIImage(systemName: "eye.slash"),
             handler: { [cardPresenter] _ in
-                let isMasked = cardPresenter.isMasked(.cardNumber)
                 var maskedElements = cardPresenter.maskedElements
                 if cardPresenter.isMasked(.cardNumber) {
                     maskedElements.remove(.cardNumber)
@@ -189,13 +193,12 @@ private extension ExperimentsViewController {
         let copyCvvBtn = UIButton(primaryAction: UIAction(
             image: UIImage(systemName: "square.and.arrow.up.circle"),
             handler: { [cardPresenter] _ in
-                cardPresenter.cardCvv.copyToClipboard()
+                cardPresenter.copyToClipboard([.cvv])
             }
         ))
         let maskCvvBtn = UIButton(primaryAction: UIAction(
             image: UIImage(systemName: "eye.slash"),
             handler: { [cardPresenter] _ in
-                let isMasked = cardPresenter.isMasked(.cvv)
                 var maskedElements = cardPresenter.maskedElements
                 if cardPresenter.isMasked(.cvv) {
                     maskedElements.remove(.cvv)
@@ -261,10 +264,14 @@ private extension ExperimentsViewController {
 }
 
 private extension ExperimentsViewModel {
+    var language: NILanguage? { settingsProvider.currentLanguage }
+    var textPositioning: NICardDetailsTextPositioning? { settingsProvider.textPosition.sdkValue
+    }
+    var backgroundImage: UIImage? { settingsProvider.cardBackgroundImage }
+    
     var displayAttributes: NIDisplayAttributes {
         NIDisplayAttributes(
             theme: settingsProvider.theme,
-            language: settingsProvider.currentLanguage, // can be nil
             fonts: settingsProvider.fonts, // can be omitted
             cardAttributes: cardAttributes // can be nil
         )
@@ -273,8 +280,6 @@ private extension ExperimentsViewModel {
     var cardAttributes: NICardAttributes {
         NICardAttributes(
             shouldBeMaskedDefault: Set([.cvv]), // initially only cvv will be masked
-            backgroundImage: settingsProvider.cardBackgroundImage,
-            textPositioning: settingsProvider.textPosition.sdkValue,
             colors: [
                 UIElementColor(element: UIElement.CardDetails.Label.cardNumber, color: .red),
                 UIElementColor(element: UIElement.CardDetails.Value.cardNumber, color: .purple),

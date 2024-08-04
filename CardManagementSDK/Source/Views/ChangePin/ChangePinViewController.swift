@@ -15,11 +15,13 @@ class ChangePinViewController: UIViewController {
     private var oldPin: String?
     private var newPin: String?
     private var pinView: PinView?
+    private let language: NILanguage?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
-    init(viewModel: ChangePinViewModel) {
+    init(language: NILanguage?, viewModel: ChangePinViewModel) {
+        self.language = language
         self.viewModel = viewModel
         super.init(nibName: "ChangePinViewController", bundle: Bundle(for: ChangePinViewController.self))
         
@@ -34,14 +36,14 @@ class ChangePinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NIResource.L10n.changePinTitleKey.localized
+        title = NIResource.L10n.changePinTitleKey.localized(with: language)
         
         pinView = Bundle(for: ChangePinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
         guard let pinView = pinView else { return }
         pinView.descriptionLabel.font = viewModel.font(for: .changePinDescription)
         pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
                                              dotsCount: viewModel.dotsCount,
-                                             descriptionText: NIResource.L10n.changePinEnterCurrentKey.localized,
+                                             descriptionText: NIResource.L10n.changePinEnterCurrentKey.localized(with: language),
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
@@ -91,19 +93,19 @@ extension ChangePinViewController: PinViewProtocol {
                         }
                     }
                 } else {
-                    pinView?.viewmodel?.descriptionText = NIResource.L10n.changePinNotMatchKey.localized
+                    pinView?.viewmodel?.descriptionText = NIResource.L10n.changePinNotMatchKey.localized(with: language)
                     pinView?.resetView()
                 }
             } else {
                 newPin = pin
                 guard let pinView = pinView else { return }
-                pinView.viewmodel?.descriptionText = NIResource.L10n.changePinReenterPinKey.localized
+                pinView.viewmodel?.descriptionText = NIResource.L10n.changePinReenterPinKey.localized(with: language)
                 pinView.resetView()
             }
         } else {
             oldPin = pin
             guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = NIResource.L10n.changePinEnterNewPinKey.localized
+            pinView.viewmodel?.descriptionText = NIResource.L10n.changePinEnterNewPinKey.localized(with: language)
             pinView.resetView()
         }
     }

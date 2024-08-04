@@ -108,10 +108,10 @@ struct TextPositioning {
         )
     }
     
-    var leftAlignment: Double
-    var cardNumberGroupTopAlignment: Double
-    var dateCvvGroupTopAlignment: Double
-    var cardHolderNameGroupTopAlignment: Double
+    var leftAlignment: Double = Self.initial.leftAlignment
+    var cardNumberGroupTopAlignment: Double = Self.initial.cardNumberGroupTopAlignment
+    var dateCvvGroupTopAlignment: Double = Self.initial.dateCvvGroupTopAlignment
+    var cardHolderNameGroupTopAlignment: Double = Self.initial.cardHolderNameGroupTopAlignment
     
     var sdkValue: NICardDetailsTextPositioning {
         NICardDetailsTextPositioning(
