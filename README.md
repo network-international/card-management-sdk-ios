@@ -9,22 +9,10 @@ The current supported features are:
 5. View PIN: Displays a component providing the ability to show PIN card. The PIN is end to end encrypted to securely transport this sensitive information
 
 ## Requirements
-The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 12 and above.
+The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
 ## Installation
-We support all the popular iOS dependency management tools. The SDK can be added via [CocoaPods](https://cocoapods.org/) or using [Swift Package Manager](https://swift.org/package-manager/). 
-We offer, the possibility to add the XCFramework manually into your project, as well.
-
-##### XCFramework
-Steps to connect our iOS SDK to your iOS application:
-
-1.	Drag NICardManagementSDK.xcframework to the Frameworks, Libraries and Embedded Content section of your project target: General -> Frameworks, Libraries and Embedded Content.
-2.	Make sure the “Embed & Sign” option is set on Embed tab.
-3.	If your application is written with Objective C, perform an additional step: Build settings -> Build Options -> Always Embed Swift Standard Libraries set YES
-
-##### Swift Package Manager
-From Xcode simply select `File > Swift Packages > Add Package Dependency...` and paste `https://github.com/network-international/cardmanagement-sdk-ios` to search field. You can specify rules according to your preferences and you are ready to use. 
-
+The SDK can be added via [CocoaPods](https://cocoapods.org/)
 
 ##### CocoaPods
 The steps to install it via CocoaPods:
@@ -43,45 +31,17 @@ Swift:
 ```swift
 import NICardManagementSDK
 ```
-#### Migration from 1.0 version to 1.1
-1) NIInput was deleted, it's parameters divided between SDK's instance initialisations 
-```
-NICardManagementAPI(
-            rootUrl: rootUrl,
-            cardIdentifierId: cardIdentifierId,
-            cardIdentifierType: cardIdentifierType,
-            bankCode: bankCode,
-            tokenFetchable: NICardManagementTokenFetchable
-        )
-```
-and `displayAttributes` that used for showing forms
-
-2) Since `NIInput` deleted
-- input argument was also removed from all public methods (see (3))
-
-3) Instead of static methods, use sdk's instance methods
-`NICardManagementAPI.displayCardDetailsForm(input:, viewController:, completion:)`
-use 
-`sdk.displayCardDetailsForm(viewController:, completion:)`
-same for other methods:
-`NICardManagementAPI.setPinForm` --> `sdk.setPinForm`
-`NICardManagementAPI.changePinForm` --> `sdk.changePinForm`
-`NICardManagementAPI.verifyPinForm` --> `sdk.verifyPinForm`
-
-4) `NIViewPinView` and `NICardView` configuration changed
-`view.setInput(input:)` --> `view.configure(displayAttributes:)`
-also pass `sdk` instance as view's `service` parameter
 
 
 #### Usage
 
 ###### Decide how `token` will be provided - create `tokenFetchable`(`NICardManagementTokenFetchable`), available options:
 1) Implement you own provider that meet protocol requiremets
-2) If you have permanent token - you can use simple wrapper
+2) If you have token - you can use simple wrapper
 ```
-TokenFetcherFactory.makeSimpleWrapper(tokenValue: "your token")
+TokenFetcherFactory.makeSimpleWrapper(tokenValue: "your generated token")
 ```
-3) Use sdk's provider that will try to fetch token with POST request and cache it in device's keychain
+3) Use simple sdk's provider that will try to fetch token with POST request and cache it in device's keychain
 ```
 TokenFetcherFactory.makeNetworkWithCache(
     urlString: "your url", 
@@ -152,8 +112,9 @@ We offer:
 For the card background image, we expect a UIImage to be set. The recommended size would be 343 x 182. 
 
 ```swift
-    let image = UIImage(named:"background_image")
-    let cardAttributes = NICardAttributes(backgroundImage: image)) 
+    let cardView = NICardView()
+    cardView.setBackgroundImage(image: UIImage(named:"background_image"))
+                cardView.updatePositioning(self.viewModel.textPositioning)
 ```
  - Possibility to set the text position as grouped labels
  
@@ -167,30 +128,108 @@ The card details labels are grouped as follows:
 In order to set the position of the each group, we expect percentage (of card container view height and width) values to the following parameters: ```leftAlignment```, ```cardNumberGroupTopAlignment```, ```dateCvvGroupTopAlignment```, ```cardHolderNameGroupTopAlignment```
 
 ```swift
-    let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
-    let cardAttributes = NICardAttributes(textPositioning: textPosition)
+    let cardView = NICardView()
+    cardView.updatePositioning(
+         NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
+    )
 ```
 
-All are optional. 
+Most of the parameters are optional. 
 
-If all properties are wanted, initialization NICardAttributes is made with all properties. 
     
+#### Display Card Details as a view
+The customer application can integrate Card Details and View Pin as a view into a UIViewController
+
+##### Constructing Custom layout Card Details view from given UI elements.
+SDK allows to build any layout for card details by getting UI elements with card details data, this will help to keep card details data protected and not pass it in a war data
 ```swift
-    let image = UIImage(named:"background_image") 
-    let textPosition = NICardDetailsTextPositioning(leftAlignment: 0.09, cardNumberGroupTopAlignment: 0.4, dateCvvGroupTopAlignment: 0.6, cardHolderNameGroupTopAlignment: 0.8)
-    let cardAttributes = NICardAttributes(shouldHide: false, backgroundImage: image, textPositioning: textPosition) 
+// toggle cardPresenter.isMasked (the way how information displayed) 
+// - by `displayAttributes.cardAttributes.shouldHide`
+let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: displayAttributes, language: nil)
+// fetch data
+cardPresenter.showCardDetails { errorResponse in
+// check if errorResponse is not nil and handle error
+}
+// Composition of your layout by UI elements
+let customView = UIStackView()
+customView.axis = .vertical
+customView.addArrangedSubview(cardPresenter.cardNumber.title)
+customView.addArrangedSubview(cardPresenter.cardNumber.value)
+customView.addArrangedSubview(cardPresenter.cardCvv.title)
+customView.addArrangedSubview(cardPresenter.cardCvv.value)
+customView.addArrangedSubview(cardPresenter.cardExpiry.title)
+customView.addArrangedSubview(cardPresenter.cardExpiry.value)
+customView.addArrangedSubview(cardPresenter.cardHolder.title)
+customView.addArrangedSubview(cardPresenter.cardHolder.value)
 ```
+
+Presenter allows copy values to clipbloard with given template
+```swift
+@objc func cardCopyAction() {
+        let template = """
+        cardNumber: %@
+        cvv: %@
+        expiry: %@
+        """
+        cardPresenter.copyToClipboard([.cardNumber, .cvv, .expiry], template: template)
+        showToast(message: "Copied")
+    }
+```
+Presenter can mask/unmask given set of elements, if set is empty - presenter will unmask all fields
+```swift
+cardPresenter.toggle(isMasked: Set(UIElement.CardDetails.Value.allCases))
+```
+
+##### Constructing Card Details view.
+A view of NICardView type can be added into storyboard or created programmatically
+```swift
+let cardView = NICardView()
+```
+then start the flow as below:
+```swift
+cardView.configure(
+    language: nil,
+    displayAttributes: displayAttributes, // type NIDisplayAttributes - see the explanation above
+    maskableValues: Set(UIElement.CardDetails.Value.allCases), // set of elements that will be toggled by "show" button
+    service: sdk // CardDetailsService protocol, use sdk instance
+    ) { errorResponse in
+// check if errorResponse is not nil and handle error
+}
+// customize background image and text position
+cardView.setBackgroundImage(image: backgroundImage)
+cardView.updatePositioning(textPositioning)
+```
+
+##### Display View Pin View
+
+A view of NIViewPinView type can be added into storyboard, then set the input and start the flow as below:
+```swift
+viewPinView.configure(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .black) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+or the NIViewPinView can be created programmatically and initialized as below:
+```swift
+let viewPinView = NIViewPinView(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .red) { successResponse, errorResponse in
+// handle here error and success
+}
+```
+Parameters: 
+- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
+- timer - type Double - offers possibility to set the display time of the PIN, expressed in seconds. Using value "0" for this parameter, the PIN will be displayed indefinitely. After the countdown, the PIN will be masked.
+This is a required parameter.
+- color - type UIColor - offers possibility to set the color of the elements contained in the view. This is an optional parameter.
 
 #### Form Factory Interface
 ##### Display Card Details in a new screen (UIViewController).
 The card info displayed are: Card Number, Expiry Date, CVV and Cardholder Name.
 
 ```swift
-func displayCardDetailsForm(viewController: UIViewController, completion: @escaping (NICardManagementSDK.NISuccessResponse?, NICardManagementSDK.NIErrorResponse?) -> Void)
-```
-Swift: 
-```swift
-    sdk.displayCardDetailsForm(viewController: navigationViewController) { successResponse, errorResponse in
+    sdk.displayCardDetailsForm(
+        viewController: navigationViewController, 
+        cardViewBackground: UIImage(resource: .background), 
+        cardViewTextPositioning: nil
+        ) { successResponse, errorResponse in
         // handle error and success
     }
 ```
@@ -230,74 +269,6 @@ sdk.verifyPinForm(type: pinType, viewController: navigationViewController, displ
 	// handle here error and success
 }
 ```
-
-#### Display as a view
-The customer application can integrate Card Details and View Pin as a view into a UIViewController
-
-##### Constructing Custom layout Card Details view from given UI elements.
-SDK allows to build any layout for card details by getting UI elements with card details data, this will help to keep card details data protected and not pass it in a war data
-```swift
-// toggle cardPresenter.isMasked (the way how information displayed) 
-// - by `displayAttributes.cardAttributes.shouldHide`
-let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: displayAttributes)
-// fetch data
-cardPresenter.showCardDetails { errorResponse in
-// check if errorResponse is not nil and handle error
-}
-// Composition of your layout by UI elements
-let customView = UIStackView()
-customView.axis = .vertical
-customView.addArrangedSubview(cardPresenter.cardNumber.title)
-customView.addArrangedSubview(cardPresenter.cardNumber.value)
-customView.addArrangedSubview(cardPresenter.cardCvv.title)
-customView.addArrangedSubview(cardPresenter.cardCvv.value)
-customView.addArrangedSubview(cardPresenter.cardExpiry.title)
-customView.addArrangedSubview(cardPresenter.cardExpiry.value)
-customView.addArrangedSubview(cardPresenter.cardHolder.title)
-customView.addArrangedSubview(cardPresenter.cardHolder.value)
-```
-
-Each element of presenter allows copy value to clipbloard 
-```
-@objc func cardNrCopyAction() {
-        presenter.cardNumber.copyToClipboard()
-        showToast(message: "toast_message".localized)
-    }
-```
-
-##### Constructing Card Details view.
-A view of NICardView type can be added into storyboard or created programmatically
-```swift
-let cardView = NICardView()
-```
-then start the flow as below:
-```swift
-cardView.configure(displayAttributes: displayAttributes, service: sdk) { errorResponse in
-// check if errorResponse is not nil and handle error
-}
-```
-Parameters: 
-- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
-
-##### Display View Pin View
-
-A view of NIViewPinView type can be added into storyboard, then set the input and start the flow as below:
-```swift
-viewPinView.configure(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .black) { successResponse, errorResponse in
-// handle here error and success
-}
-```
-or the NIViewPinView can be created programmatically and initialized as below:
-```swift
-let viewPinView = NIViewPinView(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .red) { successResponse, errorResponse in
-// handle here error and success
-}
-```
-Parameters: 
-- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
-- timer - type Double - offers possibility to set the display time of the PIN, expressed in seconds. Using value "0" for this parameter, the PIN will be displayed indefinitely. After the countdown, the PIN will be masked.
-This is a required parameter.
-- color - type UIColor - offers possibility to set the color of the elements contained in the view. This is an optional parameter.
 
 #### Programatic Interface
 The customer application will be responsible to handle the UI part.
@@ -358,4 +329,4 @@ sdk.getPin { pin, errorResponse in
 ```
 
 # Sample application
-Check example of usage in [Sample application](https://github.com/network-international/card-management-sdk-ios-sample-app)
+Check sample application in "Example" directory with SDK usage

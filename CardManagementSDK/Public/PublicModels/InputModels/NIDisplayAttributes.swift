@@ -14,9 +14,6 @@ public class NIDisplayAttributes {
     /// is always required, default is `.light`
     public var theme: NITheme
     
-    /// if language is not set, the sdk will use the device language (english or arabic), other languages will default to english
-    public var language: NILanguage?
-    
     /// if set, these fonts will be used in the UI forms; if not set will use default fonts
     public var fonts: [UIElementFont]
     
@@ -25,12 +22,10 @@ public class NIDisplayAttributes {
     
     public init(
         theme: NITheme = .light,
-        language: NILanguage? = nil,
         fonts: [UIElementFont] = [],
         cardAttributes: NICardAttributes = .zero
     ) {
         self.theme = theme
-        self.language = language
         self.fonts = fonts
         self.cardAttributes = cardAttributes
     }

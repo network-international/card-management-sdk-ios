@@ -168,7 +168,7 @@ public final class NICardView: UIView {
         cardNumberGroupTopConstraint?.isActive = true
         dateCvvGroupTopConstraint = dateCvvGroup.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.dateCvvGroupTop)
         dateCvvGroupTopConstraint?.isActive = true
-        holderNameTopConstraint = cardNameWithCopyGr.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.cardNumberGroupTop)
+        holderNameTopConstraint = cardNameWithCopyGr.topAnchor.constraint(equalTo: topAnchor, constant: Constants.InitialConstraints.holderNameTop)
         holderNameTopConstraint?.isActive = true
         
         hideUI(true)
@@ -178,17 +178,23 @@ public final class NICardView: UIView {
     /// - Parameters:
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
-    public func configure(displayAttributes: NIDisplayAttributes = .zero, elementsColor: UIColor = .niAlwaysWhite, maskableValues: Set<UIElement.CardDetails.Value> = Set(UIElement.CardDetails.Value.allCases), service: CardDetailsService, completion: @escaping (NIErrorResponse?) -> Void) {
+    public func configure(
+        language: NILanguage?,
+        displayAttributes: NIDisplayAttributes = .zero,
+        elementsColor: UIColor = .niAlwaysWhite,
+        maskableValues: Set<UIElement.CardDetails.Value> = Set(UIElement.CardDetails.Value.allCases),
+        service: CardDetailsService,
+        completion: @escaping (NIErrorResponse?) -> Void
+    ) {
         self.maskableValues = maskableValues
-        hideUI(true)
-        activityIndicator.startAnimating()
+        
         // update colors of images
         [eyeButton, cardNrCopyButton, nameCopyButton].forEach { button in
             button.tintColor = elementsColor
             button.imageView?.tintColor = elementsColor
         }
         
-        // if labels color not provided - use same as elementsColor
+        // if labels color was not provided - use same as elementsColor
         var missingColors = [UIElementColor]()
         UIElement.CardDetails.Label.allCases.forEach { label in
             if displayAttributes.cardAttributes.colors.color(for: label) == nil {
@@ -202,35 +208,38 @@ public final class NICardView: UIView {
         }
         displayAttributes.cardAttributes.colors = displayAttributes.cardAttributes.colors + missingColors
         
-        /// set background image
-        backgroundCardImage.image = displayAttributes.cardAttributes.backgroundImage
+        presenter.setup(language: language, displayAttributes: displayAttributes, service: service)
         
-        presenter.setup(displayAttributes: displayAttributes, service: service)
-        
-        
-        if #available(iOS 13.0, *) {
-            backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
-        } else {
-            backgroundColor = self.presenter.isThemeLight ? .white : UIColor.black
-        }
-        
+        backgroundColor = UIColor.backgroundColor
+        overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
         eyeButton.isSelected = presenter.maskedElements.isEmpty
         
+        hideUI(true)
+        activityIndicator.startAnimating()
         presenter.showCardDetails { [weak self] errorResponse in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                self?.updatePositioning(displayAttributes.cardAttributes.textPositioning)
                 self?.hideUI(false)
                 completion(errorResponse)
             }
         }
     }
     
-    public func setBackgroundImage(image: UIImage) {
+    public func setBackgroundImage(image: UIImage?) {
         backgroundCardImage.image = image
     }
     
+    public func updatePositioning(_ textPositioning: NICardDetailsTextPositioning?) {
+        guard let constraints = textPositioning else { return }
+        if bounds == .zero {
+            setNeedsLayout()
+            layoutIfNeeded()
+        }
+        self.leftAlignmentConstraint?.constant = CGFloat(constraints.leftAlignment * bounds.width)
+        self.cardNumberGroupTopConstraint?.constant = CGFloat(constraints.cardNumberGroupTopAlignment * bounds.height)
+        self.dateCvvGroupTopConstraint?.constant = CGFloat(constraints.dateCvvGroupTopAlignment * bounds.height)
+        self.holderNameTopConstraint?.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * bounds.height)
+    }
 }
 
 // MARK: - Private
@@ -241,18 +250,10 @@ private extension NICardView {
         static let dateCvvHSpace: CGFloat = 24
         enum InitialConstraints {
             static let leftAlignment: CGFloat = 16
-            static let cardNumberGroupTop: CGFloat = 64
-            static let dateCvvGroupTop: CGFloat = 105
-            static let holderNameTop: CGFloat = 143
+            static let cardNumberGroupTop: CGFloat = 16
+            static let dateCvvGroupTop: CGFloat = 57
+            static let holderNameTop: CGFloat = 95
         }
-    }
-    
-    func updatePositioning(_ textPositioning: NICardDetailsTextPositioning?) {
-        guard let constraints = textPositioning else { return }
-        self.leftAlignmentConstraint?.constant = CGFloat(constraints.leftAlignment * self.bounds.height)
-        self.cardNumberGroupTopConstraint?.constant = CGFloat(constraints.cardNumberGroupTopAlignment * self.bounds.height)
-        self.dateCvvGroupTopConstraint?.constant = CGFloat(constraints.dateCvvGroupTopAlignment * self.bounds.height)
-        self.holderNameTopConstraint?.constant = CGFloat(constraints.cardHolderNameGroupTopAlignment * self.bounds.height)
     }
     
     func hideUI(_ shouldHide: Bool) {
@@ -264,13 +265,13 @@ private extension NICardView {
     
     // MARK: - Actions
     @objc func cardNrCopyAction() {
-        presenter.cardNumber.copyToClipboard()
-        showToast(message: NIResource.L10n.toastMessage.localized)
+        presenter.copyToClipboard([.cardNumber])
+        showToast(message: NIResource.L10n.toastMessage.localized(with: presenter.language))
     }
     
     @objc func nameCopyAction() {
-        presenter.cardHolder.copyToClipboard()
-        showToast(message: NIResource.L10n.toastMessage.localized)
+        presenter.copyToClipboard([.cardHolder])
+        showToast(message: NIResource.L10n.toastMessage.localized(with: presenter.language))
     }
     
     @objc func eyeButtonAction(_ sender: EyeButton) {

@@ -151,13 +151,11 @@ private extension CardViewController {
                 // sdk.getCardDetails(completion: cardViewCallback)
                 
                 // show in-place
-                if let cardView = self.cardViewHolder.subviews.last as? NICardView {
-                    cardView.configure(displayAttributes: self.viewModel.displayAttributes, maskableValues: Set(UIElement.CardDetails.Value.allCases), service: sdk, completion: cardViewCompletion)
-                    // this can be done with `cardAttributes`
-                    // cardView.setBackgroundImage(image: viewModel.settingsProvider.cardBackgroundImage)
+                let cardView: NICardView
+                if let current = self.cardViewHolder.subviews.last as? NICardView {
+                    cardView = current
                 } else {
-                    // card
-                    let cardView = NICardView()
+                    cardView = NICardView()
                     self.cardViewHolder.addSubview(cardView)
                     cardView.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate([
@@ -166,8 +164,16 @@ private extension CardViewController {
                         cardView.leadingAnchor.constraint(equalTo: self.cardViewHolder.leadingAnchor),
                         cardView.trailingAnchor.constraint(equalTo: self.cardViewHolder.trailingAnchor)
                     ])
-                    cardView.configure(displayAttributes: self.viewModel.displayAttributes, maskableValues: Set(UIElement.CardDetails.Value.allCases), service: sdk, completion: cardViewCompletion)
                 }
+                cardView.configure(
+                    language: self.viewModel.language,
+                    displayAttributes: self.viewModel.displayAttributes,
+                    maskableValues: Set(UIElement.CardDetails.Value.allCases),
+                    service: sdk,
+                    completion: cardViewCompletion
+                )
+                cardView.setBackgroundImage(image: self.viewModel.backgroundImage)
+                cardView.updatePositioning(self.viewModel.textPositioning)
             }
         ))
         
@@ -187,7 +193,7 @@ private extension CardViewController {
                 let dummyVC = UIViewController()
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
-                self.sdk.setPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, completion: self.cardViewCallback)
+                self.sdk.setPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: self.cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
@@ -206,7 +212,7 @@ private extension CardViewController {
                 let dummyVC = UIViewController()
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
-                self.sdk.changePinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, completion: cardViewCallback)
+                self.sdk.changePinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
@@ -226,7 +232,7 @@ private extension CardViewController {
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
 
-                self.sdk.verifyPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, completion: cardViewCallback)
+                self.sdk.verifyPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
@@ -244,7 +250,7 @@ private extension CardViewController {
                 if let pinView = self.pinViewHolder.subviews.last as? NIViewPinView {
                     pinView.configure(displayAttributes: self.viewModel.displayAttributes, service: self.sdk, timer: timer, color: color, completion: cardViewCallback)
                 } else {
-                    let pinView = NIViewPinView(displayAttributes: self.viewModel.displayAttributes, service: self.sdk, timer: timer, color: color, completion: cardViewCallback)
+                    let pinView = NIViewPinView(language: self.viewModel.language, displayAttributes: self.viewModel.displayAttributes, service: self.sdk, timer: timer, color: color, completion: cardViewCallback)
                     self.pinViewHolder.addSubview(pinView)
                     pinView.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate([
@@ -291,10 +297,15 @@ private extension CardViewController {
 }
 
 private extension CardViewModel {
+    var language: NILanguage? { settingsProvider.currentLanguage }
+    var textPositioning: NICardDetailsTextPositioning? {
+        settingsProvider.textPosition.sdkValue
+    }
+    var backgroundImage: UIImage? { settingsProvider.cardBackgroundImage }
+    
     var displayAttributes: NIDisplayAttributes {
         NIDisplayAttributes(
             theme: settingsProvider.theme,
-            language: settingsProvider.currentLanguage, // can be nil
             fonts: settingsProvider.fonts, // can be omitted
             cardAttributes: cardAttributes // can be nil
         )
@@ -302,9 +313,7 @@ private extension CardViewModel {
     
     var cardAttributes: NICardAttributes {
         NICardAttributes(
-            shouldBeMaskedDefault: Set(UIElement.CardDetails.Value.allCases),
-            backgroundImage: settingsProvider.cardBackgroundImage,
-            textPositioning: settingsProvider.textPosition.sdkValue
+            shouldBeMaskedDefault: Set(UIElement.CardDetails.Value.allCases)
         )
     }
 }

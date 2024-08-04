@@ -35,6 +35,7 @@ public final class NIViewPinView: UIView {
     private var counter: Double = 0
     private var timer: Timer?
     private var colorInput: UIColor?
+    private let language: NILanguage?
     
     var viewModel: ViewPinViewModel?
     
@@ -42,10 +43,12 @@ public final class NIViewPinView: UIView {
     /// Initialization of NIViewPinView
     /// To be used when creating the PIN view programatically
     /// - Parameters:
+    ///   - language: language of UI, can be nil
     ///   - displayAttributes: input needed for the PIN visualization
     ///   - service: sdk instance
     ///   - timer: seconds needed for the PIN visualization
-    public init(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public init(language: NILanguage?, displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+        self.language = language
         counter = timer
         colorInput = color
         viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
@@ -63,6 +66,7 @@ public final class NIViewPinView: UIView {
     }
     
     required init?(coder: NSCoder) {
+        language = nil
         super.init(coder: coder)
         fromNib()
     }
@@ -94,7 +98,7 @@ public final class NIViewPinView: UIView {
     
     @objc private func updateCounter() {
         if counter > 0 {
-            countDownDecription.text = NIResource.L10n.pinCountdownDescriptionKey.localized + " " + String(Int(counter)) + " " + NIResource.L10n.pinCountdownUnitKey.localized
+            countDownDecription.text = NIResource.L10n.pinCountdownDescriptionKey.localized(with: language) + " " + String(Int(counter)) + " " + NIResource.L10n.pinCountdownUnitKey.localized(with: language)
             counter -= 1
         } else {
             timer?.invalidate()
@@ -153,8 +157,8 @@ public final class NIViewPinView: UIView {
                 
                 if viewModel.startTimer && self.counter != 0 {
                     self.startTimer()
-                    let countDownDescriptionLocalized: String = NIResource.L10n.pinCountdownDescriptionKey.localized + " "
-                    let countDownUnitLocalized: String = " " + NIResource.L10n.pinCountdownUnitKey.localized
+                    let countDownDescriptionLocalized: String = NIResource.L10n.pinCountdownDescriptionKey.localized(with: self.language) + " "
+                    let countDownUnitLocalized: String = " " + NIResource.L10n.pinCountdownUnitKey.localized(with: self.language)
                     self.countDownDecription.text = countDownDescriptionLocalized + String(Int(self.counter)) + countDownUnitLocalized
                     self.counter -= 1
                 } else {
