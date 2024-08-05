@@ -38,36 +38,43 @@ public final class NICardManagementAPI {
     }
     
     // MARK: - Form Factories Interface
-    public func displayCardDetailsForm(viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func displayCardDetailsForm(
+        viewController: UIViewController,
+        displayAttributes: NIDisplayAttributes = .zero,
+        language: NILanguage? = nil,
+        cardViewBackground: UIImage?,
+        cardViewTextPositioning: NICardDetailsTextPositioning?,
+        completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void
+    ) {
         
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes, language: language, cardViewBackground: cardViewBackground, cardViewTextPositioning: cardViewTextPositioning)
             .coordinate(route: .cardDetails, completion: completion)
     }
     
-    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func setPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, language: NILanguage?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes, language: language)
             .coordinate(route: .setPin(type: type), completion: completion)
     }
     
-    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func verifyPinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, language: NILanguage?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes, language: language)
             .coordinate(route: .verifyPin(type: type), completion: completion)
     }
     
-    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func changePinForm(type: NIPinFormType, viewController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, language: NILanguage?, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
         if viewController is UINavigationController {
             completion(nil, NIErrorResponse(error: NISDKErrors.NAV_ERROR)){}
         }
-        makeCoordinator(with: viewController, displayAttributes: displayAttributes)
+        makeCoordinator(with: viewController, displayAttributes: displayAttributes, language: language)
             .coordinate(route: .changePin(type: type), completion: completion)
     }
     
@@ -75,9 +82,9 @@ public final class NICardManagementAPI {
     /// use it to fill any custom layout by UI elements of this presenter
     /// so the card details data is not passed in raw format
     /// after building presenter, call `presenter.showCardDetails(completion:)`
-    public func buildCardDetailsPresenter(displayAttributes: NIDisplayAttributes = .zero) -> NICardElementsPresenter {
+    public func buildCardDetailsPresenter(displayAttributes: NIDisplayAttributes = .zero, language: NILanguage?) -> NICardElementsPresenter {
         let presenter = NICardElementsPresenter()
-        presenter.setup(displayAttributes: displayAttributes, service: self)
+        presenter.setup(language: language, displayAttributes: displayAttributes, service: self)
         return presenter
     }
     
@@ -146,12 +153,20 @@ public final class NICardManagementAPI {
 
 // MARK: - Private
 private extension NICardManagementAPI {
-    func makeCoordinator(with navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero) -> FormCoordinator {
-        GlobalConfig.shared.language = displayAttributes.language
+    func makeCoordinator(
+        with navigationController: UIViewController,
+        displayAttributes: NIDisplayAttributes = .zero,
+        language: NILanguage?,
+        cardViewBackground: UIImage? = nil,
+        cardViewTextPositioning: NICardDetailsTextPositioning? = nil
+    ) -> FormCoordinator {
         return FormCoordinator(
             navigationController: navigationController,
             displayAttributes: displayAttributes,
-            service: self
+            service: self,
+            language: language,
+            cardViewBackground: cardViewBackground,
+            cardViewTextPositioning: cardViewTextPositioning
         )
     }
 }

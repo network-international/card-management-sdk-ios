@@ -9,14 +9,14 @@ import Foundation
 
 
 protocol NILocalizable {
-    /// forced localized for the Global set language, use app localisation as a fallback
-    var localized: String { get }
+    /// if language is not set, the sdk will use the device language (english or arabic), other languages will default to english
+    func localized(with lanuage: NILanguage?) -> String
 }
 
 extension String: NILocalizable {
 
-    var localized: String {
-        GlobalConfig.shared.language.flatMap { localized(for: $0.name) }
+    func localized(with lanuage: NILanguage?) -> String {
+        lanuage.flatMap { localized(for: $0.name) }
         ?? localized(for: "en")
         ?? deviceLocalized
     }

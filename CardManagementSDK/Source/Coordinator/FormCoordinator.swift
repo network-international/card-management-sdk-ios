@@ -22,34 +22,54 @@ class FormCoordinator: Coordinator {
     var navigationController: UIViewController
     private let service: FormCoordinatorService
     private let displayAttributes: NIDisplayAttributes
+    private let language: NILanguage?
+    private let cardViewBackground: UIImage?
+    private let cardViewTextPositioning: NICardDetailsTextPositioning?
     
-    init(navigationController: UIViewController, displayAttributes: NIDisplayAttributes = .zero, service: FormCoordinatorService) {
+    init(
+        navigationController: UIViewController,
+        displayAttributes: NIDisplayAttributes = .zero,
+        service: FormCoordinatorService,
+        language: NILanguage?,
+        cardViewBackground: UIImage? = nil,
+        cardViewTextPositioning: NICardDetailsTextPositioning? = nil
+    ) {
         self.navigationController = navigationController
         self.displayAttributes = displayAttributes
         self.service = service
+        self.language = language
+        self.cardViewBackground = cardViewBackground
+        self.cardViewTextPositioning = cardViewTextPositioning
     }
     
     func coordinate(route: Route, completion: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?) {
         switch route {
         case .cardDetails:
-            let vc = CardDetailsViewController(displayAttributes: displayAttributes, service: service, callback: completion)
+            let vc = CardDetailsViewController(
+                language: language,
+                displayAttributes: displayAttributes,
+                cardBackground: cardViewBackground,
+                cardPositioning: cardViewTextPositioning,
+                service: service,
+                callback: completion
+            )
             present(vc)
             
         case let .setPin(pinFormType):
             let viewModel = SetPinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
-            let vc = SetPinViewController(viewModel: viewModel)
+            let vc = SetPinViewController(language: language, viewModel: viewModel)
             vc.callback = completion
             push(vc)
             
         case let .verifyPin(pinFormType):
             let viewModel = VerifyPinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
-            let vc = VerifyPinViewController(viewModel: viewModel)
+            let vc = VerifyPinViewController(language: language, viewModel: viewModel)
             vc.callback = completion
             push(vc)
             
         case let .changePin(pinFormType):
             let viewModel = ChangePinViewModel(displayAttributes: displayAttributes, formType: pinFormType, service: service)
-            let vc = ChangePinViewController(viewModel: viewModel)
+            let vc = ChangePinViewController(language: language, viewModel: viewModel)
             vc.callback = completion
             push(vc)
         }

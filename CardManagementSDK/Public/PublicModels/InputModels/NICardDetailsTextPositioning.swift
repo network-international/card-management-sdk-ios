@@ -7,13 +7,13 @@
 
 import Foundation
 
-@objc public class NICardDetailsTextPositioning: NSObject {
+public struct NICardDetailsTextPositioning {
     var leftAlignment: Double
     var cardNumberGroupTopAlignment: Double
     var dateCvvGroupTopAlignment: Double
     var cardHolderNameGroupTopAlignment: Double
     
-    @objc public init(leftAlignment: Double, cardNumberGroupTopAlignment: Double, dateCvvGroupTopAlignment: Double, cardHolderNameGroupTopAlignment: Double) {
+    public init(leftAlignment: Double, cardNumberGroupTopAlignment: Double, dateCvvGroupTopAlignment: Double, cardHolderNameGroupTopAlignment: Double) {
         self.leftAlignment = leftAlignment
         self.cardNumberGroupTopAlignment = cardNumberGroupTopAlignment
         self.dateCvvGroupTopAlignment = dateCvvGroupTopAlignment

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CardView</key>
+	<dict>
+		<key>cardIdentifier</key>
+		<dict>
+			<key>Id</key>
+			<string>52913582188097343008</string>
+			<key>type</key>
+			<string>EXID</string>
+		</dict>
+		<key>connection</key>
+		<dict>
+			<key>baseUrl</key>
+			<string>https://apitest.network.ae</string>
+			<key>bankCode</key>
+			<string>EAND</string>
+		</dict>
+		<key>credentials</key>
+		<dict>
+			<key>tokenUrl</key>
+			<string>https://apitest.network.ae/CardServices/v2/Token</string>
+			<key>clientSecret</key>
+			<string>hnCqJYwuzt</string>
+			<key>clientId</key>
+			<string>6rxqcbjuejesgw95htm4r3vg</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

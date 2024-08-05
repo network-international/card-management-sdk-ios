@@ -50,18 +50,19 @@ public class NICardElementsPresenter {
     
     public private(set) var maskedElements = Set(UIElement.CardDetails.Value.allCases)
     public var isThemeLight: Bool { displayAttributes.theme == .light }
+    
+    public private(set) var language: NILanguage?
 
     private var displayAttributes: NIDisplayAttributes = .zero
     private var service: CardDetailsService?
     private var cardDetails = CardDetails()
     
-    public func setup(displayAttributes: NIDisplayAttributes, service: CardDetailsService) {
+    /// if language is not set, the sdk will use the device language (english or arabic), other languages will default to english
+    public func setup(language: NILanguage?, displayAttributes: NIDisplayAttributes, service: CardDetailsService) {
         self.displayAttributes = displayAttributes
         self.service = service
         maskedElements = displayAttributes.cardAttributes.shouldBeMaskedDefault
-        GlobalConfig.shared.language = displayAttributes.language
-        cardDetails.setNoData()
-        update()
+        self.language = language
     }
     
     public func showCardDetails(completion: @escaping (NIErrorResponse?) -> Void) {
@@ -76,7 +77,7 @@ public class NICardElementsPresenter {
                 self.update()
                 completion(nil)
             } else {
-                self.cardDetails.setNoData()
+                self.maskedElements = Set(UIElement.CardDetails.Value.allCases)
                 self.update()
                 completion(error ?? NIErrorResponse(error: NISDKErrors.NO_DATA_ERROR))
             }
@@ -107,6 +108,23 @@ public class NICardElementsPresenter {
         cardCvv.title.isHidden = isHidden
         cardCvv.value.isHidden = isHidden
     }
+    
+    public func copyToClipboard(_ elements: [UIElement.CardDetails.Value] = [.cardNumber], template: String? = "%@") {
+        guard !elements.isEmpty else { return }
+        let values = elements.compactMap {
+            switch $0 {
+            case .cardHolder: return self.cardHolder.shareProvider()
+            case .cardNumber: return self.cardNumber.shareProvider()
+            case .cvv: return self.cardCvv.shareProvider()
+            case .expiry: return self.cardExpiry.shareProvider()
+            }
+        }
+        if let template = template {
+            UIPasteboard.general.string = String(format: template, arguments: values)
+        } else {
+            UIPasteboard.general.string = values.joined(separator: "/n")
+        }
+    }
 }
 
 extension NICardElementsPresenter {
@@ -114,7 +132,7 @@ extension NICardElementsPresenter {
         public let title: UILabel
         public let value: TextValueContainer
         
-        private let shareProvider: () -> String?
+        fileprivate let shareProvider: () -> String?
         
         private let titleLabel: UIElement.CardDetails.Label
         private let valueLabel: UIElement.CardDetails.Value
@@ -130,9 +148,8 @@ extension NICardElementsPresenter {
             self.title = UIView.makeLabel(element: titleLabel, displayAttributes: displayAttributes, text: nil)
             self.value = UIView.makeWrappedLabel(element: valueLabel, displayAttributes: displayAttributes, text: nil)
             self.shareProvider = shareProvider
-            
-            GlobalConfig.shared.language = displayAttributes.language
         }
+        
         func update(title: String?, value: String?, with displayAttributes: NIDisplayAttributes) {
             self.title.text = title
             self.title.font = displayAttributes.fonts.font(for: titleLabel)
@@ -140,10 +157,6 @@ extension NICardElementsPresenter {
             self.value.wrappedFont = displayAttributes.fonts.font(for: valueLabel)
             self.value.wrappedText = value
             self.value.wrappedColor = displayAttributes.cardAttributes.colors.color(for: valueLabel).fallback
-        }
-        
-        public func copyToClipboard() {
-            UIPasteboard.general.string = shareProvider()
         }
     }
 }
@@ -155,14 +168,6 @@ private extension NICardElementsPresenter {
         var cardholderName: String?
         var cardExpiry: String?
         var cvv2: String?
-        
-        fileprivate mutating func setNoData() {
-            cardNumber = "-"
-            cardholderName = "-"
-            cardExpiry = "-"
-            cvv2 = "-"
-            maskedCardNumber = "-"
-        }
         
         fileprivate var masked: CardDetails {
             var maskedHolder = ""
@@ -212,22 +217,22 @@ private extension NICardElementsPresenter {
         }
         
         cardNumber.update(
-            title: displayAttributes.cardAttributes.labels[.cardNumber, default: NIResource.L10n.cardNumberKey.localized],
+            title: displayAttributes.cardAttributes.labels[.cardNumber, default: NIResource.L10n.cardNumberKey.localized(with: language)],
             value: cardNumberData?.separate(every: 4, with: " "),
             with: displayAttributes
         )
         cardExpiry.update(
-            title: displayAttributes.cardAttributes.labels[.expiry, default: NIResource.L10n.cardExpiryKey.localized],
+            title: displayAttributes.cardAttributes.labels[.expiry, default: NIResource.L10n.cardExpiryKey.localized(with: language)],
             value: cardExpiryData,
             with: displayAttributes
         )
         cardCvv.update(
-            title: displayAttributes.cardAttributes.labels[.cvv, default: NIResource.L10n.cardCvvKey.localized],
+            title: displayAttributes.cardAttributes.labels[.cvv, default: NIResource.L10n.cardCvvKey.localized(with: language)],
             value: cardCvvData,
             with: displayAttributes
         )
         cardHolder.update(
-            title: displayAttributes.cardAttributes.labels[.cardHolder, default: NIResource.L10n.cardNameKey.localized],
+            title: displayAttributes.cardAttributes.labels[.cardHolder, default: NIResource.L10n.cardNameKey.localized(with: language)],
             value: cardHolderData,
             with: displayAttributes
         )
