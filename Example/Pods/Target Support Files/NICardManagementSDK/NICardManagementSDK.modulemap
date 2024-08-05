@@ -1,0 +1,6 @@
+framework module NICardManagementSDK {
+  umbrella header "NICardManagementSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

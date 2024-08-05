@@ -20,6 +20,10 @@ public struct AccessToken: Codable {
         self.created = created
     }
     
+    public init(value: String, type: String? = nil, created: TimeInterval = Date().timeIntervalSince1970) {
+        self.init(value: value, type: type, expiresIn: Constants.expiresInDefault)
+    }
+    
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case type = "token_type"
@@ -30,11 +34,8 @@ public struct AccessToken: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         value = try values.decode(String.self, forKey: .accessToken)
         type = try values.decodeIfPresent(String.self, forKey: .type)
-        if let expiresIn = try? values.decodeIfPresent(TimeInterval.self, forKey: .expiresIn) {
-            self.expiresIn = expiresIn
-        } else {
-            expiresIn = 1800
-        }
+        let expiresIn = try? values.decodeIfPresent(TimeInterval.self, forKey: .expiresIn)
+        self.expiresIn = expiresIn ?? Constants.expiresInDefault
         created = Date().timeIntervalSince1970
     }
     public func encode(to encoder: Encoder) throws {
@@ -50,6 +51,12 @@ public struct AccessToken: Codable {
 extension AccessToken {
     var isExpired: Bool {
         (Date().timeIntervalSince1970 - created) > expiresIn
+    }
+}
+
+private extension AccessToken {
+    enum Constants {
+        static let expiresInDefault: TimeInterval = 1800
     }
 }
 

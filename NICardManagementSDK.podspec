@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "NICardManagementSDK"
-  spec.version      = "1.2.3-alpha.2"
+  spec.version      = "2.0.0"
   spec.summary      = "SDKs to help card issuers to consume our APIs from iOS applications."
   spec.homepage     = "https://github.com/network-international/card-management-sdk-ios"
 
@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   spec.platform     = :ios
-  spec.ios.deployment_target = "12.0"
+  spec.ios.deployment_target = "15.0"
   spec.swift_version = "5.0"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
