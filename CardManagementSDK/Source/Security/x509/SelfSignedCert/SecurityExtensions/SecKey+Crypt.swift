@@ -27,15 +27,27 @@ public extension SecKey {
             let start = i * maxDataLength
             let end = min((i+1) * maxDataLength, bytes.count)
             let block = Array(bytes[start ..< end])
-
-            var cypherText: [UInt8] = Array(repeating: UInt8(0), count: Int(blockSize))
-            var cypherLength: Int = blockSize
-
-            let resultCode = SecKeyEncrypt(self, SecPadding.PKCS1, block, block.count, &cypherText, &cypherLength)
-            guard resultCode == errSecSuccess else {
+            
+            // new
+            var error: Unmanaged<CFError>?
+            //rsaSignatureDigestPKCS1v15SHA256
+            let cfdata = SecKeyCreateEncryptedData(self, .rsaEncryptionPKCS1, Data(block) as CFData, &error)
+            if let cfdata = cfdata {
+                encryptedBytes += [UInt8](cfdata as Data)
+            } else {
+                
+                //throw KeychainError.generateKeyFailed(error: error!.takeRetainedValue() as Error)
+                print("encrypt error \(error!.takeRetainedValue() as Error)")
                 return nil
             }
-            encryptedBytes += cypherText[0 ..< cypherLength]
+
+//            var cypherText: [UInt8] = Array(repeating: UInt8(0), count: Int(blockSize))
+//            var cypherLength: Int = blockSize
+//            let resultCode = SecKeyEncrypt(self, SecPadding.PKCS1, block, block.count, &cypherText, &cypherLength)
+//            guard resultCode == errSecSuccess else {
+//                return nil
+//            }
+//            encryptedBytes += cypherText[0 ..< cypherLength]
         }
         return encryptedBytes
     }
@@ -68,14 +80,18 @@ public extension SecKey {
             let start = i * blockSize
             let end = min((i+1)*blockSize, cypherText.count)
             let block = Array(cypherText[start ..< end])
-
-            var plainTextData: [UInt8] = Array(repeating: UInt8(0), count: Int(blockSize))
-            var plainTextDataLength: Int = blockSize
-            let resultCode = SecKeyDecrypt(self, SecPadding.PKCS1, block, block.count, &plainTextData, &plainTextDataLength)
-            guard resultCode == errSecSuccess else {
+            
+            // new
+            var error: Unmanaged<CFError>?
+            //rsaSignatureDigestPKCS1v15SHA256
+            let cfdata = SecKeyCreateDecryptedData(self, .rsaEncryptionPKCS1, Data(block) as CFData, &error)
+            if let cfdata = cfdata {
+                decryptedBytes += [UInt8](cfdata as Data)
+            } else {
+                //throw KeychainError.generateKeyFailed(error: error!.takeRetainedValue() as Error)
+                print("decrypt error \(error!.takeRetainedValue() as Error)")
                 return nil
             }
-            decryptedBytes += Array(plainTextData[0 ..< plainTextDataLength])
         }
 
         return decryptedBytes
