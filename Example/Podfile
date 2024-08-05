@@ -1,11 +1,11 @@
-platform :ios, '15.0'
+platform :ios, '17.0'
 
 target 'CardManagementSDKSwiftSample' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # PROD
-  #pod 'NICardManagementSDK', '2.0.0-alpha.1'
+  #pod 'NICardManagementSDK', '2.0.0'
   
   # DEV
   pod 'NICardManagementSDK', :path => '../'
