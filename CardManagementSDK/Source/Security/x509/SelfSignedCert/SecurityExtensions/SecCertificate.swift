@@ -99,7 +99,7 @@ public extension SecCertificate {
         guard resultCode == errSecSuccess, let trust = trust else {
             throw KeychainError.certCreationFailed(status: resultCode)
         }
-        guard let result = SecTrustCopyPublicKey(trust) else {
+        guard let result = SecTrustCopyKey(trust) else {
             // this can happen if the public key algorithm is not supported
             throw KeychainError.publicKeyNotAvailable
         }

@@ -20,14 +20,16 @@ extension SecKey {
         _ = sha256.update(buffer: data, byteCount: data.count)
         let digest = sha256.final()
         
-        var signature = [UInt8](repeating: 0, count: 1024)
-        var signatureLength = 1024
-        let status = SecKeyRawSign(self, .PKCS1SHA256, digest, digest.count, &signature, &signatureLength)
-        guard status == errSecSuccess else {
-            return nil
+        // new rsaSignatureDigestPKCS1v15SHA256   rsaSignatureMessagePKCS1v15SHA256
+        var error: Unmanaged<CFError>?
+        if let signature = SecKeyCreateSignature(self, .rsaSignatureDigestPKCS1v15SHA256, Data(digest) as CFData, &error) {
+            let signatureBytes = [UInt8](signature as Data)
+            return signatureBytes
+        } else {
+            print("sign error \(error!.takeRetainedValue() as Error)")
+            // throw KeychainError.generateKeyFailed(error: error!.takeRetainedValue() as Error)
         }
-        let realSignature = signature[0 ..< signatureLength]
-        return Array(realSignature)
+        return nil
     }
     
 }
