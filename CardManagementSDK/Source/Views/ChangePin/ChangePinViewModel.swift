@@ -12,13 +12,52 @@ protocol ChangePinService {
     func changePin(oldPin: String, newPin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
-class ChangePinViewModel {
-    private let displayAttributes: NIDisplayAttributes?
+public class ChangePinViewModel {
+    public struct Config {
+        public let enterCurrentPinText: NSAttributedString
+        public let enterNewPinText: NSAttributedString
+        public let reEnterNewPinText: NSAttributedString
+        public let notMatchPinText: NSAttributedString
+        public let titleText: String
+        public let backgroundColor: UIColor?
+
+        public static let `default` = Config(
+            enterCurrentPinText: NSAttributedString(
+                string: NISDKStrings.change_pin_description_enter_current_pin.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.changePinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            enterNewPinText: NSAttributedString(
+                string: NISDKStrings.change_pin_description_enter_new_pin.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.changePinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            reEnterNewPinText: NSAttributedString(
+                string: NISDKStrings.change_pin_description_re_enter_new_pin.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.changePinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            notMatchPinText: NSAttributedString(
+                string: NISDKStrings.change_pin_description_pin_not_match.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.changePinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            titleText: NISDKStrings.change_pin_title.rawValue,
+            backgroundColor: UIColor.backgroundColor
+        )
+        
+        public init(enterCurrentPinText: NSAttributedString, enterNewPinText: NSAttributedString, reEnterNewPinText: NSAttributedString, notMatchPinText: NSAttributedString, titleText: String, backgroundColor: UIColor?) {
+            self.enterCurrentPinText = enterCurrentPinText
+            self.enterNewPinText = enterNewPinText
+            self.reEnterNewPinText = reEnterNewPinText
+            self.notMatchPinText = notMatchPinText
+            self.titleText = titleText
+            self.backgroundColor = backgroundColor
+        }
+    }
+    
+    let config: Config
     private let formType: NIPinFormType
     private let service: ChangePinService
     
-    init(displayAttributes: NIDisplayAttributes?, formType: NIPinFormType, service: ChangePinService) {
-        self.displayAttributes = displayAttributes
+    init(config: Config, formType: NIPinFormType, service: ChangePinService) {
+        self.config = config
         self.formType = formType
         self.service = service
     }
@@ -43,13 +82,5 @@ extension ChangePinViewModel {
 
     var fixedLength: Bool {
         return formType != .dynamic
-    }
-    
-    func font(for label: UIElement.PinFormLabel) -> UIFont {
-        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
-    }
-    
-    var theme: NITheme { /// default is light
-        return displayAttributes?.theme ?? .light
     }
 }

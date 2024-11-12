@@ -14,10 +14,11 @@ enum WebServices {
         path: String,
         method: WSHTTPMethod,
         headers: Headers,
+        extraHeaders: [String: String]?,
         parameters: [String: Any]?,
         postQuery: [String: Any]?,
         token: String?
-    ) throws -> URLRequest {
+    ) -> URLRequest? {
         
         guard
             let url = baseUrl?.appendingPathComponent(path), // Could not build the URL
@@ -27,7 +28,7 @@ enum WebServices {
                 resolvingAgainstBaseURL: true
             )
         else {
-            throw NSError(domain: "MyDomain", code: 0)
+            return nil
         }
         
         var queryItems = [URLQueryItem]()
@@ -61,7 +62,7 @@ enum WebServices {
         guard
             let requestUrl = urlComponents.url
         else {
-            throw NSError(domain: "MyDomain", code: 0)
+            return nil
         }
         var request = URLRequest(url: requestUrl)
         request.httpBody = httpBody
@@ -75,12 +76,18 @@ enum WebServices {
         let channelId = headers.channelId
         
         request.httpMethod = method.rawValue
-        request.setValue(authorization, forHTTPHeaderField: WSConstants.HeaderKeys.authorization)
-        request.setValue(contentType, forHTTPHeaderField: WSConstants.HeaderKeys.contentType)
-        request.setValue(accept, forHTTPHeaderField: WSConstants.HeaderKeys.accept)
-        request.setValue(uniqueReferenceCode, forHTTPHeaderField: WSConstants.HeaderKeys.uniqueReferenceCode)
-        request.setValue(financialId, forHTTPHeaderField: WSConstants.HeaderKeys.financialId)
-        request.setValue(channelId, forHTTPHeaderField: WSConstants.HeaderKeys.channelId)
+        request.setValue(authorization, forHTTPHeaderField: Headers.Key.authorization.rawValue)
+        request.setValue(contentType, forHTTPHeaderField: Headers.Key.contentType.rawValue)
+        request.setValue(accept, forHTTPHeaderField: Headers.Key.accept.rawValue)
+        request.setValue(uniqueReferenceCode, forHTTPHeaderField: Headers.Key.uniqueReferenceCode.rawValue)
+        request.setValue(financialId, forHTTPHeaderField: Headers.Key.financialId.rawValue)
+        request.setValue(channelId, forHTTPHeaderField: Headers.Key.channelId.rawValue)
+        
+        extraHeaders?
+            .filter { !Headers.Key.allCases.map(\.rawValue).contains($0.key) }
+            .forEach {
+                request.setValue($0.value, forHTTPHeaderField: $0.key)
+            }
         //print("========== uniqueReferenceCode \(uniqueReferenceCode) =============")
         return request
     }
@@ -93,17 +100,13 @@ struct Headers {
     var uniqueReferenceCode: String
     var financialId: String
     var channelId: String
-}
-
-
-private enum WSConstants {
-    enum HeaderKeys {
-        static let authorization = "Authorization"
-        static let contentType = "Content-Type"
-        static let accept = "Accept"
-        static let uniqueReferenceCode = "Unique-Reference-Code"
-        static let financialId = "Financial-Id"
-        static let channelId = "Channel-Id"
-    }
     
+    fileprivate enum Key: String, CaseIterable {
+        case authorization = "Authorization"
+        case contentType = "Content-Type"
+        case accept = "Accept"
+        case uniqueReferenceCode = "Unique-Reference-Code"
+        case financialId = "Financial-Id"
+        case channelId = "Channel-Id"
+    }
 }

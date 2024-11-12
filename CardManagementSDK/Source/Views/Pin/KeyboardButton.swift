@@ -9,33 +9,20 @@ import UIKit
 
 class KeyboardButton: UIButton {
     
-    private var theme: NITheme?
+    private var isColored = false
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        if #available(iOS 13.0, *) { } else {
-            updateThemeIfNeeded()
-        }
-        
-    }
-    
-    // MARK: -
-    func setTheme(_ theme: NITheme) {
-        self.theme = theme
-    }
-    
-    // MARK: - Private
-    private func updateThemeIfNeeded() { /// called only if device has iOS 12
-        guard let theme = theme else { return }
-        switch theme {
-        case .light:
-            self.setTitleColor(UIColor.darkerGrayLight, for: .normal)
-            self.tintColor = UIColor.darkerGrayLight
-        case .dark:
-            self.setTitleColor(UIColor.darkerGrayDark, for: .normal)
-            self.tintColor = UIColor.darkerGrayDark
+        if !isColored {
+            isColored = true
+            self.setTitleColor(color, for: .normal)
+            self.tintColor = color
         }
     }
     
+    private var color: UIColor {
+        UIColor.init { (trait) -> UIColor in
+            return trait.userInterfaceStyle == .dark ? (UIColor.darkerGrayDark ?? .label) : (UIColor.darkerGrayLight ?? .label)
+        }
+    }    
 }

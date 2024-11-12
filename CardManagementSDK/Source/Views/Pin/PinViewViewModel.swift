@@ -7,9 +7,8 @@
 
 import Foundation
 
-struct PinViewViewModel {
-    var theme: NITheme
-    var dotsCount: Int
-    var descriptionText: String
-    var fixedLength: Bool
+public struct PinViewViewModel {
+    public var dotsCount: Int
+    public var descriptionText: NSAttributedString
+    public var fixedLength: Bool
 }

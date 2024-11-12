@@ -12,13 +12,35 @@ protocol VerifyPinService {
     func verifyPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
-class VerifyPinViewModel {
-    private let displayAttributes: NIDisplayAttributes?
+public class VerifyPinViewModel {
+    
+    public struct Config {
+        public let descriptionAttributedText: NSAttributedString
+        public let titleText: String
+        public let backgroundColor: UIColor?
+        
+        public init(descriptionAttributedText: NSAttributedString, titleText: String, backgroundColor: UIColor?) {
+            self.descriptionAttributedText = descriptionAttributedText
+            self.titleText = titleText
+            self.backgroundColor = backgroundColor
+        }
+        
+        public static let `default` = Config(
+            descriptionAttributedText: NSAttributedString(
+                string: NISDKStrings.verify_pin_description.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.verifyPinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            titleText: NISDKStrings.verify_pin_title.rawValue,
+            backgroundColor: UIColor.backgroundColor
+        )
+    }
+    
+    let config: Config
     private let formType: NIPinFormType
     private let service: VerifyPinService
     
-    init(displayAttributes: NIDisplayAttributes?, formType: NIPinFormType, service: VerifyPinService) {
-        self.displayAttributes = displayAttributes
+    init(config: Config, formType: NIPinFormType, service: VerifyPinService) {
+        self.config = config
         self.formType = formType
         self.service = service
     }
@@ -43,13 +65,5 @@ extension VerifyPinViewModel {
     
     var fixedLength: Bool {
         return formType != .dynamic
-    }
-    
-    func font(for label: UIElement.PinFormLabel) -> UIFont {
-        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
-    }
-    
-    var theme: NITheme { /// default is light
-        return displayAttributes?.theme ?? .light
     }
 }

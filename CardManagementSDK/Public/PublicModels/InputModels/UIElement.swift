@@ -7,46 +7,47 @@
 
 import UIKit
 
-public protocol ColorAssignable: Equatable {}
-public protocol FontAssignable: Equatable {
-    var defaultFont: UIFont { get }
-}
-
-public struct UIElementFont {
-    public let element: any FontAssignable
-    public let font: UIFont
-    public init(element: any FontAssignable, font: UIFont) {
-        self.element = element
-        self.font = font
-    }
-}
-public struct UIElementColor {
-    public let element: any ColorAssignable
-    public let color: UIColor
-    public init(element: any ColorAssignable, color: UIColor) {
-        self.element = element
-        self.color = color
-    }
-}
-
 /// Enum of all labels in the UI forms
 public enum UIElement {
-    public enum CardDetails {
-        public enum Label: CaseIterable, FontAssignable, ColorAssignable {
-            case cardNumber
-            case expiry
-            case cvv
-            case cardHolder
+    public enum CardDetails: CaseIterable {
+        case cardNumber
+        case expiry
+        case cvv
+        case cardHolder
+        
+        public var defaultLabelFont: UIFont {
+            switch self {
+            case .cardNumber: return UIFont.make(name: "NotoSansOriya", size: 10)
+            case .expiry: return UIFont.make(name: "NotoSansOriya", size: 10)
+            case .cvv: return UIFont.make(name: "NotoSansOriya", size: 10)
+            case .cardHolder: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
+            }
         }
-        public enum Value: CaseIterable, FontAssignable, ColorAssignable {
-            case cardNumber
-            case expiry
-            case cvv
-            case cardHolder
+        public var defaultValueFont: UIFont {
+            switch self {
+            case .cardNumber: return UIFont.make(name: "NotoSansOriya-Bold", size: 16)
+            case .expiry: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
+            case .cvv: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
+            case .cardHolder: return UIFont.make(name: "NotoSansOriya", size: 10)
+            }
+        }
+        public var defaultLabelText: String {
+            switch self {
+            case .cardNumber: return "CARD NUMBER"
+            case .expiry: return "VALID THRU"
+            case .cvv: return "CVV"
+            case .cardHolder: return "NAME"
+            }
+        }
+        public func defaultAttributedText(color: UIColor) -> NSAttributedString {
+            NSAttributedString(
+                string: defaultLabelText,
+                attributes: [.font : defaultLabelFont, .foregroundColor: color]
+            )
         }
     }
     
-    public enum PinFormLabel: CaseIterable, FontAssignable {
+    public enum PinFormLabel: CaseIterable {
         /// Set PIN
         case setPinDescription
         
@@ -59,84 +60,54 @@ public enum UIElement {
         /// View PIN
         case viewPinCountDownDescription
         case pinDigit
+        
+        public var defaultFont: UIFont {
+            switch self {
+            case .setPinDescription, .verifyPinDescription, .changePinDescription:
+                return UIFont.make(name: "NotoSansOriya", size: 18)
+                
+            case .pinDigit: return UIFont.make(name: "NotoSansOriya-Bold", size: 20)
+            case .viewPinCountDownDescription: return UIFont.make(name: "NotoSansOriya", size: 12)
+            }
+        }
+//        internal var defaultLabelText: String {
+//            switch self {
+//            case .setPinDescription:
+//            case .verifyPinDescription: return "Please enter your card PIN for verification"
+//            case .changePinDescription:
+//                return UIFont.make(name: "NotoSansOriya", size: 18)
+//                
+//            case .pinDigit: return UIFont.make(name: "NotoSansOriya-Bold", size: 20)
+//            case .viewPinCountDownDescription: return UIFont.make(name: "NotoSansOriya", size: 12)
+//            }
+//        }
     }
 }
 
-public extension UIElement.CardDetails.Label {
-    var defaultFont: UIFont {
-        switch self {
-        case .cardNumber: return UIFont.make(name: "NotoSansOriya", size: 10)
-        case .expiry: return UIFont.make(name: "NotoSansOriya", size: 10)
-        case .cvv: return UIFont.make(name: "NotoSansOriya", size: 10)
-        case .cardHolder: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
-        }
-    }
-}
-public extension UIElement.CardDetails.Value {
-    var defaultFont: UIFont {
-        switch self {
-        case .cardNumber: return UIFont.make(name: "NotoSansOriya-Bold", size: 16)
-        case .expiry: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
-        case .cvv: return UIFont.make(name: "NotoSansOriya-Bold", size: 14)
-        case .cardHolder: return UIFont.make(name: "NotoSansOriya", size: 10)
-        }
-    }
-}
-public extension UIElement.PinFormLabel {
-    var defaultFont: UIFont {
-        switch self {
-        case .setPinDescription, .verifyPinDescription, .changePinDescription:
-            return UIFont.make(name: "NotoSansOriya", size: 18)
-            
-        case .pinDigit: return UIFont.make(name: "NotoSansOriya-Bold", size: 20)
-        case .viewPinCountDownDescription: return UIFont.make(name: "NotoSansOriya", size: 12)
-        }
-    }
-}
+public enum NISDKStrings: String {
+    case card_details_title = "Card details";
+    case verify_pin_title = "Verify PIN";
+    case change_pin_title = "Change PIN";
+    case set_pin_title = "Set PIN";
+    
+    case verify_pin_description = "Please enter your card PIN for verification"
+    
+    case set_pin_description_enter_pin = "Please enter the desired PIN for your card";
+    case set_pin_description_re_enter_pin = "Please re-enter the desired card PIN";
+    case set_pin_description_pin_not_match = "PIN does not match.\nPlease re-enter the card PIN";
 
-internal extension Collection where Element == UIElementFont {
-    func font<T: FontAssignable>(for label: T) -> UIFont {
-        self.first { wrapper in
-            if let uiLabel = wrapper.element as? T {
-                return uiLabel == label
-            }
-            return false
-        }?.font ?? label.defaultFont
-    }
-}
-internal extension Collection where Element == UIElementColor {
-    func color<T: ColorAssignable>(for label: T) -> UIColor? {
-        self.first { wrapper in
-            if let uiLabel = wrapper.element as? T {
-                return uiLabel == label
-            }
-            return false
-        }?.color
-    }
-}
-internal extension Optional where Wrapped == any Collection<UIElementColor> {
-    func color<T: ColorAssignable>(for label: T) -> UIColor? {
-        self?.color(for: label)
-    }
-}
-internal extension Optional where Wrapped == any Collection<UIElementFont> {
-    func font<T: FontAssignable>(for label: T) -> UIFont {
-        self?.font(for: label) ?? label.defaultFont
-    }
+    case change_pin_description_enter_current_pin = "Please enter your current card PIN";
+    case change_pin_description_enter_new_pin = "Please enter the new card PIN";
+    case change_pin_description_re_enter_new_pin = "Please re-enter the new card PIN";
+    case change_pin_description_pin_not_match = "PIN does not match.\nPlease re-enter the new card PIN";
+
+    case view_pin_countdown_template = "PIN will be hidden in %@ seconds"
+
+    case toast_message = "Copied to clipboard";
 }
 
 private extension UIFont {
     static func make(name: String, size: CGFloat) -> UIFont {
-        guard #available(iOS 13.0, *) else {
-            switch name {
-            case "NotoSansOriya":
-                return UIFont(name: "Helvetica", size: size)!
-            case "NotoSansOriya-Bold":
-                return UIFont(name: "OCRA", size: size)!
-            default:
-                return UIFont(name: name, size: size) ?? UIFont.systemFont(ofSize: size)
-            }
-        }
         return UIFont(name: name, size: size) ?? UIFont.systemFont(ofSize: size)
     }
 }
