@@ -14,7 +14,6 @@ class CardViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
     private let stackView = UIStackView()
     private let logo: LogoView
-    private let pinViewHolder = UIView()
     private let cardViewHolder = UIView()
     
     private var sdk: NICardManagementAPI
@@ -36,7 +35,7 @@ class CardViewController: UIViewController {
     
     init(viewModel: CardViewModel) {
         self.viewModel = viewModel
-        logo = LogoView(currentLanguage: viewModel.settingsProvider.currentLanguage)
+        logo = LogoView(isArabic: false)
         sdk = viewModel.settingsProvider.settings.buildSdk()
         super.init(nibName: nil, bundle: nil)
     }
@@ -55,10 +54,6 @@ class CardViewController: UIViewController {
                 // refresh UI
                 self?.fillContent()
             }
-            .store(in: &bag)
-        viewModel.settingsProvider.$currentLanguage
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.logo.update(with: $0) }
             .store(in: &bag)
     }
 }
@@ -110,23 +105,6 @@ private extension CardViewController {
         ])
         cardViewHolder.heightAnchor.constraint(equalToConstant: 182).isActive = true
         cardViewHolder.translatesAutoresizingMaskIntoConstraints = false
-        
-        let pinBgImage = UIImageView(image: UIImage(resource: .background))
-        pinBgImage.translatesAutoresizingMaskIntoConstraints = false
-        pinBgImage.alpha = 0.5
-        pinViewHolder.addSubview(pinBgImage)
-        NSLayoutConstraint.activate([
-            pinBgImage.leadingAnchor.constraint(equalTo: pinViewHolder.leadingAnchor),
-            pinBgImage.trailingAnchor.constraint(equalTo: pinViewHolder.trailingAnchor),
-            pinBgImage.topAnchor.constraint(equalTo: pinViewHolder.topAnchor),
-            pinBgImage.bottomAnchor.constraint(equalTo: pinViewHolder.bottomAnchor)
-        ])
-        pinViewHolder.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        pinViewHolder.translatesAutoresizingMaskIntoConstraints = false
-        pinViewHolder.layer.masksToBounds = true
-        pinViewHolder.layer.cornerRadius = 15
-        pinViewHolder.layer.borderWidth = 1
-        pinViewHolder.layer.borderColor = UIColor.white.cgColor
     }
     
     func fillContent() {
@@ -166,10 +144,11 @@ private extension CardViewController {
                     ])
                 }
                 cardView.configure(
-                    language: self.viewModel.language,
-                    displayAttributes: self.viewModel.displayAttributes,
-                    maskableValues: Set(UIElement.CardDetails.Value.allCases),
-                    service: sdk,
+                    cardAttributes: self.viewModel.cardAttributes,
+                    buttonsColor: .niAlwaysWhite,
+                    maskableValues: Set(UIElement.CardDetails.allCases),
+                    service: self.sdk,
+                    toastMessage: NISDKStrings.toast_message.rawValue,
                     completion: cardViewCompletion
                 )
                 cardView.setBackgroundImage(image: self.viewModel.backgroundImage)
@@ -193,7 +172,7 @@ private extension CardViewController {
                 let dummyVC = UIViewController()
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
-                self.sdk.setPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: self.cardViewCallback)
+                self.sdk.setPinForm(type: pinType, config: self.viewModel.settingsProvider.pinSetConfig, viewController: dummyVC, completion: self.cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
@@ -212,7 +191,7 @@ private extension CardViewController {
                 let dummyVC = UIViewController()
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
-                self.sdk.changePinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: cardViewCallback)
+                self.sdk.changePinForm(type: pinType, config: self.viewModel.settingsProvider.pinChangeConfig, viewController: dummyVC, completion: cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
@@ -232,39 +211,21 @@ private extension CardViewController {
                 let navVC = UINavigationController(rootViewController: dummyVC)
                 navVC.isNavigationBarHidden = true
 
-                self.sdk.verifyPinForm(type: pinType, viewController: dummyVC, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, completion: cardViewCallback)
+                let config = VerifyPinViewModel.Config(
+                    descriptionAttributedText: NSAttributedString(
+                        string: NISDKStrings.verify_pin_description.rawValue,
+                        attributes: [.font : UIElement.PinFormLabel.verifyPinDescription.defaultFont, .foregroundColor: UIColor.label]
+                    )
+                    ,
+                    titleText: NISDKStrings.verify_pin_title.rawValue,
+                    backgroundColor: .clear
+                )
+                self.sdk.verifyPinForm(type: pinType, config: config, viewController: dummyVC, completion: cardViewCallback)
                 self.present(navVC, animated: true)
             }
         ))
         
-        stackView.addArrangedSubview(makeButton(
-            title: "View PIN",
-            action: UIAction { [weak self] _ in
-                guard let self = self else { return }
-                // Uncomment below section for programatic flow
-                // NICardManagementAPI.getPin(input: self.cardViewInput, completion: cardViewCallback)
-                // return
-                let timer: Double = 5
-                let color: UIColor = .gray
-                // show in-place
-                if let pinView = self.pinViewHolder.subviews.last as? NIViewPinView {
-                    pinView.configure(displayAttributes: self.viewModel.displayAttributes, service: self.sdk, timer: timer, color: color, completion: cardViewCallback)
-                } else {
-                    let pinView = NIViewPinView(language: self.viewModel.language, displayAttributes: self.viewModel.displayAttributes, service: self.sdk, timer: timer, color: color, completion: cardViewCallback)
-                    self.pinViewHolder.addSubview(pinView)
-                    pinView.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
-                        pinView.topAnchor.constraint(equalTo: self.pinViewHolder.topAnchor),
-                        pinView.bottomAnchor.constraint(equalTo: self.pinViewHolder.bottomAnchor),
-                        pinView.leadingAnchor.constraint(equalTo: self.pinViewHolder.leadingAnchor),
-                        pinView.trailingAnchor.constraint(equalTo: self.pinViewHolder.trailingAnchor)
-                    ])
-                    
-                }
-            }
-        ))
-        
-        stackView.addArrangedSubview(pinViewHolder)
+        fillPinViewContent()
     }
     
     func makeButton(title: String?, action: UIAction?) -> UIView {
@@ -294,26 +255,65 @@ private extension CardViewController {
         label.text = text
         return view
     }
+    
+    func fillPinViewContent() {
+        // View PIN functionality has not been approved by PCIDSS
+        /*
+        let pinViewHolder = UIView()
+        let pinBgImage = UIImageView(image: UIImage(resource: .background))
+        pinBgImage.translatesAutoresizingMaskIntoConstraints = false
+        pinBgImage.alpha = 0.5
+        pinViewHolder.addSubview(pinBgImage)
+        NSLayoutConstraint.activate([
+            pinBgImage.leadingAnchor.constraint(equalTo: pinViewHolder.leadingAnchor),
+            pinBgImage.trailingAnchor.constraint(equalTo: pinViewHolder.trailingAnchor),
+            pinBgImage.topAnchor.constraint(equalTo: pinViewHolder.topAnchor),
+            pinBgImage.bottomAnchor.constraint(equalTo: pinViewHolder.bottomAnchor)
+        ])
+        pinViewHolder.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        pinViewHolder.translatesAutoresizingMaskIntoConstraints = false
+        pinViewHolder.layer.masksToBounds = true
+        pinViewHolder.layer.cornerRadius = 15
+        pinViewHolder.layer.borderWidth = 1
+        pinViewHolder.layer.borderColor = UIColor.white.cgColor
+        stackView.addArrangedSubview(makeButton(
+            title: "View PIN",
+            action: UIAction { [weak self] _ in
+                guard let self = self else { return }
+                // Uncomment below section for programatic flow
+                // NICardManagementAPI.getPin(input: self.cardViewInput, completion: cardViewCallback)
+                // return
+                
+                let timer: Double = 5
+                let color: UIColor = .gray
+                let pinViewConfig = ViewPinViewModel.Config(countDownTemplate: NISDKStrings.view_pin_countdown_template.rawValue, digitFont: UIElement.PinFormLabel.pinDigit.defaultFont, colorInput: color, timer: timer)
+                let pinViewModel = ViewPinViewModel(config: pinViewConfig, service: self.sdk)
+                let pinView = NIViewPinView(viewModel: pinViewModel)
+                
+                // show in-place
+                //pinView.configure(viewModel: pinViewModel)
+                pinViewHolder.addSubview(pinView)
+                pinView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    pinView.topAnchor.constraint(equalTo: pinViewHolder.topAnchor),
+                    pinView.bottomAnchor.constraint(equalTo: pinViewHolder.bottomAnchor),
+                    pinView.leadingAnchor.constraint(equalTo: pinViewHolder.leadingAnchor),
+                    pinView.trailingAnchor.constraint(equalTo: pinViewHolder.trailingAnchor)
+                ])
+            }
+        ))
+        stackView.addArrangedSubview(pinViewHolder)
+         */
+    }
 }
 
 private extension CardViewModel {
-    var language: NILanguage? { settingsProvider.currentLanguage }
     var textPositioning: NICardDetailsTextPositioning? {
         settingsProvider.textPosition.sdkValue
     }
     var backgroundImage: UIImage? { settingsProvider.cardBackgroundImage }
     
-    var displayAttributes: NIDisplayAttributes {
-        NIDisplayAttributes(
-            theme: settingsProvider.theme,
-            fonts: settingsProvider.fonts, // can be omitted
-            cardAttributes: cardAttributes // can be nil
-        )
-    }
-    
     var cardAttributes: NICardAttributes {
-        NICardAttributes(
-            shouldBeMaskedDefault: Set(UIElement.CardDetails.Value.allCases)
-        )
+        NICardAttributes.niAlwaysWhite
     }
 }

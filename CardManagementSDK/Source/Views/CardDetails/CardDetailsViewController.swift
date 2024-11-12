@@ -12,28 +12,27 @@ class CardDetailsViewController: UIViewController {
     @IBOutlet weak var customNICardView: NICardView!
     
     private var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
-    private var displayAttributes: NIDisplayAttributes
+    private var cardAttributes: NICardAttributes
     private var service: CardDetailsService
-    private let language: NILanguage?
     private let cardBackground: UIImage?
     private let cardPositioning: NICardDetailsTextPositioning?
     
     // MARK: - Init
     init(
-        language: NILanguage?,
-        displayAttributes: NIDisplayAttributes = .zero,
+        title: String?,
+        cardAttributes: NICardAttributes,
         cardBackground: UIImage?,
         cardPositioning: NICardDetailsTextPositioning?,
         service: CardDetailsService,
         callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     ) {
-        self.language = language
-        self.displayAttributes = displayAttributes
+        self.cardAttributes = cardAttributes
         self.service = service
         self.callback = callback
         self.cardBackground = cardBackground
         self.cardPositioning = cardPositioning
         super.init(nibName: "CardDetailsViewController", bundle: Bundle(for: CardDetailsViewController.self))
+        self.title = title
     }
     
     required init?(coder: NSCoder) {
@@ -43,9 +42,13 @@ class CardDetailsViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NIResource.L10n.cardDetailsTitleKey.localized(with: language)
         setupCloseButton()
-        customNICardView.configure(language: language, displayAttributes: displayAttributes, maskableValues: Set(UIElement.CardDetails.Value.allCases), service: service) { [weak self] errorResponse in
+        customNICardView.configure(
+            cardAttributes: cardAttributes, 
+            buttonsColor: .niAlwaysWhite,
+            maskableValues: Set(UIElement.CardDetails.allCases),
+            service: service
+        ) { [weak self] errorResponse in
             self?.callback?(
                 errorResponse == nil ? NISuccessResponse(message: "Card details retrieved with success!") : nil,
                 errorResponse
@@ -58,12 +61,9 @@ class CardDetailsViewController: UIViewController {
     // MARK: - Private
     private func setupCloseButton() {
         let closeButton = UIButton(type: .custom)
-        let image = UIImage(
-            named: (displayAttributes.theme == .light) ? "icon_close" : "icon_close_white",
-            in: Bundle.sdkBundle,
-            compatibleWith: .none
-        )
+        let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(image, for: .normal)
+        closeButton.tintColor = UIColor.label
         closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         let barCloseButton = UIBarButtonItem(customView: closeButton)
         self.navigationItem.rightBarButtonItem = barCloseButton

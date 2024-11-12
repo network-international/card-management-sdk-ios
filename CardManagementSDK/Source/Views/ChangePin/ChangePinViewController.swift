@@ -15,18 +15,13 @@ class ChangePinViewController: UIViewController {
     private var oldPin: String?
     private var newPin: String?
     private var pinView: PinView?
-    private let language: NILanguage?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
-    init(language: NILanguage?, viewModel: ChangePinViewModel) {
-        self.language = language
+    init(viewModel: ChangePinViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "ChangePinViewController", bundle: Bundle(for: ChangePinViewController.self))
-        
-        // theme (dark / light mode setups)
-        updateUI(for: viewModel.theme)
     }
     
     required init?(coder: NSCoder) {
@@ -36,32 +31,19 @@ class ChangePinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NIResource.L10n.changePinTitleKey.localized(with: language)
+        title = viewModel.config.titleText
+        view.backgroundColor = viewModel.config.backgroundColor
+        activityIndicator.style = .large
         
-        pinView = Bundle(for: ChangePinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
+        pinView = PinView.fromBundle
         guard let pinView = pinView else { return }
-        pinView.descriptionLabel.font = viewModel.font(for: .changePinDescription)
-        pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
-                                             dotsCount: viewModel.dotsCount,
-                                             descriptionText: NIResource.L10n.changePinEnterCurrentKey.localized(with: language),
+        pinView.viewmodel = PinViewViewModel(dotsCount: viewModel.dotsCount,
+                                             descriptionText: viewModel.config.enterCurrentPinText,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
         view.bringSubviewToFront(activityIndicator)
         pinView.alignConstraintsToView(view: view)
-    }
-    
-    // MARK: - Private
-    private func updateUI(for theme: NITheme) {
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-            activityIndicator.style = .large
-        } else {
-            activityIndicator.style = .whiteLarge
-            activityIndicator.color = theme == .light ? .gray : .white
-            view.backgroundColor = theme == .light ? .white : .black
-        }
     }
     
 }
@@ -93,19 +75,19 @@ extension ChangePinViewController: PinViewProtocol {
                         }
                     }
                 } else {
-                    pinView?.viewmodel?.descriptionText = NIResource.L10n.changePinNotMatchKey.localized(with: language)
+                    pinView?.viewmodel?.descriptionText = viewModel.config.notMatchPinText
                     pinView?.resetView()
                 }
             } else {
                 newPin = pin
                 guard let pinView = pinView else { return }
-                pinView.viewmodel?.descriptionText = NIResource.L10n.changePinReenterPinKey.localized(with: language)
+                pinView.viewmodel?.descriptionText = viewModel.config.reEnterNewPinText
                 pinView.resetView()
             }
         } else {
             oldPin = pin
             guard let pinView = pinView else { return }
-            pinView.viewmodel?.descriptionText = NIResource.L10n.changePinEnterNewPinKey.localized(with: language)
+            pinView.viewmodel?.descriptionText = viewModel.config.enterNewPinText
             pinView.resetView()
         }
     }

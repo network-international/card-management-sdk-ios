@@ -36,16 +36,5 @@ class RootViewController: UITabBarController {
         settingsVc.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), tag: 2)
         
         viewControllers = [cardVc, experimentsVc, settingsVc]
-        
-        viewModel.settingsProvider.$theme
-            .receive(on: RunLoop.main)
-            .sink { theme in
-                UIApplication.shared.connectedScenes
-                    .compactMap({ $0 as? UIWindowScene })
-                    .map(\.windows)
-                    .flatMap({ $0 })
-                    .forEach({ $0.overrideUserInterfaceStyle = theme == .dark ? .dark : .light })
-            }
-            .store(in: &bag)
     }
 }

@@ -12,13 +12,46 @@ protocol SetPinService {
     func setPin(pin: String, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
-class SetPinViewModel {
-    private let displayAttributes: NIDisplayAttributes?
+public class SetPinViewModel {
+    public struct Config {
+        public let enterPinText: NSAttributedString
+        public let reEnterPinText: NSAttributedString
+        public let notMatchPinText: NSAttributedString
+        public let titleText: String
+        public let backgroundColor: UIColor?
+
+        public static let `default` = Config(
+            enterPinText: NSAttributedString(
+                string: NISDKStrings.set_pin_description_enter_pin.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.setPinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            reEnterPinText: NSAttributedString(
+                string: NISDKStrings.set_pin_description_re_enter_pin.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.setPinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            notMatchPinText: NSAttributedString(
+                string: NISDKStrings.set_pin_description_pin_not_match.rawValue,
+                attributes: [.font : UIElement.PinFormLabel.setPinDescription.defaultFont, .foregroundColor: UIColor.label]
+            ),
+            titleText: NISDKStrings.set_pin_title.rawValue,
+            backgroundColor: UIColor.backgroundColor
+        )
+        
+        public init(enterPinText: NSAttributedString, reEnterPinText: NSAttributedString, notMatchPinText: NSAttributedString, titleText: String, backgroundColor: UIColor?) {
+            self.enterPinText = enterPinText
+            self.reEnterPinText = reEnterPinText
+            self.notMatchPinText = notMatchPinText
+            self.titleText = titleText
+            self.backgroundColor = backgroundColor
+        }
+    }
+    
+    let config: Config
     private let formType: NIPinFormType
     private let service: SetPinService
     
-    init(displayAttributes: NIDisplayAttributes?, formType: NIPinFormType, service: SetPinService) {
-        self.displayAttributes = displayAttributes
+    init(config: Config, formType: NIPinFormType, service: SetPinService) {
+        self.config = config
         self.formType = formType
         self.service = service
     }
@@ -44,13 +77,4 @@ extension SetPinViewModel {
     var fixedLength: Bool {
         return formType != .dynamic
     }
-    
-    func font(for label: UIElement.PinFormLabel) -> UIFont {
-        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
-    }
-    
-    var theme: NITheme { /// default is light
-        return displayAttributes?.theme ?? .light
-    }
-    
 }

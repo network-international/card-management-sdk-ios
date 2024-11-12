@@ -55,7 +55,7 @@ class SettingsViewController: UIViewController {
 private extension SettingsViewController {
     func setupView() {
         // Logo
-        let logo = LogoView(currentLanguage: viewModel.settingsProvider.currentLanguage)
+        let logo = LogoView(isArabic: false)
         view.addSubview(logo)
         NSLayoutConstraint.activate([
             logo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -70,15 +70,6 @@ private extension SettingsViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        
-        viewModel.settingsProvider.$currentLanguage
-            .receive(on: RunLoop.main)
-            .sink { [logo] lang in logo.update(with: lang) }
-            .store(in: &bag)
-        viewModel.settingsProvider.$theme
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in self?.applySnapshot() }
-            .store(in: &bag)
     }
 }
 
@@ -103,8 +94,6 @@ fileprivate extension SettingsViewController {
         case cardIdentifier
         case connection
         case pinType
-        case language
-        case theme
         case textPositioning
         
         var description: String {
@@ -113,8 +102,6 @@ fileprivate extension SettingsViewController {
             case .cardIdentifier: return "Card Identifier"
             case .connection: return "Connection settings"
             case .pinType: return "Pin Length"
-            case .language: return "Language"
-            case .theme: return "Theme"
             case .textPositioning: return "Text Positioning"
             }
         }
@@ -148,8 +135,6 @@ fileprivate extension SettingsViewController {
         case rootUrl = "Root URL"
         case bankCode = "Bank code"
         case pinLength = "PIN length"
-        case language = "Language"
-        case theme = "Theme"
         // textPositioning
         case leftAlignment = "Left Alignment"
         case cardNumberGroupTopAlignment = "CardNumber Top"
@@ -178,24 +163,6 @@ fileprivate extension SettingsViewController {
                 self?.updateTextPositioning(itemName: itemValue.name, value: stepperValue)
             }
             cell.contentConfiguration = config
-        case let .row(itemValue) where itemValue.name == .theme:
-            var config = cell.segmentedConfiguration()
-            config.segments = viewModel.themes.map(\.name)
-            config.selectedIndex = viewModel.selectedThemeIdx
-            config.segmentSelected = { [weak self, itemValue] segment in
-                self?.updateSettings(itemName: itemValue.name, text: segment)
-            }
-            cell.contentConfiguration = config
-            cell.backgroundConfiguration = nil
-        case let .row(itemValue) where itemValue.name == .language:
-            var config = cell.segmentedConfiguration()
-            config.segments = viewModel.languages.map(\.localizedString)
-            config.selectedIndex = viewModel.selectedLanguageIdx
-            config.segmentSelected = { [weak self, itemValue] segment in
-                self?.updateSettings(itemName: itemValue.name, text: segment)
-            }
-            cell.contentConfiguration = config
-            cell.backgroundConfiguration = nil
         case let .row(itemValue):
             var config = cell.textFieldConfiguration()
             config.text = itemValue.text
@@ -260,20 +227,6 @@ fileprivate extension SettingsViewController {
             ))
         ], toSection: .pinType)
         snapshot.appendItems([
-            .header(Section.language.description),
-            .row(.init(
-                name: .language,
-                text: viewModel.settingsProvider.currentLanguage.localizedString
-            ))
-        ], toSection: .language)
-        snapshot.appendItems([
-            .header(Section.textPositioning.description),
-            .row(.init(
-                name: .theme,
-                text: viewModel.settingsProvider.theme.name
-            ))
-        ], toSection: .theme)
-        snapshot.appendItems([
             .header(Section.textPositioning.description),
             .row(.init(
                 name: .leftAlignment,
@@ -310,14 +263,6 @@ fileprivate extension SettingsViewController {
     
     func updateSettings(itemName: ItemName, text: String) {
         var settings = self.viewModel.settingsProvider.settings
-        if itemName == .theme, let theme = viewModel.themes.first(where: { $0.name == text }) {
-            viewModel.updateTheme(theme)
-            return
-        }
-        if itemName == .language, let lang = viewModel.languages.first(where: { $0.localizedString == text }) {
-            viewModel.updateLanguage(lang)
-            return
-        }
         
         switch itemName {
             // credentials
