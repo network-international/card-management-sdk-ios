@@ -11,32 +11,40 @@ import NICardManagementSDK
 
 class SettingsProvider {
     @Published private(set) var settings: SettingsModel
-    // UI Settings
-    @Published private(set) var currentLanguage: NILanguage
-    @Published private(set) var theme: NITheme
     @Published private(set) var textPosition: TextPositioning
 
     @Published private(set) var cardBackgroundImage = UIImage(resource: .background)
-    @Published private(set) var fonts: [UIElementFont]
+    
+    // Update configs for pin forms if needed
+    let pinVerifyConfig = VerifyPinViewModel.Config(
+        descriptionAttributedText: NSAttributedString(
+            string: NISDKStrings.verify_pin_description.rawValue,
+            attributes: [.font : UIElement.PinFormLabel.verifyPinDescription.defaultFont, .foregroundColor: UIColor.label]
+        ),
+        titleText: NISDKStrings.verify_pin_title.rawValue,
+        backgroundColor: .clear
+    )
+    let pinChangeConfig = ChangePinViewModel.Config(
+        enterCurrentPinText: NSAttributedString(
+            string: NISDKStrings.change_pin_description_enter_current_pin.rawValue,
+            attributes: [.font : UIFont(name: "Helvetica", size: 18) ?? UIFont.systemFont(ofSize: 18), .foregroundColor: UIColor.label]
+        ),
+        enterNewPinText: ChangePinViewModel.Config.default.enterNewPinText,
+        reEnterNewPinText: ChangePinViewModel.Config.default.reEnterNewPinText,
+        notMatchPinText: ChangePinViewModel.Config.default.notMatchPinText,
+        titleText: ChangePinViewModel.Config.default.titleText,
+        backgroundColor: ChangePinViewModel.Config.default.backgroundColor
+    )
+    let pinSetConfig = SetPinViewModel.Config.default
+
     
     init() {
         settings = Self.readSettings()
-        currentLanguage = .initial
-        theme = .initial
         textPosition = .initial
-        fonts = Self.initialFonts
-    }
-    
-    func updateLanguage(_ language: NILanguage) {
-        currentLanguage = language
     }
     
     func updateSettings(_ settings: SettingsModel) {
         self.settings = settings
-    }
-    
-    func updateTheme(_ theme: NITheme) {
-        self.theme = theme
     }
     
     func updateTextPosition(_ textPosition: TextPositioning) {
@@ -66,14 +74,6 @@ private extension SettingsProvider {
         
         return settings
     }
-    
-    static var initialFonts: [UIElementFont] {
-        // Example of setting of a specific fonts (this is optional)
-        [
-            UIElementFont(element: UIElement.PinFormLabel.setPinDescription, font: UIFont(name: "Helvetica", size: 18) ?? UIFont.systemFont(ofSize: 18)),
-            UIElementFont(element: UIElement.PinFormLabel.verifyPinDescription, font: UIFont(name: "Helvetica", size: 18) ?? UIFont.systemFont(ofSize: 18))
-        ]
-    }
 }
 
 fileprivate extension SettingsModel {
@@ -86,17 +86,7 @@ fileprivate extension SettingsModel {
         )
     }
 }
-extension NILanguage {
-    static var initial: Self {
-        let isArabicLang = Locale.preferredLanguages.first?.hasPrefix("ar") ?? false
-        return isArabicLang ? .arabic : .english
-    }
-}
-extension NITheme {
-    static var initial: Self {
-        UIScreen.main.traitCollection.userInterfaceStyle == .light ? .light : .dark
-    }
-}
+
 // Have to use proxy, as NICardDetailsTextPositioning's fields has internal access level
 struct TextPositioning {
     static var initial: TextPositioning {

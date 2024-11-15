@@ -34,7 +34,7 @@ class ExperimentsViewController: UIViewController {
     
     init(viewModel: ExperimentsViewModel) {
         self.viewModel = viewModel
-        logo = LogoView(currentLanguage: viewModel.settingsProvider.currentLanguage)
+        logo = LogoView(isArabic: false)
         sdk = viewModel.settingsProvider.settings.buildSdk()
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,10 +53,6 @@ class ExperimentsViewController: UIViewController {
                 // refresh UI
                 self?.fillContent()
             }
-            .store(in: &bag)
-        viewModel.settingsProvider.$currentLanguage
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in self?.logo.update(with: $0) }
             .store(in: &bag)
     }
 }
@@ -101,7 +97,13 @@ private extension ExperimentsViewController {
             title: "Present form with card",
             action: UIAction { [weak self] _ in
                 guard let self = self else { return }
-                self.sdk.displayCardDetailsForm(viewController: self, displayAttributes: self.viewModel.displayAttributes, language: self.viewModel.language, cardViewBackground: viewModel.backgroundImage, cardViewTextPositioning: viewModel.textPositioning, completion: self.cardViewCallback)
+                self.sdk.displayCardDetailsForm(
+                    viewController: self,
+                    cardAttributes: self.viewModel.cardAttributes,
+                    cardViewBackground: self.viewModel.backgroundImage,
+                    cardViewTextPositioning: self.viewModel.textPositioning,
+                    completion: self.cardViewCallback
+                )
             }
         ))
         
@@ -148,7 +150,7 @@ private extension ExperimentsViewController {
         
         // toggle cardPresenter.isMasked (the way how information displayed) 
         // - by `displayAttributes.cardAttributes.shouldHide`
-        let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: viewModel.displayAttributes, language: self.viewModel.language)
+        let cardPresenter = sdk.buildCardDetailsPresenter(cardAttributes: viewModel.cardAttributes)
         let customView = UIStackView()
         customView.translatesAutoresizingMaskIntoConstraints = false
         customView.axis = .vertical
@@ -227,7 +229,7 @@ private extension ExperimentsViewController {
             title: "Toggle Masking All",
             image: UIImage(systemName: "eye.slash"),
             handler: { [cardPresenter] _ in
-                cardPresenter.toggle(isMasked: cardPresenter.maskedElements.isEmpty ? Set(UIElement.CardDetails.Value.allCases) : Set())
+                cardPresenter.toggle(isMasked: cardPresenter.maskedElements.isEmpty ? Set(UIElement.CardDetails.allCases) : Set())
             }
         ))
         customView.addArrangedSubview(maskAllBtn)
@@ -264,31 +266,44 @@ private extension ExperimentsViewController {
 }
 
 private extension ExperimentsViewModel {
-    var language: NILanguage? { settingsProvider.currentLanguage }
+
     var textPositioning: NICardDetailsTextPositioning? { settingsProvider.textPosition.sdkValue
     }
     var backgroundImage: UIImage? { settingsProvider.cardBackgroundImage }
     
-    var displayAttributes: NIDisplayAttributes {
-        NIDisplayAttributes(
-            theme: settingsProvider.theme,
-            fonts: settingsProvider.fonts, // can be omitted
-            cardAttributes: cardAttributes // can be nil
-        )
-    }
-    
     var cardAttributes: NICardAttributes {
+        // Example how fonts, colors can be changed
         NICardAttributes(
-            shouldBeMaskedDefault: Set([.cvv]), // initially only cvv will be masked
-            colors: [
-                UIElementColor(element: UIElement.CardDetails.Label.cardNumber, color: .red),
-                UIElementColor(element: UIElement.CardDetails.Value.cardNumber, color: .purple),
-                UIElementColor(element: UIElement.CardDetails.Label.cvv, color: .blue),
-                UIElementColor(element: UIElement.CardDetails.Value.cvv, color: .green),
-            ],
+            shouldBeMaskedDefault: Set([.cvv]),
             labels: [
-                .cardNumber: "My card >>", // use localised strings here
-                .cvv: "My CVV >>"
+                .cardNumber: NSAttributedString(
+                    string: "My card >>",
+                    attributes: [
+                        .font : UIElement.CardDetails.cardNumber.defaultLabelFont,
+                        .foregroundColor: UIColor.red
+                    ]
+                ),
+                .cvv: NSAttributedString(
+                    string: "My CVV >>",
+                    attributes: [
+                        .font : UIElement.CardDetails.cvv.defaultLabelFont,
+                        .foregroundColor: UIColor.blue
+                    ]
+                ),
+                .cardHolder: NICardAttributes.zero.labels[.cardHolder]!,
+                .expiry: NICardAttributes.zero.labels[.expiry]!,
+            ],
+            valueAttributes: [
+                .cardNumber: [
+                    .font : UIElement.CardDetails.cardNumber.defaultValueFont,
+                    .foregroundColor: UIColor.purple
+                ],
+                .cvv: [
+                    .font : UIElement.CardDetails.cvv.defaultValueFont,
+                    .foregroundColor: UIColor.green
+                ],
+                .cardHolder: NICardAttributes.zero.valueAttributes[.cardHolder]!,
+                .expiry: NICardAttributes.zero.valueAttributes[.expiry]!,
             ]
         )
     }

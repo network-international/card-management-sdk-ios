@@ -12,18 +12,15 @@ class VerifyPinViewController: UIViewController {
     
     private var viewModel: VerifyPinViewModel
     private var pinView: PinView?
-    private let language: NILanguage?
     
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     
     // MARK: - Init
-    init(language: NILanguage?, viewModel: VerifyPinViewModel) {
-        self.language = language
+    init(viewModel: VerifyPinViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "VerifyPinViewController", bundle: Bundle(for: VerifyPinViewController.self))
-        
-        // theme (dark / light mode setups)
-        updateUI(for: viewModel.theme)
+        super.init(nibName: "VerifyPinViewController", bundle: Bundle(for: Self.self))
+        view.backgroundColor = viewModel.config.backgroundColor
+        activityIndicator.style = .large
     }
     
     required init?(coder: NSCoder) {
@@ -33,34 +30,18 @@ class VerifyPinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NIResource.L10n.verifyPinTitleKey.localized(with: language)
+        title = viewModel.config.titleText
         
-        pinView = Bundle(for: VerifyPinViewController.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
+        pinView = PinView.fromBundle
         guard let pinView = pinView else { return }
-        pinView.descriptionLabel.font = viewModel.font(for: .verifyPinDescription)
-        pinView.viewmodel = PinViewViewModel(theme: viewModel.theme,
-                                             dotsCount: viewModel.dotsCount,
-                                             descriptionText: NIResource.L10n.verifyPinDescriptionKey.localized(with: language),
+        pinView.viewmodel = PinViewViewModel(dotsCount: viewModel.dotsCount,
+                                             descriptionText: viewModel.config.descriptionAttributedText,
                                              fixedLength: viewModel.fixedLength)
         pinView.pinDelegate = self
         view.addSubview(pinView)
         view.bringSubviewToFront(activityIndicator)
         pinView.alignConstraintsToView(view: view)
     }
-    
-    // MARK: - Private
-    private func updateUI(for theme: NITheme) {
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = UIColor.backgroundColor
-            view.overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-            activityIndicator.style = .large
-        } else {
-            activityIndicator.style = .whiteLarge
-            activityIndicator.color = theme == .light ? .gray : .white
-            view.backgroundColor = theme == .light ? .white : .black
-        }
-    }
-    
 }
 
 

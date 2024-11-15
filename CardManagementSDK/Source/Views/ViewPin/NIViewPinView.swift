@@ -8,7 +8,7 @@
 import Foundation
 
 import UIKit
-
+// TODO: update fonts and displayAttributes usage
 public final class NIViewPinView: UIView {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -32,12 +32,11 @@ public final class NIViewPinView: UIView {
     
     private var digits: [UILabel]?
     private var separators: [UIView]?
-    private var counter: Double = 0
+
     private var timer: Timer?
-    private var colorInput: UIColor?
-    private let language: NILanguage?
+    private var counter: Double = 0
     
-    var viewModel: ViewPinViewModel?
+    public var viewModel: ViewPinViewModel!
     
     // MARK: - Init
     /// Initialization of NIViewPinView
@@ -47,12 +46,10 @@ public final class NIViewPinView: UIView {
     ///   - displayAttributes: input needed for the PIN visualization
     ///   - service: sdk instance
     ///   - timer: seconds needed for the PIN visualization
-    public init(language: NILanguage?, displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
-        self.language = language
-        counter = timer
-        colorInput = color
-        viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
+    ///
+    ///   //viewModel?.callback = completion
+    public init(viewModel: ViewPinViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         fromNib()
         hideUI(true)
@@ -66,7 +63,6 @@ public final class NIViewPinView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        language = nil
         super.init(coder: coder)
         fromNib()
     }
@@ -78,12 +74,8 @@ public final class NIViewPinView: UIView {
     ///   - service: sdk instance
     ///   - input: input needed for the PIN visualization
     ///   - timer: seconds needed for the PIN visualization
-    public func configure(displayAttributes: NIDisplayAttributes?, service: ViewPinService, timer: Double, color: UIColor? = nil, completion: @escaping (NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void) {
+    public func configure(viewModel: ViewPinViewModel) {
         hideUI(true)
-        counter = timer
-        colorInput = color
-        viewModel = ViewPinViewModel(displayAttributes: displayAttributes, service: service)
-        viewModel?.callback = completion
         activityIndicator.startAnimating()
         digits = [firstDigit, secondDigit, thirdDigit, fourthDigit, fifthDigit, sixthDigit]
         separators = [firstSeparator, secondSeparator, thirdSeparator, fourthSeparator, fifthSeparator]
@@ -93,12 +85,13 @@ public final class NIViewPinView: UIView {
     // MARK: - Private
 
     private func startTimer() {
+        counter = viewModel.config.timer
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
     }
     
     @objc private func updateCounter() {
         if counter > 0 {
-            countDownDecription.text = NIResource.L10n.pinCountdownDescriptionKey.localized(with: language) + " " + String(Int(counter)) + " " + NIResource.L10n.pinCountdownUnitKey.localized(with: language)
+            countDownDecription.text = String(format: viewModel!.config.countDownTemplate, String(Int(counter)))
             counter -= 1
         } else {
             timer?.invalidate()
@@ -118,10 +111,7 @@ public final class NIViewPinView: UIView {
     
     private func updateUI() {
         guard let viewModel = viewModel else { return }
-        if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
-        }
-        UIFont.registerDefaultFonts()
+        activityIndicator.style = .large
         stackView.semanticContentAttribute = .forceLeftToRight
         
         viewModel.bindCardDetailsViewModel = {
@@ -157,9 +147,7 @@ public final class NIViewPinView: UIView {
                 
                 if viewModel.startTimer && self.counter != 0 {
                     self.startTimer()
-                    let countDownDescriptionLocalized: String = NIResource.L10n.pinCountdownDescriptionKey.localized(with: self.language) + " "
-                    let countDownUnitLocalized: String = " " + NIResource.L10n.pinCountdownUnitKey.localized(with: self.language)
-                    self.countDownDecription.text = countDownDescriptionLocalized + String(Int(self.counter)) + countDownUnitLocalized
+                    self.countDownDecription.text = String(format: self.viewModel.config.countDownTemplate, String(Int(self.counter)))
                     self.counter -= 1
                 } else {
                     self.countDownDecription.isHidden = true
@@ -171,30 +159,21 @@ public final class NIViewPinView: UIView {
         borderView.layer.borderWidth = 1
         borderView.layer.cornerRadius = 15
                 
-        //set fonts
-        countDownDecription.font = viewModel.font(for: .viewPinCountDownDescription)
+        //TODO: use vm
+        countDownDecription.font = UIElement.PinFormLabel.viewPinCountDownDescription.defaultFont
         if let digits = digits {
             for digit in digits {
-                digit.font = viewModel.font(for: .pinDigit)
+                digit.font = UIElement.PinFormLabel.pinDigit.defaultFont
             }
         }
         
-        if let color = colorInput {
+        if let color = viewModel.config.colorInput {
             borderColor(color: color)
             textColor(color: color)
         } else {
             // Theme
-            if #available(iOS 13.0, *) {
-                backgroundColor = UIColor.clear
-                overrideUserInterfaceStyle = viewModel.theme == .light ? .light : .dark
-                
-                if viewModel.theme == .dark {
-                    borderColor(color: .white)
-                }
-            } else {
-                /// Fallback on earlier versions
-                setupTheme(viewModel.theme)
-            }
+            backgroundColor = UIColor.clear
+            borderColor(color: .label)
         }
     }
     
@@ -214,19 +193,7 @@ public final class NIViewPinView: UIView {
             }
         }
     }
-    
-    private func setupTheme(_ theme: NITheme) {
-        switch theme {
-        case .light:
-            backgroundColor = UIColor.clear
-            textColor(color: .darkerGrayLight!)
-        case .dark:
-            backgroundColor = UIColor.clear
-            textColor(color: .white)
-            borderColor(color: .white)
-        }
-    }
-    
+        
     private func updateFirst4Digits(viewModel: ViewPinViewModel) {
         firstDigit.text = viewModel.pin?[0]
         secondDigit.text = viewModel.pin?[1]

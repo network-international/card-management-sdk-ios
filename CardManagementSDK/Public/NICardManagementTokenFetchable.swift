@@ -18,7 +18,7 @@ public protocol NICardManagementTokenFetchable {
 }
 
 public struct TokenFetcherFactory {
-    public static func makeNetworkWithCache(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval = 30) -> NICardManagementTokenFetchable {
+    public static func makeDemoClient(urlString: String, credentials: ClientCredentials, timeoutInterval: TimeInterval = 30) -> NICardManagementTokenFetchable {
         let storage = TokenKeychainStogage(credentials: credentials)
         let network = TokenNetworkFetcher(urlString: urlString, credentials: credentials, timeoutInterval: timeoutInterval)
         let repository = TokenRepository(tokenStorage: storage, networkFetcher: network)
