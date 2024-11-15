@@ -11,12 +11,7 @@ public final class NICardView: UIView {
     private lazy var cardNrCopyButton: UIButton = { // copyButton
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image: UIImage?
-        if #available(iOS 13.0, *) {
-            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
-        } else {
-            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-        }
+        let image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
         element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(cardNrCopyAction), for: .touchUpInside)
         return element
@@ -34,11 +29,7 @@ public final class NICardView: UIView {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.hidesWhenStopped = true
         element.tintColor = .white
-        if #available(iOS 13.0, *) {
-            element.style = .large
-        } else {
-            element.style = .whiteLarge
-        }
+        element.style = .large
         return element
     }()
     private lazy var backgroundCardImage: UIImageView = {
@@ -49,12 +40,7 @@ public final class NICardView: UIView {
     private lazy var nameCopyButton: UIButton = {
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image: UIImage?
-        if #available(iOS 13.0, *) {
-            image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
-        } else {
-            image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
-        }
+        let image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
         element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(nameCopyAction), for: .touchUpInside)
         return element
@@ -67,7 +53,9 @@ public final class NICardView: UIView {
 
     private var presenter = NICardElementsPresenter()
     
-    private var maskableValues = Set(UIElement.CardDetails.Value.allCases)
+    private var maskableValues = Set(UIElement.CardDetails.allCases)
+    
+    private var toastMessage: String = NISDKStrings.toast_message.rawValue
     
     override public init(frame: CGRect) {
         super.init(frame: .zero)
@@ -179,39 +167,27 @@ public final class NICardView: UIView {
     ///   - input: input needed for the card details visualization
     ///   - service: sdk instance
     public func configure(
-        language: NILanguage?,
-        displayAttributes: NIDisplayAttributes = .zero,
-        elementsColor: UIColor = .niAlwaysWhite,
-        maskableValues: Set<UIElement.CardDetails.Value> = Set(UIElement.CardDetails.Value.allCases),
+        cardAttributes: NICardAttributes,
+        buttonsColor: UIColor,
+        maskableValues: Set<UIElement.CardDetails> = Set(UIElement.CardDetails.allCases),
         service: CardDetailsService,
+        toastMessage: String? = nil,
         completion: @escaping (NIErrorResponse?) -> Void
     ) {
         self.maskableValues = maskableValues
         
+        self.toastMessage = toastMessage ?? NISDKStrings.toast_message.rawValue
+        
         // update colors of images
         [eyeButton, cardNrCopyButton, nameCopyButton].forEach { button in
-            button.tintColor = elementsColor
-            button.imageView?.tintColor = elementsColor
+            button.tintColor = buttonsColor
+            button.imageView?.tintColor = buttonsColor
         }
         
-        // if labels color was not provided - use same as elementsColor
-        var missingColors = [UIElementColor]()
-        UIElement.CardDetails.Label.allCases.forEach { label in
-            if displayAttributes.cardAttributes.colors.color(for: label) == nil {
-                missingColors.append(UIElementColor(element: label, color: elementsColor))
-            }
-        }
-        UIElement.CardDetails.Value.allCases.forEach { label in
-            if displayAttributes.cardAttributes.colors.color(for: label) == nil {
-                missingColors.append(UIElementColor(element: label, color: elementsColor))
-            }
-        }
-        displayAttributes.cardAttributes.colors = displayAttributes.cardAttributes.colors + missingColors
-        
-        presenter.setup(language: language, displayAttributes: displayAttributes, service: service)
+        presenter.setup(cardAttributes: cardAttributes, service: service)
         
         backgroundColor = UIColor.backgroundColor
-        overrideUserInterfaceStyle = self.presenter.isThemeLight ? .light : .dark
+        
         eyeButton.isSelected = presenter.maskedElements.isEmpty
         
         hideUI(true)
@@ -266,12 +242,12 @@ private extension NICardView {
     // MARK: - Actions
     @objc func cardNrCopyAction() {
         presenter.copyToClipboard([.cardNumber])
-        showToast(message: NIResource.L10n.toastMessage.localized(with: presenter.language))
+        showToast(message: toastMessage)
     }
     
     @objc func nameCopyAction() {
         presenter.copyToClipboard([.cardHolder])
-        showToast(message: NIResource.L10n.toastMessage.localized(with: presenter.language))
+        showToast(message: toastMessage)
     }
     
     @objc func eyeButtonAction(_ sender: EyeButton) {

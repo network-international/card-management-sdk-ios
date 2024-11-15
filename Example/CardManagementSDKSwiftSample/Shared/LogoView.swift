@@ -10,15 +10,15 @@ import NICardManagementSDK
 
 class LogoView: UIView {
     
-    private let logoImageView: UIImageView
+    private var logoImageView: UIImageView
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
-    required init(currentLanguage: NILanguage) {
-        logoImageView = UIImageView(image: currentLanguage.logo)
-        logoImageView.contentMode = .scaleAspectFit
+    required init(isArabic: Bool) {
+        logoImageView = UIImageView(image: Self.logo(isArabic: isArabic))
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
+        logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(logoImageView)
 
@@ -40,26 +40,19 @@ class LogoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(with language: NILanguage) {
-        logoImageView.image = language.logo
-        switch language {
-        case .arabic:
+    func update(isArabic: Bool) {
+        logoImageView.image = Self.logo(isArabic: isArabic)
+        if isArabic {
             leadingConstraint.priority = .defaultLow
             trailingConstraint.priority = .defaultHigh
-        case .english:
+        } else {
             leadingConstraint.priority = .defaultHigh
             trailingConstraint.priority = .defaultLow
         }
     }
-}
-
-fileprivate extension NILanguage {
-    var logo: UIImage {
-        switch self {
-        case .english:
-            return UIImage(resource: .logoEn)
-        case .arabic:
-            return UIImage(resource: .logoAr)
-        }
+    
+    static func logo(isArabic: Bool) -> UIImage {
+        isArabic ? UIImage(resource: .logoAr) : UIImage(resource: .logoEn)
     }
 }
+

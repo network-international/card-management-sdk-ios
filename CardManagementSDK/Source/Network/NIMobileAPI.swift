@@ -19,6 +19,7 @@ class NIMobileAPI {
     private let bankCode: String
     
     private var rsaKeysProvider: () throws -> RSAKeyx509
+    private let extraHeadersProvider: NICardManagementExtraHeaders?
     private let logger: NICardManagementLogger?
     
     
@@ -28,6 +29,7 @@ class NIMobileAPI {
         cardIdentifierType: String,
         bankCode: String,
         tokenFetchable: NICardManagementTokenFetchable,
+        extraHeadersProvider: NICardManagementExtraHeaders?,
         logger: NICardManagementLogger?
     ) {
         self.tokenFetchable = tokenFetchable
@@ -35,6 +37,7 @@ class NIMobileAPI {
         self.cardIdentifierType = cardIdentifierType
         self.bankCode = bankCode
         self.rootUrl = rootUrl
+        self.extraHeadersProvider = extraHeadersProvider
         self.logger = logger
         rsaKeysProvider = {
             // regenerate on each keys request
@@ -52,8 +55,9 @@ class NIMobileAPI {
             completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
             return
         }
-
         
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
+
         let cardParams = CardDetailsParams(publicKey: rsaInfo.cert)
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode] connectionProperties, requestLogger in
             Request(.cardDetails(
@@ -62,7 +66,7 @@ class NIMobileAPI {
                 type: cardIdentifierType,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), extraHeaders: extraHeaders, logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { [privKey = rsaInfo.privateKey] response, error in
             guard let response = response else {
@@ -102,9 +106,11 @@ class NIMobileAPI {
             cardIdentifierType: cardIdentifierType,
             publicKey: rsaInfo.cert
         )
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(
                 .cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties),
+                extraHeaders: extraHeaders,
                 logger: requestLogger
             )
         }
@@ -129,8 +135,11 @@ class NIMobileAPI {
     }
     
     func retrievePinCertificate(completion: @escaping (PinCertificateResponse?, NIErrorResponse?) -> Void) {
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [bankCode] connectionProperties, requestLogger in
-            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties), logger: requestLogger)
+            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties),
+                    extraHeaders: extraHeaders,
+                    logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -168,12 +177,13 @@ class NIMobileAPI {
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType
         )
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.viewPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), extraHeaders: extraHeaders, logger: requestLogger)
         }
         sendRequest(builder: requestBuilder) { [privKey = rsaInfo.privateKey] response, error in
             
@@ -213,12 +223,13 @@ class NIMobileAPI {
             encryptedPin: pinEncryption.encryptedPinBlock,
             encryptionMethod: pinEncryption.method
         )
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.setPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), extraHeaders: extraHeaders, logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -239,12 +250,13 @@ class NIMobileAPI {
             encryptedPin: pinEncryption.encryptedPinBlock,
             encryptionMethod: pinEncryption.method
         )
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.verifyPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), extraHeaders: extraHeaders, logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -268,12 +280,13 @@ class NIMobileAPI {
             encryptedNewPin: newPinEncryption.encryptedPinBlock,
             encryptionMethod: newPinEncryption.method
         )
+        let extraHeaders = extraHeadersProvider?.additionalNetworkHeaders()
         let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
             Request(.changePin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), extraHeaders: extraHeaders, logger: requestLogger)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }

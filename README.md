@@ -39,55 +39,57 @@ import NICardManagementSDK
 1) Implement you own provider that meet protocol requiremets
 2) If you have token - you can use simple wrapper
 ```
-TokenFetcherFactory.makeSimpleWrapper(tokenValue: "your generated token")
-```
-3) Use simple sdk's provider that will try to fetch token with POST request and cache it in device's keychain
-```
-TokenFetcherFactory.makeNetworkWithCache(
-    urlString: "your url", 
-    credentials: ClientCredentials // clientId, clientSecret
-)
+let tokenFetcher = TokenFetcherFactory.makeSimpleWrapper(tokenValue: "your generated token")
 ```
 
 ###### Create SDK instance
 Swift:
 ```swift
     let sdk = NICardManagementAPI(
-            rootUrl: rootUrl,
+            rootUrl: connection.baseUrl,
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType,
             bankCode: bankCode,
-            tokenFetchable: NICardManagementTokenFetchable
+            tokenFetchable: tokenFetcher,
+            // pass nil if there are no needs in extra headers
+            extraHeadersProvider: NICardManagementExtraHeaders,
+            // pass nil or add logger for debugging, like NICardManagementLogging()
+            logger: NICardManagementLogger
         )
 ```
 
-###### Display attributes  
-Display attributes parameter has default value `NIDisplayAttributes.zero`. You can set one or more attributes, or even none of them.  
-
-1. Theme
-
-We support dark and light mode, by setting the theme parameter from the display attributes. If the Customer App is in dark mode, then you should use our SDK with dark theme. If the Customer App is in light mode, then you should use our SDK with light theme.  
-
-2. Language
-
-Languages supported are English and Arabic. You can either set the desired language or not. 
-If you don’t set any language, it will use the device language, if supported, otherwise will default to English. 
-
-3. Fonts
-
-We support customization of fonts. System and custom fonts can be set for the labels of each form view.  
-
-4. Card Attributes
-
-Card Attributes has default value `NICardAttributes.zero`. It can be set if customisation of the card details view is wanted. 
-    
-We offer:  
- - Set colors of card view elements, `.niAlwaysWhite` by default for cardView and `.label` for custom layout
- 
+- Use `NICardManagementExtraHeaders` when need to add some specific httpHeaders for each SDK http request, for example to bypass additional firewalls
 ```swift
-    let cardAttributes = NICardAttributes(colors: [UIElementColor(element: UIElement.CardDetails.Value.cardNumber, color: .purple)])
+final class AdditionalDemoHeadersProvider: NICardManagementExtraHeaders {
+    func additionalNetworkHeaders() -> [String: String] {
+        ["extraHeader1": "DemoExtraHttpHeaderValue"]
+    }
+}
 ```
 
+###### Configure appearance
+
+1. Card Attributes
+
+Card Attributes has default values `NICardAttributes.zero` or `NICardAttributes.niAlwaysWhite`.
+- `NICardAttributes.zero` - default fonts and `UIColor.label` will be used for card elements.
+- `NICardAttributes.niAlwaysWhite` - default fonts and `UIColor.niAlwaysWhite` will be used for card elements, this color ignores Theme setting (light/dark).
+- use custom configuration to provide necessary string attributes (font, color, ...) for any card details elemend
+```swift
+    NICardAttributes(
+        // configure elements that will be masked
+        shouldBeMaskedDefault: Set<UIElement.CardDetails> = Set(UIElement.CardDetails.allCases),
+        // [UIElement.CardDetails: NSAttributedString]
+        // provide desired attributed string for card details label
+        labels: UIElement.CardDetails.allCases.reduce(into: [:], { partialResult, label in
+            partialResult[label] = label.defaultAttributedText(color: .niAlwaysWhite)
+        }),
+        // [UIElement.CardDetails: [NSAttributedString.Key: Any]]
+        // provide desired String attributes that will be applied to card details value holder
+        valueAttributes: UIElement.CardDetails.allCases.reduce(into: [:], { partialResult, label in
+            partialResult[label] = [.font: label.defaultValueFont, .foregroundColor: UIColor.niAlwaysWhite]
+        })
+```
  - Define which elements will be masked by default
  
  To directly show the card details (not masked) when card view is displayed, we expect the ```shouldBeMaskedDefault``` property to be set to emtpy set. Or concrete elements can be masked by default 
@@ -101,10 +103,27 @@ We offer:
  To define custom texts for cardView labels - use `labels` 
  
 ```swift
-    let cardAttributes = NICardAttributes(labels: [
-                .cardNumber: "My card >>", // use localised strings here
-                .cvv: "My CVV >>"
-            ])
+    let cardAttributes =         NICardAttributes(
+            shouldBeMaskedDefault: Set([.cvv]),
+            labels: [
+                .cardNumber: NSAttributedString(
+                    string: "My card >>",
+                    attributes: [
+                        .font : UIElement.CardDetails.cardNumber.defaultLabelFont,
+                        .foregroundColor: UIColor.red
+                    ]
+                ),
+                .cvv: NSAttributedString(
+                    string: "My CVV >>",
+                    attributes: [
+                        .font : UIElement.CardDetails.cvv.defaultLabelFont,
+                        .foregroundColor: UIColor.blue
+                    ]
+                ),
+                .cardHolder: NICardAttributes.zero.labels[.cardHolder]!,
+                .expiry: NICardAttributes.zero.labels[.expiry]!,
+            ]
+    )
 ```
 
  - Background image customization
@@ -114,7 +133,7 @@ For the card background image, we expect a UIImage to be set. The recommended si
 ```swift
     let cardView = NICardView()
     cardView.setBackgroundImage(image: UIImage(named:"background_image"))
-                cardView.updatePositioning(self.viewModel.textPositioning)
+    cardView.updatePositioning(self.viewModel.textPositioning)
 ```
  - Possibility to set the text position as grouped labels
  
@@ -143,9 +162,7 @@ The customer application can integrate Card Details and View Pin as a view into 
 ##### Constructing Custom layout Card Details view from given UI elements.
 SDK allows to build any layout for card details by getting UI elements with card details data, this will help to keep card details data protected and not pass it in a war data
 ```swift
-// toggle cardPresenter.isMasked (the way how information displayed) 
-// - by `displayAttributes.cardAttributes.shouldHide`
-let cardPresenter = sdk.buildCardDetailsPresenter(displayAttributes: displayAttributes, language: nil)
+let cardPresenter = sdk.buildCardDetailsPresenter(cardAttributes: NICardAttributes.zero)
 // fetch data
 cardPresenter.showCardDetails { errorResponse in
 // check if errorResponse is not nil and handle error
@@ -177,7 +194,7 @@ Presenter allows copy values to clipbloard with given template
 ```
 Presenter can mask/unmask given set of elements, if set is empty - presenter will unmask all fields
 ```swift
-cardPresenter.toggle(isMasked: Set(UIElement.CardDetails.Value.allCases))
+cardPresenter.toggle(isMasked: Set(UIElement.CardDetails.allCases))
 ```
 
 ##### Constructing Card Details view.
@@ -188,10 +205,10 @@ let cardView = NICardView()
 then start the flow as below:
 ```swift
 cardView.configure(
-    language: nil,
-    displayAttributes: displayAttributes, // type NIDisplayAttributes - see the explanation above
-    maskableValues: Set(UIElement.CardDetails.Value.allCases), // set of elements that will be toggled by "show" button
-    service: sdk // CardDetailsService protocol, use sdk instance
+        cardAttributes: NICardAttributes.niAlwaysWhite,
+        buttonsColor: .niAlwaysWhite, // define color for buttons
+        maskableValues: Set(UIElement.CardDetails.allCases),
+        service: sdk // CardDetailsService protocol, use sdk instance
     ) { errorResponse in
 // check if errorResponse is not nil and handle error
 }
@@ -200,72 +217,71 @@ cardView.setBackgroundImage(image: backgroundImage)
 cardView.updatePositioning(textPositioning)
 ```
 
-##### Display View Pin View
-
-A view of NIViewPinView type can be added into storyboard, then set the input and start the flow as below:
-```swift
-viewPinView.configure(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .black) { successResponse, errorResponse in
-// handle here error and success
-}
-```
-or the NIViewPinView can be created programmatically and initialized as below:
-```swift
-let viewPinView = NIViewPinView(displayAttributes: displayAttributes, service: sdk, timer: 5, color: .red) { successResponse, errorResponse in
-// handle here error and success
-}
-```
-Parameters: 
-- displayAttributes - type NIDisplayAttributes - see the explanation above. - service - CardDetailsService protocol, use sdk instance
-- timer - type Double - offers possibility to set the display time of the PIN, expressed in seconds. Using value "0" for this parameter, the PIN will be displayed indefinitely. After the countdown, the PIN will be masked.
-This is a required parameter.
-- color - type UIColor - offers possibility to set the color of the elements contained in the view. This is an optional parameter.
-
 #### Form Factory Interface
 ##### Display Card Details in a new screen (UIViewController).
 The card info displayed are: Card Number, Expiry Date, CVV and Cardholder Name.
 
 ```swift
     sdk.displayCardDetailsForm(
-        viewController: navigationViewController, 
-        cardViewBackground: UIImage(resource: .background), 
-        cardViewTextPositioning: nil
-        ) { successResponse, errorResponse in
+        viewController: navigationViewController,
+        cardAttributes: NICardAttributes.niAlwaysWhite,
+        cardViewBackground: UIImage(resource: .background),
+        cardViewTextPositioning: nil) { successResponse, errorResponse in
         // handle error and success
     }
 ```
 
-##### Set PIN Form 
+#### Pin Form Factory Interface
 A PIN-pad will be displayed into a separate screen (UIViewController). 
 
-specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
+- provide desired text/color configuration if needed
+```swift
+    let pinVerifyConfig = VerifyPinViewModel.Config(
+        descriptionAttributedText: NSAttributedString(
+            string: NISDKStrings.verify_pin_description.rawValue,
+            attributes: [.font : UIElement.PinFormLabel.verifyPinDescription.defaultFont, .foregroundColor: UIColor.label]
+        ),
+        titleText: NISDKStrings.verify_pin_title.rawValue,
+        backgroundColor: .clear
+    )
+    let pinChangeConfig = ChangePinViewModel.Config(
+        enterCurrentPinText: NSAttributedString(
+            string: NISDKStrings.change_pin_description_enter_current_pin.rawValue,
+            attributes: [.font : UIFont(name: "Helvetica", size: 18) ?? UIFont.systemFont(ofSize: 18), .foregroundColor: UIColor.label]
+        ),
+        enterNewPinText: ChangePinViewModel.Config.default.enterNewPinText,
+        reEnterNewPinText: ChangePinViewModel.Config.default.reEnterNewPinText,
+        notMatchPinText: ChangePinViewModel.Config.default.notMatchPinText,
+        titleText: ChangePinViewModel.Config.default.titleText,
+        backgroundColor: ChangePinViewModel.Config.default.backgroundColor
+    )
+    let pinSetConfig = SetPinViewModel.Config.default
+```
+- specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
+
+##### Set PIN Form 
 
 ```swift
-sdk.setPinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
+    sdk.setPinForm(type: pinType, config: pinSetConfig) { successResponse, errorResponse in
 	//  handle here error and success
 }
 ```
 
 ##### Change PIN Form 
-A PIN-pad will be displayed into a separate screen (UIViewController).
 Change PIN is a two step flow:
 1.Capture current PIN 
 2.Capture new PIN 
 
-specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
-
 ```swift
-sdk.changePinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
+sdk.changePinForm(type: pinType, config: pinChangeConfig) { successResponse, errorResponse in
 	// handle here error and success
 }
 ```
 
 ##### Verify PIN Form 
-A PIN-pad will be displayed into a separate screen (UIViewController). 
-
-specify required pin type (pin length 4...6): `let pinType = NIPinFormType.dynamic`
 
 ```swift
-sdk.verifyPinForm(type: pinType, viewController: navigationViewController, displayAttributes: displayAttributes) { successResponse, errorResponse in
+sdk.verifyPinForm(type: pinType, config: pinVerifyConfig) { successResponse, errorResponse in
 	// handle here error and success
 }
 ```
@@ -317,16 +333,6 @@ sdk.verifyPin(pin: pin) { successResponse, errorResponse in
 }
 ```
 
-
-##### View PIN
-The programmatic interface for the View PIN functionality will return a String value representing the PIN or failure response.
-
-Swift:
-```swift
-sdk.getPin { pin, errorResponse in
-    //  handle here error and success
-}
-```
 
 # Sample application
 Check sample application in "Example" directory with SDK usage

@@ -12,11 +12,32 @@ public protocol ViewPinService {
     func getPin(completion: @escaping (String?, NIErrorResponse?, @escaping () -> Void) -> Void)
 }
 
-class ViewPinViewModel {
+public class ViewPinViewModel {
+    public struct Config {
+        public let countDownTemplate: String
+        public let digitFont: UIFont
+        public var colorInput: UIColor?
+        public var timer: Double
+        
+        public init(countDownTemplate: String, digitFont: UIFont, colorInput: UIColor? = nil, timer: Double) {
+            self.countDownTemplate = countDownTemplate
+            self.digitFont = digitFont
+            self.colorInput = colorInput
+            self.timer = timer
+        }
+        
+        public static let `default` = Config(
+            countDownTemplate: NISDKStrings.view_pin_countdown_template.rawValue, 
+            digitFont: UIElement.PinFormLabel.pinDigit.defaultFont,
+            colorInput: UIColor.label,
+            timer: 0
+        )
+    }
+    
     var callback: ((NISuccessResponse?, NIErrorResponse?, @escaping () -> Void) -> Void)?
     var startTimer = false
     
-    private let displayAttributes: NIDisplayAttributes?
+    let config: Config
     private let service: ViewPinService
     
     private(set) var pin: String? {
@@ -27,8 +48,8 @@ class ViewPinViewModel {
     
     var bindCardDetailsViewModel = {}
     
-    init(displayAttributes: NIDisplayAttributes?, service: ViewPinService) {
-        self.displayAttributes = displayAttributes
+    public init(config: Config, service: ViewPinService) {
+        self.config = config
         self.service = service
         getPin()
     }
@@ -53,15 +74,5 @@ class ViewPinViewModel {
                 self.startTimer = false
             }
         }
-    }
-}
-
-// MARK: - Helpers/Utils
-extension ViewPinViewModel {    
-    var theme: NITheme { /// default is light
-        return displayAttributes?.theme ?? .light
-    }
-    func font(for label: UIElement.PinFormLabel) -> UIFont {
-        displayAttributes?.fonts.font(for: label) ?? label.defaultFont
     }
 }

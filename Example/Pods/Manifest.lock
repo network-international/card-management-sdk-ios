@@ -1,5 +1,5 @@
 PODS:
-  - NICardManagementSDK (2.0.0-alpha.1)
+  - NICardManagementSDK (2.1.0)
 
 DEPENDENCIES:
   - NICardManagementSDK (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NICardManagementSDK: 6cb658b9c235b4fad2726033b5520030e981b0a5
+  NICardManagementSDK: 87a42490affbbc144934a8ae220b81ab60b5f68a
 
-PODFILE CHECKSUM: d31f7e69f1e0cad0b4d1556de22f5a07cd313230
+PODFILE CHECKSUM: 728cf17c9caf3b85f8c7a736f40c2d76590596ae
 
 COCOAPODS: 1.15.2

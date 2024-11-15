@@ -13,6 +13,10 @@ protocol PinViewProtocol: AnyObject {
 
 class PinView: UIView {
     
+    static var fromBundle: PinView? {
+        Bundle(for: Self.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
+    }
+    
     @IBOutlet private weak var dot1: DotView!
     @IBOutlet private weak var dot2: DotView!
     @IBOutlet private weak var dot3: DotView!
@@ -101,46 +105,15 @@ class PinView: UIView {
             dot6.isHidden = false
         }
         
-        descriptionLabel.text = viewmodel.descriptionText
+        descriptionLabel.attributedText = viewmodel.descriptionText
         confirmButton.isEnabled = false
         deleteButton.isUserInteractionEnabled = true
         
         
-        // Theme
-        if #available(iOS 13.0, *) {
-            backgroundColor = UIColor.backgroundColor
-            overrideUserInterfaceStyle = viewmodel.theme == .light ? .light : .dark
-        } else {
-            /// Fallback on earlier versions
-            setupTheme(viewmodel.theme)
-        }
+        backgroundColor = UIColor.backgroundColor
         
         dotsStackView.semanticContentAttribute = .forceLeftToRight
         keyboardStackView.semanticContentAttribute = .forceLeftToRight
-    }
-    
-    private func setupTheme(_ theme: NITheme) {
-        switch theme {
-        case .light:
-            backgroundColor = UIColor.white
-            descriptionLabel.textColor = .darkerGrayLight
-            deleteButton.imageView?.tintColor = UIColor.darkerGrayLight
-        case .dark:
-            backgroundColor = UIColor.black
-            descriptionLabel.textColor = .white
-            deleteButton.imageView?.tintColor = UIColor.darkerGrayDark
-        }
-        
-        button0.setTheme(theme)
-        button1.setTheme(theme)
-        button2.setTheme(theme)
-        button3.setTheme(theme)
-        button4.setTheme(theme)
-        button5.setTheme(theme)
-        button6.setTheme(theme)
-        button7.setTheme(theme)
-        button8.setTheme(theme)
-        button9.setTheme(theme)
     }
     
     

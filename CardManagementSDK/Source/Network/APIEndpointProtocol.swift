@@ -16,17 +16,18 @@ protocol APIEndpointProtocol {
     var headers: Headers { get }
     var token: String? { get }
     var rootUrl: String { get }
-    func asURLRequest() throws -> URLRequest?
+    func asURLRequest(extraHeaders: [String: String]?) -> URLRequest?
 }
 
 extension APIEndpointProtocol {
     
-    func asURLRequest() throws -> URLRequest? {
-        return try WebServices.createRequest(
+    func asURLRequest(extraHeaders: [String: String]?) -> URLRequest? {
+        WebServices.createRequest(
             baseUrl: rootUrl.asURL,
             path: path,
             method: method,
             headers: headers,
+            extraHeaders: extraHeaders,
             parameters: parameters,
             postQuery: queryParameters,
             token: token
