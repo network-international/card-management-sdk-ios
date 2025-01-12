@@ -17,19 +17,22 @@ class NIMobileAPI {
     private let cardIdentifierId: String
     private let cardIdentifierType: String
     private let bankCode: String
+    private let extraHeaders: [String: String]?
     
     required init(
         rootUrl: String,
         cardIdentifierId: String,
         cardIdentifierType: String,
         bankCode: String,
-        tokenFetchable: NICardManagementTokenFetchable
+        tokenFetchable: NICardManagementTokenFetchable,
+        extraHeaders: [String: String]?
     ) {
         self.tokenFetchable = tokenFetchable
         self.cardIdentifierId = cardIdentifierId
         self.cardIdentifierType = cardIdentifierType
         self.bankCode = bankCode
         self.rootUrl = rootUrl
+        self.extraHeaders = extraHeaders
     }
     
     func retrieveCardDetails(completion: @escaping (CardDetailsResponse?, NIErrorResponse?) -> Void) {
@@ -38,7 +41,7 @@ class NIMobileAPI {
             completion(nil, NIErrorResponse(error: NISDKErrors.RSAKEY_ERROR))
             return
         }
-        
+        let extraHeaders = self.extraHeaders
         let cardParams = CardDetailsParams(publicKey: publicKey)
         let requestBuilder: (NIConnectionProperties) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode] connectionProperties in
             Request(.cardDetails(
@@ -47,7 +50,7 @@ class NIMobileAPI {
                 type: cardIdentifierType,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -83,8 +86,9 @@ class NIMobileAPI {
             cardIdentifierType: cardIdentifierType,
             publicKey: publicKey
         )
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
-            Request(.cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties))
+            Request(.cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { response, error in
             guard let response = response else {
@@ -106,8 +110,9 @@ class NIMobileAPI {
     }
     
     func retrievePinCertificate(completion: @escaping (PinCertificateResponse?, NIErrorResponse?) -> Void) {
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [bankCode] connectionProperties in
-            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties))
+            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -142,12 +147,13 @@ class NIMobileAPI {
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType
         )
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
             Request(.viewPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -188,12 +194,13 @@ class NIMobileAPI {
             encryptedPin: encryptedPin,
             encryptionMethod: encryption.method
         )
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
             Request(.setPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -211,12 +218,13 @@ class NIMobileAPI {
             encryptedPin: encryptedPin,
             encryptionMethod: encryption.method
         )
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
             Request(.verifyPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -234,12 +242,13 @@ class NIMobileAPI {
             encryptedNewPin: encryptedPin,
             encryptionMethod: encryption.0.method
         )
+        let extraHeaders = self.extraHeaders
         let requestBuilder: (NIConnectionProperties) -> Request = { [params, bankCode] connectionProperties in
             Request(.changePin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ))
+            ), extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }

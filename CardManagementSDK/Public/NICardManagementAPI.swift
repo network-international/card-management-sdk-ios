@@ -17,14 +17,16 @@ public final class NICardManagementAPI {
         cardIdentifierId: String,
         cardIdentifierType: String,
         bankCode: String,
-        tokenFetchable: NICardManagementTokenFetchable
+        tokenFetchable: NICardManagementTokenFetchable,
+        extraHeaders: [String: String]?
     ) {
         self.mobileApi = NIMobileAPI(
             rootUrl: rootUrl,
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType,
             bankCode: bankCode,
-            tokenFetchable: tokenFetchable
+            tokenFetchable: tokenFetchable,
+            extraHeaders: extraHeaders
         )
         UIFont.registerDefaultFonts()
     }
