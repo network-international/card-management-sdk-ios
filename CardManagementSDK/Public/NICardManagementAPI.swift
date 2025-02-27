@@ -40,7 +40,6 @@ public final class NICardManagementAPI {
             logger: logger
         )
         self.logger = logger
-        UIFont.registerDefaultFonts()
     }
     
     // MARK: - Form Factories Interface

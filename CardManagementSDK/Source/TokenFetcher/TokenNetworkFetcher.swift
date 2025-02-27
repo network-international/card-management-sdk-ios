@@ -9,6 +9,8 @@ import Foundation
 
 // Simple network client
 class TokenNetworkFetcher: NICardManagementTokenFetchable {
+    public var isRefreshable: Bool { true }
+    
     private let urlRequest: URLRequest?
     private let credentials: ClientCredentials
     

@@ -13,6 +13,7 @@ public enum TokenError: Error {
 }
 
 public protocol NICardManagementTokenFetchable {
+    var isRefreshable: Bool { get }
     func fetchToken(completion: @escaping (Result<AccessToken, TokenError>) -> Void)
     func clearToken()
 }
