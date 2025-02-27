@@ -18,6 +18,8 @@ class TokenRepository {
 }
 
 extension TokenRepository: NICardManagementTokenFetchable {
+    var isRefreshable: Bool { true }
+    
     func fetchToken(completion: @escaping (Result<AccessToken, TokenError>) -> Void) {
         if let token = try? tokenStorage.getToken(), !token.isExpired {
             DispatchQueue.main.async { completion(.success(token)) }

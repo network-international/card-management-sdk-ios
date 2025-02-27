@@ -294,7 +294,8 @@ class NIMobileAPI {
 
 extension NIMobileAPI {
     func sendRequest(retryAndRefreshToken: Bool = false, builder: @escaping (NIConnectionProperties, RequestLogger) -> Request, completion: @escaping (Response?, NIErrorResponse?) -> Void) {
-        if retryAndRefreshToken { tokenFetchable.clearToken() }
+        let isRefreshable = tokenFetchable.isRefreshable
+        if retryAndRefreshToken && isRefreshable { tokenFetchable.clearToken() }
         // retain self explicitry
         tokenFetchable.fetchToken { [self] result in
             switch result {
@@ -302,13 +303,11 @@ extension NIMobileAPI {
                 let request = builder(.init(rootUrl: self.rootUrl, token: token.value), RequestLoggerAdapter(logger: self.logger))
                 request.sendAsync { response, error in
                     // if it is first attempt and we got 401 (auth error) - retry
-                    if let error = error, error.errorCode == "401", !retryAndRefreshToken {
+                    if let error = error, error.errorCode == "401", isRefreshable, !retryAndRefreshToken {
                         self.sendRequest(retryAndRefreshToken: true, builder: builder, completion: completion)
                         return
                     }
                     guard let response = response else {
-                        // clear old token if no response or error
-                        self.tokenFetchable.clearToken()
                         if error != nil {
                             completion(nil, error)
                         }

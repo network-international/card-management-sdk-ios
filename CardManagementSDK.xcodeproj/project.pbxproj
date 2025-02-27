@@ -92,7 +92,6 @@
 		F4C725A629377062001B28A8 /* NICardAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C725A529377062001B28A8 /* NICardAttributes.swift */; };
 		F4D0BFC42930AD6D0006080C /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D0BFC32930AD6D0006080C /* NibLoadable.swift */; };
 		F4DE3B44290BDA4600BF4727 /* RSAUtils+Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B43290BDA4600BF4727 /* RSAUtils+Certificate.swift */; };
-		F4DE3B8529124B3A00BF4727 /* OCRA.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4DE3B8429124B2A00BF4727 /* OCRA.otf */; };
 		F4DE3B8829125A8900BF4727 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8729125A8900BF4727 /* UIFont+Utils.swift */; };
 		F4DE3B8A29125AAD00BF4727 /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3B8929125AAD00BF4727 /* Bundle+Utils.swift */; };
 		F4DE3BCE2915773300BF4727 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE3BCD2915773300BF4727 /* UIColor+Utils.swift */; };
@@ -205,7 +204,6 @@
 		F4C725A529377062001B28A8 /* NICardAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardAttributes.swift; sourceTree = "<group>"; };
 		F4D0BFC32930AD6D0006080C /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		F4DE3B43290BDA4600BF4727 /* RSAUtils+Certificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSAUtils+Certificate.swift"; sourceTree = "<group>"; };
-		F4DE3B8429124B2A00BF4727 /* OCRA.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = OCRA.otf; sourceTree = "<group>"; };
 		F4DE3B8629124B5700BF4727 /* NICardManagementSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "NICardManagementSDK-Info.plist"; sourceTree = "<group>"; };
 		F4DE3B8729125A8900BF4727 /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		F4DE3B8929125AAD00BF4727 /* Bundle+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
@@ -358,14 +356,6 @@
 			path = IDZSwiftCommonCrypto;
 			sourceTree = "<group>";
 		};
-		F44559AA2906D48500384188 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F4DE3B8329124AE100BF4727 /* Fonts */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		F447E44028F7196B005A5F46 /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,14 +388,6 @@
 				2A26D2082A9DE413000C364E /* ViewPinResponse.swift */,
 			);
 			path = ResponseModels;
-			sourceTree = "<group>";
-		};
-		F4DE3B8329124AE100BF4727 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				F4DE3B8429124B2A00BF4727 /* OCRA.otf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		F4E7695B28EBF9E800CDC7E4 = {
@@ -470,7 +452,6 @@
 				F4E7698528EC7A8500CDC7E4 /* Models */,
 				F4E7698628EC7A8A00CDC7E4 /* Network */,
 				F4E7698728EC7AA200CDC7E4 /* Utils */,
-				F44559AA2906D48500384188 /* Resources */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -676,7 +657,6 @@
 			files = (
 				2AD494F12906A6F000E25695 /* ChangePinViewController.xib in Resources */,
 				F4E76A0B28EDE19900CDC7E4 /* CardDetailsViewController.xib in Resources */,
-				F4DE3B8529124B3A00BF4727 /* OCRA.otf in Resources */,
 				2ACE7F7028F837E500A8B01D /* PinView.xib in Resources */,
 				2AB28EF6290027A90078E75C /* Assets.xcassets in Resources */,
 				2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */,
