@@ -9,14 +9,7 @@ import UIKit
 
 extension UIFont {
     
-    /// registers default font, provided in the sdk bundle
-    static func registerDefaultFonts() {
-        UIFont.registerFont(withFilenameString: "OCRA.otf", in: Bundle.sdkBundle)
-    }
-    
-    
-    // MARK: - Private
-    private static func registerFont(withFilenameString filenameString: String, in bundle: Bundle) {
+    static func registerFont(withFilenameString filenameString: String, in bundle: Bundle) {
         guard let pathForResourceString = bundle.path(forResource: filenameString, ofType: nil) else {
             // [UIFont] Failed to register font - path for resource not found."
             return
