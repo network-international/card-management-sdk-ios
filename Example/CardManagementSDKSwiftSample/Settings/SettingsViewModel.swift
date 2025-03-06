@@ -29,27 +29,35 @@ final class SettingsViewModel {
 
 
 extension SettingsModel {
-    var tokenFetchableSimple: NICardManagementTokenFetchable {
-        TokenFetcherFactory.makeSimpleWrapper(tokenValue:"put your token here")
+    func makeStaticTokenFetcher(_ token: String) -> NICardManagementTokenFetchable {
+        TokenFetcherFactory.makeSimpleWrapper(tokenValue: token)
     }
     
-    var demoTokenFetcher: NICardManagementTokenFetchable {
+    func makeDemoTokenFetcher(tokenUrl: String, clientId: String, clientSecret: String) -> NICardManagementTokenFetchable {
         TokenFetcherFactory.makeDemoClient(
-            urlString: credentials.tokenUrl,
+            urlString: tokenUrl,
             credentials: .init(
-                clientId: credentials.clientId,
-                clientSecret: credentials.clientSecret
+                clientId: clientId,
+                clientSecret: clientSecret
             )
         )
     }
     
     func buildSdk() -> NICardManagementAPI {
-        NICardManagementAPI(
+        let tokenFetcher: NICardManagementTokenFetchable
+        switch self.credentials {
+        case let .staticToken(token):
+            tokenFetcher = makeStaticTokenFetcher(token)
+        case let .demoTokenFetcher(values):
+            tokenFetcher = makeDemoTokenFetcher(tokenUrl: values.tokenUrl, clientId: values.clientId, clientSecret: values.clientSecret)
+        }
+        
+        return NICardManagementAPI(
             rootUrl: connection.baseUrl,
             cardIdentifierId: cardIdentifier.Id,
             cardIdentifierType: cardIdentifier.type,
             bankCode: connection.bankCode,
-            tokenFetchable: demoTokenFetcher,
+            tokenFetchable: tokenFetcher,
             // pass nil if there are no needs in extra headers
             extraHeadersProvider: AdditionalDemoHeadersProvider(),
             // pass nil or add logger for debugging, like NICardManagementLogging()

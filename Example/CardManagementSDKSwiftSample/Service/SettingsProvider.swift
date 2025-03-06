@@ -82,7 +82,7 @@ fileprivate extension SettingsModel {
             connection: .init(baseUrl: "", bankCode: "FICODE"),
             cardIdentifier: .init(Id: "", type: ""),
             pinType: .initial, 
-            credentials: .init(tokenUrl: "", clientId: "CLIENTID", clientSecret: "******")
+            credentials: .staticToken("")
         )
     }
 }
