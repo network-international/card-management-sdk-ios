@@ -6,13 +6,14 @@ The current supported features are:
 2. Set PIN : Displays a PIN pad to allow cardholder to set a PIN on their new card. The PIN is end to end encrypted to securely transport this sensitive information
 3. Change PIN: Displays two PIN pad to allow the cardholder to change their PIN by providing old & new PIN. The PINs are end to end encrypted to securely transport this sensitive information
 4. Verify PIN: Displays a PIN pad to allow cardholder to verify PIN on their card. The PIN is end to end encrypted to securely transport this sensitive information
-5. View PIN: Displays a component providing the ability to show PIN card. The PIN is end to end encrypted to securely transport this sensitive information
 
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
 ## Installation
-The SDK can be added via [CocoaPods](https://cocoapods.org/)
+Choose desired option:
+- The SDK can be added via [CocoaPods](https://cocoapods.org/)
+- Download framework file from github releases section and add it to your project manually
 
 ##### CocoaPods
 The steps to install it via CocoaPods:

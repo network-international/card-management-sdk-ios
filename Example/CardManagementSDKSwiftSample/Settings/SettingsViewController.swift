@@ -88,7 +88,7 @@ private extension NIPinFormType {
 }
 
 // MARK: - DataSource
-fileprivate extension SettingsViewController {
+private extension SettingsViewController {
     enum Section: Int, CustomStringConvertible, CaseIterable {
         case credentials
         case cardIdentifier
@@ -129,6 +129,8 @@ fileprivate extension SettingsViewController {
         case clientId = "Client Id"
         case clientSecret = "Client secret"
         case tokenUrl = "Token fetch url"
+        case staticToken = "Token value"
+        case credentialsType = "Choose fetcher"
         // card info
         case cardIdentifierId = "Card Identifier Id"
         case cardIdentifierType = "Card Identifier Type"
@@ -145,16 +147,35 @@ fileprivate extension SettingsViewController {
             [.leftAlignment, .cardNumberGroupTopAlignment, .dateCvvGroupTopAlignment, .cardHolderNameGroupTopAlignment]
         }
     }
-    
+}
+
+private extension SettingsViewController {
     func cellRegistrationHandler(cell: UICollectionViewListCell, indexPath: IndexPath, item: Item) {
         if #available(iOS 16.0, *) {
             var backgroundConfiguration = cell.defaultBackgroundConfiguration()
             backgroundConfiguration.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
-                .secondarySystemGroupedBackground // disable selection style
+                    .secondarySystemGroupedBackground // disable selection style
             }
             cell.backgroundConfiguration = backgroundConfiguration
         }
         switch item {
+        case let .row(itemValue) where ItemName.credentialsType.rawValue == itemValue.name.rawValue:
+            var config = cell.segmentedConfiguration()
+            config.segments = ["Static", "Demo"]
+            config.selectedIndex = viewModel.settingsProvider.settings.credentials.isStatic ? 0 : 1
+            config.segmentSelected = { [weak self] segment in
+                guard let self = self else { return }
+                var settings = self.viewModel.settingsProvider.settings
+                switch segment {
+                case "Static":
+                    settings.credentials = SettingsModel.Credentials.staticToken("")
+                default:
+                    settings.credentials = SettingsModel.Credentials.demoTokenFetcher(.init(tokenUrl: "", clientId: "", clientSecret: ""))
+                }
+                self.viewModel.settingsProvider.updateSettings(settings)
+                self.applySnapshot()
+            }
+            cell.contentConfiguration = config
         case let .row(itemValue) where ItemName.textPositioning.contains(itemValue.name):
             var config = cell.stepperConfiguration()
             config.initialValue = viewModel.settingsProvider.textPosition.value(for: itemValue.name)
@@ -178,25 +199,50 @@ fileprivate extension SettingsViewController {
             cell.contentConfiguration = contentConfiguration
         }
     }
+    
     func applySnapshot() {
         var snapshot = dataSource.snapshot()
         snapshot.deleteAllItems()
         snapshot.appendSections(Section.allCases)
+        
         snapshot.appendItems([
             .header(Section.credentials.description),
-            .row(.init(
-                name: .clientId,
-                text: viewModel.settingsProvider.settings.credentials.clientId
-            )),
-            .row(.init(
-                name: .clientSecret,
-                text: viewModel.settingsProvider.settings.credentials.clientSecret
-            )),
-            .row(.init(
-                name: .tokenUrl,
-                text: viewModel.settingsProvider.settings.credentials.tokenUrl
-            ))
+            
         ], toSection: .credentials)
+        
+        switch viewModel.settingsProvider.settings.credentials {
+        case let .demoTokenFetcher(fetcher):
+            snapshot.appendItems([
+                .row(.init(
+                    name: .credentialsType,
+                    text: "Demo"
+                )),
+                .row(.init(
+                    name: .clientId,
+                    text: fetcher.clientId
+                )),
+                .row(.init(
+                    name: .clientSecret,
+                    text: fetcher.clientSecret
+                )),
+                .row(.init(
+                    name: .tokenUrl,
+                    text: fetcher.tokenUrl
+                ))
+            ], toSection: .credentials)
+        case let .staticToken(token):
+            snapshot.appendItems([
+                .row(.init(
+                    name: .credentialsType,
+                    text: "Static"
+                )),
+                .row(.init(
+                    name: .staticToken,
+                    text: token
+                ))
+            ], toSection: .credentials)
+        }
+        
         snapshot.appendItems([
             .header(Section.cardIdentifier.description),
             .row(.init(
@@ -261,18 +307,50 @@ fileprivate extension SettingsViewController {
         viewModel.settingsProvider.updateTextPosition(current)
     }
     
+        
     func updateSettings(itemName: ItemName, text: String) {
         var settings = self.viewModel.settingsProvider.settings
-        
-        switch itemName {
-            // credentials
-        case .clientId:
-            settings.credentials.clientId = text
-        case .clientSecret:
-            settings.credentials.clientSecret = text
-        case .tokenUrl:
-            settings.credentials.tokenUrl = text
+        let updateCredentialsIfNeeded: (SettingsModel, ItemName) -> SettingsModel = { oldSettings, itemName in
+            switch itemName {
+            case .clientId:
+                guard case let .demoTokenFetcher(fetcher) = oldSettings.credentials else { return oldSettings }
+                var newSettings = oldSettings
+                newSettings.credentials = .demoTokenFetcher(.init(
+                    tokenUrl: fetcher.tokenUrl,
+                    clientId: text,
+                    clientSecret: fetcher.clientSecret
+                ))
+                return newSettings
+            case .clientSecret:
+                guard case let .demoTokenFetcher(fetcher) = oldSettings.credentials else { return oldSettings }
+                var newSettings = oldSettings
+                newSettings.credentials = .demoTokenFetcher(.init(
+                    tokenUrl: fetcher.tokenUrl,
+                    clientId: fetcher.clientId,
+                    clientSecret: text
+                ))
+                return newSettings
+            case .tokenUrl:
+                guard case let .demoTokenFetcher(fetcher) = oldSettings.credentials else { return oldSettings }
+                var newSettings = oldSettings
+                newSettings.credentials = .demoTokenFetcher(.init(
+                    tokenUrl: text,
+                    clientId: fetcher.clientId,
+                    clientSecret: fetcher.clientSecret
+                ))
+                return newSettings
+            case .staticToken:
+                guard case .staticToken = oldSettings.credentials else { return oldSettings }
+                var newSettings = oldSettings
+                newSettings.credentials = .staticToken(text)
+                return newSettings
+            default:
+                return oldSettings
+            }
             
+        }
+        settings = updateCredentialsIfNeeded(settings, itemName)
+        switch itemName {
         case .cardIdentifierId:
             settings.cardIdentifier.Id = text
         case .cardIdentifierType:

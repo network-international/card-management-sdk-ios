@@ -4,3 +4,4 @@ UserInterfaceState.xcuserstate
 xcschememanagement.plist
 *.xcbkptlist
 tools/temp
+Example/build/XCBuildData
