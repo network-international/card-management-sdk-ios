@@ -1,5 +1,5 @@
 PODS:
-  - NICardManagementSDK (2.1.1)
+  - NICardManagementSDK (2.1.3)
 
 DEPENDENCIES:
   - NICardManagementSDK (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NICardManagementSDK: 19c40ff40848c3c1b295bea1a176b0506b3f4287
+  NICardManagementSDK: 6329f879f4e6dd8433f2e68193a6ec668740593a
 
 PODFILE CHECKSUM: 728cf17c9caf3b85f8c7a736f40c2d76590596ae
 
