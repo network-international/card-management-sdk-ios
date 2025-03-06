@@ -24,10 +24,23 @@ extension SettingsModel {
         var Id: String
         var type: String
     }
-    struct Credentials {
+    
+    struct DemoTokenFetcher {
         var tokenUrl: String
         var clientId: String
         var clientSecret: String
+    }
+    enum Credentials {
+        case demoTokenFetcher(DemoTokenFetcher)
+        case staticToken(String)
+        var isStatic: Bool {
+            switch self {
+            case .demoTokenFetcher:
+                return false
+            case .staticToken:
+                return true
+            }
+        }
     }
 }
 
@@ -35,9 +48,10 @@ extension SettingsModel {
     static func decode(from dict: [String: Any]) -> Self? {
         guard
             let connection = Connection.decode(from: dict["connection"] as? [String: String] ?? [:]),
-            let cardIdentifier = CardIdentifier.decode(from: dict["cardIdentifier"] as? [String: String] ?? [:]),
-            let credentials = Credentials.decode(from: dict["credentials"] as? [String: String] ?? [:])
+            let cardIdentifier = CardIdentifier.decode(from: dict["cardIdentifier"] as? [String: String] ?? [:])
         else { return nil }
+        let credentials = Credentials.decode(from: dict["credentials"] as? [String: String] ?? [:])
+        ?? .staticToken("put your token here")
         return .init(
             connection: connection,
             cardIdentifier: cardIdentifier,
@@ -64,11 +78,11 @@ extension SettingsModel.CardIdentifier {
 extension SettingsModel.Credentials {
     static func decode(from dict: [String: String]) -> Self? {
         guard
-            let tokenUrl = dict["tokenUrl"],
-            let clientId = dict["clientId"],
-            let clientSecret = dict["clientSecret"]
+            let tokenUrl = dict["demoTokenUrl"],
+            let clientId = dict["demoClientId"],
+            let clientSecret = dict["demoClientSecret"]
         else { return nil }
-        return .init(tokenUrl: tokenUrl, clientId: clientId, clientSecret: clientSecret)
+        return .demoTokenFetcher(.init(tokenUrl: tokenUrl, clientId: clientId, clientSecret: clientSecret))
     }
 }
 

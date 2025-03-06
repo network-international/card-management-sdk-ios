@@ -32,7 +32,6 @@
 		2AD494F12906A6F000E25695 /* ChangePinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AD494EF2906A6F000E25695 /* ChangePinViewController.xib */; };
 		2AD494F32906A93500E25695 /* ChangePinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD494F22906A93500E25695 /* ChangePinViewModel.swift */; };
 		BA70A1492B306F8300A196C9 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1482B306F8300A196C9 /* AccessToken.swift */; };
-		BA70A14B2B30793700A196C9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14A2B30793700A196C9 /* Environment.swift */; };
 		BA70A14D2B31C53500A196C9 /* NICardManagementTokenFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */; };
 		BA70A1502B31C5B600A196C9 /* TokenFetcherSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A14F2B31C5B600A196C9 /* TokenFetcherSimple.swift */; };
 		BA70A1522B31C6C900A196C9 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA70A1512B31C6C900A196C9 /* TokenRepository.swift */; };
@@ -144,7 +143,6 @@
 		2AD494EF2906A6F000E25695 /* ChangePinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePinViewController.xib; sourceTree = "<group>"; };
 		2AD494F22906A93500E25695 /* ChangePinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinViewModel.swift; sourceTree = "<group>"; };
 		BA70A1482B306F8300A196C9 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
-		BA70A14A2B30793700A196C9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		BA70A14C2B31C53500A196C9 /* NICardManagementTokenFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NICardManagementTokenFetchable.swift; sourceTree = "<group>"; };
 		BA70A14F2B31C5B600A196C9 /* TokenFetcherSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFetcherSimple.swift; sourceTree = "<group>"; };
 		BA70A1512B31C6C900A196C9 /* TokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
@@ -504,7 +502,6 @@
 				F45A7DFC28EF229100B3486E /* JSON.swift */,
 				F45A7E0928F40C2200B3486E /* WSHTTPMethod.swift */,
 				F45A7E0B28F40C7300B3486E /* WebServices.swift */,
-				BA70A14A2B30793700A196C9 /* Environment.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -728,7 +725,6 @@
 				F447E44828F83BBA005A5F46 /* PinCertificateResponse.swift in Sources */,
 				F42E8074294619C500640860 /* SecKey+KeyPair.swift in Sources */,
 				BA98DEFE2BBEDB3300A0C434 /* UIElement.swift in Sources */,
-				BA70A14B2B30793700A196C9 /* Environment.swift in Sources */,
 				2AD494F02906A6F000E25695 /* ChangePinViewController.swift in Sources */,
 				2AAA25AC2A8E238C0068466D /* NIViewPinView.swift in Sources */,
 				F447E44228F7197C005A5F46 /* CardDetailsParams.swift in Sources */,

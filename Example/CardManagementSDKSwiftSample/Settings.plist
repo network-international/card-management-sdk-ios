@@ -20,11 +20,11 @@
 		</dict>
 		<key>credentials</key>
 		<dict>
-			<key>tokenUrl</key>
+			<key>demoTokenUrl</key>
 			<string>https://apitest.network.ae/CardServices/v2/Token</string>
-			<key>clientSecret</key>
-			<string>hnCqJYwuzt</string>
-			<key>clientId</key>
+			<key>demoClientSecret</key>
+			<string>*******</string>
+			<key>demoClientId</key>
 			<string>6rxqcbjuejesgw95htm4r3vg</string>
 		</dict>
 	</dict>
