@@ -8,8 +8,8 @@
 import Foundation
 
 struct NIErrorConstants {
-    static let errorCode = "error_code"
-    static let errorDescription = "error_description"
+    static let errorCode = "error_code" // resultCode
+    static let errorDescription = "error_description" // resultDescription
 }
 
 @objc public class NIErrorResponse: NSObject {
@@ -54,8 +54,17 @@ struct NIErrorConstants {
             }
             
             isError = true
-            errorCode = json[NIErrorConstants.errorCode] as? String ?? String(response.code)
-            errorMessage = json[NIErrorConstants.errorDescription] as? String ?? json[ResponseConstants.message] as? String ?? "Unknown"
+            
+            errorCode = json[NIErrorConstants.errorCode] as? String
+            ?? json["resultCode"] as? String
+            ?? String(response.code)
+            
+            errorMessage = json[NIErrorConstants.errorDescription] as? String
+            ?? json[ResponseConstants.message] as? String
+            ?? json["resultDescription"] as? String
+            ?? String(data: data, encoding: .utf8)
+            ?? "Unknown"
+            
             return self
         }
     }
