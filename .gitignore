@@ -5,3 +5,5 @@ xcschememanagement.plist
 *.xcbkptlist
 tools/temp
 Example/build/XCBuildData
+archives
+NICardManagementSDK.xcframework
