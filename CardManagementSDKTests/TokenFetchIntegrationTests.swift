@@ -40,29 +40,4 @@ final class TokenFetchIntegrationTests: XCTestCase {
         XCTAssertEqual(token.value, "my Token value$")
         XCTAssertEqual(token.isExpired, false)
     }
-
-    func testNetworkFetcher() throws {
-        // Arrange
-        let urlString = "https://apitest.network.ae/CardServices/v2/Token"
-        let credentials = ClientCredentials(clientId: "CLIENTID",
-                                            clientSecret: "******")
-        tokenFetcher = TokenNetworkFetcher(urlString: urlString, credentials: credentials, timeoutInterval: 30)
-        let expectetion = expectation(description: "Got token")
-        var token: AccessToken?
-        // Act
-        tokenFetcher.fetchToken { result in
-            token = try? result.get()
-            expectetion.fulfill()
-        }
-        waitForExpectations(timeout: 30)
-        // Assert
-        guard let token = token else {
-            XCTFail("Token is nil")
-            return
-        }
-        XCTAssertEqual(token.expiresIn, 3600)
-        XCTAssertFalse(token.value.isEmpty)
-        XCTAssertEqual(token.isExpired, false)
-    }
-
 }

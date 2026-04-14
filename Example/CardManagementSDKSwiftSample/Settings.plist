@@ -21,11 +21,11 @@
 		<key>credentials</key>
 		<dict>
 			<key>demoTokenUrl</key>
-			<string>https://apitest.network.ae/CardServices/v2/Token</string>
+			<string>https://&lt;token-url&gt;</string>
 			<key>demoClientSecret</key>
 			<string>*******</string>
 			<key>demoClientId</key>
-			<string>6rxqcbjuejesgw95htm4r3vg</string>
+			<string>your client Id</string>
 		</dict>
 	</dict>
 </dict>
