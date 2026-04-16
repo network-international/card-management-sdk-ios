@@ -9,6 +9,8 @@ The project uses [CocoaPods](https://cocoapods.org/) package manager to attach S
 - make sure cocoapods installed `sudo gem install cocoapods`
 - Run `$ pod install --repo-update` in project directory
 
+Alternatively, you may consume the SDK as a binary XCFramework by downloading a release package from GitHub Releases and adding `NICardManagementSDK.xcframework` directly to your app.
+
 ## Quick start
 After compiling and starting sample app, check `settings` Tab and provide your credintials (ask development team for `client_secret`).
 - use credential clientId / client_secret to fetch token by SDK

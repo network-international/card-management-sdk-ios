@@ -13,15 +13,39 @@ The Network International iOS Card Management SDK requires Xcode 13 and later an
 ## Installation
 Choose desired option:
 - The SDK can be added via [CocoaPods](https://cocoapods.org/)
-- Download framework file from github releases section and add it to your project manually
+- Download the XCFramework release package from GitHub Releases and add it to your project manually
 
 ##### CocoaPods
 The steps to install it via CocoaPods:
 1.	Create a Podfile in the root directory where the .xcodeproj file resides.
-2.	Add pod 'NICardManagementSDK’ to the Podfile created in the above step.
+2.	Add pod 'NICardManagementSDK' to the Podfile created in the above step.
 3.	Close Xcode and run pod install command on the directory where the Podfile was created.
 4.	After performing the above step, open the .xcworkspace file that was created, to open your project.
 
+##### Manual release download
+The SDK is also distributed as a binary XCFramework in GitHub Releases.
+
+1. Download `NICardManagementSDK-<version>.zip` from the release page.
+2. Unzip the archive to get `NICardManagementSDK.xcframework`.
+3. In Xcode, drag `NICardManagementSDK.xcframework` into your app target's "Frameworks, Libraries, and Embedded Content" section.
+4. Set the framework embedding option to `Embed & Sign`.
+5. Import the SDK in Swift:
+
+> The release package includes the XCFramework with debug symbols (`.dSYM`) so symbolicated crash logs remain available.
+
+```swift
+import NICardManagementSDK
+```
+
+This distribution method works without CocoaPods and is compatible with Xcode 13+ and iOS 15+. 
+
+If you need to build the binary locally, use the included script:
+
+```bash
+./scripts/build-xcframework.sh
+```
+
+See `scripts/release-workflow.md` for the GitHub release workflow and version tagging process.
 
 ## Integration
 
