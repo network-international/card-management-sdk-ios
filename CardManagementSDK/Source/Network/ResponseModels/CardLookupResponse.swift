@@ -18,7 +18,7 @@ class CardLookupResponse: NSObject, Codable {
     
     
     enum CodingKeys: String, CodingKey {
-        case cardIdentifierId = "00000000"
+        case cardIdentifierId = "card_identifier_id"
         case cardIdentifierType = "card_identifier_type"
     }
     
