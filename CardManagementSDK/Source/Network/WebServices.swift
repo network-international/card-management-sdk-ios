@@ -84,7 +84,7 @@ enum WebServices {
         request.setValue(channelId, forHTTPHeaderField: WSConstants.HeaderKeys.channelId)
         
         extraHeaders?
-            .filter { !Headers.Key.allCases.map(\.rawValue).contains($0.key) }
+            //.filter { !Headers.Key.allCases.map(\.rawValue).contains($0.key) }
             .forEach {
                 request.setValue($0.value, forHTTPHeaderField: $0.key)
             }
