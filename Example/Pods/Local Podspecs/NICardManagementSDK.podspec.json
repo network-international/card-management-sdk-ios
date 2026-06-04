@@ -1,6 +1,6 @@
 {
   "name": "NICardManagementSDK",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "summary": "SDKs to help card issuers to consume our APIs from iOS applications.",
   "homepage": "https://github.com/network-international/card-management-sdk-ios",
   "license": {
@@ -14,10 +14,15 @@
   "swift_versions": "5.0",
   "source": {
     "git": "https://github.com/network-international/card-management-sdk-ios.git",
-    "tag": "2.1.7"
+    "tag": "2.1.8"
   },
   "source_files": "CardManagementSDK/**/*.{swift}",
-  "resources": "CardManagementSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets,strings,otf}",
+  "resources": "CardManagementSDK/Source/Views/**/*.xib",
+  "resource_bundles": {
+    "NICardManagementSDKResources": [
+      "CardManagementSDK/Source/Utils/Assets.xcassets"
+    ]
+  },
   "frameworks": [
     "UIKit",
     "Foundation"

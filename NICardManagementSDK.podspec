@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "NICardManagementSDK"
-  spec.version      = "2.1.7"
+  spec.version      = "2.1.8"
   spec.summary      = "SDKs to help card issuers to consume our APIs from iOS applications."
   spec.homepage     = "https://github.com/network-international/card-management-sdk-ios"
 
@@ -31,7 +31,13 @@ Pod::Spec.new do |spec|
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-spec.resources = "CardManagementSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets,strings,otf}"
+  spec.resources = "CardManagementSDK/Source/Views/**/*.xib"
+
+  spec.resource_bundles = {
+    "NICardManagementSDKResources" => [
+      "CardManagementSDK/Source/Utils/Assets.xcassets"
+    ]
+  }
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

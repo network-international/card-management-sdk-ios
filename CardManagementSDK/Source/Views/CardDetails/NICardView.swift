@@ -11,7 +11,7 @@ public final class NICardView: UIView {
     private lazy var cardNrCopyButton: UIButton = { // copyButton
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
+        let image = NICardView.copyIcon
         element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(cardNrCopyAction), for: .touchUpInside)
         return element
@@ -40,7 +40,7 @@ public final class NICardView: UIView {
     private lazy var nameCopyButton: UIButton = {
         let element = UIButton()
         element.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
+        let image = NICardView.copyIcon
         element.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
         element.addTarget(self, action: #selector(nameCopyAction), for: .touchUpInside)
         return element
@@ -220,6 +220,12 @@ public final class NICardView: UIView {
 
 // MARK: - Private
 private extension NICardView {
+    /// SF Symbol introduced in iOS 14; falls back to `doc.on.doc` (iOS 13+) if unavailable.
+    static var copyIcon: UIImage? {
+        UIImage(systemName: "rectangle.portrait.on.rectangle.portrait")
+            ?? UIImage(systemName: "doc.on.doc")
+    }
+
     enum Constants {
         static let eyeImageSize = CGSize(width: 20, height: 20)
         static let copyButtonHSpace: CGFloat = 14
