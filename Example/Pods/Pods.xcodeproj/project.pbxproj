@@ -7,109 +7,117 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0130FF410B4E7CE6820977C54781A06D /* PinViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20C52C96894C84DF6CB215EA67ACCA /* PinViewViewModel.swift */; };
-		035E99E770D1D297627B7B6AE1617D00 /* NIViewPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0745B23461CC71A7F111823C902F0805 /* NIViewPinView.swift */; };
-		0661F07BDC0B30B69D1EA8A349825F50 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD514DF9D74F6009BBC7FFA9EE90A99 /* AccessToken.swift */; };
-		092315703A0DF35048AE980C449CFF5F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A9952DBDF93A59F4E44B36D0CDDC40 /* Request.swift */; };
-		096D681CDB49DCD9A0C1154D41677808 /* NICardElementsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D23B7A13213F4C419F3942DA9D83676 /* NICardElementsPresenter.swift */; };
-		09E43C92171B47E303251B9EC2A19A75 /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2230BB2A67ECCF85AE0A28E163815F9E /* DotView.swift */; };
-		0C14C54C58968451FAAB1B2243DFA70F /* TokenFetcherSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CE4CD0A6CED3238A4694FC77D5E32 /* TokenFetcherSimple.swift */; };
+		0546553828D9A1FE049F97B92B5A2AB6 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B808DD08CB9C8E123B089493C719C1 /* UIViewController+Alerts.swift */; };
+		0B4C7674CBE8A2A32A255340D2B19AF9 /* NICardManagementSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AAAA171BC50E23FAC8F211848CBD39F9 /* NICardManagementSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0CC0DC278913B4367637DD74DAC80A97 /* ChangePinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4999C760315368CCED9F10348B063FD /* ChangePinViewController.swift */; };
 		0CC93D7F0F898D71B4B1B02AB3CE9F94 /* Pods-CardManagementSDKSwiftSample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 224B665033AFBAD02C08BCFD7FBF1A55 /* Pods-CardManagementSDKSwiftSample-dummy.m */; };
-		0CE7D1BE799A345F7BCD8EF9B2733980 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA9E05774F4A1CDC57BB63AE863B7C6 /* Updateable.swift */; };
-		0EDE784110FC1622B3E437553673D047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1CE40CEE7380539F00420D715A1EE2 /* Assets.xcassets */; };
-		15385351F01266C308A3013524415E6A /* SecKey+Crypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9812965F76AF21F1D35838F0E28AE20C /* SecKey+Crypt.swift */; };
-		1B92630EE5FC50DB727A93F4E9755488 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FA42988F6DB6DC9E0E91BF62130C93 /* APIEndpoint.swift */; };
-		1DEEBB14543271072BB2F22E7080346D /* SetPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0137814370C21CE79A8218F24592A5CA /* SetPinViewController.xib */; };
-		1E1CA915AD4074AC585C6CD7EE42EE75 /* ViewPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017573D9502BF00DBA504FF8E839ECBE /* ViewPinResponse.swift */; };
-		20EB23AF6D3FE0432A2EE4270097A3AE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A30F82653B8265D74B994CE91F71E4C /* JSON.swift */; };
-		2150D8F69FFBC212A39A98670878CE72 /* WSHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05D8E1A1D61D8A678B907118A2E272 /* WSHTTPMethod.swift */; };
-		248CD9C2B24437801F1BEBB14C84648B /* FormCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCF03F31ADCE8DF135BD6B2B57EBD13 /* FormCoordinator.swift */; };
-		2495F9011C832159C942E5566D2483E1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF4CA3AF5536D14B4E015504E7AEEC0 /* UIKit.framework */; };
-		266E7E9E55235A3E834EA0F3F422D58A /* ASN1Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5401E2E25EE82EDD507EA55BB95FE0A5 /* ASN1Object.swift */; };
-		27D69C9D3A434CC6D74E77D0891577BE /* SecIdentity+PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8EB79408B7F9DA5525250267475CB0 /* SecIdentity+PrivateKey.swift */; };
-		28A7DBC05B59469C40A74773CD67DD88 /* NICardManagementTokenFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019B08FA7E6DF642A242EB9AFD285504 /* NICardManagementTokenFetchable.swift */; };
+		0ED27C8BE507E2EBFAD529444DB65FF1 /* APIEndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A86C22C370758709638AB97CE17B30 /* APIEndpointProtocol.swift */; };
+		12A2A80C72D1F3119AFA494B8DAABCF6 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2A55ED4B2E1C4EC65B1C6F84150746 /* TokenRepository.swift */; };
+		14108CCACA5D48F85931C277C218ED52 /* NIConnectionProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D67253914496EF25AD34AF90189C9D /* NIConnectionProperties.swift */; };
+		16670C4D6E380CE0020B16505F18E976 /* CardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2B61991959B2DD9169B06A3545092B /* CardDetailsViewController.swift */; };
+		16734C01E23D830AA23CF27C18D74917 /* CertificateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D757360888DDF88B5BB211AFBD33C /* CertificateRequest.swift */; };
+		19A1ACAC3E89C7B288D387CB79C52C10 /* PinViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800C6C6529EA99497F1B33CE85F5CCB5 /* PinViewViewModel.swift */; };
+		1C370174ADC1E8CEADAAB2E21E66DF59 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA438F42A692BFA80A64AE60573722D2 /* APIEndpoint.swift */; };
+		1CA6354E37C0DC00DF2DE1DF52DD2DE0 /* NIMobileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932DD17CE9FDA5BA158FD93F9D4BC6CC /* NIMobileAPI.swift */; };
+		1DE78EFACF84221A7DA1FA450D30B120 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556B7E0FB96106281760D24B92BA4EE2 /* UIFont+Utils.swift */; };
+		2234D1613A7EA9756AACE3A4A3360D40 /* CardLookupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281FCF8E0AE1F3977CBFE57CC064AE8 /* CardLookupResponse.swift */; };
+		22980D11CA8B3B7B60D905F6D00042BC /* SecKey+Signing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091002243772C9E91821BD58FB544F3C /* SecKey+Signing.swift */; };
+		248F2EC69A83D801B040E8E76980112F /* SecKey+KeyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1303BBC8D9B0EE82044098AB56006A /* SecKey+KeyData.swift */; };
+		2633618EF8A88AF99134769FD305737A /* CertificateName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F44EF9364BCFCA8A46C07284D5B0BF /* CertificateName.swift */; };
+		27555B9B3BD33689E98DE0700915201B /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEE314606F3CBD21F5AE47FE39EB076 /* Updateable.swift */; };
+		277E9BA25212F4D6AF518BEB72AE77F0 /* VerifyPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D1A6062BF54D7C426F6D6AFE5ED060 /* VerifyPinViewController.xib */; };
+		280311FDDB8FE86E7D442FDAB359650C /* OID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A583D10645C6430A4B2E1B4DE3773A2D /* OID.swift */; };
 		2970E5B0F4062C8CB5B112F80FDA02B0 /* Pods-CardManagementSDKSwiftSample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 14EF73999E0FE1647902746080BA5333 /* Pods-CardManagementSDKSwiftSample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A631889BE55D3D5CD3624ACA271D4A2 /* BitString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873D6E57ECE68AE9B02C112720A05C58 /* BitString.swift */; };
-		2AD429DC06F21FDB39C255C5F3F01D75 /* NICardManagementSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B435329C204EE423284B8321225C23 /* NICardManagementSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AD76971A2F5060D2171D2CCB5E544D3 /* PinEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA0124BCBE380420C204CD7BE59EED9 /* PinEncryption.swift */; };
-		2DABBB4E536B406A1A1B6AFE07F58B78 /* ChangePinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432A13D047E2D12CB451ED23EB6A2D57 /* ChangePinParams.swift */; };
-		2E365C02C167F38DFCA6A7E8653FB36B /* NICardManagementAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A90BB7E5C2652C9FFB9DABA53FA0EA4 /* NICardManagementAPI.swift */; };
-		2F03B54677007D2711C8580921AD5C4D /* SetPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836927C97B7B6E1B8001ED7171DF6ECB /* SetPinViewModel.swift */; };
-		35F16AC7C86B34786E452301CB87F3E8 /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DA2973ED6BFCAA40ABF29C002E609A /* WebServices.swift */; };
-		3C3546C2CCE30041E448260FAFD82071 /* APIEndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7A302AF0D937E9DDAB5669161B26A /* APIEndpointProtocol.swift */; };
-		3D252F4BCDD254C91337B0D8529E322A /* CardLookupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0CCD984549542C6A5653E729F29CD7 /* CardLookupParams.swift */; };
-		3D2FE7A1C8F1805BF40FB690D7541550 /* OID.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF576C67C54762ABEAC42E17A0C91E8A /* OID.swift */; };
-		3EBF8A69C1B8F915C1A49F9950FE8F4A /* ClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4F57B82F921DA4AF13E008C241808 /* ClientCredentials.swift */; };
-		414E9BF17ECE80BC312EBE1AEAA6D8E3 /* CardDetailsParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F944FD5CB7DB6592686B7A3A67D28B /* CardDetailsParams.swift */; };
-		418D4347A26DE00A5A969E7A84011E3B /* VerifyPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD57221450D6C83DCD9E6FA526CF1D /* VerifyPinViewModel.swift */; };
-		423B5EB8D39BBA536E76DDE917A3562B /* PinBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A4CD4C4189E9EFD72B0DBEBC52C33C /* PinBlock.swift */; };
-		433A4C68571664AA22F792534FAD4D1F /* NIConnectionProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C692FA8CE45483EED27FC2ADF2BEF76 /* NIConnectionProperties.swift */; };
-		497BD30575F4F3FCD338EDE4FF43EF87 /* SecKey+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59665882B60159C5E0E97147601E5D9B /* SecKey+Keychain.swift */; };
-		4E54E9CC574EE56FA1F656AEB79BF449 /* CardLookupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8543ADDD175B54D692C5BC562F05D89 /* CardLookupResponse.swift */; };
-		4F3687DF2B85E736F2266728E8080F90 /* PinCertificateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E45C10AE1D4572B7F88080B4421C2B /* PinCertificateResponse.swift */; };
-		575EDD2C235471BE8A125B5B58C26C41 /* TokenNetworkFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34626C025BE941F865C79836A5851A /* TokenNetworkFetcher.swift */; };
-		5C128A5533E0AD75CC23D4FFA7E223E4 /* NIMobileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82840F12C82083E5C67D24B3173E796E /* NIMobileAPI.swift */; };
-		63D714E17BDA704B8FBE386349DCD367 /* CertificateName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97412D94359E1B6C9149E71C1E5984FD /* CertificateName.swift */; };
-		6997E4D0696EFF68A1E3486A28FD4F1F /* ChangePinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F295F232302F4428A2C72F905F1A1E /* ChangePinViewModel.swift */; };
-		6B95C99B6287935CC69DDE0863BF6EE6 /* CardDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13F405D906A18C96C372D3C24CE7A25A /* CardDetailsViewController.xib */; };
-		6E27FA20C50D53D9B83CB7350617AFE9 /* NICardManagementSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8037A42A881493A986FFC63F3635CE3E /* NICardManagementSDK-dummy.m */; };
-		70D7D2642D073992178FE5FB18A9E99E /* ViewPinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF34123927E90A904420C016C1C0E147 /* ViewPinParams.swift */; };
-		71865DA61832FA5E1EF1B8CD608DB77B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8F3459410A2E154AC7B0021F7E6CA3 /* Response.swift */; };
-		76B90103B2D3DEC8808B3ABE2CAA5132 /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55A4FBAE923C4987B3B4A706270403 /* Digest.swift */; };
-		8544FEFACC291E595D5FCD9DE723F3CB /* SecCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B06F7E2D8EEE1F6E1FE7EEA1ADF6FBA /* SecCertificate.swift */; };
-		85FA47DBCDC23246074016B6EF83BAD7 /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D74FDA1C0A1FF56A60F820B48AA8933 /* Bundle+Utils.swift */; };
-		8833AD5231A50AFE7CA71F22BF8B7854 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4397C3DEB7A0EFACC2A04ABEE322057 /* TokenStorage.swift */; };
-		8ADDAE5CC2F9E879C1E8B25D0E9DD126 /* VerifyPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DD71C497C6F1AC6734E8B77C1F8E40 /* VerifyPinViewController.swift */; };
-		8BD073D017B4286CED550C64E60160AB /* SecKey+KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288780EA04F0FC1174787D98566962CB /* SecKey+KeyPair.swift */; };
-		8CEE18D51826435F7F3E7057C00EC95E /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BED65CB46AE410A5F918BD66016A1F /* UIView+Constraints.swift */; };
-		94979E5DD61A0D2BC80949F042E475E1 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCC5C191EC8C996CD5CB44831FBAC3C /* UIViewController+Alerts.swift */; };
-		961780DE757DFF79D004CA7CC5742A48 /* NSError+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC67CD75F36A1703553710F0A0D17DB /* NSError+Utils.swift */; };
-		9643F0A35941D56CFD4471EE5A172A78 /* ChangePinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8AF93D9C17917B7342C18268219003C /* ChangePinViewController.xib */; };
-		975CFCF913427D97EB4382142447BA5D /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDEA1132654D6CDEC8C43193D58A76 /* HexString.swift */; };
-		97A71A2B89EDA521511B6D435840F004 /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 894C5291C514D8EEC60B1B3AD64D3F07 /* PinView.xib */; };
-		9AA55ED6AFC54649E45784A85CBA4E51 /* NIErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED0264C0E3B7ECCEF101E224C1B6AA0 /* NIErrorResponse.swift */; };
-		9BE716E6158C57316969891F19813CC3 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F406180220397D9A947FA14C99ED6B /* PinView.swift */; };
-		9CF9167A5E3072180FE72B35686E1A13 /* VerifyPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A756898EFB8FFF16370B6A5F19B8369 /* VerifyPinViewController.xib */; };
-		A604BEF09BD362E54AFB355F7EB3F54B /* NIViewPinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1125DA9D5803F7B3548A9A353D963CF9 /* NIViewPinView.xib */; };
-		A9F09578224EF7EA39FE15B59AC5729A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8193349D819536E58C58A34C1B7DF545 /* Foundation.framework */; };
-		AB57149366713140D2B52F9F3A5A51CD /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA63F39BE3C1C52F5131AFD1766F18BA /* UIColor+Utils.swift */; };
-		BCCB42D00A8007D43C2446C9CA6663EC /* RSAUtils+Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0277BE3BEA107CDD4C655E911C595B36 /* RSAUtils+Certificate.swift */; };
-		C2BFFB59F0D4E2F8836A591C36BD7FA9 /* JSONSerialiation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B3B33ABA8286A81043298124495B45 /* JSONSerialiation+Extensions.swift */; };
-		C5D5A5F4D4E272AFAB8E5EE4BF2FB0B3 /* SecCertificate+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695979D7229A7EAF1300872E15A0054 /* SecCertificate+Keychain.swift */; };
-		C65442CA6D85E70D7792E7C150A6DD9F /* NISuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2D234E824536AA00DC565D72230EF6 /* NISuccessResponse.swift */; };
-		C6F5C9F95847B468E206035A66807C78 /* NIPinFormType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95125F7072044564DEBD233C9B33FBD0 /* NIPinFormType.swift */; };
+		2A351D3CD4C65671316A250E922A14A6 /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B885F26F83B2118306D18B8BCEE4B5A1 /* KeyboardButton.swift */; };
+		328EC58800EB2B19C8531B7BAC54CA8C /* PinEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2D5B50A067F429EB106E7C682C2D58 /* PinEncryption.swift */; };
+		392DDA53E0E285A5FB4DF1F114CECF11 /* NICardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00223FA616B94241AF9F906B8C6B9681 /* NICardView.swift */; };
+		3999713EE119FF93B7BA9F5312A26EDD /* NICardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063720AB9920FEEECDED6BFE07476DA /* NICardDetailsResponse.swift */; };
+		3A6DE436F460BDE68D83CF03C54147F3 /* PinCertificateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBB8CF8DDC9741A510ADBC4DF68ECF0 /* PinCertificateResponse.swift */; };
+		3CB269B83D46284346EF767861B0FF95 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB7556ADB6B6D509917A1EC1E008A1B /* UIColor+Utils.swift */; };
+		3DC31CC38C61CF9ECBE02DC948D44D37 /* BitString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4679EFAA239892D1874D19403E7E81 /* BitString.swift */; };
+		3F72E1F59A357D7849EADB34FB4F34DE /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D869ED5661512B4AE8AD0B7EFA9A4D /* HexString.swift */; };
+		4312E295AA9A51845BA3B724B2FE759B /* UIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87CD2FFE655C4CE6AEB51415F246584 /* UIElement.swift */; };
+		46E002E164462319DBC2D809C1EB6DB4 /* SecKey+KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058826D9A862B518345361B9412F922 /* SecKey+KeyPair.swift */; };
+		49A042D2D36B2640ADD2C8F290971C32 /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C686A0899983A526D57A83E36B5BAAE /* DotView.swift */; };
+		4A8E12616AD7B2C08101C25DEF687F5C /* TokenNetworkFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD65FD0BAE9B3DF93E152D6A2CB0C60 /* TokenNetworkFetcher.swift */; };
+		4AFDEF4314130C1ACF0CC20D9CD6C5EC /* ClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725C05E71D9CECCC25DB73F7AB9AF2BF /* ClientCredentials.swift */; };
+		4CDD7814FBD463B43F2A588F6097E43F /* NIPinFormType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7FDA6D7931AB83A22E45580BFF81D /* NIPinFormType.swift */; };
+		4CFB021CEE11D5117603A4DDF3BA2AD3 /* ChangePinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A154C58CD436435C4824E48A5CB732A1 /* ChangePinViewController.xib */; };
+		4ECE455821B6A5D7D58DAE25C089FA5A /* JSONSerialiation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376942A0B6758F1858CF62759B67F63 /* JSONSerialiation+Extensions.swift */; };
+		5560EF65007990D93ACBAAF18F9C88AE /* ViewPinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6098F19EE2446C2B8CC6D971AD35437C /* ViewPinParams.swift */; };
+		57394E1D600B7F159DAEC8FA57D1E579 /* WSHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8068AFFAAF300905CA2089F3850046 /* WSHTTPMethod.swift */; };
+		580B17DF1C7794AC950E4BCDD21356C1 /* GlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395D1EC2F75CCED5E617BB4BB61DDBB8 /* GlobalConfig.swift */; };
+		58FD5875DF57748F30449FF12A5DA2EB /* NICardManagementSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 12AECCD655935DB11E8DF498EF2DFAD9 /* NICardManagementSDK-dummy.m */; };
+		5DAC5B9CA5B9B186B70666015D6B0949 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05442FC61A70E3088F46690C3A00A28 /* Request.swift */; };
+		5E4F3B82B49A03438CBC82B722205739 /* CardLookupParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7196C9E49B4121D1A08247B87BFB7856 /* CardLookupParams.swift */; };
+		6379F8220FEC402995588AF0FE8EBF68 /* CardDetailsParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7895F7B2AC14FE95E6F42200611294D3 /* CardDetailsParams.swift */; };
+		698316AE6174329A2C073B3CEEC382B2 /* SetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC2068A082CE443DBF90956AF5DC2C2 /* SetPinViewController.swift */; };
+		6A1F124B63A978397E9D658E7855F0A7 /* ChangePinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13B6F21FD973909130D4CF843C15F2 /* ChangePinViewModel.swift */; };
+		6B4F179142AC11807F3F804F72E8E584 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA131BCC0570D625488BDB13DAF8BAEE /* Assets.xcassets */; };
+		6C0FCA9FD9AAE9F1405FFB027C7316F6 /* NICardElementsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E5B1B8BCD1806472A99B1175FED04 /* NICardElementsPresenter.swift */; };
+		6E7304A0B0F149D73309B693E1B7E189 /* EyeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D734B38CB16049C8A7562838CBA14F /* EyeButton.swift */; };
+		6F481E067EDCB13AC47D656B95C1F0FD /* ViewPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6C4D4AA65C20ADEFF09568F28BF01 /* ViewPinViewModel.swift */; };
+		6FB7E7E638465B72E72A68050EC39FB8 /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209E147F5C4BC52BDBB0BEF709A5759A /* PinView.xib */; };
+		70251E6351638476BD2BFACC036DA013 /* NIViewPinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987F702A03608C7377911ADEB477AD2A /* NIViewPinView.xib */; };
+		703E2E0E20F37436F88BE3249879D3BC /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A628088996C5587435F991D7D9A11F /* NibLoadable.swift */; };
+		71A2C4E44D92BB17E79ACC4D976318B9 /* SecCertificate+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89608075C23F0C7A43897D0DAA2ABF81 /* SecCertificate+Keychain.swift */; };
+		73E5A39A4F87B4E5470091A6434A5CB7 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EAC79A24C4A0C4E7B8ABC6FFFC6D479 /* RSA.swift */; };
+		74C2B814C4E0964D07D3B5F6D47A2308 /* NICardManagementAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D58DED37455C5BFC2BFC6A946BFF04D /* NICardManagementAPI.swift */; };
+		79FE8219D368DF01FC33200CB3F8EB8D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3A36222895AD99A199DA4F65B2E94 /* Coordinator.swift */; };
+		7B1084B366B706D4E009544BFD72F2C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8193349D819536E58C58A34C1B7DF545 /* Foundation.framework */; };
+		7CFF0A9930FDBD41B0E6FC15F980F315 /* WebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B969B3BDC855A715168436F7FAB6022 /* WebServices.swift */; };
+		829C5F50DA628E6F6113E017CD32D9E5 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D659B9CE69BFBE80B0E6C28FA9114D18 /* UIView+Constraints.swift */; };
+		8324C82C80F184C7839207A232543D1C /* NSError+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5464F58C86CB17B51787376CC7FFC67D /* NSError+Utils.swift */; };
+		85274977307CDC0EE6CD6749BC2683D4 /* TokenFetcherSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAF7282B93046E077D5651343A64733 /* TokenFetcherSimple.swift */; };
+		858863315BEFC75EA1266DA84F448841 /* PinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BF3E6E84233030C60AF5ABE24BC832 /* PinParams.swift */; };
+		87E64F536500B22FA22768BC9FB67AB0 /* FormCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9518291C15B960728A54080352F8A55 /* FormCoordinator.swift */; };
+		8B3538156A21F859A3B18A3BA7A93297 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20F17AE84A98CE35E03A14DCAB4AB5 /* String+Utils.swift */; };
+		9A47949EDF074BE25F12AEBFF686290A /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB8B48ACA9081D91B09503184EBA62 /* PinView.swift */; };
+		9D985C784397B64CD4E2E1693EA06888 /* SecIdentity+PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F220F37E66E6DB24074E360C211B084B /* SecIdentity+PrivateKey.swift */; };
+		A36A834124BE0DE67C3282C195A7E30D /* SecKey+Crypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569FD892395682BA84C851A70F2FEBC1 /* SecKey+Crypt.swift */; };
+		A3F8D336D3CC5556DDE591A464571AE7 /* CardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532073B418908CD20CBCB3006DB0E9AF /* CardDetailsResponse.swift */; };
+		A7116110161EBF3A18BA97C7FD814331 /* NICardManagementSDK-NICardManagementSDKResources in Resources */ = {isa = PBXBuildFile; fileRef = 874F29C158B1F30830E379D2E00FD71C /* NICardManagementSDK-NICardManagementSDKResources */; };
+		AB32FF6464D61C173FE65ED59ED42C98 /* NISuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F85F34A6D886EC915F2BE1E9DC7236 /* NISuccessResponse.swift */; };
+		AFEE0C7D47124E19E6A5C15A4A4EC985 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF4CA3AF5536D14B4E015504E7AEEC0 /* UIKit.framework */; };
+		B2C91264487C0F88C537F57D2CD879DB /* NICardManagementTokenFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAB561590C86F70D34297A2E7049AA3 /* NICardManagementTokenFetchable.swift */; };
+		C1806845B24446C8B29FBBDD97ACE093 /* Bundle+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3375F4C46B8D9F02F87AF513FE6D646 /* Bundle+Utils.swift */; };
+		C244B021D19B6327B9426A38F9C41215 /* NICardAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C548226960C701CBD9EFFA905047A /* NICardAttributes.swift */; };
+		C6DA9955D75F77551D9D8C3BEDE93226 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AA229C864D88F085305A1BE7FF4D09 /* Status.swift */; };
 		C8DC1A116991E9A2A93CCE64FAD24F2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8193349D819536E58C58A34C1B7DF545 /* Foundation.framework */; };
-		CA92C6002690AD7A86EEFB8F8787DDB0 /* ViewPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A56BAD5A477908F5B487F2EDF9F31 /* ViewPinViewModel.swift */; };
-		CABF1A083AD421620D2CA63A589807DE /* ChangePinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69E6A92037B7470FC9AD6768A95DB26 /* ChangePinViewController.swift */; };
-		CB272F8002A42F93DBA7C76A9F127FAC /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00939B82CB875341109A00DE778C97D6 /* UIFont+Utils.swift */; };
-		D0AA07580066FC46BC6C638EAB9589D1 /* TokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E81A9FCE115A9856CA5C168FCEEC5 /* TokenRepository.swift */; };
-		D1100FE3FEDAACCA2B7E48B4D3F77B4C /* PinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14202F102CF67248F649CB0001BDE53 /* PinParams.swift */; };
-		D1D6ACB811E70F46816AB1B39B381E02 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3DA0E7C7FA616D9DE14D6FC92C1994 /* Coordinator.swift */; };
-		D40B6FD63365959C2C85A2366A223B22 /* GlobalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4E93C32BEF1D6AE132B94E9B807F3 /* GlobalConfig.swift */; };
-		D518536E790AA9381556BB4230FB1BF5 /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B925C0D8EF064DE6DBF8459D0C9436CE /* KeyboardButton.swift */; };
-		D56EB4A3C91A1FC709F0470D775332EE /* SecIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFABF1C30F8B93DDBEF5C0AE40531F1 /* SecIdentity.swift */; };
-		D718EC018A4CBE42773BF9B22B426BFF /* EyeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E520C6E5039EDBAB3B457637284304D /* EyeButton.swift */; };
-		DB86AEF8D3AAA182263AEA6C385AC21D /* CertificateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03213514B9351ACE2C83183DA622C180 /* CertificateRequest.swift */; };
-		DE072BC807C10DB1B57E3C31F93E2031 /* NICardAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45841C2CA59110A39C0901CB91A891D /* NICardAttributes.swift */; };
-		E610EEDCCB00E3478ADDC5BBF7FDDAE3 /* UIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A0935AADE06DBFA234DFB546B0645B /* UIElement.swift */; };
-		E6340A4904AAC270391C94B3A7C282B4 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BEB9954477DCE07502F7BC68E5EEBE /* NibLoadable.swift */; };
-		E7EDFE638E2B64F89F4DBDA7D94FF611 /* SetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ADD77F27845C8486A8CAE0A2759261 /* SetPinViewController.swift */; };
-		E92275DEF9EFE3F6214A1F9EB29C1B4F /* SecKey+Signing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438A6B53D2E97213E3165404B710F3AE /* SecKey+Signing.swift */; };
-		EB4FBDD3CD4B5C86A780466FD78AA02F /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C72CDC432D0C9FAE24C4BA9C78D4BC /* RSA.swift */; };
-		EB65CEA297F1381F744CE345118BFBE9 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A227843504F941E1107E0D1DFB7941 /* Status.swift */; };
-		EE1C393925AC4F8314927B96DB9EA585 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0065EDDBD417184AB2283D8B39EE18 /* RSAUtils.swift */; };
-		EF30F2AB72318466CDD65E70CCA9B309 /* NICardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D32CD3DD0B5350D9A119326171869EF /* NICardDetailsResponse.swift */; };
-		F14AF03424719481B16E365B0F02B1BD /* DEREncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CDC996BC7DFF4749870E177D3AFC00 /* DEREncoding.swift */; };
-		FABBED51FEFFC9DFAC24FAD135D107A0 /* NICardDetailsTextPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DDE4424B3ED4B9030021183D17C50B /* NICardDetailsTextPositioning.swift */; };
-		FCD53603ED67C156364D30F5A94FC3B7 /* CardDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBB9E418E54E4BFF77DD3C059DC2BD /* CardDetailsResponse.swift */; };
-		FCD88049AB3271F751C8E4D6C7101BE5 /* CardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25C6C69C4FCC49785721C45A051CED1 /* CardDetailsViewController.swift */; };
-		FCFA4528FFCA0AC6D0C41C79A66494DB /* NICardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF919407028424DE4615D842A1E81B /* NICardView.swift */; };
-		FECC41D10DD9F32C0C4346CFEA600D64 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD77DD058CFDCC05561E0C61651D7A9B /* String+Utils.swift */; };
-		FF274E12D28E690B2600879E82FB12B1 /* SecKey+KeyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A935AA90861FF9F6073B0C2B30558968 /* SecKey+KeyData.swift */; };
+		C9FDACBA4BDF38AC9C62402B11C8224F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994FF9EAA0DE7CEB37260E5A4813132 /* JSON.swift */; };
+		CC0057755BA15023BF868361F7C97423 /* ChangePinParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09840FB7154B126327647CC344F708B5 /* ChangePinParams.swift */; };
+		CCD3C884920AC474AE2E035AF186A224 /* SecCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE55F27041B812F9E7A2F2E1388C0DD /* SecCertificate.swift */; };
+		CEA9F0AEB932D09746573C722493A3D4 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F52C21068384DEEC2D631E8E02BFA5A /* AccessToken.swift */; };
+		CED3C90952CC941D8733B201E44857CD /* NIViewPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB405641544E1FBCE56D09852ACFE04 /* NIViewPinView.swift */; };
+		CF9AD4E4C6836ACD0B3DF4FD8342F5D6 /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2640DCE883B83AEBB59B1A9EC58249F9 /* Digest.swift */; };
+		D3DD3D761B35ED71831CCFD5B78658A1 /* SetPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59A5271CD61A64F54144BEE574140E6 /* SetPinViewController.xib */; };
+		D4356588E58476845CB929E5A225429E /* SecIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA335221B133FE04E1435824ED3BD66 /* SecIdentity.swift */; };
+		D73D4CB59CC00859815E645625654FA9 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D952F28F3BC18FB95D81354E6BB23C /* TokenStorage.swift */; };
+		D812D14BA966C9489D128BDBAB30CD04 /* NIErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9225EAF45273A8AC6F44D02088E49ED9 /* NIErrorResponse.swift */; };
+		E2CE193BA105EFC59B6C6E950250EF44 /* SecKey+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129E74F0FAA7B906491DCB4EFB5B38AD /* SecKey+Keychain.swift */; };
+		E5202A6114C3D5730E88BB2AED107A87 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B78CD6679B2EF8C844FFBFAC5F16A72 /* Response.swift */; };
+		EA0C8B7A003B4DF1AAAA390578975DD2 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044A92B7D33E1C76D6400667F75EF74D /* RSAUtils.swift */; };
+		EBAD1FA5FE5057909B8AE0A2C413615E /* VerifyPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B06DEAF46578D6F93DFAE0944E4C4 /* VerifyPinViewModel.swift */; };
+		EEBAD43AA973CB0333F8C2971E3A0E1A /* DEREncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C824C0346130650C379036E704C78B4E /* DEREncoding.swift */; };
+		F3962E5F298A3A69AAAC0BA860CC2576 /* VerifyPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98823BF4C9631D787EB4733317BFE13 /* VerifyPinViewController.swift */; };
+		F5060EB988D91D48CA62BF51657EF17F /* CardDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A0B7F9897945AF79059F0B7219F8C24 /* CardDetailsViewController.xib */; };
+		F99C8DAA6AD5F85B24CA7E40BEEEB473 /* RSAUtils+Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BAE5C40B670A97CBB133480E3F03 /* RSAUtils+Certificate.swift */; };
+		F9D99CAA013158EEE7BF85C177005886 /* PinBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEE8442E303C665E734A68A09C42E78 /* PinBlock.swift */; };
+		FAB651FFFA2061922DE544E1A70E09AE /* ViewPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D51941BE0EDD9A1E546A3774008DCF /* ViewPinResponse.swift */; };
+		FC6CBDE057286E68902B1397B5C63660 /* SetPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8767D1697798E2AC21D8376B94EDEBA6 /* SetPinViewModel.swift */; };
+		FEED4FBBC1BE654005BE1CC7648CAEFC /* NICardDetailsTextPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AB423587A3AB674625021F2432BE4D /* NICardDetailsTextPositioning.swift */; };
+		FEF24DFF6598D5C85EF3161A0B08E552 /* ASN1Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B3B6178CA9DA4FF165688952CF256F /* ASN1Object.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		43BD8582BE78E8D445E055E0BACEA79C /* PBXContainerItemProxy */ = {
+		559F36954446B0ABF4376372B6F6B540 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B081476509A50A0620B3ACD95F3DCD77;
+			remoteInfo = "NICardManagementSDK-NICardManagementSDKResources";
+		};
+		CC538C7099619BB392AF78678C870B45 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -119,131 +127,140 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00939B82CB875341109A00DE778C97D6 /* UIFont+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
-		0137814370C21CE79A8218F24592A5CA /* SetPinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = SetPinViewController.xib; sourceTree = "<group>"; };
-		017573D9502BF00DBA504FF8E839ECBE /* ViewPinResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinResponse.swift; sourceTree = "<group>"; };
-		019B08FA7E6DF642A242EB9AFD285504 /* NICardManagementTokenFetchable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardManagementTokenFetchable.swift; sourceTree = "<group>"; };
-		01A0935AADE06DBFA234DFB546B0645B /* UIElement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UIElement.swift; sourceTree = "<group>"; };
-		0277BE3BEA107CDD4C655E911C595B36 /* RSAUtils+Certificate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RSAUtils+Certificate.swift"; sourceTree = "<group>"; };
-		03213514B9351ACE2C83183DA622C180 /* CertificateRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CertificateRequest.swift; sourceTree = "<group>"; };
-		0745B23461CC71A7F111823C902F0805 /* NIViewPinView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIViewPinView.swift; sourceTree = "<group>"; };
-		08FBB9E418E54E4BFF77DD3C059DC2BD /* CardDetailsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsResponse.swift; sourceTree = "<group>"; };
-		0A756898EFB8FFF16370B6A5F19B8369 /* VerifyPinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = VerifyPinViewController.xib; sourceTree = "<group>"; };
-		0C0065EDDBD417184AB2283D8B39EE18 /* RSAUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
-		0C692FA8CE45483EED27FC2ADF2BEF76 /* NIConnectionProperties.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIConnectionProperties.swift; sourceTree = "<group>"; };
-		0D32CD3DD0B5350D9A119326171869EF /* NICardDetailsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardDetailsResponse.swift; sourceTree = "<group>"; };
-		0D74FDA1C0A1FF56A60F820B48AA8933 /* Bundle+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
-		1125DA9D5803F7B3548A9A353D963CF9 /* NIViewPinView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = NIViewPinView.xib; sourceTree = "<group>"; };
-		13F405D906A18C96C372D3C24CE7A25A /* CardDetailsViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = CardDetailsViewController.xib; sourceTree = "<group>"; };
+		00223FA616B94241AF9F906B8C6B9681 /* NICardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardView.swift; sourceTree = "<group>"; };
+		0063720AB9920FEEECDED6BFE07476DA /* NICardDetailsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardDetailsResponse.swift; sourceTree = "<group>"; };
+		03B808DD08CB9C8E123B089493C719C1 /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
+		044A92B7D33E1C76D6400667F75EF74D /* RSAUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
+		04515340DD6AC617457233C620C821A3 /* NICardManagementSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NICardManagementSDK-Info.plist"; sourceTree = "<group>"; };
+		091002243772C9E91821BD58FB544F3C /* SecKey+Signing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Signing.swift"; sourceTree = "<group>"; };
+		09840FB7154B126327647CC344F708B5 /* ChangePinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinParams.swift; sourceTree = "<group>"; };
+		0F1303BBC8D9B0EE82044098AB56006A /* SecKey+KeyData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyData.swift"; sourceTree = "<group>"; };
+		1291BAE5C40B670A97CBB133480E3F03 /* RSAUtils+Certificate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RSAUtils+Certificate.swift"; sourceTree = "<group>"; };
+		129E74F0FAA7B906491DCB4EFB5B38AD /* SecKey+Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Keychain.swift"; sourceTree = "<group>"; };
+		12AECCD655935DB11E8DF498EF2DFAD9 /* NICardManagementSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NICardManagementSDK-dummy.m"; sourceTree = "<group>"; };
 		14EF73999E0FE1647902746080BA5333 /* Pods-CardManagementSDKSwiftSample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CardManagementSDKSwiftSample-umbrella.h"; sourceTree = "<group>"; };
 		19390A5B4EB1F5B4BC029882E6016B0A /* Pods-CardManagementSDKSwiftSample-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CardManagementSDKSwiftSample-Info.plist"; sourceTree = "<group>"; };
-		20DA2973ED6BFCAA40ABF29C002E609A /* WebServices.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
-		2230BB2A67ECCF85AE0A28E163815F9E /* DotView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
+		1A2A55ED4B2E1C4EC65B1C6F84150746 /* TokenRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
+		1B2D5B50A067F429EB106E7C682C2D58 /* PinEncryption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinEncryption.swift; sourceTree = "<group>"; };
+		1C686A0899983A526D57A83E36B5BAAE /* DotView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
+		209E147F5C4BC52BDBB0BEF709A5759A /* PinView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
+		21D952F28F3BC18FB95D81354E6BB23C /* TokenStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		224B665033AFBAD02C08BCFD7FBF1A55 /* Pods-CardManagementSDKSwiftSample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CardManagementSDKSwiftSample-dummy.m"; sourceTree = "<group>"; };
-		25F295F232302F4428A2C72F905F1A1E /* ChangePinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinViewModel.swift; sourceTree = "<group>"; };
-		288780EA04F0FC1174787D98566962CB /* SecKey+KeyPair.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyPair.swift"; sourceTree = "<group>"; };
-		29CDC996BC7DFF4749870E177D3AFC00 /* DEREncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DEREncoding.swift; sourceTree = "<group>"; };
-		2BBDEA1132654D6CDEC8C43193D58A76 /* HexString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HexString.swift; sourceTree = "<group>"; };
-		2C3C345F2DBAEA3F546D31B303454A2B /* NICardManagementSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NICardManagementSDK-prefix.pch"; sourceTree = "<group>"; };
-		2ED0264C0E3B7ECCEF101E224C1B6AA0 /* NIErrorResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIErrorResponse.swift; sourceTree = "<group>"; };
+		2376942A0B6758F1858CF62759B67F63 /* JSONSerialiation+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "JSONSerialiation+Extensions.swift"; sourceTree = "<group>"; };
+		2640DCE883B83AEBB59B1A9EC58249F9 /* Digest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Digest.swift; sourceTree = "<group>"; };
+		28D869ED5661512B4AE8AD0B7EFA9A4D /* HexString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HexString.swift; sourceTree = "<group>"; };
+		2AFBA525D9D317B89E0154DCF0031709 /* NICardManagementSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NICardManagementSDK.release.xcconfig; sourceTree = "<group>"; };
+		2B969B3BDC855A715168436F7FAB6022 /* WebServices.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebServices.swift; sourceTree = "<group>"; };
 		2EE39F499C13BAEAD886C9FC21AD7ED0 /* Pods-CardManagementSDKSwiftSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CardManagementSDKSwiftSample.release.xcconfig"; sourceTree = "<group>"; };
-		321DD044A9AD552CD6A50598691CA83F /* NICardManagementSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NICardManagementSDK-Info.plist"; sourceTree = "<group>"; };
-		33B3B33ABA8286A81043298124495B45 /* JSONSerialiation+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "JSONSerialiation+Extensions.swift"; sourceTree = "<group>"; };
-		37E45C10AE1D4572B7F88080B4421C2B /* PinCertificateResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinCertificateResponse.swift; sourceTree = "<group>"; };
-		3A30F82653B8265D74B994CE91F71E4C /* JSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
-		3B05D8E1A1D61D8A678B907118A2E272 /* WSHTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WSHTTPMethod.swift; sourceTree = "<group>"; };
-		3D0CCD984549542C6A5653E729F29CD7 /* CardLookupParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardLookupParams.swift; sourceTree = "<group>"; };
-		3E520C6E5039EDBAB3B457637284304D /* EyeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EyeButton.swift; sourceTree = "<group>"; };
-		432A13D047E2D12CB451ED23EB6A2D57 /* ChangePinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinParams.swift; sourceTree = "<group>"; };
-		438A6B53D2E97213E3165404B710F3AE /* SecKey+Signing.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Signing.swift"; sourceTree = "<group>"; };
-		45A227843504F941E1107E0D1DFB7941 /* Status.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		48A9952DBDF93A59F4E44B36D0CDDC40 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		49BED65CB46AE410A5F918BD66016A1F /* UIView+Constraints.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
-		4B06F7E2D8EEE1F6E1FE7EEA1ADF6FBA /* SecCertificate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SecCertificate.swift; sourceTree = "<group>"; };
-		4D8EB79408B7F9DA5525250267475CB0 /* SecIdentity+PrivateKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecIdentity+PrivateKey.swift"; sourceTree = "<group>"; };
-		5401E2E25EE82EDD507EA55BB95FE0A5 /* ASN1Object.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ASN1Object.swift; sourceTree = "<group>"; };
-		552E7AA5DF7AE62C7F1312DD3CAA455C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		59665882B60159C5E0E97147601E5D9B /* SecKey+Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Keychain.swift"; sourceTree = "<group>"; };
-		5B55A4FBAE923C4987B3B4A706270403 /* Digest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Digest.swift; sourceTree = "<group>"; };
-		5CCF03F31ADCE8DF135BD6B2B57EBD13 /* FormCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FormCoordinator.swift; sourceTree = "<group>"; };
-		68F944FD5CB7DB6592686B7A3A67D28B /* CardDetailsParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsParams.swift; sourceTree = "<group>"; };
-		6CA9E05774F4A1CDC57BB63AE863B7C6 /* Updateable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Updateable.swift; sourceTree = "<group>"; };
-		6F2D234E824536AA00DC565D72230EF6 /* NISuccessResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NISuccessResponse.swift; sourceTree = "<group>"; };
-		78AD57221450D6C83DCD9E6FA526CF1D /* VerifyPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerifyPinViewModel.swift; sourceTree = "<group>"; };
-		79A4CD4C4189E9EFD72B0DBEBC52C33C /* PinBlock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinBlock.swift; sourceTree = "<group>"; };
-		7A90BB7E5C2652C9FFB9DABA53FA0EA4 /* NICardManagementAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardManagementAPI.swift; sourceTree = "<group>"; };
-		7D1CE40CEE7380539F00420D715A1EE2 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7D34626C025BE941F865C79836A5851A /* TokenNetworkFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenNetworkFetcher.swift; sourceTree = "<group>"; };
-		7DEF919407028424DE4615D842A1E81B /* NICardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardView.swift; sourceTree = "<group>"; };
-		8037A42A881493A986FFC63F3635CE3E /* NICardManagementSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NICardManagementSDK-dummy.m"; sourceTree = "<group>"; };
+		30F3A36222895AD99A199DA4F65B2E94 /* Coordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		31D1A6062BF54D7C426F6D6AFE5ED060 /* VerifyPinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = VerifyPinViewController.xib; sourceTree = "<group>"; };
+		33A628088996C5587435F991D7D9A11F /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		395D1EC2F75CCED5E617BB4BB61DDBB8 /* GlobalConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GlobalConfig.swift; sourceTree = "<group>"; };
+		4A0B7F9897945AF79059F0B7219F8C24 /* CardDetailsViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = CardDetailsViewController.xib; sourceTree = "<group>"; };
+		4B8068AFFAAF300905CA2089F3850046 /* WSHTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WSHTTPMethod.swift; sourceTree = "<group>"; };
+		4DBB8B48ACA9081D91B09503184EBA62 /* PinView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		532073B418908CD20CBCB3006DB0E9AF /* CardDetailsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsResponse.swift; sourceTree = "<group>"; };
+		538D757360888DDF88B5BB211AFBD33C /* CertificateRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CertificateRequest.swift; sourceTree = "<group>"; };
+		5464F58C86CB17B51787376CC7FFC67D /* NSError+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSError+Utils.swift"; sourceTree = "<group>"; };
+		556B7E0FB96106281760D24B92BA4EE2 /* UIFont+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
+		569FD892395682BA84C851A70F2FEBC1 /* SecKey+Crypt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Crypt.swift"; sourceTree = "<group>"; };
+		5BAF7282B93046E077D5651343A64733 /* TokenFetcherSimple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenFetcherSimple.swift; sourceTree = "<group>"; };
+		5D58DED37455C5BFC2BFC6A946BFF04D /* NICardManagementAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardManagementAPI.swift; sourceTree = "<group>"; };
+		5FD6C4D4AA65C20ADEFF09568F28BF01 /* ViewPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinViewModel.swift; sourceTree = "<group>"; };
+		6098F19EE2446C2B8CC6D971AD35437C /* ViewPinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinParams.swift; sourceTree = "<group>"; };
+		61F85F34A6D886EC915F2BE1E9DC7236 /* NISuccessResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NISuccessResponse.swift; sourceTree = "<group>"; };
+		638E5B1B8BCD1806472A99B1175FED04 /* NICardElementsPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardElementsPresenter.swift; sourceTree = "<group>"; };
+		674D8775FBD6C03225551CF1A43F9F91 /* NICardManagementSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NICardManagementSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6B2B06DEAF46578D6F93DFAE0944E4C4 /* VerifyPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerifyPinViewModel.swift; sourceTree = "<group>"; };
+		6BB405641544E1FBCE56D09852ACFE04 /* NIViewPinView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIViewPinView.swift; sourceTree = "<group>"; };
+		6CEE314606F3CBD21F5AE47FE39EB076 /* Updateable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Updateable.swift; sourceTree = "<group>"; };
+		6DE55F27041B812F9E7A2F2E1388C0DD /* SecCertificate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SecCertificate.swift; sourceTree = "<group>"; };
+		6EAC79A24C4A0C4E7B8ABC6FFFC6D479 /* RSA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
+		6F52C21068384DEEC2D631E8E02BFA5A /* AccessToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		6FC2068A082CE443DBF90956AF5DC2C2 /* SetPinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
+		7196C9E49B4121D1A08247B87BFB7856 /* CardLookupParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardLookupParams.swift; sourceTree = "<group>"; };
+		725C05E71D9CECCC25DB73F7AB9AF2BF /* ClientCredentials.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
+		762F8BB27844099546880241421ADD57 /* ResourceBundle-NICardManagementSDKResources-NICardManagementSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-NICardManagementSDKResources-NICardManagementSDK-Info.plist"; sourceTree = "<group>"; };
+		77CC6B52FFDCBB4305A7C1DE912C34CA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		7895F7B2AC14FE95E6F42200611294D3 /* CardDetailsParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsParams.swift; sourceTree = "<group>"; };
+		7BA335221B133FE04E1435824ED3BD66 /* SecIdentity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SecIdentity.swift; sourceTree = "<group>"; };
+		7CBB8CF8DDC9741A510ADBC4DF68ECF0 /* PinCertificateResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinCertificateResponse.swift; sourceTree = "<group>"; };
+		7DB7556ADB6B6D509917A1EC1E008A1B /* UIColor+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
+		7DD65FD0BAE9B3DF93E152D6A2CB0C60 /* TokenNetworkFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenNetworkFetcher.swift; sourceTree = "<group>"; };
+		800C6C6529EA99497F1B33CE85F5CCB5 /* PinViewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinViewViewModel.swift; sourceTree = "<group>"; };
+		8058826D9A862B518345361B9412F922 /* SecKey+KeyPair.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyPair.swift"; sourceTree = "<group>"; };
 		8193349D819536E58C58A34C1B7DF545 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		82840F12C82083E5C67D24B3173E796E /* NIMobileAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIMobileAPI.swift; sourceTree = "<group>"; };
-		836927C97B7B6E1B8001ED7171DF6ECB /* SetPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewModel.swift; sourceTree = "<group>"; };
-		848E81A9FCE115A9856CA5C168FCEEC5 /* TokenRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenRepository.swift; sourceTree = "<group>"; };
-		873D6E57ECE68AE9B02C112720A05C58 /* BitString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BitString.swift; sourceTree = "<group>"; };
-		87B435329C204EE423284B8321225C23 /* NICardManagementSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NICardManagementSDK-umbrella.h"; sourceTree = "<group>"; };
-		87DD71C497C6F1AC6734E8B77C1F8E40 /* VerifyPinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerifyPinViewController.swift; sourceTree = "<group>"; };
-		894C5291C514D8EEC60B1B3AD64D3F07 /* PinView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
-		8A20C52C96894C84DF6CB215EA67ACCA /* PinViewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinViewViewModel.swift; sourceTree = "<group>"; };
-		8D23B7A13213F4C419F3942DA9D83676 /* NICardElementsPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardElementsPresenter.swift; sourceTree = "<group>"; };
+		84F44EF9364BCFCA8A46C07284D5B0BF /* CertificateName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CertificateName.swift; sourceTree = "<group>"; };
+		874F29C158B1F30830E379D2E00FD71C /* NICardManagementSDK-NICardManagementSDKResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "NICardManagementSDK-NICardManagementSDKResources"; path = NICardManagementSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8767D1697798E2AC21D8376B94EDEBA6 /* SetPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewModel.swift; sourceTree = "<group>"; };
+		88BF3E6E84233030C60AF5ABE24BC832 /* PinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinParams.swift; sourceTree = "<group>"; };
+		89608075C23F0C7A43897D0DAA2ABF81 /* SecCertificate+Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Keychain.swift"; sourceTree = "<group>"; };
+		8E06316996A645E68F32351B71855162 /* NICardManagementSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NICardManagementSDK.modulemap; sourceTree = "<group>"; };
+		9225EAF45273A8AC6F44D02088E49ED9 /* NIErrorResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIErrorResponse.swift; sourceTree = "<group>"; };
 		92C6C2090B7D3B0D815832F20AA93FA4 /* Pods-CardManagementSDKSwiftSample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CardManagementSDKSwiftSample-acknowledgements.plist"; sourceTree = "<group>"; };
-		95125F7072044564DEBD233C9B33FBD0 /* NIPinFormType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIPinFormType.swift; sourceTree = "<group>"; };
-		97412D94359E1B6C9149E71C1E5984FD /* CertificateName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CertificateName.swift; sourceTree = "<group>"; };
-		9812965F76AF21F1D35838F0E28AE20C /* SecKey+Crypt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+Crypt.swift"; sourceTree = "<group>"; };
+		932DD17CE9FDA5BA158FD93F9D4BC6CC /* NIMobileAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIMobileAPI.swift; sourceTree = "<group>"; };
+		939C2CAA0FBFCB9EF9B06F79EE761C71 /* NICardManagementSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NICardManagementSDK-prefix.pch"; sourceTree = "<group>"; };
+		987F702A03608C7377911ADEB477AD2A /* NIViewPinView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = NIViewPinView.xib; sourceTree = "<group>"; };
+		9A2B61991959B2DD9169B06A3545092B /* CardDetailsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsViewController.swift; sourceTree = "<group>"; };
+		9B78CD6679B2EF8C844FFBFAC5F16A72 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9DA0124BCBE380420C204CD7BE59EED9 /* PinEncryption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinEncryption.swift; sourceTree = "<group>"; };
-		9E3DA0E7C7FA616D9DE14D6FC92C1994 /* Coordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		A14202F102CF67248F649CB0001BDE53 /* PinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinParams.swift; sourceTree = "<group>"; };
-		A935AA90861FF9F6073B0C2B30558968 /* SecKey+KeyData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecKey+KeyData.swift"; sourceTree = "<group>"; };
-		ABD514DF9D74F6009BBC7FFA9EE90A99 /* AccessToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
-		ABFABF1C30F8B93DDBEF5C0AE40531F1 /* SecIdentity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SecIdentity.swift; sourceTree = "<group>"; };
-		ADCC5C191EC8C996CD5CB44831FBAC3C /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
-		AFC67CD75F36A1703553710F0A0D17DB /* NSError+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSError+Utils.swift"; sourceTree = "<group>"; };
+		A05442FC61A70E3088F46690C3A00A28 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		A143ED20E8570F792BFD2C3D739C039C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		A154C58CD436435C4824E48A5CB732A1 /* ChangePinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ChangePinViewController.xib; sourceTree = "<group>"; };
+		A583D10645C6430A4B2E1B4DE3773A2D /* OID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OID.swift; sourceTree = "<group>"; };
+		A5B3B6178CA9DA4FF165688952CF256F /* ASN1Object.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ASN1Object.swift; sourceTree = "<group>"; };
+		AAAA171BC50E23FAC8F211848CBD39F9 /* NICardManagementSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NICardManagementSDK-umbrella.h"; sourceTree = "<group>"; };
+		AEAB561590C86F70D34297A2E7049AA3 /* NICardManagementTokenFetchable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardManagementTokenFetchable.swift; sourceTree = "<group>"; };
 		B2126F4513A11519DB40724A08DE76F3 /* Pods-CardManagementSDKSwiftSample */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CardManagementSDKSwiftSample"; path = Pods_CardManagementSDKSwiftSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2D4E93C32BEF1D6AE132B94E9B807F3 /* GlobalConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GlobalConfig.swift; sourceTree = "<group>"; };
-		B4FA42988F6DB6DC9E0E91BF62130C93 /* APIEndpoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
-		B695979D7229A7EAF1300872E15A0054 /* SecCertificate+Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Keychain.swift"; sourceTree = "<group>"; };
-		B69E6A92037B7470FC9AD6768A95DB26 /* ChangePinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinViewController.swift; sourceTree = "<group>"; };
-		B925C0D8EF064DE6DBF8459D0C9436CE /* KeyboardButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
+		B3375F4C46B8D9F02F87AF513FE6D646 /* Bundle+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Bundle+Utils.swift"; sourceTree = "<group>"; };
+		B885F26F83B2118306D18B8BCEE4B5A1 /* KeyboardButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
+		B9518291C15B960728A54080352F8A55 /* FormCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FormCoordinator.swift; sourceTree = "<group>"; };
+		B994FF9EAA0DE7CEB37260E5A4813132 /* JSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		B9B7F36B35D85BE2BBE5CE07FB3CE279 /* Pods-CardManagementSDKSwiftSample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CardManagementSDKSwiftSample-acknowledgements.markdown"; sourceTree = "<group>"; };
-		BD139F287E3C541332D93437DFF598F7 /* NICardManagementSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NICardManagementSDK.release.xcconfig; sourceTree = "<group>"; };
-		BF2F0F96E627F949EC575A74D0E63216 /* NICardManagementSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NICardManagementSDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BF34123927E90A904420C016C1C0E147 /* ViewPinParams.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinParams.swift; sourceTree = "<group>"; };
-		BF576C67C54762ABEAC42E17A0C91E8A /* OID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OID.swift; sourceTree = "<group>"; };
-		C5C4F57B82F921DA4AF13E008C241808 /* ClientCredentials.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
-		C8543ADDD175B54D692C5BC562F05D89 /* CardLookupResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardLookupResponse.swift; sourceTree = "<group>"; };
+		BB0C548226960C701CBD9EFFA905047A /* NICardAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardAttributes.swift; sourceTree = "<group>"; };
+		BCEE8442E303C665E734A68A09C42E78 /* PinBlock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinBlock.swift; sourceTree = "<group>"; };
+		BF20F17AE84A98CE35E03A14DCAB4AB5 /* String+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
+		C0A86C22C370758709638AB97CE17B30 /* APIEndpointProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpointProtocol.swift; sourceTree = "<group>"; };
+		C281FCF8E0AE1F3977CBFE57CC064AE8 /* CardLookupResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardLookupResponse.swift; sourceTree = "<group>"; };
+		C4D734B38CB16049C8A7562838CBA14F /* EyeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EyeButton.swift; sourceTree = "<group>"; };
+		C6AB423587A3AB674625021F2432BE4D /* NICardDetailsTextPositioning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardDetailsTextPositioning.swift; sourceTree = "<group>"; };
+		C824C0346130650C379036E704C78B4E /* DEREncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DEREncoding.swift; sourceTree = "<group>"; };
 		C9BAC5F614C1C24CAEBA1549542155C2 /* Pods-CardManagementSDKSwiftSample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CardManagementSDKSwiftSample.modulemap"; sourceTree = "<group>"; };
-		CE587F2F0510A332664210CE46A75612 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		D3ADD77F27845C8486A8CAE0A2759261 /* SetPinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
-		D3DDE4424B3ED4B9030021183D17C50B /* NICardDetailsTextPositioning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardDetailsTextPositioning.swift; sourceTree = "<group>"; };
-		D4397C3DEB7A0EFACC2A04ABEE322057 /* TokenStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
-		D45841C2CA59110A39C0901CB91A891D /* NICardAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NICardAttributes.swift; sourceTree = "<group>"; };
+		CA131BCC0570D625488BDB13DAF8BAEE /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = CardManagementSDK/Source/Utils/Assets.xcassets; sourceTree = "<group>"; };
+		CBDC52A8AF9C283503404AC9C9697822 /* NICardManagementSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NICardManagementSDK.debug.xcconfig; sourceTree = "<group>"; };
+		CC13B6F21FD973909130D4CF843C15F2 /* ChangePinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinViewModel.swift; sourceTree = "<group>"; };
+		CC4679EFAA239892D1874D19403E7E81 /* BitString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BitString.swift; sourceTree = "<group>"; };
+		D4999C760315368CCED9F10348B063FD /* ChangePinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinViewController.swift; sourceTree = "<group>"; };
+		D59A5271CD61A64F54144BEE574140E6 /* SetPinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = SetPinViewController.xib; sourceTree = "<group>"; };
 		D5B5338502D121267AEE05623D6DB7A0 /* Pods-CardManagementSDKSwiftSample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CardManagementSDKSwiftSample-frameworks.sh"; sourceTree = "<group>"; };
-		D6BEB9954477DCE07502F7BC68E5EEBE /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
-		DA63F39BE3C1C52F5131AFD1766F18BA /* UIColor+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
-		DB20598B05F74635D49EF2D48BE9329C /* NICardManagementSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NICardManagementSDK.modulemap; sourceTree = "<group>"; };
-		DB8F3459410A2E154AC7B0021F7E6CA3 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		DC0A56BAD5A477908F5B487F2EDF9F31 /* ViewPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinViewModel.swift; sourceTree = "<group>"; };
-		DD77DD058CFDCC05561E0C61651D7A9B /* String+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
-		E2F406180220397D9A947FA14C99ED6B /* PinView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		D659B9CE69BFBE80B0E6C28FA9114D18 /* UIView+Constraints.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		D87CD2FFE655C4CE6AEB51415F246584 /* UIElement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UIElement.swift; sourceTree = "<group>"; };
+		D98823BF4C9631D787EB4733317BFE13 /* VerifyPinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerifyPinViewController.swift; sourceTree = "<group>"; };
+		DAC7FDA6D7931AB83A22E45580BFF81D /* NIPinFormType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIPinFormType.swift; sourceTree = "<group>"; };
 		E45CBF903128A70FDE33544E6F992E56 /* NICardManagementSDK */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NICardManagementSDK; path = NICardManagementSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E66CE4CD0A6CED3238A4694FC77D5E32 /* TokenFetcherSimple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TokenFetcherSimple.swift; sourceTree = "<group>"; };
-		E8AF93D9C17917B7342C18268219003C /* ChangePinViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = ChangePinViewController.xib; sourceTree = "<group>"; };
+		E6AA229C864D88F085305A1BE7FF4D09 /* Status.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		ECF4CA3AF5536D14B4E015504E7AEEC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		ED97632975B5E52F257E61A8C3729DF4 /* NICardManagementSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NICardManagementSDK.debug.xcconfig; sourceTree = "<group>"; };
 		F11BC3CD59C42330B9576DBD1157704D /* Pods-CardManagementSDKSwiftSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CardManagementSDKSwiftSample.debug.xcconfig"; sourceTree = "<group>"; };
-		F1C72CDC432D0C9FAE24C4BA9C78D4BC /* RSA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
-		F25C6C69C4FCC49785721C45A051CED1 /* CardDetailsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardDetailsViewController.swift; sourceTree = "<group>"; };
-		FBC7A302AF0D937E9DDAB5669161B26A /* APIEndpointProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpointProtocol.swift; sourceTree = "<group>"; };
+		F220F37E66E6DB24074E360C211B084B /* SecIdentity+PrivateKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecIdentity+PrivateKey.swift"; sourceTree = "<group>"; };
+		F3D51941BE0EDD9A1E546A3774008DCF /* ViewPinResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewPinResponse.swift; sourceTree = "<group>"; };
+		F9D67253914496EF25AD34AF90189C9D /* NIConnectionProperties.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NIConnectionProperties.swift; sourceTree = "<group>"; };
+		FA438F42A692BFA80A64AE60573722D2 /* APIEndpoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0DA18B2C712666BBF62C0BA6BFD5E3F2 /* Frameworks */ = {
+		5BA8328722347A286644E081EBA66D66 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9F09578224EF7EA39FE15B59AC5729A /* Foundation.framework in Frameworks */,
-				2495F9011C832159C942E5566D2483E1 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A44D39D230538A881B6D9B62A788FC1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B1084B366B706D4E009544BFD72F2C0 /* Foundation.framework in Frameworks */,
+				AFEE0C7D47124E19E6A5C15A4A4EC985 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,39 +275,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		042352437E0778E2F265D717E06BBF14 /* ResponseModels */ = {
+		03C3544BE885190C07D7B31EFBC53FE8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				08FBB9E418E54E4BFF77DD3C059DC2BD /* CardDetailsResponse.swift */,
-				C8543ADDD175B54D692C5BC562F05D89 /* CardLookupResponse.swift */,
-				37E45C10AE1D4572B7F88080B4421C2B /* PinCertificateResponse.swift */,
-				017573D9502BF00DBA504FF8E839ECBE /* ViewPinResponse.swift */,
-			);
-			name = ResponseModels;
-			path = ResponseModels;
-			sourceTree = "<group>";
-		};
-		0FA4AA8F4B457DA7F92701E85DADF042 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				7D1CE40CEE7380539F00420D715A1EE2 /* Assets.xcassets */,
+				B3375F4C46B8D9F02F87AF513FE6D646 /* Bundle+Utils.swift */,
+				33A628088996C5587435F991D7D9A11F /* NibLoadable.swift */,
+				5464F58C86CB17B51787376CC7FFC67D /* NSError+Utils.swift */,
+				BF20F17AE84A98CE35E03A14DCAB4AB5 /* String+Utils.swift */,
+				7DB7556ADB6B6D509917A1EC1E008A1B /* UIColor+Utils.swift */,
+				556B7E0FB96106281760D24B92BA4EE2 /* UIFont+Utils.swift */,
+				D659B9CE69BFBE80B0E6C28FA9114D18 /* UIView+Constraints.swift */,
+				03B808DD08CB9C8E123B089493C719C1 /* UIViewController+Alerts.swift */,
 			);
 			name = Utils;
-			path = CardManagementSDK/Source/Utils;
+			path = Utils;
 			sourceTree = "<group>";
 		};
-		10540254A227CDFFAFE1D002CA5C1D39 /* Pin */ = {
+		08C084AE7621ED7730EEE3B838EF7135 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2230BB2A67ECCF85AE0A28E163815F9E /* DotView.swift */,
-				B925C0D8EF064DE6DBF8459D0C9436CE /* KeyboardButton.swift */,
-				E2F406180220397D9A947FA14C99ED6B /* PinView.swift */,
-				8A20C52C96894C84DF6CB215EA67ACCA /* PinViewViewModel.swift */,
-				D3ADD77F27845C8486A8CAE0A2759261 /* SetPinViewController.swift */,
-				836927C97B7B6E1B8001ED7171DF6ECB /* SetPinViewModel.swift */,
+				BA14AFE17355F9282F7E877196507258 /* Coordinator */,
+				2F200E71ADDDB2C74FE15C47C1215D76 /* Models */,
+				65B8A6D69C4C8A8AD9097CE9170CD5E0 /* Network */,
+				E9D27230F0772BF99E05E83A2F42751A /* Security */,
+				CA878F37F116F60327A32B0911B3AC19 /* TokenFetcher */,
+				03C3544BE885190C07D7B31EFBC53FE8 /* Utils */,
+				5F4C3F9E4851940DE20B45BE71EE356A /* Views */,
+			);
+			name = Source;
+			path = CardManagementSDK/Source;
+			sourceTree = "<group>";
+		};
+		0D1495FBDDF611AAF3857B284FDF20C7 /* x509 */ = {
+			isa = PBXGroup;
+			children = (
+				6EAC79A24C4A0C4E7B8ABC6FFFC6D479 /* RSA.swift */,
+				74B3ACFDA66EE956CA3AB2FF62A11710 /* SelfSignedCert */,
+			);
+			name = x509;
+			path = x509;
+			sourceTree = "<group>";
+		};
+		0E956226F17A2942E5DEFED3B9D64772 /* Pin */ = {
+			isa = PBXGroup;
+			children = (
+				209E147F5C4BC52BDBB0BEF709A5759A /* PinView.xib */,
+				D59A5271CD61A64F54144BEE574140E6 /* SetPinViewController.xib */,
 			);
 			name = Pin;
-			path = Pin;
+			path = CardManagementSDK/Source/Views/Pin;
 			sourceTree = "<group>";
 		};
 		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
@@ -310,49 +343,26 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		20D9040276F7F4772CA5B552FB818CE6 /* ChangePin */ = {
+		222E7002828E851AC4DB3CBB979E737F /* InputModels */ = {
 			isa = PBXGroup;
 			children = (
-				E8AF93D9C17917B7342C18268219003C /* ChangePinViewController.xib */,
+				BB0C548226960C701CBD9EFFA905047A /* NICardAttributes.swift */,
+				C6AB423587A3AB674625021F2432BE4D /* NICardDetailsTextPositioning.swift */,
+				F9D67253914496EF25AD34AF90189C9D /* NIConnectionProperties.swift */,
+				DAC7FDA6D7931AB83A22E45580BFF81D /* NIPinFormType.swift */,
+				D87CD2FFE655C4CE6AEB51415F246584 /* UIElement.swift */,
 			);
-			name = ChangePin;
-			path = ChangePin;
+			name = InputModels;
+			path = InputModels;
 			sourceTree = "<group>";
 		};
-		21B854E523DD351C0BAEBB2C93E43F51 /* SecurityExtensions */ = {
+		2F200E71ADDDB2C74FE15C47C1215D76 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2BBDEA1132654D6CDEC8C43193D58A76 /* HexString.swift */,
-				4B06F7E2D8EEE1F6E1FE7EEA1ADF6FBA /* SecCertificate.swift */,
-				ABFABF1C30F8B93DDBEF5C0AE40531F1 /* SecIdentity.swift */,
-				4D8EB79408B7F9DA5525250267475CB0 /* SecIdentity+PrivateKey.swift */,
-				9812965F76AF21F1D35838F0E28AE20C /* SecKey+Crypt.swift */,
-				59665882B60159C5E0E97147601E5D9B /* SecKey+Keychain.swift */,
-				A935AA90861FF9F6073B0C2B30558968 /* SecKey+KeyData.swift */,
-				288780EA04F0FC1174787D98566962CB /* SecKey+KeyPair.swift */,
-				438A6B53D2E97213E3165404B710F3AE /* SecKey+Signing.swift */,
+				1B2D5B50A067F429EB106E7C682C2D58 /* PinEncryption.swift */,
 			);
-			name = SecurityExtensions;
-			path = SecurityExtensions;
-			sourceTree = "<group>";
-		};
-		261A480FE4A601F98D90EF55A877B5B1 /* VerifyPin */ = {
-			isa = PBXGroup;
-			children = (
-				0A756898EFB8FFF16370B6A5F19B8369 /* VerifyPinViewController.xib */,
-			);
-			name = VerifyPin;
-			path = VerifyPin;
-			sourceTree = "<group>";
-		};
-		297E8F74B47A373776519E6C926AFA7D /* x509 */ = {
-			isa = PBXGroup;
-			children = (
-				F1C72CDC432D0C9FAE24C4BA9C78D4BC /* RSA.swift */,
-				9470F6E73B5AC57A29DEC091FFF5A3C8 /* SelfSignedCert */,
-			);
-			name = x509;
-			path = x509;
+			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		319A613C66A432A06735884C7559FAB9 /* Targets Support Files */ = {
@@ -363,349 +373,340 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		480E1FBBEAEB2B1E09F82F3AD94315A3 /* NICardManagementSDK */ = {
+		3C58B6A1AE0D1C69D9AD2F745FE8E547 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BD7ED1D4F758163EF7371B3F7FD4905E /* Pod */,
-				99016B70C6127900635E4B55379C6032 /* Public */,
-				CD368770DA8C40E5474D81AE457C4201 /* Source */,
-				93E63798EA3BB2F8A3946CEAB292CD2D /* Support Files */,
-				0FA4AA8F4B457DA7F92701E85DADF042 /* Utils */,
-				FA5B44BF25B47AF7FEA5EFF3C7A888F6 /* Views */,
+				5EFCB7B98652E2831EBEB5D11277C744 /* NICardManagementSDK */,
 			);
-			name = NICardManagementSDK;
-			path = ../..;
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		495CA248A8BF474F878ECDEF66B3431E /* ViewPin */ = {
+		40F16D7768959E42ABD43F14836899FC /* VerifyPin */ = {
 			isa = PBXGroup;
 			children = (
-				0745B23461CC71A7F111823C902F0805 /* NIViewPinView.swift */,
-				DC0A56BAD5A477908F5B487F2EDF9F31 /* ViewPinViewModel.swift */,
-			);
-			name = ViewPin;
-			path = ViewPin;
-			sourceTree = "<group>";
-		};
-		4F301DDC121D978C665B20B012446C9B /* TokenFetcher */ = {
-			isa = PBXGroup;
-			children = (
-				7D34626C025BE941F865C79836A5851A /* TokenNetworkFetcher.swift */,
-				848E81A9FCE115A9856CA5C168FCEEC5 /* TokenRepository.swift */,
-				D4397C3DEB7A0EFACC2A04ABEE322057 /* TokenStorage.swift */,
-			);
-			name = TokenFetcher;
-			path = TokenFetcher;
-			sourceTree = "<group>";
-		};
-		507FB10290A74F65C7F776CDB3958D4F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9DA0124BCBE380420C204CD7BE59EED9 /* PinEncryption.swift */,
-			);
-			name = Models;
-			path = Models;
-			sourceTree = "<group>";
-		};
-		5E3A45FA904EFE48F4D33A35AB65E999 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E45CBF903128A70FDE33544E6F992E56 /* NICardManagementSDK */,
-				B2126F4513A11519DB40724A08DE76F3 /* Pods-CardManagementSDKSwiftSample */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5EC22985EBAC3A55E2F8DBD0A23F6392 /* InputModels */ = {
-			isa = PBXGroup;
-			children = (
-				D45841C2CA59110A39C0901CB91A891D /* NICardAttributes.swift */,
-				D3DDE4424B3ED4B9030021183D17C50B /* NICardDetailsTextPositioning.swift */,
-				0C692FA8CE45483EED27FC2ADF2BEF76 /* NIConnectionProperties.swift */,
-				95125F7072044564DEBD233C9B33FBD0 /* NIPinFormType.swift */,
-				01A0935AADE06DBFA234DFB546B0645B /* UIElement.swift */,
-			);
-			name = InputModels;
-			path = InputModels;
-			sourceTree = "<group>";
-		};
-		60963DF480242377AC65C0BB1181E416 /* ViewPin */ = {
-			isa = PBXGroup;
-			children = (
-				1125DA9D5803F7B3548A9A353D963CF9 /* NIViewPinView.xib */,
-			);
-			name = ViewPin;
-			path = ViewPin;
-			sourceTree = "<group>";
-		};
-		64F4DCF8AD12E44F6BB169F155BDF054 /* PublicModels */ = {
-			isa = PBXGroup;
-			children = (
-				ABD514DF9D74F6009BBC7FFA9EE90A99 /* AccessToken.swift */,
-				C5C4F57B82F921DA4AF13E008C241808 /* ClientCredentials.swift */,
-				0D32CD3DD0B5350D9A119326171869EF /* NICardDetailsResponse.swift */,
-				2ED0264C0E3B7ECCEF101E224C1B6AA0 /* NIErrorResponse.swift */,
-				6F2D234E824536AA00DC565D72230EF6 /* NISuccessResponse.swift */,
-				5EC22985EBAC3A55E2F8DBD0A23F6392 /* InputModels */,
-			);
-			name = PublicModels;
-			path = PublicModels;
-			sourceTree = "<group>";
-		};
-		6AEFCFBACB02743BEB69DAE875F08E67 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				DD6B421C42829C1E154A80B960005AE7 /* CardDetails */,
-				C1F3897784C3DD87F76CC88150645D08 /* ChangePin */,
-				10540254A227CDFFAFE1D002CA5C1D39 /* Pin */,
-				8B227C83E61097070303D6DD5463EA00 /* VerifyPin */,
-				495CA248A8BF474F878ECDEF66B3431E /* ViewPin */,
-			);
-			name = Views;
-			path = Views;
-			sourceTree = "<group>";
-		};
-		743CB5159D8DC6175C61EA79CA826DA4 /* SelfSigned */ = {
-			isa = PBXGroup;
-			children = (
-				5401E2E25EE82EDD507EA55BB95FE0A5 /* ASN1Object.swift */,
-				873D6E57ECE68AE9B02C112720A05C58 /* BitString.swift */,
-				97412D94359E1B6C9149E71C1E5984FD /* CertificateName.swift */,
-				03213514B9351ACE2C83183DA622C180 /* CertificateRequest.swift */,
-				29CDC996BC7DFF4749870E177D3AFC00 /* DEREncoding.swift */,
-				BF576C67C54762ABEAC42E17A0C91E8A /* OID.swift */,
-				B695979D7229A7EAF1300872E15A0054 /* SecCertificate+Keychain.swift */,
-			);
-			name = SelfSigned;
-			path = SelfSigned;
-			sourceTree = "<group>";
-		};
-		7A3547F1E020A1DE83EE4426534C85B0 /* Pin */ = {
-			isa = PBXGroup;
-			children = (
-				894C5291C514D8EEC60B1B3AD64D3F07 /* PinView.xib */,
-				0137814370C21CE79A8218F24592A5CA /* SetPinViewController.xib */,
-			);
-			name = Pin;
-			path = Pin;
-			sourceTree = "<group>";
-		};
-		81E4FEE593EBD45EE29682E5BE1BA31E /* CardDetails */ = {
-			isa = PBXGroup;
-			children = (
-				13F405D906A18C96C372D3C24CE7A25A /* CardDetailsViewController.xib */,
-			);
-			name = CardDetails;
-			path = CardDetails;
-			sourceTree = "<group>";
-		};
-		8B227C83E61097070303D6DD5463EA00 /* VerifyPin */ = {
-			isa = PBXGroup;
-			children = (
-				87DD71C497C6F1AC6734E8B77C1F8E40 /* VerifyPinViewController.swift */,
-				78AD57221450D6C83DCD9E6FA526CF1D /* VerifyPinViewModel.swift */,
+				31D1A6062BF54D7C426F6D6AFE5ED060 /* VerifyPinViewController.xib */,
 			);
 			name = VerifyPin;
-			path = VerifyPin;
+			path = CardManagementSDK/Source/Views/VerifyPin;
 			sourceTree = "<group>";
 		};
-		8EBDC5E166142C0CCF1671DD5A74EAD1 /* Coordinator */ = {
+		473AFDD2FD9AB1E242BCC8D2D30D2F73 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				9E3DA0E7C7FA616D9DE14D6FC92C1994 /* Coordinator.swift */,
-				5CCF03F31ADCE8DF135BD6B2B57EBD13 /* FormCoordinator.swift */,
-			);
-			name = Coordinator;
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		8ED167CADF8012EFEA4FCE20C6400060 /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				79A4CD4C4189E9EFD72B0DBEBC52C33C /* PinBlock.swift */,
-				0C0065EDDBD417184AB2283D8B39EE18 /* RSAUtils.swift */,
-				0277BE3BEA107CDD4C655E911C595B36 /* RSAUtils+Certificate.swift */,
-				297E8F74B47A373776519E6C926AFA7D /* x509 */,
-			);
-			name = Security;
-			path = Security;
-			sourceTree = "<group>";
-		};
-		93E63798EA3BB2F8A3946CEAB292CD2D /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				DB20598B05F74635D49EF2D48BE9329C /* NICardManagementSDK.modulemap */,
-				8037A42A881493A986FFC63F3635CE3E /* NICardManagementSDK-dummy.m */,
-				321DD044A9AD552CD6A50598691CA83F /* NICardManagementSDK-Info.plist */,
-				2C3C345F2DBAEA3F546D31B303454A2B /* NICardManagementSDK-prefix.pch */,
-				87B435329C204EE423284B8321225C23 /* NICardManagementSDK-umbrella.h */,
-				ED97632975B5E52F257E61A8C3729DF4 /* NICardManagementSDK.debug.xcconfig */,
-				BD139F287E3C541332D93437DFF598F7 /* NICardManagementSDK.release.xcconfig */,
+				8E06316996A645E68F32351B71855162 /* NICardManagementSDK.modulemap */,
+				12AECCD655935DB11E8DF498EF2DFAD9 /* NICardManagementSDK-dummy.m */,
+				04515340DD6AC617457233C620C821A3 /* NICardManagementSDK-Info.plist */,
+				939C2CAA0FBFCB9EF9B06F79EE761C71 /* NICardManagementSDK-prefix.pch */,
+				AAAA171BC50E23FAC8F211848CBD39F9 /* NICardManagementSDK-umbrella.h */,
+				CBDC52A8AF9C283503404AC9C9697822 /* NICardManagementSDK.debug.xcconfig */,
+				2AFBA525D9D317B89E0154DCF0031709 /* NICardManagementSDK.release.xcconfig */,
+				762F8BB27844099546880241421ADD57 /* ResourceBundle-NICardManagementSDKResources-NICardManagementSDK-Info.plist */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/NICardManagementSDK";
 			sourceTree = "<group>";
 		};
-		9470F6E73B5AC57A29DEC091FFF5A3C8 /* SelfSignedCert */ = {
+		47637D192B3F31E409F5FAB8A3856613 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				C0D4FE33A749D3E463BCDF7FB0F2549E /* IDZSwiftCommonCrypto */,
-				21B854E523DD351C0BAEBB2C93E43F51 /* SecurityExtensions */,
-				743CB5159D8DC6175C61EA79CA826DA4 /* SelfSigned */,
+				A143ED20E8570F792BFD2C3D739C039C /* LICENSE */,
+				674D8775FBD6C03225551CF1A43F9F91 /* NICardManagementSDK.podspec */,
+				77CC6B52FFDCBB4305A7C1DE912C34CA /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		5EFCB7B98652E2831EBEB5D11277C744 /* NICardManagementSDK */ = {
+			isa = PBXGroup;
+			children = (
+				CA131BCC0570D625488BDB13DAF8BAEE /* Assets.xcassets */,
+				DF94AAF194512DEFB93D0994A894F5B6 /* CardDetails */,
+				72B8ED88EDAE8A633F7768A41718F682 /* ChangePin */,
+				0E956226F17A2942E5DEFED3B9D64772 /* Pin */,
+				47637D192B3F31E409F5FAB8A3856613 /* Pod */,
+				A7732840B3BA8D656B4D7943B083C460 /* Public */,
+				08C084AE7621ED7730EEE3B838EF7135 /* Source */,
+				473AFDD2FD9AB1E242BCC8D2D30D2F73 /* Support Files */,
+				40F16D7768959E42ABD43F14836899FC /* VerifyPin */,
+				7E9A6201BF2C783E61AE6CD98245A3A6 /* ViewPin */,
+			);
+			name = NICardManagementSDK;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		5F4C3F9E4851940DE20B45BE71EE356A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DE33AA60196D395CD9068F2A0785E065 /* CardDetails */,
+				A1C746A019E9B5F682A32E3E40F708E4 /* ChangePin */,
+				9553677550E7BC2982C146EDC9435153 /* Pin */,
+				9F4E90B43D31D488E11B587CC2F3868E /* VerifyPin */,
+				BC89D11E8930419C1339A2F518444420 /* ViewPin */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		64E7C2B7AC2189FADB73C5299FAB280B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E45CBF903128A70FDE33544E6F992E56 /* NICardManagementSDK */,
+				874F29C158B1F30830E379D2E00FD71C /* NICardManagementSDK-NICardManagementSDKResources */,
+				B2126F4513A11519DB40724A08DE76F3 /* Pods-CardManagementSDKSwiftSample */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65B8A6D69C4C8A8AD9097CE9170CD5E0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FA438F42A692BFA80A64AE60573722D2 /* APIEndpoint.swift */,
+				C0A86C22C370758709638AB97CE17B30 /* APIEndpointProtocol.swift */,
+				395D1EC2F75CCED5E617BB4BB61DDBB8 /* GlobalConfig.swift */,
+				B994FF9EAA0DE7CEB37260E5A4813132 /* JSON.swift */,
+				2376942A0B6758F1858CF62759B67F63 /* JSONSerialiation+Extensions.swift */,
+				932DD17CE9FDA5BA158FD93F9D4BC6CC /* NIMobileAPI.swift */,
+				A05442FC61A70E3088F46690C3A00A28 /* Request.swift */,
+				9B78CD6679B2EF8C844FFBFAC5F16A72 /* Response.swift */,
+				2B969B3BDC855A715168436F7FAB6022 /* WebServices.swift */,
+				4B8068AFFAAF300905CA2089F3850046 /* WSHTTPMethod.swift */,
+				A49C3D28E7E856FD0A1F1E7E88421EAD /* Parameters */,
+				AD791FFB29A0DF9444319DB3A6443108 /* ResponseModels */,
+			);
+			name = Network;
+			path = Network;
+			sourceTree = "<group>";
+		};
+		72B8ED88EDAE8A633F7768A41718F682 /* ChangePin */ = {
+			isa = PBXGroup;
+			children = (
+				A154C58CD436435C4824E48A5CB732A1 /* ChangePinViewController.xib */,
+			);
+			name = ChangePin;
+			path = CardManagementSDK/Source/Views/ChangePin;
+			sourceTree = "<group>";
+		};
+		74B3ACFDA66EE956CA3AB2FF62A11710 /* SelfSignedCert */ = {
+			isa = PBXGroup;
+			children = (
+				D5F881FABAF4D6E84C49AAD01E8D9BA1 /* IDZSwiftCommonCrypto */,
+				DAD2631AC87A6E790E33F09E04E3F6E3 /* SecurityExtensions */,
+				C775AC51D7717056CD9590644C96F871 /* SelfSigned */,
 			);
 			name = SelfSignedCert;
 			path = SelfSignedCert;
 			sourceTree = "<group>";
 		};
-		99016B70C6127900635E4B55379C6032 /* Public */ = {
+		7E9A6201BF2C783E61AE6CD98245A3A6 /* ViewPin */ = {
 			isa = PBXGroup;
 			children = (
-				7A90BB7E5C2652C9FFB9DABA53FA0EA4 /* NICardManagementAPI.swift */,
-				019B08FA7E6DF642A242EB9AFD285504 /* NICardManagementTokenFetchable.swift */,
-				E66CE4CD0A6CED3238A4694FC77D5E32 /* TokenFetcherSimple.swift */,
-				64F4DCF8AD12E44F6BB169F155BDF054 /* PublicModels */,
+				987F702A03608C7377911ADEB477AD2A /* NIViewPinView.xib */,
 			);
-			name = Public;
-			path = CardManagementSDK/Public;
+			name = ViewPin;
+			path = CardManagementSDK/Source/Views/ViewPin;
 			sourceTree = "<group>";
 		};
-		B4E7F77475C4DEC7A759A7B19ED00DAC /* Development Pods */ = {
+		9553677550E7BC2982C146EDC9435153 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
-				480E1FBBEAEB2B1E09F82F3AD94315A3 /* NICardManagementSDK */,
+				1C686A0899983A526D57A83E36B5BAAE /* DotView.swift */,
+				B885F26F83B2118306D18B8BCEE4B5A1 /* KeyboardButton.swift */,
+				4DBB8B48ACA9081D91B09503184EBA62 /* PinView.swift */,
+				800C6C6529EA99497F1B33CE85F5CCB5 /* PinViewViewModel.swift */,
+				6FC2068A082CE443DBF90956AF5DC2C2 /* SetPinViewController.swift */,
+				8767D1697798E2AC21D8376B94EDEBA6 /* SetPinViewModel.swift */,
 			);
-			name = "Development Pods";
+			name = Pin;
+			path = Pin;
 			sourceTree = "<group>";
 		};
-		BD7ED1D4F758163EF7371B3F7FD4905E /* Pod */ = {
+		9F4E90B43D31D488E11B587CC2F3868E /* VerifyPin */ = {
 			isa = PBXGroup;
 			children = (
-				552E7AA5DF7AE62C7F1312DD3CAA455C /* LICENSE */,
-				BF2F0F96E627F949EC575A74D0E63216 /* NICardManagementSDK.podspec */,
-				CE587F2F0510A332664210CE46A75612 /* README.md */,
+				D98823BF4C9631D787EB4733317BFE13 /* VerifyPinViewController.swift */,
+				6B2B06DEAF46578D6F93DFAE0944E4C4 /* VerifyPinViewModel.swift */,
 			);
-			name = Pod;
+			name = VerifyPin;
+			path = VerifyPin;
 			sourceTree = "<group>";
 		};
-		C0D4FE33A749D3E463BCDF7FB0F2549E /* IDZSwiftCommonCrypto */ = {
+		A1C746A019E9B5F682A32E3E40F708E4 /* ChangePin */ = {
 			isa = PBXGroup;
 			children = (
-				5B55A4FBAE923C4987B3B4A706270403 /* Digest.swift */,
-				45A227843504F941E1107E0D1DFB7941 /* Status.swift */,
-				6CA9E05774F4A1CDC57BB63AE863B7C6 /* Updateable.swift */,
-			);
-			name = IDZSwiftCommonCrypto;
-			path = IDZSwiftCommonCrypto;
-			sourceTree = "<group>";
-		};
-		C1F3897784C3DD87F76CC88150645D08 /* ChangePin */ = {
-			isa = PBXGroup;
-			children = (
-				B69E6A92037B7470FC9AD6768A95DB26 /* ChangePinViewController.swift */,
-				25F295F232302F4428A2C72F905F1A1E /* ChangePinViewModel.swift */,
+				D4999C760315368CCED9F10348B063FD /* ChangePinViewController.swift */,
+				CC13B6F21FD973909130D4CF843C15F2 /* ChangePinViewModel.swift */,
 			);
 			name = ChangePin;
 			path = ChangePin;
 			sourceTree = "<group>";
 		};
-		CA2090B30B7F6AE892101DFEAF5A8E08 /* Utils */ = {
+		A49C3D28E7E856FD0A1F1E7E88421EAD /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
-				0D74FDA1C0A1FF56A60F820B48AA8933 /* Bundle+Utils.swift */,
-				D6BEB9954477DCE07502F7BC68E5EEBE /* NibLoadable.swift */,
-				AFC67CD75F36A1703553710F0A0D17DB /* NSError+Utils.swift */,
-				DD77DD058CFDCC05561E0C61651D7A9B /* String+Utils.swift */,
-				DA63F39BE3C1C52F5131AFD1766F18BA /* UIColor+Utils.swift */,
-				00939B82CB875341109A00DE778C97D6 /* UIFont+Utils.swift */,
-				49BED65CB46AE410A5F918BD66016A1F /* UIView+Constraints.swift */,
-				ADCC5C191EC8C996CD5CB44831FBAC3C /* UIViewController+Alerts.swift */,
+				7895F7B2AC14FE95E6F42200611294D3 /* CardDetailsParams.swift */,
+				7196C9E49B4121D1A08247B87BFB7856 /* CardLookupParams.swift */,
+				09840FB7154B126327647CC344F708B5 /* ChangePinParams.swift */,
+				88BF3E6E84233030C60AF5ABE24BC832 /* PinParams.swift */,
+				6098F19EE2446C2B8CC6D971AD35437C /* ViewPinParams.swift */,
 			);
-			name = Utils;
-			path = Utils;
+			name = Parameters;
+			path = Parameters;
 			sourceTree = "<group>";
 		};
-		CD368770DA8C40E5474D81AE457C4201 /* Source */ = {
+		A7732840B3BA8D656B4D7943B083C460 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				8EBDC5E166142C0CCF1671DD5A74EAD1 /* Coordinator */,
-				507FB10290A74F65C7F776CDB3958D4F /* Models */,
-				D30A1209385AEB52A4EC10A36EBF920E /* Network */,
-				8ED167CADF8012EFEA4FCE20C6400060 /* Security */,
-				4F301DDC121D978C665B20B012446C9B /* TokenFetcher */,
-				CA2090B30B7F6AE892101DFEAF5A8E08 /* Utils */,
-				6AEFCFBACB02743BEB69DAE875F08E67 /* Views */,
+				5D58DED37455C5BFC2BFC6A946BFF04D /* NICardManagementAPI.swift */,
+				AEAB561590C86F70D34297A2E7049AA3 /* NICardManagementTokenFetchable.swift */,
+				5BAF7282B93046E077D5651343A64733 /* TokenFetcherSimple.swift */,
+				EF541E37F048E48121ED3A06AFBEB8B9 /* PublicModels */,
 			);
-			name = Source;
-			path = CardManagementSDK/Source;
+			name = Public;
+			path = CardManagementSDK/Public;
+			sourceTree = "<group>";
+		};
+		AD791FFB29A0DF9444319DB3A6443108 /* ResponseModels */ = {
+			isa = PBXGroup;
+			children = (
+				532073B418908CD20CBCB3006DB0E9AF /* CardDetailsResponse.swift */,
+				C281FCF8E0AE1F3977CBFE57CC064AE8 /* CardLookupResponse.swift */,
+				7CBB8CF8DDC9741A510ADBC4DF68ECF0 /* PinCertificateResponse.swift */,
+				F3D51941BE0EDD9A1E546A3774008DCF /* ViewPinResponse.swift */,
+			);
+			name = ResponseModels;
+			path = ResponseModels;
+			sourceTree = "<group>";
+		};
+		BA14AFE17355F9282F7E877196507258 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				30F3A36222895AD99A199DA4F65B2E94 /* Coordinator.swift */,
+				B9518291C15B960728A54080352F8A55 /* FormCoordinator.swift */,
+			);
+			name = Coordinator;
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		BC89D11E8930419C1339A2F518444420 /* ViewPin */ = {
+			isa = PBXGroup;
+			children = (
+				6BB405641544E1FBCE56D09852ACFE04 /* NIViewPinView.swift */,
+				5FD6C4D4AA65C20ADEFF09568F28BF01 /* ViewPinViewModel.swift */,
+			);
+			name = ViewPin;
+			path = ViewPin;
+			sourceTree = "<group>";
+		};
+		C775AC51D7717056CD9590644C96F871 /* SelfSigned */ = {
+			isa = PBXGroup;
+			children = (
+				A5B3B6178CA9DA4FF165688952CF256F /* ASN1Object.swift */,
+				CC4679EFAA239892D1874D19403E7E81 /* BitString.swift */,
+				84F44EF9364BCFCA8A46C07284D5B0BF /* CertificateName.swift */,
+				538D757360888DDF88B5BB211AFBD33C /* CertificateRequest.swift */,
+				C824C0346130650C379036E704C78B4E /* DEREncoding.swift */,
+				A583D10645C6430A4B2E1B4DE3773A2D /* OID.swift */,
+				89608075C23F0C7A43897D0DAA2ABF81 /* SecCertificate+Keychain.swift */,
+			);
+			name = SelfSigned;
+			path = SelfSigned;
+			sourceTree = "<group>";
+		};
+		CA878F37F116F60327A32B0911B3AC19 /* TokenFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				7DD65FD0BAE9B3DF93E152D6A2CB0C60 /* TokenNetworkFetcher.swift */,
+				1A2A55ED4B2E1C4EC65B1C6F84150746 /* TokenRepository.swift */,
+				21D952F28F3BC18FB95D81354E6BB23C /* TokenStorage.swift */,
+			);
+			name = TokenFetcher;
+			path = TokenFetcher;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				B4E7F77475C4DEC7A759A7B19ED00DAC /* Development Pods */,
+				3C58B6A1AE0D1C69D9AD2F745FE8E547 /* Development Pods */,
 				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
-				5E3A45FA904EFE48F4D33A35AB65E999 /* Products */,
+				64E7C2B7AC2189FADB73C5299FAB280B /* Products */,
 				319A613C66A432A06735884C7559FAB9 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		D30A1209385AEB52A4EC10A36EBF920E /* Network */ = {
+		D5F881FABAF4D6E84C49AAD01E8D9BA1 /* IDZSwiftCommonCrypto */ = {
 			isa = PBXGroup;
 			children = (
-				B4FA42988F6DB6DC9E0E91BF62130C93 /* APIEndpoint.swift */,
-				FBC7A302AF0D937E9DDAB5669161B26A /* APIEndpointProtocol.swift */,
-				B2D4E93C32BEF1D6AE132B94E9B807F3 /* GlobalConfig.swift */,
-				3A30F82653B8265D74B994CE91F71E4C /* JSON.swift */,
-				33B3B33ABA8286A81043298124495B45 /* JSONSerialiation+Extensions.swift */,
-				82840F12C82083E5C67D24B3173E796E /* NIMobileAPI.swift */,
-				48A9952DBDF93A59F4E44B36D0CDDC40 /* Request.swift */,
-				DB8F3459410A2E154AC7B0021F7E6CA3 /* Response.swift */,
-				20DA2973ED6BFCAA40ABF29C002E609A /* WebServices.swift */,
-				3B05D8E1A1D61D8A678B907118A2E272 /* WSHTTPMethod.swift */,
-				EB441C0597FF1E6D3B2439DA9F4EE0C8 /* Parameters */,
-				042352437E0778E2F265D717E06BBF14 /* ResponseModels */,
+				2640DCE883B83AEBB59B1A9EC58249F9 /* Digest.swift */,
+				E6AA229C864D88F085305A1BE7FF4D09 /* Status.swift */,
+				6CEE314606F3CBD21F5AE47FE39EB076 /* Updateable.swift */,
 			);
-			name = Network;
-			path = Network;
+			name = IDZSwiftCommonCrypto;
+			path = IDZSwiftCommonCrypto;
 			sourceTree = "<group>";
 		};
-		DD6B421C42829C1E154A80B960005AE7 /* CardDetails */ = {
+		DAD2631AC87A6E790E33F09E04E3F6E3 /* SecurityExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				F25C6C69C4FCC49785721C45A051CED1 /* CardDetailsViewController.swift */,
-				3E520C6E5039EDBAB3B457637284304D /* EyeButton.swift */,
-				8D23B7A13213F4C419F3942DA9D83676 /* NICardElementsPresenter.swift */,
-				7DEF919407028424DE4615D842A1E81B /* NICardView.swift */,
+				28D869ED5661512B4AE8AD0B7EFA9A4D /* HexString.swift */,
+				6DE55F27041B812F9E7A2F2E1388C0DD /* SecCertificate.swift */,
+				7BA335221B133FE04E1435824ED3BD66 /* SecIdentity.swift */,
+				F220F37E66E6DB24074E360C211B084B /* SecIdentity+PrivateKey.swift */,
+				569FD892395682BA84C851A70F2FEBC1 /* SecKey+Crypt.swift */,
+				129E74F0FAA7B906491DCB4EFB5B38AD /* SecKey+Keychain.swift */,
+				0F1303BBC8D9B0EE82044098AB56006A /* SecKey+KeyData.swift */,
+				8058826D9A862B518345361B9412F922 /* SecKey+KeyPair.swift */,
+				091002243772C9E91821BD58FB544F3C /* SecKey+Signing.swift */,
+			);
+			name = SecurityExtensions;
+			path = SecurityExtensions;
+			sourceTree = "<group>";
+		};
+		DE33AA60196D395CD9068F2A0785E065 /* CardDetails */ = {
+			isa = PBXGroup;
+			children = (
+				9A2B61991959B2DD9169B06A3545092B /* CardDetailsViewController.swift */,
+				C4D734B38CB16049C8A7562838CBA14F /* EyeButton.swift */,
+				638E5B1B8BCD1806472A99B1175FED04 /* NICardElementsPresenter.swift */,
+				00223FA616B94241AF9F906B8C6B9681 /* NICardView.swift */,
 			);
 			name = CardDetails;
 			path = CardDetails;
 			sourceTree = "<group>";
 		};
-		EB441C0597FF1E6D3B2439DA9F4EE0C8 /* Parameters */ = {
+		DF94AAF194512DEFB93D0994A894F5B6 /* CardDetails */ = {
 			isa = PBXGroup;
 			children = (
-				68F944FD5CB7DB6592686B7A3A67D28B /* CardDetailsParams.swift */,
-				3D0CCD984549542C6A5653E729F29CD7 /* CardLookupParams.swift */,
-				432A13D047E2D12CB451ED23EB6A2D57 /* ChangePinParams.swift */,
-				A14202F102CF67248F649CB0001BDE53 /* PinParams.swift */,
-				BF34123927E90A904420C016C1C0E147 /* ViewPinParams.swift */,
+				4A0B7F9897945AF79059F0B7219F8C24 /* CardDetailsViewController.xib */,
 			);
-			name = Parameters;
-			path = Parameters;
+			name = CardDetails;
+			path = CardManagementSDK/Source/Views/CardDetails;
 			sourceTree = "<group>";
 		};
-		FA5B44BF25B47AF7FEA5EFF3C7A888F6 /* Views */ = {
+		E9D27230F0772BF99E05E83A2F42751A /* Security */ = {
 			isa = PBXGroup;
 			children = (
-				81E4FEE593EBD45EE29682E5BE1BA31E /* CardDetails */,
-				20D9040276F7F4772CA5B552FB818CE6 /* ChangePin */,
-				7A3547F1E020A1DE83EE4426534C85B0 /* Pin */,
-				261A480FE4A601F98D90EF55A877B5B1 /* VerifyPin */,
-				60963DF480242377AC65C0BB1181E416 /* ViewPin */,
+				BCEE8442E303C665E734A68A09C42E78 /* PinBlock.swift */,
+				044A92B7D33E1C76D6400667F75EF74D /* RSAUtils.swift */,
+				1291BAE5C40B670A97CBB133480E3F03 /* RSAUtils+Certificate.swift */,
+				0D1495FBDDF611AAF3857B284FDF20C7 /* x509 */,
 			);
-			name = Views;
-			path = CardManagementSDK/Source/Views;
+			name = Security;
+			path = Security;
+			sourceTree = "<group>";
+		};
+		EF541E37F048E48121ED3A06AFBEB8B9 /* PublicModels */ = {
+			isa = PBXGroup;
+			children = (
+				6F52C21068384DEEC2D631E8E02BFA5A /* AccessToken.swift */,
+				725C05E71D9CECCC25DB73F7AB9AF2BF /* ClientCredentials.swift */,
+				0063720AB9920FEEECDED6BFE07476DA /* NICardDetailsResponse.swift */,
+				9225EAF45273A8AC6F44D02088E49ED9 /* NIErrorResponse.swift */,
+				61F85F34A6D886EC915F2BE1E9DC7236 /* NISuccessResponse.swift */,
+				222E7002828E851AC4DB3CBB979E737F /* InputModels */,
+			);
+			name = PublicModels;
+			path = PublicModels;
 			sourceTree = "<group>";
 		};
 		FB4300DCFDCE7B9683BE277647371073 /* Pods-CardManagementSDKSwiftSample */ = {
@@ -728,11 +729,11 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		68542117CF4F245AADA16CE4F6274AA9 /* Headers */ = {
+		5E7CE9A510666698997CAF85628B87DA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AD429DC06F21FDB39C255C5F3F01D75 /* NICardManagementSDK-umbrella.h in Headers */,
+				0B4C7674CBE8A2A32A255340D2B19AF9 /* NICardManagementSDK-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,16 +750,17 @@
 /* Begin PBXNativeTarget section */
 		13CB1B81448974027F3B77572DD23B54 /* NICardManagementSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 853478F5A1976A5D8A1FA18FAA3EA3F2 /* Build configuration list for PBXNativeTarget "NICardManagementSDK" */;
+			buildConfigurationList = 7C5803767E8157FF3746F20A21E92D52 /* Build configuration list for PBXNativeTarget "NICardManagementSDK" */;
 			buildPhases = (
-				68542117CF4F245AADA16CE4F6274AA9 /* Headers */,
-				44DA16B84AA6742177E5C439C67E1B77 /* Sources */,
-				0DA18B2C712666BBF62C0BA6BFD5E3F2 /* Frameworks */,
-				22630E5F34F2E205BFBF2F5FDC5CD556 /* Resources */,
+				5E7CE9A510666698997CAF85628B87DA /* Headers */,
+				2F9E66BA2E90B7E5F4684991CE1773C7 /* Sources */,
+				A44D39D230538A881B6D9B62A788FC1C /* Frameworks */,
+				47ABB5A4EA9FC5A31D2B76B75809178D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9FEAED2D0606159E951D65CB7D2B475B /* PBXTargetDependency */,
 			);
 			name = NICardManagementSDK;
 			productName = NICardManagementSDK;
@@ -777,12 +779,29 @@
 			buildRules = (
 			);
 			dependencies = (
-				02FF8503214E072C2879F4D6BEE04A7C /* PBXTargetDependency */,
+				3ACE57C4D53CB81A026A2BD6C3701565 /* PBXTargetDependency */,
 			);
 			name = "Pods-CardManagementSDKSwiftSample";
 			productName = Pods_CardManagementSDKSwiftSample;
 			productReference = B2126F4513A11519DB40724A08DE76F3 /* Pods-CardManagementSDKSwiftSample */;
 			productType = "com.apple.product-type.framework";
+		};
+		B081476509A50A0620B3ACD95F3DCD77 /* NICardManagementSDK-NICardManagementSDKResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3483208990F11D44C586C80C4A22719 /* Build configuration list for PBXNativeTarget "NICardManagementSDK-NICardManagementSDKResources" */;
+			buildPhases = (
+				7C2C6AD0AC154C999F64BF882A16095E /* Sources */,
+				5BA8328722347A286644E081EBA66D66 /* Frameworks */,
+				8F039B4C933230A8F57E660D55CC2A02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "NICardManagementSDK-NICardManagementSDKResources";
+			productName = NICardManagementSDKResources;
+			productReference = 874F29C158B1F30830E379D2E00FD71C /* NICardManagementSDK-NICardManagementSDKResources */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -804,28 +823,37 @@
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 5E3A45FA904EFE48F4D33A35AB65E999 /* Products */;
+			productRefGroup = 64E7C2B7AC2189FADB73C5299FAB280B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				13CB1B81448974027F3B77572DD23B54 /* NICardManagementSDK */,
+				B081476509A50A0620B3ACD95F3DCD77 /* NICardManagementSDK-NICardManagementSDKResources */,
 				3468D0142223EB3279F271542EC39270 /* Pods-CardManagementSDKSwiftSample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		22630E5F34F2E205BFBF2F5FDC5CD556 /* Resources */ = {
+		47ABB5A4EA9FC5A31D2B76B75809178D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0EDE784110FC1622B3E437553673D047 /* Assets.xcassets in Resources */,
-				6B95C99B6287935CC69DDE0863BF6EE6 /* CardDetailsViewController.xib in Resources */,
-				9643F0A35941D56CFD4471EE5A172A78 /* ChangePinViewController.xib in Resources */,
-				A604BEF09BD362E54AFB355F7EB3F54B /* NIViewPinView.xib in Resources */,
-				97A71A2B89EDA521511B6D435840F004 /* PinView.xib in Resources */,
-				1DEEBB14543271072BB2F22E7080346D /* SetPinViewController.xib in Resources */,
-				9CF9167A5E3072180FE72B35686E1A13 /* VerifyPinViewController.xib in Resources */,
+				F5060EB988D91D48CA62BF51657EF17F /* CardDetailsViewController.xib in Resources */,
+				4CFB021CEE11D5117603A4DDF3BA2AD3 /* ChangePinViewController.xib in Resources */,
+				A7116110161EBF3A18BA97C7FD814331 /* NICardManagementSDK-NICardManagementSDKResources in Resources */,
+				70251E6351638476BD2BFACC036DA013 /* NIViewPinView.xib in Resources */,
+				6FB7E7E638465B72E72A68050EC39FB8 /* PinView.xib in Resources */,
+				D3DD3D761B35ED71831CCFD5B78658A1 /* SetPinViewController.xib in Resources */,
+				277E9BA25212F4D6AF518BEB72AE77F0 /* VerifyPinViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F039B4C933230A8F57E660D55CC2A02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B4F179142AC11807F3F804F72E8E584 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,96 +867,103 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		44DA16B84AA6742177E5C439C67E1B77 /* Sources */ = {
+		2F9E66BA2E90B7E5F4684991CE1773C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0661F07BDC0B30B69D1EA8A349825F50 /* AccessToken.swift in Sources */,
-				1B92630EE5FC50DB727A93F4E9755488 /* APIEndpoint.swift in Sources */,
-				3C3546C2CCE30041E448260FAFD82071 /* APIEndpointProtocol.swift in Sources */,
-				266E7E9E55235A3E834EA0F3F422D58A /* ASN1Object.swift in Sources */,
-				2A631889BE55D3D5CD3624ACA271D4A2 /* BitString.swift in Sources */,
-				85FA47DBCDC23246074016B6EF83BAD7 /* Bundle+Utils.swift in Sources */,
-				414E9BF17ECE80BC312EBE1AEAA6D8E3 /* CardDetailsParams.swift in Sources */,
-				FCD53603ED67C156364D30F5A94FC3B7 /* CardDetailsResponse.swift in Sources */,
-				FCD88049AB3271F751C8E4D6C7101BE5 /* CardDetailsViewController.swift in Sources */,
-				3D252F4BCDD254C91337B0D8529E322A /* CardLookupParams.swift in Sources */,
-				4E54E9CC574EE56FA1F656AEB79BF449 /* CardLookupResponse.swift in Sources */,
-				63D714E17BDA704B8FBE386349DCD367 /* CertificateName.swift in Sources */,
-				DB86AEF8D3AAA182263AEA6C385AC21D /* CertificateRequest.swift in Sources */,
-				2DABBB4E536B406A1A1B6AFE07F58B78 /* ChangePinParams.swift in Sources */,
-				CABF1A083AD421620D2CA63A589807DE /* ChangePinViewController.swift in Sources */,
-				6997E4D0696EFF68A1E3486A28FD4F1F /* ChangePinViewModel.swift in Sources */,
-				3EBF8A69C1B8F915C1A49F9950FE8F4A /* ClientCredentials.swift in Sources */,
-				D1D6ACB811E70F46816AB1B39B381E02 /* Coordinator.swift in Sources */,
-				F14AF03424719481B16E365B0F02B1BD /* DEREncoding.swift in Sources */,
-				76B90103B2D3DEC8808B3ABE2CAA5132 /* Digest.swift in Sources */,
-				09E43C92171B47E303251B9EC2A19A75 /* DotView.swift in Sources */,
-				D718EC018A4CBE42773BF9B22B426BFF /* EyeButton.swift in Sources */,
-				248CD9C2B24437801F1BEBB14C84648B /* FormCoordinator.swift in Sources */,
-				D40B6FD63365959C2C85A2366A223B22 /* GlobalConfig.swift in Sources */,
-				975CFCF913427D97EB4382142447BA5D /* HexString.swift in Sources */,
-				20EB23AF6D3FE0432A2EE4270097A3AE /* JSON.swift in Sources */,
-				C2BFFB59F0D4E2F8836A591C36BD7FA9 /* JSONSerialiation+Extensions.swift in Sources */,
-				D518536E790AA9381556BB4230FB1BF5 /* KeyboardButton.swift in Sources */,
-				E6340A4904AAC270391C94B3A7C282B4 /* NibLoadable.swift in Sources */,
-				DE072BC807C10DB1B57E3C31F93E2031 /* NICardAttributes.swift in Sources */,
-				EF30F2AB72318466CDD65E70CCA9B309 /* NICardDetailsResponse.swift in Sources */,
-				FABBED51FEFFC9DFAC24FAD135D107A0 /* NICardDetailsTextPositioning.swift in Sources */,
-				096D681CDB49DCD9A0C1154D41677808 /* NICardElementsPresenter.swift in Sources */,
-				2E365C02C167F38DFCA6A7E8653FB36B /* NICardManagementAPI.swift in Sources */,
-				6E27FA20C50D53D9B83CB7350617AFE9 /* NICardManagementSDK-dummy.m in Sources */,
-				28A7DBC05B59469C40A74773CD67DD88 /* NICardManagementTokenFetchable.swift in Sources */,
-				FCFA4528FFCA0AC6D0C41C79A66494DB /* NICardView.swift in Sources */,
-				433A4C68571664AA22F792534FAD4D1F /* NIConnectionProperties.swift in Sources */,
-				9AA55ED6AFC54649E45784A85CBA4E51 /* NIErrorResponse.swift in Sources */,
-				5C128A5533E0AD75CC23D4FFA7E223E4 /* NIMobileAPI.swift in Sources */,
-				C6F5C9F95847B468E206035A66807C78 /* NIPinFormType.swift in Sources */,
-				C65442CA6D85E70D7792E7C150A6DD9F /* NISuccessResponse.swift in Sources */,
-				035E99E770D1D297627B7B6AE1617D00 /* NIViewPinView.swift in Sources */,
-				961780DE757DFF79D004CA7CC5742A48 /* NSError+Utils.swift in Sources */,
-				3D2FE7A1C8F1805BF40FB690D7541550 /* OID.swift in Sources */,
-				423B5EB8D39BBA536E76DDE917A3562B /* PinBlock.swift in Sources */,
-				4F3687DF2B85E736F2266728E8080F90 /* PinCertificateResponse.swift in Sources */,
-				2AD76971A2F5060D2171D2CCB5E544D3 /* PinEncryption.swift in Sources */,
-				D1100FE3FEDAACCA2B7E48B4D3F77B4C /* PinParams.swift in Sources */,
-				9BE716E6158C57316969891F19813CC3 /* PinView.swift in Sources */,
-				0130FF410B4E7CE6820977C54781A06D /* PinViewViewModel.swift in Sources */,
-				092315703A0DF35048AE980C449CFF5F /* Request.swift in Sources */,
-				71865DA61832FA5E1EF1B8CD608DB77B /* Response.swift in Sources */,
-				EB4FBDD3CD4B5C86A780466FD78AA02F /* RSA.swift in Sources */,
-				EE1C393925AC4F8314927B96DB9EA585 /* RSAUtils.swift in Sources */,
-				BCCB42D00A8007D43C2446C9CA6663EC /* RSAUtils+Certificate.swift in Sources */,
-				8544FEFACC291E595D5FCD9DE723F3CB /* SecCertificate.swift in Sources */,
-				C5D5A5F4D4E272AFAB8E5EE4BF2FB0B3 /* SecCertificate+Keychain.swift in Sources */,
-				D56EB4A3C91A1FC709F0470D775332EE /* SecIdentity.swift in Sources */,
-				27D69C9D3A434CC6D74E77D0891577BE /* SecIdentity+PrivateKey.swift in Sources */,
-				15385351F01266C308A3013524415E6A /* SecKey+Crypt.swift in Sources */,
-				497BD30575F4F3FCD338EDE4FF43EF87 /* SecKey+Keychain.swift in Sources */,
-				FF274E12D28E690B2600879E82FB12B1 /* SecKey+KeyData.swift in Sources */,
-				8BD073D017B4286CED550C64E60160AB /* SecKey+KeyPair.swift in Sources */,
-				E92275DEF9EFE3F6214A1F9EB29C1B4F /* SecKey+Signing.swift in Sources */,
-				E7EDFE638E2B64F89F4DBDA7D94FF611 /* SetPinViewController.swift in Sources */,
-				2F03B54677007D2711C8580921AD5C4D /* SetPinViewModel.swift in Sources */,
-				EB65CEA297F1381F744CE345118BFBE9 /* Status.swift in Sources */,
-				FECC41D10DD9F32C0C4346CFEA600D64 /* String+Utils.swift in Sources */,
-				0C14C54C58968451FAAB1B2243DFA70F /* TokenFetcherSimple.swift in Sources */,
-				575EDD2C235471BE8A125B5B58C26C41 /* TokenNetworkFetcher.swift in Sources */,
-				D0AA07580066FC46BC6C638EAB9589D1 /* TokenRepository.swift in Sources */,
-				8833AD5231A50AFE7CA71F22BF8B7854 /* TokenStorage.swift in Sources */,
-				AB57149366713140D2B52F9F3A5A51CD /* UIColor+Utils.swift in Sources */,
-				E610EEDCCB00E3478ADDC5BBF7FDDAE3 /* UIElement.swift in Sources */,
-				CB272F8002A42F93DBA7C76A9F127FAC /* UIFont+Utils.swift in Sources */,
-				8CEE18D51826435F7F3E7057C00EC95E /* UIView+Constraints.swift in Sources */,
-				94979E5DD61A0D2BC80949F042E475E1 /* UIViewController+Alerts.swift in Sources */,
-				0CE7D1BE799A345F7BCD8EF9B2733980 /* Updateable.swift in Sources */,
-				8ADDAE5CC2F9E879C1E8B25D0E9DD126 /* VerifyPinViewController.swift in Sources */,
-				418D4347A26DE00A5A969E7A84011E3B /* VerifyPinViewModel.swift in Sources */,
-				70D7D2642D073992178FE5FB18A9E99E /* ViewPinParams.swift in Sources */,
-				1E1CA915AD4074AC585C6CD7EE42EE75 /* ViewPinResponse.swift in Sources */,
-				CA92C6002690AD7A86EEFB8F8787DDB0 /* ViewPinViewModel.swift in Sources */,
-				35F16AC7C86B34786E452301CB87F3E8 /* WebServices.swift in Sources */,
-				2150D8F69FFBC212A39A98670878CE72 /* WSHTTPMethod.swift in Sources */,
+				CEA9F0AEB932D09746573C722493A3D4 /* AccessToken.swift in Sources */,
+				1C370174ADC1E8CEADAAB2E21E66DF59 /* APIEndpoint.swift in Sources */,
+				0ED27C8BE507E2EBFAD529444DB65FF1 /* APIEndpointProtocol.swift in Sources */,
+				FEF24DFF6598D5C85EF3161A0B08E552 /* ASN1Object.swift in Sources */,
+				3DC31CC38C61CF9ECBE02DC948D44D37 /* BitString.swift in Sources */,
+				C1806845B24446C8B29FBBDD97ACE093 /* Bundle+Utils.swift in Sources */,
+				6379F8220FEC402995588AF0FE8EBF68 /* CardDetailsParams.swift in Sources */,
+				A3F8D336D3CC5556DDE591A464571AE7 /* CardDetailsResponse.swift in Sources */,
+				16670C4D6E380CE0020B16505F18E976 /* CardDetailsViewController.swift in Sources */,
+				5E4F3B82B49A03438CBC82B722205739 /* CardLookupParams.swift in Sources */,
+				2234D1613A7EA9756AACE3A4A3360D40 /* CardLookupResponse.swift in Sources */,
+				2633618EF8A88AF99134769FD305737A /* CertificateName.swift in Sources */,
+				16734C01E23D830AA23CF27C18D74917 /* CertificateRequest.swift in Sources */,
+				CC0057755BA15023BF868361F7C97423 /* ChangePinParams.swift in Sources */,
+				0CC0DC278913B4367637DD74DAC80A97 /* ChangePinViewController.swift in Sources */,
+				6A1F124B63A978397E9D658E7855F0A7 /* ChangePinViewModel.swift in Sources */,
+				4AFDEF4314130C1ACF0CC20D9CD6C5EC /* ClientCredentials.swift in Sources */,
+				79FE8219D368DF01FC33200CB3F8EB8D /* Coordinator.swift in Sources */,
+				EEBAD43AA973CB0333F8C2971E3A0E1A /* DEREncoding.swift in Sources */,
+				CF9AD4E4C6836ACD0B3DF4FD8342F5D6 /* Digest.swift in Sources */,
+				49A042D2D36B2640ADD2C8F290971C32 /* DotView.swift in Sources */,
+				6E7304A0B0F149D73309B693E1B7E189 /* EyeButton.swift in Sources */,
+				87E64F536500B22FA22768BC9FB67AB0 /* FormCoordinator.swift in Sources */,
+				580B17DF1C7794AC950E4BCDD21356C1 /* GlobalConfig.swift in Sources */,
+				3F72E1F59A357D7849EADB34FB4F34DE /* HexString.swift in Sources */,
+				C9FDACBA4BDF38AC9C62402B11C8224F /* JSON.swift in Sources */,
+				4ECE455821B6A5D7D58DAE25C089FA5A /* JSONSerialiation+Extensions.swift in Sources */,
+				2A351D3CD4C65671316A250E922A14A6 /* KeyboardButton.swift in Sources */,
+				703E2E0E20F37436F88BE3249879D3BC /* NibLoadable.swift in Sources */,
+				C244B021D19B6327B9426A38F9C41215 /* NICardAttributes.swift in Sources */,
+				3999713EE119FF93B7BA9F5312A26EDD /* NICardDetailsResponse.swift in Sources */,
+				FEED4FBBC1BE654005BE1CC7648CAEFC /* NICardDetailsTextPositioning.swift in Sources */,
+				6C0FCA9FD9AAE9F1405FFB027C7316F6 /* NICardElementsPresenter.swift in Sources */,
+				74C2B814C4E0964D07D3B5F6D47A2308 /* NICardManagementAPI.swift in Sources */,
+				58FD5875DF57748F30449FF12A5DA2EB /* NICardManagementSDK-dummy.m in Sources */,
+				B2C91264487C0F88C537F57D2CD879DB /* NICardManagementTokenFetchable.swift in Sources */,
+				392DDA53E0E285A5FB4DF1F114CECF11 /* NICardView.swift in Sources */,
+				14108CCACA5D48F85931C277C218ED52 /* NIConnectionProperties.swift in Sources */,
+				D812D14BA966C9489D128BDBAB30CD04 /* NIErrorResponse.swift in Sources */,
+				1CA6354E37C0DC00DF2DE1DF52DD2DE0 /* NIMobileAPI.swift in Sources */,
+				4CDD7814FBD463B43F2A588F6097E43F /* NIPinFormType.swift in Sources */,
+				AB32FF6464D61C173FE65ED59ED42C98 /* NISuccessResponse.swift in Sources */,
+				CED3C90952CC941D8733B201E44857CD /* NIViewPinView.swift in Sources */,
+				8324C82C80F184C7839207A232543D1C /* NSError+Utils.swift in Sources */,
+				280311FDDB8FE86E7D442FDAB359650C /* OID.swift in Sources */,
+				F9D99CAA013158EEE7BF85C177005886 /* PinBlock.swift in Sources */,
+				3A6DE436F460BDE68D83CF03C54147F3 /* PinCertificateResponse.swift in Sources */,
+				328EC58800EB2B19C8531B7BAC54CA8C /* PinEncryption.swift in Sources */,
+				858863315BEFC75EA1266DA84F448841 /* PinParams.swift in Sources */,
+				9A47949EDF074BE25F12AEBFF686290A /* PinView.swift in Sources */,
+				19A1ACAC3E89C7B288D387CB79C52C10 /* PinViewViewModel.swift in Sources */,
+				5DAC5B9CA5B9B186B70666015D6B0949 /* Request.swift in Sources */,
+				E5202A6114C3D5730E88BB2AED107A87 /* Response.swift in Sources */,
+				73E5A39A4F87B4E5470091A6434A5CB7 /* RSA.swift in Sources */,
+				EA0C8B7A003B4DF1AAAA390578975DD2 /* RSAUtils.swift in Sources */,
+				F99C8DAA6AD5F85B24CA7E40BEEEB473 /* RSAUtils+Certificate.swift in Sources */,
+				CCD3C884920AC474AE2E035AF186A224 /* SecCertificate.swift in Sources */,
+				71A2C4E44D92BB17E79ACC4D976318B9 /* SecCertificate+Keychain.swift in Sources */,
+				D4356588E58476845CB929E5A225429E /* SecIdentity.swift in Sources */,
+				9D985C784397B64CD4E2E1693EA06888 /* SecIdentity+PrivateKey.swift in Sources */,
+				A36A834124BE0DE67C3282C195A7E30D /* SecKey+Crypt.swift in Sources */,
+				E2CE193BA105EFC59B6C6E950250EF44 /* SecKey+Keychain.swift in Sources */,
+				248F2EC69A83D801B040E8E76980112F /* SecKey+KeyData.swift in Sources */,
+				46E002E164462319DBC2D809C1EB6DB4 /* SecKey+KeyPair.swift in Sources */,
+				22980D11CA8B3B7B60D905F6D00042BC /* SecKey+Signing.swift in Sources */,
+				698316AE6174329A2C073B3CEEC382B2 /* SetPinViewController.swift in Sources */,
+				FC6CBDE057286E68902B1397B5C63660 /* SetPinViewModel.swift in Sources */,
+				C6DA9955D75F77551D9D8C3BEDE93226 /* Status.swift in Sources */,
+				8B3538156A21F859A3B18A3BA7A93297 /* String+Utils.swift in Sources */,
+				85274977307CDC0EE6CD6749BC2683D4 /* TokenFetcherSimple.swift in Sources */,
+				4A8E12616AD7B2C08101C25DEF687F5C /* TokenNetworkFetcher.swift in Sources */,
+				12A2A80C72D1F3119AFA494B8DAABCF6 /* TokenRepository.swift in Sources */,
+				D73D4CB59CC00859815E645625654FA9 /* TokenStorage.swift in Sources */,
+				3CB269B83D46284346EF767861B0FF95 /* UIColor+Utils.swift in Sources */,
+				4312E295AA9A51845BA3B724B2FE759B /* UIElement.swift in Sources */,
+				1DE78EFACF84221A7DA1FA450D30B120 /* UIFont+Utils.swift in Sources */,
+				829C5F50DA628E6F6113E017CD32D9E5 /* UIView+Constraints.swift in Sources */,
+				0546553828D9A1FE049F97B92B5A2AB6 /* UIViewController+Alerts.swift in Sources */,
+				27555B9B3BD33689E98DE0700915201B /* Updateable.swift in Sources */,
+				F3962E5F298A3A69AAAC0BA860CC2576 /* VerifyPinViewController.swift in Sources */,
+				EBAD1FA5FE5057909B8AE0A2C413615E /* VerifyPinViewModel.swift in Sources */,
+				5560EF65007990D93ACBAAF18F9C88AE /* ViewPinParams.swift in Sources */,
+				FAB651FFFA2061922DE544E1A70E09AE /* ViewPinResponse.swift in Sources */,
+				6F481E067EDCB13AC47D656B95C1F0FD /* ViewPinViewModel.swift in Sources */,
+				7CFF0A9930FDBD41B0E6FC15F980F315 /* WebServices.swift in Sources */,
+				57394E1D600B7F159DAEC8FA57D1E579 /* WSHTTPMethod.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C2C6AD0AC154C999F64BF882A16095E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,11 +978,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		02FF8503214E072C2879F4D6BEE04A7C /* PBXTargetDependency */ = {
+		3ACE57C4D53CB81A026A2BD6C3701565 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NICardManagementSDK;
 			target = 13CB1B81448974027F3B77572DD23B54 /* NICardManagementSDK */;
-			targetProxy = 43BD8582BE78E8D445E055E0BACEA79C /* PBXContainerItemProxy */;
+			targetProxy = CC538C7099619BB392AF78678C870B45 /* PBXContainerItemProxy */;
+		};
+		9FEAED2D0606159E951D65CB7D2B475B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "NICardManagementSDK-NICardManagementSDKResources";
+			target = B081476509A50A0620B3ACD95F3DCD77 /* NICardManagementSDK-NICardManagementSDKResources */;
+			targetProxy = 559F36954446B0ABF4376372B6F6B540 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -991,9 +1032,48 @@
 			};
 			name = Debug;
 		};
-		1A26C265F8AA764C6A8ED641629F3E76 /* Release */ = {
+		2C78037C3320DEE436B51611BE4C7EB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD139F287E3C541332D93437DFF598F7 /* NICardManagementSDK.release.xcconfig */;
+			baseConfigurationReference = CBDC52A8AF9C283503404AC9C9697822 /* NICardManagementSDK.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/NICardManagementSDK/NICardManagementSDK-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/NICardManagementSDK/NICardManagementSDK-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/NICardManagementSDK/NICardManagementSDK.modulemap";
+				PRODUCT_MODULE_NAME = NICardManagementSDK;
+				PRODUCT_NAME = NICardManagementSDK;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		58A1C867CAE205628AC2B1174B190403 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AFBA525D9D317B89E0154DCF0031709 /* NICardManagementSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1030,45 +1110,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		5D549C68DCFDDDB6687D8DFF1E039282 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED97632975B5E52F257E61A8C3729DF4 /* NICardManagementSDK.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/NICardManagementSDK/NICardManagementSDK-prefix.pch";
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Target Support Files/NICardManagementSDK/NICardManagementSDK-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/NICardManagementSDK/NICardManagementSDK.modulemap";
-				PRODUCT_MODULE_NAME = NICardManagementSDK;
-				PRODUCT_NAME = NICardManagementSDK;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		6A5C026ED62BBFE3380CD257EEFAEB20 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1136,6 +1177,23 @@
 			};
 			name = Debug;
 		};
+		A4002269390C2E62C82737247721CC88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CBDC52A8AF9C283503404AC9C9697822 /* NICardManagementSDK.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/NICardManagementSDK";
+				IBSC_MODULE = NICardManagementSDK;
+				INFOPLIST_FILE = "Target Support Files/NICardManagementSDK/ResourceBundle-NICardManagementSDKResources-NICardManagementSDK-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = NICardManagementSDKResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		A442F11B2395D8FD6AFE14D8B38BAEFD /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EE39F499C13BAEAD886C9FC21AD7ED0 /* Pods-CardManagementSDKSwiftSample.release.xcconfig */;
@@ -1173,6 +1231,23 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C8FAA208A9AA7AA437B76884348A3D54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AFBA525D9D317B89E0154DCF0031709 /* NICardManagementSDK.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/NICardManagementSDK";
+				IBSC_MODULE = NICardManagementSDK;
+				INFOPLIST_FILE = "Target Support Files/NICardManagementSDK/ResourceBundle-NICardManagementSDKResources-NICardManagementSDK-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = NICardManagementSDKResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -1259,11 +1334,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		853478F5A1976A5D8A1FA18FAA3EA3F2 /* Build configuration list for PBXNativeTarget "NICardManagementSDK" */ = {
+		7C5803767E8157FF3746F20A21E92D52 /* Build configuration list for PBXNativeTarget "NICardManagementSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D549C68DCFDDDB6687D8DFF1E039282 /* Debug */,
-				1A26C265F8AA764C6A8ED641629F3E76 /* Release */,
+				2C78037C3320DEE436B51611BE4C7EB3 /* Debug */,
+				58A1C867CAE205628AC2B1174B190403 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3483208990F11D44C586C80C4A22719 /* Build configuration list for PBXNativeTarget "NICardManagementSDK-NICardManagementSDKResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A4002269390C2E62C82737247721CC88 /* Debug */,
+				C8FAA208A9AA7AA437B76884348A3D54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
