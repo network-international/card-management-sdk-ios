@@ -23,6 +23,7 @@ public final class NICardManagementAPI {
         cardIdentifierType: String,
         bankCode: String,
         tokenFetchable: NICardManagementTokenFetchable,
+        extraHeaders: [String: String]? = nil,
         logger: NICardManagementLogger? = nil
     ) {
         self.mobileApi = NIMobileAPI(
@@ -30,7 +31,8 @@ public final class NICardManagementAPI {
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType,
             bankCode: bankCode,
-            tokenFetchable: tokenFetchable, 
+            tokenFetchable: tokenFetchable,
+            extraHeaders: extraHeaders,
             logger: logger
         )
         self.logger = logger

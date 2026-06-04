@@ -14,6 +14,7 @@ enum WebServices {
         path: String,
         method: WSHTTPMethod,
         headers: Headers,
+        extraHeaders: [String: String]? = nil,
         parameters: [String: Any]?,
         postQuery: [String: Any]?,
         token: String?
@@ -81,6 +82,12 @@ enum WebServices {
         request.setValue(uniqueReferenceCode, forHTTPHeaderField: WSConstants.HeaderKeys.uniqueReferenceCode)
         request.setValue(financialId, forHTTPHeaderField: WSConstants.HeaderKeys.financialId)
         request.setValue(channelId, forHTTPHeaderField: WSConstants.HeaderKeys.channelId)
+        
+        extraHeaders?
+            .filter { !Headers.Key.allCases.map(\.rawValue).contains($0.key) }
+            .forEach {
+                request.setValue($0.value, forHTTPHeaderField: $0.key)
+            }
         //print("========== uniqueReferenceCode \(uniqueReferenceCode) =============")
         return request
     }

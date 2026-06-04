@@ -17,6 +17,7 @@ class NIMobileAPI {
     private let cardIdentifierId: String
     private let cardIdentifierType: String
     private let bankCode: String
+    private let extraHeaders: [String: String]?
     
     private var rsaKeysProvider: () throws -> RSAKeyx509
     private let logger: NICardManagementLogger?
@@ -28,12 +29,14 @@ class NIMobileAPI {
         cardIdentifierType: String,
         bankCode: String,
         tokenFetchable: NICardManagementTokenFetchable,
-        logger: NICardManagementLogger?
+        extraHeaders: [String: String]? = nil,
+        logger: NICardManagementLogger? = nil
     ) {
         self.tokenFetchable = tokenFetchable
         self.cardIdentifierId = cardIdentifierId
         self.cardIdentifierType = cardIdentifierType
         self.bankCode = bankCode
+        self.extraHeaders = extraHeaders
         self.rootUrl = rootUrl
         self.logger = logger
         rsaKeysProvider = {
@@ -55,14 +58,14 @@ class NIMobileAPI {
 
         
         let cardParams = CardDetailsParams(publicKey: rsaInfo.cert)
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [cardParams, cardIdentifierId, cardIdentifierType, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(.cardDetails(
                 cardParams: cardParams,
                 identifier: cardIdentifierId,
                 type: cardIdentifierType,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { [privKey = rsaInfo.privateKey] response, error in
             guard let response = response else {
@@ -102,10 +105,11 @@ class NIMobileAPI {
             cardIdentifierType: cardIdentifierType,
             publicKey: rsaInfo.cert
         )
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(
                 .cardsLookup(lookupParams: params, bankCode: bankCode, connection: connectionProperties),
-                logger: requestLogger
+                logger: requestLogger,
+                extraHeaders: extraHeaders
             )
         }
         sendRequest(builder: requestBuilder) { [privKey = rsaInfo.privateKey] response, error in
@@ -129,8 +133,8 @@ class NIMobileAPI {
     }
     
     func retrievePinCertificate(completion: @escaping (PinCertificateResponse?, NIErrorResponse?) -> Void) {
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [bankCode] connectionProperties, requestLogger in
-            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties), logger: requestLogger)
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [bankCode, extraHeaders] connectionProperties, requestLogger in
+            Request(.pinCertificate(bankCode: bankCode, connection: connectionProperties), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { response, error in
             
@@ -168,12 +172,12 @@ class NIMobileAPI {
             cardIdentifierId: cardIdentifierId,
             cardIdentifierType: cardIdentifierType
         )
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(.viewPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder) { [privKey = rsaInfo.privateKey] response, error in
             
@@ -213,12 +217,12 @@ class NIMobileAPI {
             encryptedPin: pinEncryption.encryptedPinBlock,
             encryptionMethod: pinEncryption.method
         )
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(.setPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -239,12 +243,12 @@ class NIMobileAPI {
             encryptedPin: pinEncryption.encryptedPinBlock,
             encryptionMethod: pinEncryption.method
         )
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(.verifyPin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }
@@ -268,12 +272,12 @@ class NIMobileAPI {
             encryptedNewPin: newPinEncryption.encryptedPinBlock,
             encryptionMethod: newPinEncryption.method
         )
-        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode] connectionProperties, requestLogger in
+        let requestBuilder: (NIConnectionProperties, RequestLogger) -> Request = { [params, bankCode, extraHeaders] connectionProperties, requestLogger in
             Request(.changePin(
                 params: params,
                 bankCode: bankCode,
                 connection: connectionProperties
-            ), logger: requestLogger)
+            ), logger: requestLogger, extraHeaders: extraHeaders)
         }
         sendRequest(builder: requestBuilder, completion: completion)
     }

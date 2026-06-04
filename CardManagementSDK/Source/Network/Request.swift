@@ -16,16 +16,18 @@ class Request {
     
     var endpoint: APIEndpoint
     private let logger: RequestLogger
+    private let extraHeaders: [String: String]?
     
-    init(_ endpoint: APIEndpoint, logger: RequestLogger) {
+    init(_ endpoint: APIEndpoint, logger: RequestLogger, extraHeaders: [String: String]?) {
         self.endpoint = endpoint
         self.logger = logger
+        self.extraHeaders = extraHeaders
     }
     
     func sendAsync(_ completionHandler: @escaping (Response?, NIErrorResponse?) -> Void) {
         DispatchQueue.global(qos: .default).async {
             do {
-                guard let request = try self.endpoint.asURLRequest() else { return }
+                guard let request = try self.endpoint.asURLRequest(extraHeaders: self.extraHeaders) else { return }
                 self.logger.logRequestStarted(request)
                 let task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
                     self.logger.logRequestCompleted(request, response: response, data: data, error: error)
