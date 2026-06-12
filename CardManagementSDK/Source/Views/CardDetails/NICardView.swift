@@ -137,7 +137,10 @@ extension NICardView {
         if #available(iOS 13.0, *) {
             view.backgroundColor = UIColor.backgroundColor
             overrideUserInterfaceStyle = viewModel.isThemeLight ? .light : .dark
-            copyButton.setImage(UIImage(systemName: "rectangle.portrait.on.rectangle.portrait"), for: .normal)
+            copyButton.setImage(
+                UIImage(systemName: "rectangle.portrait.on.rectangle.portrait") ?? UIImage(systemName: "doc.on.doc"), 
+                for: .normal
+            )
         } else {
             view.backgroundColor = viewModel.isThemeLight ? .white : UIColor.black
             let image = UIImage(named: "icon_copy", in: Bundle.sdkBundle, compatibleWith: .none)
