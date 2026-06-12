@@ -19,7 +19,7 @@ class CardDetailsViewModel {
     private let displayAttributes: NIDisplayAttributes?
     private let service: CardDetailsService
     
-    private (set) var cardDetails: CardDetails? {
+    private(set) var cardDetails: CardDetails? {
         didSet {
             self.bindCardDetailsViewModel()
         }

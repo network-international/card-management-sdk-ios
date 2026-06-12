@@ -22,7 +22,7 @@ protocol NILocalizable {
 extension String: NILocalizable {
     
     var deviceLocalized: String {
-        return NSLocalizedString(self, bundle: Bundle(for: NICardManagementAPI.self), comment: "")
+        return NSLocalizedString(self, bundle: Bundle.sdkBundle, comment: "")
     }
     
     var localized: String {
@@ -34,7 +34,7 @@ extension String: NILocalizable {
     }
     
     func localized(for language: String) -> String {
-        let bundle = Bundle(for: NICardManagementAPI.self)
+        let bundle = Bundle.sdkBundle
         if let path = bundle.path(forResource: language, ofType: "lproj") {
             let languageBundle = Bundle(path: path)
             return languageBundle?.localizedString(forKey: self, value: self, table: nil) ?? ""

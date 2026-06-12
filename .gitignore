@@ -2,3 +2,10 @@
 /.idea
 UserInterfaceState.xcuserstate
 xcschememanagement.plist
+tools/temp
+Example/build/XCBuildData
+archives
+NICardManagementSDK.xcframework
+Example/Pods/Pods.xcodeproj/xcuserdata
+
+Example/CardManagementSDKSwiftSample.xcworkspace/xcuserdata
