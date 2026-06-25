@@ -24,7 +24,6 @@
 		2AAA25AA2A8E23710068466D /* NIViewPinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA25A92A8E23710068466D /* NIViewPinView.xib */; };
 		2AAA25AC2A8E238C0068466D /* NIViewPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA25AB2A8E238C0068466D /* NIViewPinView.swift */; };
 		2AAA25B22A8ED2AB0068466D /* ViewPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA25B12A8ED2AB0068466D /* ViewPinViewModel.swift */; };
-		2AB28EF6290027A90078E75C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AB28EF5290027A90078E75C /* Assets.xcassets */; };
 		2ABD9AB328F4478D0045BDBC /* CardDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABD9AB228F4478D0045BDBC /* CardDetails.swift */; };
 		2AC614772907E91F0008B389 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC614762907E91F0008B389 /* UIView+Constraints.swift */; };
 		2ACE7F7028F837E500A8B01D /* PinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ACE7F6F28F837E500A8B01D /* PinView.xib */; };
@@ -143,7 +142,6 @@
 		2AAA25A92A8E23710068466D /* NIViewPinView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NIViewPinView.xib; sourceTree = "<group>"; };
 		2AAA25AB2A8E238C0068466D /* NIViewPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIViewPinView.swift; sourceTree = "<group>"; };
 		2AAA25B12A8ED2AB0068466D /* ViewPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPinViewModel.swift; sourceTree = "<group>"; };
-		2AB28EF5290027A90078E75C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ABD9AB228F4478D0045BDBC /* CardDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetails.swift; sourceTree = "<group>"; };
 		2AC614762907E91F0008B389 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		2ACE7F6F28F837E500A8B01D /* PinView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
@@ -560,7 +558,6 @@
 			isa = PBXGroup;
 			children = (
 				F44559A82906CFAA00384188 /* Localizable.swift */,
-				2AB28EF5290027A90078E75C /* Assets.xcassets */,
 				F45A7DF628EF04EB00B3486E /* String+Utils.swift */,
 				F45A7E0028EF24AE00B3486E /* NSError+Utils.swift */,
 				F447E4762901923F005A5F46 /* UIViewController+Alerts.swift */,
@@ -715,7 +712,6 @@
 				F48CFC22292F8DDD000DEF69 /* NICardView.xib in Resources */,
 				F4DE3B8529124B3A00BF4727 /* OCRA.otf in Resources */,
 				2ACE7F7028F837E500A8B01D /* PinView.xib in Resources */,
-				2AB28EF6290027A90078E75C /* Assets.xcassets in Resources */,
 				2A82D06E28F584D700F57DC6 /* SetPinViewController.xib in Resources */,
 				2A17CB5029DC28D700AD04EC /* VerifyPinViewController.xib in Resources */,
 				2AAA25AA2A8E23710068466D /* NIViewPinView.xib in Resources */,
