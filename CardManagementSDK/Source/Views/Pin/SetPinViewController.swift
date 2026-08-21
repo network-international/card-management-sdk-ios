@@ -29,7 +29,7 @@ class SetPinViewController: UIViewController {
     // MARK: - Init
     init(viewModel: SetPinViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "SetPinViewController", bundle: Bundle(for: SetPinViewController.self))
+        super.init(nibName: "SetPinViewController", bundle: Bundle.nibBundle(named: "SetPinViewController"))
     }
     
     required init?(coder: NSCoder) {

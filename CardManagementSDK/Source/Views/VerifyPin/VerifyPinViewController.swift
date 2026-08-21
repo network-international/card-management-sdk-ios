@@ -18,9 +18,7 @@ class VerifyPinViewController: UIViewController {
     // MARK: - Init
     init(viewModel: VerifyPinViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "VerifyPinViewController", bundle: Bundle(for: Self.self))
-        view.backgroundColor = viewModel.config.backgroundColor
-        activityIndicator.style = .large
+        super.init(nibName: "VerifyPinViewController", bundle: Bundle.nibBundle(named: "VerifyPinViewController"))
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +28,8 @@ class VerifyPinViewController: UIViewController {
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = viewModel.config.backgroundColor
+        activityIndicator.style = .large
         title = viewModel.config.titleText
         
         pinView = PinView.fromBundle

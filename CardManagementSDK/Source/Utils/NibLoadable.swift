@@ -14,7 +14,7 @@ protocol NibLoadable: AnyObject {
 extension NibLoadable where Self: UIView {
     
     static func instantiateFromNib<T: UIView>() -> T {
-        let bundle = Bundle(for: Self.self)
+        let bundle = Bundle.nibBundle(named: String(describing: self))
         return bundle.loadNibNamed(String(describing: self), owner: nil, options: nil)?[0] as! T
     }
     
