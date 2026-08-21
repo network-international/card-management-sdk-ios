@@ -31,11 +31,14 @@ Pod::Spec.new do |spec|
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  spec.resources = "CardManagementSDK/Source/Views/**/*.xib"
+  spec.resources = [
+    "CardManagementSDK/Source/Views/**/*.xib"
+  ]
 
   spec.resource_bundles = {
     "NICardManagementSDKResources" => [
-      "CardManagementSDK/Source/Utils/Assets.xcassets"
+      "CardManagementSDK/Source/Utils/Assets.xcassets",
+      "CardManagementSDK/Source/Views/**/*.xib"
     ]
   }
 

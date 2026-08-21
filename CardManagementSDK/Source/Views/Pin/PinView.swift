@@ -14,7 +14,7 @@ protocol PinViewProtocol: AnyObject {
 class PinView: UIView {
     
     static var fromBundle: PinView? {
-        Bundle(for: Self.self).loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
+        Bundle.nibBundle(named: "PinView").loadNibNamed("PinView", owner: self, options: nil)?.first as? PinView
     }
     
     @IBOutlet private weak var dot1: DotView!
@@ -58,7 +58,17 @@ class PinView: UIView {
     // MARK: - View lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureBundleImages()
         updateUI()
+    }
+
+    private func configureBundleImages() {
+        confirmButton.setImage(Bundle.sdkImage(named: "icon_check"), for: .normal)
+        confirmButton.setImage(Bundle.sdkImage(named: "icon_check"), for: .selected)
+        confirmButton.setImage(Bundle.sdkImage(named: "icon_check_gray"), for: .disabled)
+
+        deleteButton.setImage(Bundle.sdkImage(named: "icon_clear"), for: .normal)
+        deleteButton.setImage(Bundle.sdkImage(named: "icon_clear"), for: .selected)
     }
     
     // MARK: -

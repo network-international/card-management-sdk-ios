@@ -21,7 +21,7 @@ class ChangePinViewController: UIViewController {
     // MARK: - Init
     init(viewModel: ChangePinViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "ChangePinViewController", bundle: Bundle(for: ChangePinViewController.self))
+        super.init(nibName: "ChangePinViewController", bundle: Bundle.nibBundle(named: "ChangePinViewController"))
     }
     
     required init?(coder: NSCoder) {
