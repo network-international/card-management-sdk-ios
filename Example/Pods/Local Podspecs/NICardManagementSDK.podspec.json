@@ -17,10 +17,13 @@
     "tag": "2.1.8"
   },
   "source_files": "CardManagementSDK/**/*.{swift}",
-  "resources": "CardManagementSDK/Source/Views/**/*.xib",
+  "resources": [
+    "CardManagementSDK/Source/Views/**/*.xib"
+  ],
   "resource_bundles": {
     "NICardManagementSDKResources": [
-      "CardManagementSDK/Source/Utils/Assets.xcassets"
+      "CardManagementSDK/Source/Utils/Assets.xcassets",
+      "CardManagementSDK/Source/Views/**/*.xib"
     ]
   },
   "frameworks": [

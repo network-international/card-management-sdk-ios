@@ -31,7 +31,7 @@ class CardDetailsViewController: UIViewController {
         self.callback = callback
         self.cardBackground = cardBackground
         self.cardPositioning = cardPositioning
-        super.init(nibName: "CardDetailsViewController", bundle: Bundle(for: CardDetailsViewController.self))
+        super.init(nibName: "CardDetailsViewController", bundle: Bundle.nibBundle(named: "CardDetailsViewController"))
         self.title = title
     }
     
