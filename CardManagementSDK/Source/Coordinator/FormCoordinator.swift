@@ -5,6 +5,7 @@
 //  Created by Paula Radu on 06.10.2022.
 //
 
+import NICardManagementSDKCore
 import Foundation
 
 import UIKit

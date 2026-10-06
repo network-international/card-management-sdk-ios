@@ -5,6 +5,7 @@
 //  Created by Gabriel Cernestean on 25.10.2022.
 //
 
+import NICardManagementSDKCore
 import UIKit
 
 extension UIView {

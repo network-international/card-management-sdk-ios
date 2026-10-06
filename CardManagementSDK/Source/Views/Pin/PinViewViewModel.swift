@@ -5,6 +5,7 @@
 //  Created by Gabriel Cernestean on 14.10.2022.
 //
 
+import NICardManagementSDKCore
 import Foundation
 
 public struct PinViewViewModel {

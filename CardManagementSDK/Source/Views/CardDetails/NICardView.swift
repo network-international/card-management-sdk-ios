@@ -5,6 +5,7 @@
 //  Created by Paula Radu on 24.11.2022.
 //
 
+import NICardManagementSDKCore
 import UIKit
 
 public final class NICardView: UIView {

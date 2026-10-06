@@ -5,6 +5,7 @@
 //  Created by Paula Radu on 20.10.2022.
 //
 
+import NICardManagementSDKCore
 import Foundation
 
 /// There three types of pin views with 4, 5 and 6 digits

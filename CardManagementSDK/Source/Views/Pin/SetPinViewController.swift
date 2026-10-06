@@ -5,6 +5,7 @@
 //  Created by Gabriel Cernestean on 11.10.2022.
 //
 
+import NICardManagementSDKCore
 import UIKit
 
 class SetPinViewController: UIViewController {

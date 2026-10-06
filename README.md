@@ -10,6 +10,10 @@ The current supported features are:
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
+Programmatic card operations (`getCardDetails`, `setPin`, `verifyPin`, `changePin`, `getPin`) live in private **Core** (`NICardManagementSDKCore`). This repository is the public **UI** (forms, XIBs, presenters) and depends on Core. Core is **SPM-only** — there is no CocoaPods Core product.
+
+Local UI development: clone `card-management-sdk-core`, run `./scripts/link-core.sh`, then open `CardManagementSDK.xcodeproj` (Xcode resolves Core via `Vendor/NICardManagementSDKCore`). CocoaPods Example additionally needs a built Core XCFramework (`card-management-sdk-core/scripts/build-ios.sh`) so `Vendor/NICardManagementSDKCore.xcframework` can be vendored.
+
 ## Installation
 Choose desired option:
 - The SDK can be added via [CocoaPods](https://cocoapods.org/)

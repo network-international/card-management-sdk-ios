@@ -5,6 +5,7 @@
 //  Created by Gabriel Cernestean on 12.05.2023.
 //
 
+import NICardManagementSDKCore
 import Foundation
 
 public struct NICardDetailsTextPositioning {

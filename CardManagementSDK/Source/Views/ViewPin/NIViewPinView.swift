@@ -5,6 +5,7 @@
 //  Created by Gabriel Cernestean on 17.08.2023.
 //
 
+import NICardManagementSDKCore
 import Foundation
 
 import UIKit
@@ -218,5 +219,11 @@ public final class NIViewPinView: UIView {
         fourthSeparator.backgroundColor = color
         fifthSeparator.backgroundColor = color
         borderView.layer.borderColor = color.cgColor
+    }
+}
+
+private extension String {
+    subscript(_ characterIndex: Int) -> String {
+        String(self[index(startIndex, offsetBy: characterIndex)])
     }
 }
