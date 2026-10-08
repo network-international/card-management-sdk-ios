@@ -1,5 +1,5 @@
 PODS:
-  - NICardManagementSDK (2.1.8)
+  - NICardManagementSDK (2.2.0)
 
 DEPENDENCIES:
   - NICardManagementSDK (from `../`)
