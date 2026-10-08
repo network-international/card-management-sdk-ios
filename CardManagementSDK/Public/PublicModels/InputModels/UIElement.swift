@@ -5,7 +5,6 @@
 //  Created by Paula Radu on 02.11.2022.
 //
 
-import NICardManagementSDKCore
 import UIKit
 
 /// Enum of all labels in the UI forms
