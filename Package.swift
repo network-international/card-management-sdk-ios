@@ -2,7 +2,14 @@
 import PackageDescription
 import Foundation
 
-func resolveCoreDependency() -> Package.Dependency {
+/// Local Core uses Package.swift `name` (NICardManagementSDKCore).
+/// Remote URL identity is the repo name (card-management-sdk-core).
+struct CorePin {
+    let dependency: Package.Dependency
+    let packageIdentity: String
+}
+
+func resolveCorePin() -> CorePin {
     let fm = FileManager.default
     let env = ProcessInfo.processInfo.environment["CORE_IOS_DIR"]
     let localCandidates = [
@@ -15,14 +22,22 @@ func resolveCoreDependency() -> Package.Dependency {
     if let path = localCandidates.first(where: {
         fm.fileExists(atPath: $0 + "/Package.swift")
     }) {
-        return .package(path: path)
+        return CorePin(
+            dependency: .package(path: path),
+            packageIdentity: "NICardManagementSDKCore"
+        )
     }
     // Temporary personal host until org Core repo exists (private — needs GitHub auth).
-    return .package(
-        url: "https://github.com/akiselevn/card-management-sdk-core.git",
-        exact: "0.1.0"
+    return CorePin(
+        dependency: .package(
+            url: "https://github.com/akiselevn/card-management-sdk-core.git",
+            exact: "0.1.0"
+        ),
+        packageIdentity: "card-management-sdk-core"
     )
 }
+
+let core = resolveCorePin()
 
 let xibs = (try? FileManager.default.subpathsOfDirectory(atPath: "CardManagementSDK"))?
     .filter { $0.hasSuffix(".xib") }
@@ -40,13 +55,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        resolveCoreDependency(),
+        core.dependency,
     ],
     targets: [
         .target(
             name: "NICardManagementSDK",
             dependencies: [
-                .product(name: "NICardManagementSDKCore", package: "NICardManagementSDKCore"),
+                .product(name: "NICardManagementSDKCore", package: core.packageIdentity),
             ],
             path: "CardManagementSDK",
             exclude: [
