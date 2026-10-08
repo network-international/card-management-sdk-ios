@@ -2,12 +2,36 @@
 Sample application illustrating the use of the Card Management SDK for iOS
 
 ## Requirements
-This project was configured with Xcode 15 and target iOS version 15.
+- Xcode 15+ (deployment target iOS 15; Example Podfile uses iOS 17)
+- CocoaPods
+- Private **Core** XCFramework for local `:path` SDK builds (CocoaPods vendors `Vendor/NICardManagementSDKCore.xcframework`)
 
 ## Installation
-The project uses [CocoaPods](https://cocoapods.org/) package manager to attach SDK as a dependency,
-- make sure cocoapods installed `sudo gem install cocoapods`
-- Run `$ pod install --repo-update` in project directory
+
+From the **repository root** (not `Example/`), fetch Core **0.1.0** into `Vendor/` (needs `gh` auth or `CORE_GITHUB_TOKEN` with read access to [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core)):
+
+```bash
+bash scripts/fetch-core-xcframework.sh
+```
+
+Or build Core locally and link it:
+
+```bash
+# in card-management-sdk-core
+bash scripts/build-ios.sh
+# in this repo
+bash scripts/link-core.sh
+```
+
+Then install pods and open the workspace:
+
+```bash
+cd Example
+pod install
+open CardManagementSDKSwiftSample.xcworkspace
+```
+
+App integrators do **not** add Core separately when consuming a published UI SDK — Core is already bundled/transitive. The Vendor step is for **this Example** (local pod `:path => '../'`).
 
 Alternatively, you may consume the SDK as a binary XCFramework by downloading a release package from GitHub Releases and adding `NICardManagementSDK.xcframework` directly to your app.
 

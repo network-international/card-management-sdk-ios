@@ -114,7 +114,6 @@
 		92C6C2090B7D3B0D815832F20AA93FA4 /* Pods-CardManagementSDKSwiftSample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CardManagementSDKSwiftSample-acknowledgements.plist"; sourceTree = "<group>"; };
 		9352BBEBEC2975BECC589EF6D6B77837 /* NICardManagementSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NICardManagementSDK-dummy.m"; sourceTree = "<group>"; };
 		93A0E1919B858AF66F1F5AF43C23DA9A /* UIFont+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
-		93D454BDADC0B8B504ED7FD1FD470A22 /* NICardManagementSDKCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NICardManagementSDKCore.xcframework; path = "../../card-management-sdk-core/card-management-sdk-core/ios/build/NICardManagementSDKCore.xcframework"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F66E148A5F97A2E1FE233B29180E9C3 /* SetPinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewModel.swift; sourceTree = "<group>"; };
 		A358843C4830DD40236FC68F6DD659DF /* PinView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = PinView.xib; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		B90A85A3E01E12071AE24BC6942EA392 /* ChangePinViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChangePinViewModel.swift; sourceTree = "<group>"; };
 		B9B7F36B35D85BE2BBE5CE07FB3CE279 /* Pods-CardManagementSDKSwiftSample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CardManagementSDKSwiftSample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BE82AE5AFC96FFEFDC74323F3076956E /* NICardManagementSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NICardManagementSDK.debug.xcconfig; sourceTree = "<group>"; };
+		C09A18BE0BC0DE0A6F5B4CC08A330F62 /* NICardManagementSDKCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = NICardManagementSDKCore.xcframework; path = Vendor/NICardManagementSDKCore.xcframework; sourceTree = "<group>"; };
 		C9BAC5F614C1C24CAEBA1549542155C2 /* Pods-CardManagementSDKSwiftSample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CardManagementSDKSwiftSample.modulemap"; sourceTree = "<group>"; };
 		CCEC7DEB358AFB73DFF178950EDF8E11 /* SetPinViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SetPinViewController.swift; sourceTree = "<group>"; };
 		D299F2CA07DC106509D4E5889C539B66 /* UIColor+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
@@ -178,14 +178,6 @@
 			);
 			name = PublicModels;
 			path = PublicModels;
-			sourceTree = "<group>";
-		};
-		0E458809DF7C4ED638253295DCCA594E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				93D454BDADC0B8B504ED7FD1FD470A22 /* NICardManagementSDKCore.xcframework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
@@ -266,6 +258,14 @@
 			);
 			name = ChangePin;
 			path = CardManagementSDK/Source/Views/ChangePin;
+			sourceTree = "<group>";
+		};
+		6112BE9CE535C7DEBDEE65D352D1FA7C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C09A18BE0BC0DE0A6F5B4CC08A330F62 /* NICardManagementSDKCore.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		63D7E34D340ECA59243349B27F6E8DD5 /* Utils */ = {
@@ -394,7 +394,7 @@
 			children = (
 				A75464075D619FE8F85F744427806E53 /* CardDetails */,
 				54914E01DE78EA6641B774BA5510655A /* ChangePin */,
-				0E458809DF7C4ED638253295DCCA594E /* Frameworks */,
+				6112BE9CE535C7DEBDEE65D352D1FA7C /* Frameworks */,
 				BCF4AD6068F0F9DE55CC2F327C041647 /* Pin */,
 				F1BBBCE046A639349A4F39F4499C5362 /* Pod */,
 				E3B8B507422042603AF518BE5C762CD6 /* Public */,

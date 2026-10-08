@@ -35,8 +35,8 @@ Pod::Spec.new do |spec|
   ]
 
   # Core is SPM-only (NICardManagementSDKCore) at 0.1.0 (temporary GitHub host akiselevn/card-management-sdk-core). Not a CocoaPods product.
-  # Local Example: build Core (`card-management-sdk-core/scripts/build-ios.sh`) then
-  # `scripts/link-core.sh` so Vendor/NICardManagementSDKCore.xcframework exists.
+  # Local Example: `scripts/fetch-core-xcframework.sh` (Release core-0.1.0) or build Core + `scripts/link-core.sh`
+  # so Vendor/NICardManagementSDKCore.xcframework exists.
   core_xcframework = File.expand_path("Vendor/NICardManagementSDKCore.xcframework", __dir__)
   if File.directory?(core_xcframework)
     spec.vendored_frameworks = "Vendor/NICardManagementSDKCore.xcframework"
