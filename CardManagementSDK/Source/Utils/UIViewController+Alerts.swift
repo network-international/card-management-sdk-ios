@@ -5,7 +5,6 @@
 //  Created by Paula Radu on 20.10.2022.
 //
 
-import NICardManagementSDKCore
 import UIKit
 
 extension UIViewController {

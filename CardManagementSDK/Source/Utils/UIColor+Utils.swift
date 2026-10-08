@@ -5,7 +5,6 @@
 //  Created by Paula Radu on 04.11.2022.
 //
 
-import NICardManagementSDKCore
 import UIKit
 
 extension UIColor {

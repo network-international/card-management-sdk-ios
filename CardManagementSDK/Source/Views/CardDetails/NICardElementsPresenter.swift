@@ -5,7 +5,6 @@
 //  Created by Gabriel Cernestean on 07.10.2022.
 //
 
-import NICardManagementSDKCore
 import Foundation
 import UIKit
 
@@ -61,7 +60,7 @@ public class NICardElementsPresenter {
             } else {
                 self.maskedElements = Set(UIElement.CardDetails.allCases)
                 self.update()
-                completion(error ?? NIErrorResponse(errorMessage: "No Data Found"))
+                completion(error ?? NIErrorResponse(error: NISDKErrors.NO_DATA_ERROR))
             }
         }
     }

@@ -5,7 +5,6 @@
 //  Created by Paula Radu on 25.11.2022.
 //
 
-import NICardManagementSDKCore
 import UIKit
 
 protocol NibLoadable: AnyObject {

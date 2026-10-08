@@ -5,7 +5,6 @@
 //  Created by Gabriel Cernestean on 18.08.2023.
 //
 
-import NICardManagementSDKCore
 import Foundation
 import UIKit
 
@@ -65,7 +64,7 @@ public class ViewPinViewModel {
                     self.pin = response
                     self.startTimer = true
                 } else {
-                    self.callback?(nil, NIErrorResponse(errorMessage: "No Data Found")){}
+                    self.callback?(nil, NIErrorResponse(error: .NO_DATA_ERROR)){}
                     self.pin = "----"
                     self.startTimer = false
                 }

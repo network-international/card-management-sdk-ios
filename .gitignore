@@ -8,5 +8,3 @@ Example/build/XCBuildData
 archives
 NICardManagementSDK.xcframework
 Example/Pods/Pods.xcodeproj/xcuserdata
-Vendor/NICardManagementSDKCore.xcframework
-.swiftpm/
