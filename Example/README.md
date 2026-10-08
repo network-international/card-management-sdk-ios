@@ -3,7 +3,7 @@ Sample application illustrating the use of the Card Management SDK for iOS
 
 ## Requirements
 - Xcode 15+ (deployment target iOS 15; Example uses iOS 17)
-- Swift Package Manager (CocoaPods is **not** used)
+- Swift Package Manager (this Example does not use CocoaPods; Trunk goes read-only on [2 December 2026](https://blog.cocoapods.org/CocoaPods-Specs-Repo/))
 
 ## Installation
 

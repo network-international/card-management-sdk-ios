@@ -12,7 +12,9 @@ The Network International iOS Card Management SDK requires Xcode 13 and later an
 
 This repository is the public **Card Management SDK** for iOS (UI forms **and** the programmatic API below). App integrators depend on **this** package only.
 
-**Distribution is SPM + XCFramework only — CocoaPods is not supported** (no `.podspec`, no `pod 'NICardManagementSDK'`).
+**Distribution is SPM + XCFramework only** (no `.podspec` / CocoaPods product for this modularisation line).
+
+CocoaPods [Trunk becomes permanently read-only on 2 December 2026](https://blog.cocoapods.org/CocoaPods-Specs-Repo/) — after that date no new pods or pod versions can be published to Trunk (existing installs keep working). This SDK ships via Swift Package Manager and XCFramework so integrators are not tied to Trunk for updates.
 
 Private **Core** is a transitive SPM dependency (not a separate product for app developers). Maintainers: Core **0.1.0** from [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0); private — GitHub auth). Local Core override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh`.
 
