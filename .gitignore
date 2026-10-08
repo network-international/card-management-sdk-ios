@@ -17,3 +17,4 @@ Example/*.xcworkspace/
 
 # Local Core overrides (never commit binaries/symlinks for Core)
 Vendor/NICardManagementSDKCore.xcframework
+.build/
