@@ -10,14 +10,9 @@ The current supported features are:
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
-This repository is the public **UI** SDK (forms, XIBs, presenters). Programmatic card ops (`getCardDetails`, `setPin`, `verifyPin`, `changePin`, `getPin`) live in private **Core** (`NICardManagementSDKCore`). Core is **SPM-only** — no CocoaPods Core product.
+This repository is the public **Card Management SDK** for iOS (UI forms **and** the programmatic API below). App integrators depend on **this** package only.
 
-| Consumer | Depend on |
-| --- | --- |
-| UI apps | this iOS UI SDK — Core is transitive via SPM |
-| API-only apps | **Core alone** (SPM binary from private Core repo) — not this UI repo |
-
-**Core pin (2.2.0 RC):** SPM `exact: "0.1.0"` → [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (binary Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0)). Private — configure GitHub auth (`~/.netrc` or `x-access-token` URL rewrite). Maintainer local override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh` (or `CORE_IOS_DIR`). CocoaPods Example vendors `Vendor/NICardManagementSDKCore.xcframework` when present.
+Private **Core** is a transitive SPM dependency (not a separate product for app developers). Maintainers: Core **0.1.0** from [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0); private — GitHub auth). Local Core override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh`. CocoaPods Example vendors `Vendor/NICardManagementSDKCore.xcframework` when present.
 
 ## Installation
 Choose desired option:
@@ -321,7 +316,7 @@ sdk.verifyPinForm(type: pinType, config: pinVerifyConfig) { successResponse, err
 ```
 
 #### Programatic Interface
-The customer application will be responsible to handle the UI part.
+Use the same `NICardManagementAPI` / `sdk` instance from this SDK when your app owns the UI. (You do **not** add a separate Core library dependency.)
 
 ##### Retrieve Card Details
 The programmatic interface of the card details will return the card details in an object (NICardDetailsResponse).
