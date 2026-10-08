@@ -2,32 +2,31 @@
 import PackageDescription
 import Foundation
 
-/// Local Core uses Package.swift `name` (NICardManagementSDKCore).
-/// Remote URL identity is the repo name (card-management-sdk-core).
+/// Remote URL identity is the repo name (`card-management-sdk-core`).
+/// Local path identity is Package.swift `name` (`NICardManagementSDKCore`).
 struct CorePin {
     let dependency: Package.Dependency
     let packageIdentity: String
 }
 
 func resolveCorePin() -> CorePin {
-    let fm = FileManager.default
-    let env = ProcessInfo.processInfo.environment["CORE_IOS_DIR"]
-    let localCandidates = [
-        env,
-        "Vendor/NICardManagementSDKCore",
-        "../../card-management-sdk-core/card-management-sdk-core/ios",
-        "../card-management-sdk-core/card-management-sdk-core/ios",
-        "../card-management-sdk-core/ios",
-    ].compactMap { $0 }
-    if let path = localCandidates.first(where: {
-        fm.fileExists(atPath: $0 + "/Package.swift")
-    }) {
-        return CorePin(
-            dependency: .package(path: path),
-            packageIdentity: "NICardManagementSDKCore"
-        )
+    let env = ProcessInfo.processInfo.environment
+    let useLocal = env["CORE_USE_LOCAL"] == "1" || env["CORE_IOS_DIR"] != nil
+    if useLocal {
+        let fm = FileManager.default
+        let candidates = [
+            env["CORE_IOS_DIR"],
+            "Vendor/NICardManagementSDKCore",
+        ].compactMap { $0 }
+        if let path = candidates.first(where: { fm.fileExists(atPath: $0 + "/Package.swift") }) {
+            return CorePin(
+                dependency: .package(path: path),
+                packageIdentity: "NICardManagementSDKCore"
+            )
+        }
+        fatalError("CORE_USE_LOCAL/CORE_IOS_DIR set but Core Package.swift not found. Run scripts/link-core.sh or set CORE_IOS_DIR.")
     }
-    // Temporary personal host until org Core repo exists (private — needs GitHub auth).
+    // Phase 5 default: hosted Core binary (private — GitHub auth / netrc required).
     return CorePin(
         dependency: .package(
             url: "https://github.com/akiselevn/card-management-sdk-core.git",

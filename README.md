@@ -10,9 +10,14 @@ The current supported features are:
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
-Programmatic card operations (`getCardDetails`, `setPin`, `verifyPin`, `changePin`, `getPin`) live in private **Core** (`NICardManagementSDKCore`). This repository is the public **UI** (forms, XIBs, presenters) and depends on Core. Core is **SPM-only** — there is no CocoaPods Core product.
+This repository is the public **UI** SDK (forms, XIBs, presenters). Programmatic card ops (`getCardDetails`, `setPin`, `verifyPin`, `changePin`, `getPin`) live in private **Core** (`NICardManagementSDKCore`). Core is **SPM-only** — no CocoaPods Core product.
 
-Pinned to Core **0.1.0** via SPM (`akiselevn/card-management-sdk-core` tag `0.1.0`, binary from Release `core-0.1.0`; private — GitHub auth required). Local override: clone Core + `./scripts/link-core.sh` (Vendor path wins). CocoaPods Example still vendors `Vendor/NICardManagementSDKCore.xcframework` when present.
+| Consumer | Depend on |
+| --- | --- |
+| UI apps | this iOS UI SDK — Core is transitive via SPM |
+| API-only apps | **Core alone** (SPM binary from private Core repo) — not this UI repo |
+
+**Core pin (2.2.0 RC):** SPM `exact: "0.1.0"` → [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (binary Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0)). Private — configure GitHub auth (`~/.netrc` or `x-access-token` URL rewrite). Maintainer local override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh` (or `CORE_IOS_DIR`). CocoaPods Example vendors `Vendor/NICardManagementSDKCore.xcframework` when present.
 
 ## Installation
 Choose desired option:
@@ -35,7 +40,7 @@ The SDK is also distributed as a binary XCFramework in GitHub Releases.
 4. Set the framework embedding option to `Embed & Sign`.
 5. Import the SDK in Swift:
 
-> The release package includes the XCFramework with debug symbols (`.dSYM`) so symbolicated crash logs remain available.
+> UI XCFramework releases are separate from private **Core** binaries. Core dSYMs are private (on request); they are not in the Core binary zip.
 
 ```swift
 import NICardManagementSDK
