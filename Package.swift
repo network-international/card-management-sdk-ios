@@ -2,22 +2,26 @@
 import PackageDescription
 import Foundation
 
-func resolveCorePath() -> String {
+func resolveCoreDependency() -> Package.Dependency {
     let fm = FileManager.default
     let env = ProcessInfo.processInfo.environment["CORE_IOS_DIR"]
-    let candidates = [
+    let localCandidates = [
         env,
         "Vendor/NICardManagementSDKCore",
         "../../card-management-sdk-core/card-management-sdk-core/ios",
         "../card-management-sdk-core/card-management-sdk-core/ios",
         "../card-management-sdk-core/ios",
     ].compactMap { $0 }
-    guard let path = candidates.first(where: {
+    if let path = localCandidates.first(where: {
         fm.fileExists(atPath: $0 + "/Package.swift")
-    }) else {
-        fatalError("Core iOS package not found. Clone card-management-sdk-core and run scripts/link-core.sh (or set CORE_IOS_DIR).")
+    }) {
+        return .package(path: path)
     }
-    return path
+    // Temporary personal host until org Core repo exists (private — needs GitHub auth).
+    return .package(
+        url: "https://github.com/akiselevn/card-management-sdk-core.git",
+        exact: "0.1.0"
+    )
 }
 
 let xibs = (try? FileManager.default.subpathsOfDirectory(atPath: "CardManagementSDK"))?
@@ -36,7 +40,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: resolveCorePath()),
+        resolveCoreDependency(),
     ],
     targets: [
         .target(
