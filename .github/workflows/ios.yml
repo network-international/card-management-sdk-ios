@@ -52,18 +52,12 @@ jobs:
           fi
           xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
 
-      - name: Build Example (CocoaPods + Core XCFramework)
+      - name: Build Example (SPM)
         if: steps.core.outputs.available == 'true'
-        env:
-          CORE_GITHUB_TOKEN: ${{ secrets.CORE_GITHUB_TOKEN }}
         run: |
-          bash scripts/fetch-core-xcframework.sh
-          gem install cocoapods --no-document
-          cd Example
-          pod install
           device=$(xcrun simctl list devices available | grep -E 'iPhone' | head -1 | sed -E 's/^[[:space:]]*([^(]+).*/\1/' | sed 's/[[:space:]]*$//')
           xcodebuild \
-            -workspace CardManagementSDKSwiftSample.xcworkspace \
+            -project Example/CardManagementSDKSwiftSample.xcodeproj \
             -scheme CardManagementSDKSwiftSample \
             -configuration Debug \
             -destination "platform=iOS Simulator,name=${device}" \

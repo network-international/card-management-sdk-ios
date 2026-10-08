@@ -50,5 +50,5 @@ PY
   ln -sfn "${XCF_REL}" "${ROOT}/Vendor/NICardManagementSDKCore.xcframework"
   echo "Linked ${ROOT}/Vendor/NICardManagementSDKCore.xcframework -> ${XCF_REL}"
 else
-  echo "note: Core XCFramework not built yet (run card-management-sdk-core/scripts/build-ios.sh for CocoaPods vendoring)"
+  echo "note: Core XCFramework not built yet (optional; SPM uses Core Package.swift / binary package — run card-management-sdk-core/scripts/build-ios.sh if you need the XCFramework locally)"
 fi

@@ -1,0 +1,27 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "nicardmanagementsdkcore",
+          "kind" : "fileSystem",
+          "location" : "/Users/alekseikiselev/Documents/projects/SDK_IOS/card-management-sdk-ios.worktrees/samples-1fd3/Vendor/NICardManagementSDKCore",
+          "name" : "NICardManagementSDKCore"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/alekseikiselev/Documents/projects/SDK_IOS/card-management-sdk-ios.worktrees/samples-1fd3/Vendor/NICardManagementSDKCore"
+        },
+        "subpath" : "nicardmanagementsdkcore"
+      }
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}

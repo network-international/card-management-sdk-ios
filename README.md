@@ -12,38 +12,35 @@ The Network International iOS Card Management SDK requires Xcode 13 and later an
 
 This repository is the public **Card Management SDK** for iOS (UI forms **and** the programmatic API below). App integrators depend on **this** package only.
 
-Private **Core** is a transitive SPM dependency (not a separate product for app developers). Maintainers: Core **0.1.0** from [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0); private — GitHub auth). Local Core override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh`. CocoaPods Example vendors `Vendor/NICardManagementSDKCore.xcframework` when present.
+**Distribution is SPM + XCFramework only — CocoaPods is not supported** (no `.podspec`, no `pod 'NICardManagementSDK'`).
+
+Private **Core** is a transitive SPM dependency (not a separate product for app developers). Maintainers: Core **0.1.0** from [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (Release [`core-0.1.0`](https://github.com/akiselevn/card-management-sdk-core/releases/tag/core-0.1.0); private — GitHub auth). Local Core override: `CORE_USE_LOCAL=1` + `./scripts/link-core.sh`.
 
 ## Installation
-Choose desired option:
-- The SDK can be added via [CocoaPods](https://cocoapods.org/)
-- Download the XCFramework release package from GitHub Releases and add it to your project manually
+Choose one:
 
-##### CocoaPods
-The steps to install it via CocoaPods:
-1.	Create a Podfile in the root directory where the .xcodeproj file resides.
-2.	Add pod 'NICardManagementSDK' to the Podfile created in the above step.
-3.	Close Xcode and run pod install command on the directory where the Podfile was created.
-4.	After performing the above step, open the .xcworkspace file that was created, to open your project.
-
-##### Manual release download
-The SDK is also distributed as a binary XCFramework in GitHub Releases.
-
-1. Download `NICardManagementSDK-<version>.zip` from the release page.
-2. Unzip the archive to get `NICardManagementSDK.xcframework`.
-3. In Xcode, drag `NICardManagementSDK.xcframework` into your app target's "Frameworks, Libraries, and Embedded Content" section.
-4. Set the framework embedding option to `Embed & Sign`.
-5. Import the SDK in Swift:
-
-> UI XCFramework releases are separate from private **Core** binaries. Core dSYMs are private (on request); they are not in the Core binary zip.
+##### Swift Package Manager (recommended)
+1. In Xcode: **File → Add Package Dependencies…**
+2. Add this repository URL (or a local checkout of this package).
+3. Add the `NICardManagementSDK` product to your app target.
+4. Import and use:
 
 ```swift
 import NICardManagementSDK
 ```
 
-This distribution method works without CocoaPods and is compatible with Xcode 13+ and iOS 15+. 
+Core resolves transitively via SPM. App integrators do **not** add a separate Core package.
 
-If you need to build the binary locally, use the included script:
+##### Manual XCFramework download
+1. Download `NICardManagementSDK-<version>.zip` from GitHub Releases.
+2. Unzip to get `NICardManagementSDK.xcframework`.
+3. Drag it into your app target’s **Frameworks, Libraries, and Embedded Content**.
+4. Set embedding to **Embed & Sign**.
+5. `import NICardManagementSDK`
+
+> UI XCFramework releases are separate from private **Core** binaries. Core dSYMs are private (on request); they are not in the Core binary zip.
+
+If you need to build the UI binary locally:
 
 ```bash
 ./scripts/build-xcframework.sh

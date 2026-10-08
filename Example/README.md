@@ -2,38 +2,25 @@
 Sample application illustrating the use of the Card Management SDK for iOS
 
 ## Requirements
-- Xcode 15+ (deployment target iOS 15; Example Podfile uses iOS 17)
-- CocoaPods
-- Private **Core** XCFramework for local `:path` SDK builds (CocoaPods vendors `Vendor/NICardManagementSDKCore.xcframework`)
+- Xcode 15+ (deployment target iOS 15; Example uses iOS 17)
+- Swift Package Manager (CocoaPods is **not** used)
 
 ## Installation
 
-From the **repository root** (not `Example/`), fetch Core **0.1.0** into `Vendor/` (needs `gh` auth or `CORE_GITHUB_TOKEN` with read access to [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core)):
+The Example app depends on the local SPM package at the repository root (`Package.swift` → product `NICardManagementSDK`). Core is a transitive SPM dependency.
+
+1. From the repository root, ensure Core can resolve:
+   - **Remote (default):** GitHub auth to private [`akiselevn/card-management-sdk-core`](https://github.com/akiselevn/card-management-sdk-core) (e.g. `gh auth` / `CORE_GITHUB_TOKEN` / netrc), then `swift package resolve`
+   - **Local Core:** `CORE_USE_LOCAL=1` and `./scripts/link-core.sh`
+2. Open the Example **project** (not a CocoaPods workspace):
 
 ```bash
-bash scripts/fetch-core-xcframework.sh
+open Example/CardManagementSDKSwiftSample.xcodeproj
 ```
 
-Or build Core locally and link it:
+3. Build & run the `CardManagementSDKSwiftSample` scheme.
 
-```bash
-# in card-management-sdk-core
-bash scripts/build-ios.sh
-# in this repo
-bash scripts/link-core.sh
-```
-
-Then install pods and open the workspace:
-
-```bash
-cd Example
-pod install
-open CardManagementSDKSwiftSample.xcworkspace
-```
-
-App integrators do **not** add Core separately when consuming a published UI SDK — Core is already bundled/transitive. The Vendor step is for **this Example** (local pod `:path => '../'`).
-
-Alternatively, you may consume the SDK as a binary XCFramework by downloading a release package from GitHub Releases and adding `NICardManagementSDK.xcframework` directly to your app.
+App integrators consuming a published UI SDK do **not** add Core separately.
 
 ## Quick start
 After compiling and starting sample app, check `settings` Tab and provide your credintials (ask development team for `client_secret`).
@@ -46,4 +33,3 @@ curl --location --request POST 'https://apitest.network.ae/CardServices/v2/Token
 --data-urlencode 'client_secret=*******' \
 --data-urlencode 'grant_type=client_credentials'
 ```
-

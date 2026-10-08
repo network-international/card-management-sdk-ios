@@ -7,6 +7,13 @@ tools/temp
 Example/build/XCBuildData
 archives
 NICardManagementSDK.xcframework
-Example/Pods/Pods.xcodeproj/xcuserdata
-Vendor/NICardManagementSDKCore.xcframework
 .swiftpm/
+
+# SPM-only SDK — CocoaPods artifacts are not used
+Example/Pods/
+Example/Podfile
+Example/Podfile.lock
+Example/*.xcworkspace/
+
+# Local Core overrides (never commit binaries/symlinks for Core)
+Vendor/NICardManagementSDKCore.xcframework

@@ -22,7 +22,7 @@
 		BAA03C0E2B06D253007C1800 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA03C0D2B06D253007C1800 /* LogoView.swift */; };
 		BAA03C132B07682D007C1800 /* SettingsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA03C122B07682D007C1800 /* SettingsProvider.swift */; };
 		BAA03C152B076968007C1800 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA03C142B076968007C1800 /* CardViewModel.swift */; };
-		BAC9E9BD7159F7798AED5597 /* Pods_CardManagementSDKSwiftSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D64CF51C4EAEE02516B3188 /* Pods_CardManagementSDKSwiftSample.framework */; };
+		E4B3F2206392886EB9CB21EA /* NICardManagementSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 8E4D68EF798283DD97F798C2 /* NICardManagementSDK */; };
 		F4C7259B2930F73C001B28A8 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C725972930F73C001B28A8 /* CardViewController.swift */; };
 		F4DE3B31290926F900BF4727 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4DE3B33290926F900BF4727 /* Localizable.strings */; };
 		F4DE3BB12913FCD900BF4727 /* NettoPro.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4DE3BB02913FCD400BF4727 /* NettoPro.otf */; };
@@ -46,8 +46,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3334CC02BE3973F1009C6EEC /* Pods-CardManagementSDKSwiftSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardManagementSDKSwiftSample.debug.xcconfig"; path = "Target Support Files/Pods-CardManagementSDKSwiftSample/Pods-CardManagementSDKSwiftSample.debug.xcconfig"; sourceTree = "<group>"; };
-		6D64CF51C4EAEE02516B3188 /* Pods_CardManagementSDKSwiftSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardManagementSDKSwiftSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA391B432B91CFD9009BB698 /* ExperimentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentsViewController.swift; sourceTree = "<group>"; };
 		BA391B452B91D0F9009BB698 /* ExperimentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentsViewModel.swift; sourceTree = "<group>"; };
 		BA70A13B2B2034C100A196C9 /* TextFieldContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldContentConfiguration.swift; sourceTree = "<group>"; };
@@ -63,7 +61,6 @@
 		BAA03C0D2B06D253007C1800 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		BAA03C122B07682D007C1800 /* SettingsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProvider.swift; sourceTree = "<group>"; };
 		BAA03C142B076968007C1800 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
-		EB9D200BDE4CD0A12A579B52 /* Pods-CardManagementSDKSwiftSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardManagementSDKSwiftSample.release.xcconfig"; path = "Target Support Files/Pods-CardManagementSDKSwiftSample/Pods-CardManagementSDKSwiftSample.release.xcconfig"; sourceTree = "<group>"; };
 		F4C725972930F73C001B28A8 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		F4DE3B32290926F900BF4727 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F4DE3B342909271500BF4727 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -81,22 +78,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAC9E9BD7159F7798AED5597 /* Pods_CardManagementSDKSwiftSample.framework in Frameworks */,
+				E4B3F2206392886EB9CB21EA /* NICardManagementSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5DB578FC17FCF769436E72B0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3334CC02BE3973F1009C6EEC /* Pods-CardManagementSDKSwiftSample.debug.xcconfig */,
-				EB9D200BDE4CD0A12A579B52 /* Pods-CardManagementSDKSwiftSample.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		BA391B422B91CF9A009BB698 /* Experiments */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,7 +136,6 @@
 		F447E45328F9543F005A5F46 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6D64CF51C4EAEE02516B3188 /* Pods_CardManagementSDKSwiftSample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,7 +163,6 @@
 				F4E7694628EB4CC700CDC7E4 /* CardManagementSDKSwiftSample */,
 				F4E7694528EB4CC700CDC7E4 /* Products */,
 				F447E45328F9543F005A5F46 /* Frameworks */,
-				5DB578FC17FCF769436E72B0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,18 +202,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F4E7695828EB4CC800CDC7E4 /* Build configuration list for PBXNativeTarget "CardManagementSDKSwiftSample" */;
 			buildPhases = (
-				249F1FF694F09A175876D6CA /* [CP] Check Pods Manifest.lock */,
 				F4E7694028EB4CC700CDC7E4 /* Sources */,
 				F4E7694128EB4CC700CDC7E4 /* Frameworks */,
 				F4E7694228EB4CC700CDC7E4 /* Resources */,
 				F447E45828F9543F005A5F46 /* Embed Frameworks */,
-				5121491376B08BF5E82A8286 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = CardManagementSDKSwiftSample;
+			packageProductDependencies = (
+				8E4D68EF798283DD97F798C2 /* NICardManagementSDK */,
+			);
 			productName = CardManagementSDKSwiftSample;
 			productReference = F4E7694428EB4CC700CDC7E4 /* CardManagementSDKSwiftSample.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +244,9 @@
 				ar,
 			);
 			mainGroup = F4E7693B28EB4CC700CDC7E4;
+			packageReferences = (
+				932CB67C78DDE660F35DFEF5 /* XCLocalSwiftPackageReference ".." */,
+			);
 			productRefGroup = F4E7694528EB4CC700CDC7E4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -280,48 +270,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		249F1FF694F09A175876D6CA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CardManagementSDKSwiftSample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5121491376B08BF5E82A8286 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardManagementSDKSwiftSample/Pods-CardManagementSDKSwiftSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CardManagementSDKSwiftSample/Pods-CardManagementSDKSwiftSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CardManagementSDKSwiftSample/Pods-CardManagementSDKSwiftSample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F4E7694028EB4CC700CDC7E4 /* Sources */ = {
@@ -493,7 +441,6 @@
 		};
 		F4E7695928EB4CC800CDC7E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3334CC02BE3973F1009C6EEC /* Pods-CardManagementSDKSwiftSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -523,7 +470,6 @@
 		};
 		F4E7695A28EB4CC800CDC7E4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB9D200BDE4CD0A12A579B52 /* Pods-CardManagementSDKSwiftSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -573,6 +519,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		932CB67C78DDE660F35DFEF5 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E4D68EF798283DD97F798C2 /* NICardManagementSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 932CB67C78DDE660F35DFEF5 /* XCLocalSwiftPackageReference ".." */;
+			productName = NICardManagementSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F4E7693C28EB4CC700CDC7E4 /* Project object */;
 }
