@@ -5,6 +5,7 @@
 //  Created by Paula Radu on 05.10.2022.
 //
 
+import NICardManagementSDKCore
 import UIKit
 
 class CardDetailsViewController: UIViewController {
