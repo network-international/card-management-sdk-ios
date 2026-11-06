@@ -5,6 +5,7 @@
 //  Created by Paula Radu on 27.11.2022.
 //
 
+import NICardManagementSDKCore
 import UIKit
 
 class EyeButton: UIButton {
