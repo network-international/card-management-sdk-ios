@@ -16,7 +16,13 @@
     "git": "https://github.com/network-international/card-management-sdk-ios.git",
     "tag": "2.1.8"
   },
-  "source_files": "CardManagementSDK/**/*.{swift}",
+  "source_files": [
+    "CardManagementSDK/Public/**/*.swift",
+    "CardManagementSDK/Source/Coordinator/**/*.swift",
+    "CardManagementSDK/Source/Views/**/*.swift",
+    "CardManagementSDK/Source/Utils/**/*.swift"
+  ],
+  "vendored_frameworks": "Vendor/NICardManagementSDKCore.xcframework",
   "resources": [
     "CardManagementSDK/Source/Views/**/*.xib"
   ],

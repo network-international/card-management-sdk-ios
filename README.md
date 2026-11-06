@@ -10,6 +10,8 @@ The current supported features are:
 ## Requirements
 The Network International iOS Card Management SDK requires Xcode 13 and later and works with iOS version 15 and above.
 
+This repository is the public **UI** (forms, XIBs, presenters). Programmatic card operations live in **Core** (`NICardManagementSDKCore`) — see the [Core README](https://github.com/network-international/card-management-sdk-core) / Bitbucket source docs. Core is **SPM-only** (no CocoaPods Core product); this UI package depends on public Core `0.1.1` (or a local Core checkout via `CORE_IOS_DIR` / `scripts/link-core.sh` for development).
+
 ## Installation
 Choose desired option:
 - The SDK can be added via [CocoaPods](https://cocoapods.org/)
@@ -311,53 +313,7 @@ sdk.verifyPinForm(type: pinType, config: pinVerifyConfig) { successResponse, err
 }
 ```
 
-#### Programatic Interface
-The customer application will be responsible to handle the UI part.
-
-##### Retrieve Card Details
-The programmatic interface of the card details will return the card details in an object (NICardDetailsResponse).
-The card info returned are: Card Number, Expiry Date, CVV and Cardholder Name.
-
-Swift:
-```swift
-sdk.getCardDetails { successResponse, errorResponse in
-    //  handle here error and success
-}
-```
-
-
-##### Set PIN 
-The programmatic interface for the Set PIN functionality will return a success or failure response.
-
-Swift:
-```swift
-sdk.setPin(pin: pin) { successResponse, errorResponse in
-    //  handle here error and success
-}
-```
-
-
-##### Change PIN
-The programmatic interface for the Change PIN functionality will return a success or failure response.
-
-Swift:
-```swift
-sdk.changePin(oldPin: oldPin, newPin: newPin) { successResponse, errorResponse in
-    //  handle here error and success
-}
-```
-
-
-##### Verify PIN
-The programmatic interface for the Verify PIN functionality will return a success or failure response.
-
-Swift:
-```swift
-sdk.verifyPin(pin: pin) { successResponse, errorResponse in
-    //  handle here error and success
-}
-```
-
+For headless / non-UI card operations, use **Core** directly — see the [Core programmatic interface](https://github.com/network-international/card-management-sdk-core).
 
 # Sample application
 Check sample application in "Example" directory with SDK usage
